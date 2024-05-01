@@ -548,7 +548,8 @@ my @TLP_working = qw(
     matapli matc3 matc3mem match_parens
     math-into-latex-4 mathabx mathabx-type1 mathalpha mathastext
     mathcommand mathcomp mathdesign mathdots mathexam
-    mathfam256 mathfixs mathfont mathlig mathpartir mathpazo mathpunctspace
+    mathfam256 mathfixs mathfont mathgreeks
+    mathlig mathpartir mathpazo mathpunctspace
     mathsemantics mathspec mathtools matlab-prettifier mathspic maths-symbols
     matrix-skeleton mattens maybemath maze
     mcaption mceinleger mcexam mcf2graph mcite mciteplus mcmthesis
@@ -624,7 +625,7 @@ my @TLP_working = qw(
     onedown onlyamsmath onrannual opbible opcit opencolor opensans oplotsymbl
     opteng optex optexcount optidef optional options
     orcidlink ordinalpt orientation orkhun
-    oscola oststud oswald ot-tableau othello othelloboard
+    oscola osda oststud oswald ot-tableau othello othelloboard
     oubraces oup-authoring-template
     outerhbox outilsgeomtikz outline outliner outlines outlining
     overarrows overlays overlock overpic
