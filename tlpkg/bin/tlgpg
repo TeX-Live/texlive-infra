@@ -1,0 +1,36 @@
+#!/bin/sh
+# $Id$
+# Public domain. Originally written 2016, Norbert Preining.
+# Run a gpg command for TeX Live, that is, with the TL --homedir, etc.
+# Since we want to be able to independently sign and verify, factor this out.
+
+if test $# -eq 0; then
+  echo "$0: At least one argument must be given." >&2
+  exit 1
+fi
+
+# --no-tty --yes --pinentry... needed for gpg 2.2.20 (Alma Linux 8).
+gpg_prog=gpg
+gpg_opts="--batch --no-tty --yes --pinentry-mode loopback \
+  --homedir /home/texlive/.gnupg  \
+  --passphrase-file /home/texlive/.gnupg/passphrase \
+  --local-user 0x06BAB6BC "
+
+# use the environment variables if set. This is for testing;
+# we don't define them in normal usage.
+if test -n "$TL_GNUPG"; then
+  gpg_prog=$TL_GNUPG
+fi
+if test -n "$TL_GNUPGOPTS"; then
+  gpg_opts=$TL_GNUPGOPTS
+fi
+
+if $gpg_prog $gpg_opts "$@" </dev/null; then
+  :
+else
+  echo "$0: gpg failed; command was:" >&2
+  echo "$0:   $gpg_prog $gpg_opts" "$@" >&2
+  exit 1
+fi
+
+exit 0

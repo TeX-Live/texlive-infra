@@ -1,0 +1,58 @@
+#!/bin/sh
+# $Id$
+# Public domain.  Originally written 2011, Peter Breitenlohner.
+#
+# This script updates the linked scripts (but doesn't commit anything).
+
+mydir=`cd \`dirname $0\` && pwd`
+Master=`cd $mydir/../.. && pwd`
+
+compare_and_copy () {
+  for file in "$@"; do
+    #echo "comparing $Src/$file to $Dest..."
+    
+    cmp -s $Src/$file $Dest/$file && continue
+    
+    echo "updating $Src/$file -> $Dest/$file"
+    diff -u0 $Src/$file $Dest/$file
+    cp $Src/$file $Dest/$file || exit 1
+  done
+}
+
+# Master/texmf-dist/scripts => Build/source/texk/texlive/linked_scripts
+
+Dest=`cd $Master/../Build/source/texk/texlive/linked_scripts && pwd`
+Src=$Master/texmf-dist/scripts
+
+test -r $Dest/scripts.lst || {
+  echo "$0: \`$Dest/scripts.lst' missing'"
+  exit 1
+}
+
+# echo "$Src => $Dest"
+
+. $Dest/scripts.lst
+
+compare_and_copy $texmf_scripts
+exit $?
+
+# Here is how we handled a second directory, that copied in the other
+# direction. As of January 2020, all the scripts in tl_scripts are gone,
+# now maintained in Master with slaves in the normal linked_scripts
+# handled above.
+# 
+## Build/source/texk/texlive/tl_scripts => Master/texmf-dist/scripts/texlive
+#
+#Src=`cd $Dest/../tl_scripts && pwd`
+#Dest=$Master/texmf-dist/scripts/texlive
+#
+#test -r $Src/scripts.lst || {
+#  echo "$0: \`$Src/scripts.lst' missing'"
+#  exit 1
+#}
+#
+## echo "$Src => $Dest"
+#
+#. $Src/scripts.lst
+#
+#compare_and_copy $tl_scripts

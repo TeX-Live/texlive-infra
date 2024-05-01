@@ -1,0 +1,66 @@
+#!/usr/bin/env perl
+# $Id$
+# Originally written by Norbert Preining and Karl Berry, 2015.  Public domain.
+# 
+# Recursively give dependencies of a given package
+
+my $vc_id = '$Id$';
+my $Master;
+
+BEGIN {
+  chomp ($mydir = `dirname $0`);  # we are in Master/tlpkg/bin
+  unshift (@INC, "$mydir/..");
+}
+
+use TeXLive::TLPDB;
+use TeXLive::TLUtils;
+
+my $prg = TeXLive::TLUtils::basename($0);
+
+my @print_packages;
+my $tlpdb;
+my %done;
+
+exit (&main());
+
+
+sub main {
+  chomp ($Master = `cd $mydir/../.. && pwd`);
+  $tlpdb = TeXLive::TLPDB->new ("root" => $Master);
+  die "Cannot find tlpdb in $Master!" unless defined $tlpdb;
+
+  @print_packages = @ARGV;
+  print_next();
+  exit(0);
+}
+
+sub print_next {
+  return if (!@print_packages);
+  my $pkg = shift @print_packages;
+  # skip packages we have already printed
+  if (!$done{$pkg}) {
+    my $tlp = $tlpdb->get_package($pkg);
+    if ($tlp) {
+      # mark as done
+      $done{$pkg} = 1;
+      my @deps = $tlp->depends;
+      # drop .ARCH deps
+      @deps = grep(!/\.ARCH$/, @deps);
+      # only print a line when there are deps
+      if (@deps) {
+        push @print_packages, @deps;
+        print "$pkg: @deps\n";
+      }
+    } else {
+      print "$pkg: MISSING\n";
+    }
+  }
+  print_next();
+}
+
+# Local Variables:
+# perl-indent-level: 2
+# tab-width: 2
+# indent-tabs-mode: nil
+# End:
+# vim: sw=2 expandtab

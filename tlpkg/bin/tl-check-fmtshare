@@ -1,0 +1,300 @@
+#!/bin/sh
+# Public domain. Originally written by Karl Berry, 2021.
+# Test that a .fmt file built on one system can be used on another.
+# 
+# Invoked from karl's cron.weekly:
+#   tl-check-fmtshare m68:tl/Work/texk/web2c
+# where m68 is a host alias for one of Nelson's machines,
+# a 32-bit BigEndian m68k architecture.
+
+version='$Id$'
+renice 20 $$ >/dev/null 2>&1
+unset CDPATH
+LC_ALL=C; export LC_ALL
+umask 077 # since we write in a tmp dir (unsafe still, but oh well)
+
+fmtutil_path=`cd /tmp && which fmtutil-sys 2>/dev/null`
+if test -z "$fmtutil_path"; then
+  echo "$0: no fmtutil-sys in PATH, goodbye." >&2
+  exit 1
+fi
+bindir=`dirname "$fmtutil_path"`
+mydir=`cd \`dirname $0\` && pwd`	# Master/tlpkg/bin
+#echo "fmtutil_path=$fmtutil_path, bindir=$bindir, mydir=$mydir"
+
+Master=`cd "$bindir"/../.. && pwd`
+enginedir=`cd "$mydir"/../../../Build/source/Work/texk/web2c 2>/dev/null&& pwd`
+outdir=/tmp/fmtshare.`id -u`
+default_fmts="tex.fmt pdftex.fmt pdflatex.fmt xetex.fmt xelatex.fmt
+		     luatex.fmt euptex.fmt" # not lualatex or optex, see below
+fmts=
+remote=
+
+usage="Usage: $0 [OPTION]... RHOST:RDIR
+Build TeX .fmt files locally, then copy them to RHOST:RDIR and try to
+load them with the TeX engines there. That is, RDIR should be a web2c
+build directory with binaries; in TeX Live,
+/something/like/Build/source/Work/texk/web2c.
+
+The idea is to support testing for .fmts being sharable among different
+system architectures, as intended; for instance, 4-byte long vs. 8-byte
+long and BigEndian vs. LittleEndian.
+
+The further idea is to be able to test new binaries in the Build
+directory (since that's where the compiled sources change), while using
+support files from a Master directory (since that's where they are
+updated).
+
+fmtutil-sys is run locally (found using PATH) to discern the engine and
+full command line used for building the given .fmts.
+
+The remote execution is done with \"ssh -n RHOST && cd RDIR && ...\",
+so ssh has to be working.
+
+The default for the Build directory is to be relative to where this
+script is executed. The default for the Master directory is to be
+relative to where fmtutil-sys is found in PATH. These may or may not be
+the same.
+
+The output directory is not cleaned before starting, in case older logs
+are helpful in debugging new failures.
+
+Special case #1: unfortunately, lualatex.fmt cannot be easily tested,
+and it is omitted by default. Loading the fmt requires finding many Lua
+files, which are unlikely to be available on the remote machine. The
+script does not try to handle this.
+
+Special case #2: optex.fmt includes precompiled Lua code, which is not
+sharable across architectures. Therefore the .fmt isn't either. If
+users need this at some future time, the optex maintainer will consider.
+
+Options (must use --, must use space to separate option from value, sorry):
+--Master MDIR     use MDIR for local support files
+                    [$Master]
+--enginedir EDIR  use EDIR for local engine binaries
+                    [$enginedir]
+--outdir ODIR     build locally in ODIR [$outdir]
+--fmt FMT         build FMT; can be given more than once
+                    [$default_fmts]
+
+--help            display this help and exit
+--version         display version information and exit
+
+Doc: https://tug.org/texinfohtml/web2c.html#Hardware-and-memory-dumps
+Bug reports, discussion: tex-live@tug.org
+Version: $version"
+
+while test $# -gt 0; do
+ case $1 in
+  --Master)    shift; Master=$1;;
+  --enginedir) shift; enginedir=$1;;
+  --fmt)       shift; fmts="$fmts $1";;
+  --outdir)    shift; outdir=$1;;
+  #
+  --help)      echo "$usage"; exit 0;;
+  --version)   echo "$version"; exit 0;;
+  -*)          echo "$0: goodbye, unrecognized option: $1" >&2; exit 1;;
+  #
+  *)           if test -n "$remote"; then
+                 echo "$0: remote argument already seen: $remote" >&2
+                 echo "$0:   now have second: $1" >&2
+                 exit 1
+               fi
+               remote=$1;;
+ esac
+ shift
+done
+
+if test -z "$remote"; then
+  echo "$0: no remote argument given, goodbye." >&2
+  exit 1
+elif echo "$remote" | grep -v : >/dev/null; then
+  echo "$0: remote argument must have form HOST:DIR, not like: $remote" >&2
+  exit 1
+elif test `echo "$remote" | tr -cd : | wc -c` != 1 >/dev/null; then
+  # not worth the fancier parsing until we need it.
+  echo "$0: remote argument must have only one colon: $remote" >&2
+  exit 1
+fi
+remotesys=`echo "$remote" | sed 's/:.*//'`
+remotedir=`echo "$remote" | sed 's/.*://'`
+#
+if test ! -d "$Master/texmf-dist/web2c"; then
+  echo "$0: no texmf-dist/web2c subdir of Master: $Master" >&2
+  ls "$Master" >&2
+  exit 1
+fi
+#
+if test ! -d "$enginedir"; then
+  echo "$0: enginedir not a directory: $enginedir" >&2
+  ls "$enginedir" >&2
+  exit 1
+fi
+
+# create output directory if needed.
+test -d "$outdir" || mkdir "$outdir" || exit 1
+
+# default fmt list.
+test -z "$fmts" && fmts=$default_fmts
+
+prg=`basename $0`
+echo "$prg: PATH=$PATH"
+echo "$prg: support files directory: $Master"
+echo "$prg:  local engine directory: $enginedir"
+echo "$prg:  local output directory: $outdir"
+echo "$prg:        formats to build:"$fmts
+echo "$prg:                  remote: $remotesys:$remotedir"
+
+# 
+# Our function to create a format locally:
+#   mkfmt FMT ENGINEDIR MASTERDIR OUTDIR
+# Generates FMT using the binary from ENGINEDIR,
+# support files from MASTERDIR, and leaving FMT in OUTDIR.
+# 
+# Leaves current directory as OUTDIR.
+#
+# On success, returns zero and outputs two lines to stdout:
+# 1) the full path to the newly-generated fmt file; and
+# 2) the basename of the engine binary that was used to build it.
+# 
+# On failure, returns nonzero and outputs nothing to stdout; issues
+# diagnostics to stderr.
+# 
+mkfmt ()
+{
+  fmt=$1
+  enginedir=$2
+  Master=$3
+  outdir=$4
+
+  # Our goal is to build a .fmt using a binary from the Build tree
+  # while still using the support files from the Master tree.
+  # The idea being that after changing the source and rebuilding the
+  # binary, we want to easily test whether the new binary is ok.
+  #
+  # First, we run fmtutil-sys (assumed to be in PATH) without generating
+  # anything (--dry-run), to garner the command line needed to build # FMT.
+  # 
+  fcmd="fmtutil-sys --dry-run --no-engine-subdir --fmtdir $outdir --byfmt $fmt"
+  ffot=$outdir/`basename $fmt .fmt`-fmtutil.fot
+  #
+  echo "$0: running: $fcmd" >"$ffot"
+  if $fcmd >>"$ffot" 2>&1; then :; else
+    echo "$0: could not get cmdline to build $fmt" >&2
+    echo "$0:  fmtutil command failed: $fcmd" >&2
+    echo "$0:  see transcript: $ffot" >&2
+    return 1
+  fi
+  
+  # Extract the build command from the fmtutil output, which has a line like:
+  #   fmtutil: running `pdftex -ini [more options] *pdfetex.ini' ...
+  # We want what's between the quotes. Format names and options can't
+  # contain quote or other special characters.
+  lq='`'
+  rq="'"
+  ecmd=`sed -n "s/^fmtutil.*running $lq\(.*\)$rq.*/\1/p" "$ffot"`
+  if test -z "$ecmd"; then
+    echo "$0: could not extract cmdline to build $fmt" >&2
+    echo "$0:  from fmtutil output; see: $ffot" >&2
+    return 1
+  fi
+  
+  # the needed engine better be in enginedir.
+  engine=`echo "$ecmd" | awk '{print $1}'` # engine that was used
+  if test ! -s "$enginedir/$engine"; then
+    echo "$0: needed engine not in enginedir: $enginedir/$engine" >&2
+    return 1
+  fi
+
+  # Generate everything in OUTDIR.
+  cd "$outdir" || return 1
+  
+  # Set environment variables so the given Master tree is used, and
+  # prepend the given engine directory to PATH, and run the command.
+  env="env PATH=$enginedir:$PATH \
+         TEXMFCNF=$Master/texmf-dist/web2c \
+         TEXMFROOT=$Master"
+  efot=$outdir/`basename $fmt .fmt`-engine.fot
+  echo "$0: running: $ecmd" >"$efot"
+  if $env $ecmd >>"$efot" 2>&1 && test -s "$outdir/$fmt"; then
+    sed -n '2p;q' "$efot"
+    echo "$outdir/$fmt"
+    echo "$engine"
+  else
+    echo "$0: could not build $fmt" >&2
+    echo "$0: engine command failed: $ecmd" >&2
+    echo "$0: see transcript: $efot" >&2
+    return 1
+  fi
+}
+
+#  Loop over all given fmts.
+#
+for fmt in $fmts; do
+  if echo "$fmt" | grep '\.fmt$' >/dev/null; then :; else
+    echo "$0: fmt does not end with .fmt, goodbye: $fmt" >&2
+    exit 1
+  fi
+  
+  # first build fmt on local machine.
+  set - `mkfmt "$fmt" "$enginedir" "$Master" "$outdir"`
+  fmtfile=$1
+  engine=$2
+  #
+  if test -z "$fmtfile"; then
+    # error messages already given, but give another just to be sure.
+    echo "$0: mkfmt failed: $fmt " \
+              "(enginedir $enginedir) (Master $Master) (outdir $outdir)" >&2  
+    exit 1
+  elif test -z "$engine"; then
+    echo "$0: should not happen, mkfmt returned fmtfile: $fmtfile" >&2
+    echo "$0: but no engine value?!" >&2
+    exit 1
+  elif test ! -s "$fmtfile"; then
+    echo "$0: should not happen, returned fmtfile is empty: $fmtfile" >&2
+    exit 1
+  fi
+  #echo "$0: (`date`)"
+  echo "$0: built fmtfile: `ls -l $fmtfile` (on `hostname`)"
+  engineversion=`$enginedir/$engine --version | sed 1q`
+  echo "$0:   with engine: $enginedir/$engine ($engineversion)"
+
+  # The TeX \command to exit a job immediately. Assume a LaTeX fmt
+  # if "latex" is in the name, else plain (enough).
+  if echo "$fmt" | grep latex >/dev/null; then
+    endcmd='\stop'
+  else
+    endcmd='\end'
+  fi
+
+  # copy to remote machine.
+  #echo "$0: copying $fmtfile to $remotesys:$remotedir..."
+  scp -pq "$fmtfile" "$remotesys:$remotedir" || exit 1
+
+  # load on remote machine.
+  echo "$0: running ./$engine in $remotesys:$remotedir..."
+  #
+  # On the remote side, we need to find a texmf.cnf or pdftex gets the
+  # mysterious "Must increase the hyph_size"; assume the
+  # TL source directory structure to find kpathsea/texmf.cnf.
+  # 
+  # Do not try to dynamically create the .fmt.
+  # 
+  remoteenv="env MKTEXFMT=0 TEXMFCNF=../../../texk/kpathsea"
+  remotecmd="cd $remotedir && $remoteenv ./$engine -fmt=./$fmt '$endcmd'"
+  #
+  rfot=$outdir/`basename $fmt .fmt`-$remotesys.fot
+  echo "$0: running on $remotesys: $remotecmd" >$rfot
+  ssh -n $remotesys "$remotecmd" </dev/null >>$rfot 2>&1
+  if test $? -ne 0; then
+    echo "$0: *** fmt load failed on $remotesys: $fmt" >&2
+    echo "$0: *** transcript in: $rfot" >&2
+    cat $rfot >&2
+    exit 1
+  else
+    echo "$0: fmt load ok on $remotesys: $fmt"
+    echo
+  fi
+done
+
+exit 0

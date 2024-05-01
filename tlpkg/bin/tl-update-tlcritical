@@ -1,0 +1,119 @@
+#!/bin/sh -e
+# $Id$
+# Public domain.  Originally written 2008, Karl Berry.
+# Update the tlcritical mini-repository on tug with the critical
+# packages.  Listed both here and in TLConfig.pm, unfortunately.
+# Run from cron.tl.
+
+opt_do_containers=true
+tlcrit=/home/ftp/texlive/tlcritical
+recreate=
+
+while test $# -gt 0; do
+  case $1 in
+  --tlcrit)         shift; tlcrit=$1;;
+  --recreate)       recreate=--recreate;;
+  --no-containers)  opt_do_containers=false;;
+  --help)           echo "Please read the script, sorry."; exit 0;;
+  --*) echo "$0: unrecognized option: $1" >&2; exit 1;;
+    *) echo "$0: too many arguments: $1" >&2; exit 1;;
+  esac
+  shift
+done
+
+if test -d "$tlcrit"; then :; else
+  echo "$0: tlcrit directory must exist: $tlcrit" >&2
+  exit 1
+fi
+
+mydir=`cd \`dirname $0\` && pwd`
+PATH=$mydir:/usr/local/gnu/bin:/usr/local/bin:$PATH # sha*sum+makensis on tug
+master=`cd $mydir/../.. && pwd`
+
+TMPDIR=${TMPDIR-/tmp}
+cd $TMPDIR
+
+# function to update one of recovery scripts (sh or exe) in tlcritical.
+# 
+do_updater ()
+{
+  type=$1  # sh or exe
+  newfile=`ls update-*.$type`
+  if test -z "$newfile"; then
+    echo "$0: no new file update-*.$type in `pwd`" >&2
+    exit 1
+  fi
+  rm -f $tlcrit/update-*.$type*  # rm old file and checksum
+  mv $newfile $tlcrit            # move new file
+  #
+  # do rest in $tlcrit so we don't just exit from a subshell on failure.
+  origdir=`pwd`
+  cd $tlcrit
+  #
+  # make checksum for new file:
+  sha512sum $newfile >$newfile.sha512
+  # sign it:
+  $master/tlpkg/bin/tl-sign-file $newfile.sha512 || exit 1
+  #
+  # create the generic names as symlinks.  target files must be nonempty.
+  test -s $newfile \
+    && ln -s $newfile update-tlmgr-latest.$type
+  #
+  test -s $newfile.sha512 \
+    && ln -s $newfile.sha512 update-tlmgr-latest.$type.sha512
+  #
+  test -s $newfile.sha512.asc \
+    && ln -s $newfile.sha512.asc update-tlmgr-latest.$type.sha512.asc
+  #
+  cd $origdir
+}
+
+# update additionally disabled (for normal update) packages
+moredis=`grep -v '^\s*#' $master/tlpkg/dev/tlnet-disabled-packages.txt \
+         | sed -e 's/\s*$//'`
+echo "$0: additional packages from tlnet-disabled-packages.txt: $moredis"
+
+if test -n "$recreate"; then
+  echo "$0: $recreate, so cleaning $tlcrit..."
+  rm -rf $tlcrit/[^R]* # except README
+fi
+
+if $opt_do_containers; then
+  # update normal containers.
+  echo "$0: running tl-update-containers (for critical packages)..."
+  tl-update-containers -location $tlcrit $recreate -all \
+    00texlive.installation 00texlive.config texlive.infra tlperl.windows \
+    $moredis
+else
+  # this is an option so that if the repository already contains
+  # up-to-date containers, e.g., a test setup, we don't recreate them.
+  # (See doc/packages.txt.)
+  echo "$0: skipping tl-update-containers."
+fi
+
+# update Unix disaster recovery.
+echo "$0: running tl-makeself-from-tlnet $tlcrit..."
+tl-makeself-from-tlnet $tlcrit
+do_updater sh
+
+# update the Windows updater executable.
+echo "$0: running tl-update-nsis... (logfile: $TMPDIR/makensis.log)"
+#
+# we have to remove the tlpobj subdir ourselves, since it's created
+# by tl-update-nsis, but read by makensis. (But if it already exists,
+# don't remove it.)
+tlpobj=$master/tlpkg/tlpobj
+if test -d "$tlpobj"; then
+  keep_tlpobj=true
+else
+  keep_tlpobj=false
+fi
+#
+tl-update-nsis >$TMPDIR/updater.nsi
+makensis $TMPDIR/updater.nsi >$TMPDIR/makensis.log
+rm -f $TMPDIR/updater.nsi
+$keep_tlpobj || rm -rf $tlpobj
+do_updater exe
+
+echo $tlcrit:
+ls -lt $tlcrit

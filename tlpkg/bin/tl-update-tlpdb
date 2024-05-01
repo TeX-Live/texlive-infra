@@ -1,0 +1,920 @@
+#!/usr/bin/env perl
+# $Id$
+# Copyright 2007-2023 Norbert Preining
+# This file is licensed under the GNU General Public License version 2
+# or any later version.
+# 
+# Convert a TL tree and *.tlpsrc files into a (possibly updated) texlive.tlpdb.
+
+BEGIN {
+  chomp($mydir = `dirname $0`);
+  unshift(@INC, "$mydir/..");
+}
+
+use strict; use warnings;
+
+use TeXLive::TLConfig;
+use TeXLive::TLPSRC;
+use TeXLive::TLPOBJ;
+use TeXLive::TLPDB;
+use TeXLive::TLTREE;
+use TeXLive::TLUtils;
+use TeXLive::TeXCatalogue;
+use Getopt::Long;
+use Pod::Usage;
+use File::Path;
+
+my $opt_catalogue = "";
+my $opt_catalogue_compare = "";
+my $opt_catalogue_dump = "";
+my $opt_commit_max = 100;
+my $opt_dry_run = 0;
+my $opt_fix_reverse_revisions = 0;  # needs svn commit
+my $opt_fromfiles = 0;
+my $opt_fromgit = 0;
+my $opt_fromgitsvn = 0;
+my $opt_keep_revisions = 0;
+chomp(my $opt_master = `cd $::mydir/../.. && pwd`);
+my $opt_no_binsplit = 0;
+my $opt_no_commit = 0; # do/don't commit the changes
+my $opt_no_revision_check = undef; # set depending on options, if not explicit.
+my $opt_output;
+my $opt_save_anyway = 0;
+my $opt_tlpsrc_from_cmdline = 0;
+my $opt_w32warning;
+my $help = 0;
+
+TeXLive::TLUtils::process_logging_options();
+GetOptions(
+    "catalogue=s"                => \$opt_catalogue,
+    "catalogue-compare=s"        => \$opt_catalogue_compare,
+    "catalogue-dump=s"           => \$opt_catalogue_dump,
+    "commit-max=i"               => \$opt_commit_max,
+    "dry-run|n",                 => \$opt_dry_run,
+    "fix-reverse-revisions!"     => \$opt_fix_reverse_revisions,
+    "from-files"                 => \$opt_fromfiles,
+    "from-git"                   => \$opt_fromgit,
+    "from-gitsvn"                => \$opt_fromgitsvn,
+    "keep-revisions"             => \$opt_keep_revisions,
+    "master=s"                   => \$opt_master,
+    "no-bin-split!"              => \$opt_no_binsplit,
+    "no-commit!"                 => \$opt_no_commit,
+    "no-reverse-revision-check!" => \$opt_no_revision_check,
+    "output=s"                   => \$opt_output,
+    "save-anyway!"               => \$opt_save_anyway,
+    "tlpsrc-from-cmdline"        => \$opt_tlpsrc_from_cmdline,
+    "w32-pattern-warning!"       => \$opt_w32warning,
+    "help|?" => \$help) or pod2usage(1);
+pod2usage(-exitstatus => 0, -verbose => 2) if $help;
+
+my $prg = TeXLive::TLUtils::basename($0);
+
+exit(&main());
+
+
+sub main {
+  if (! -d $opt_master) {
+    die "$prg: Master $opt_master not a directory, goodbye.\n";
+  }
+  if ($opt_fromfiles + $opt_fromgit + $opt_fromgitsvn > 1) {
+    die "$prg: only one option of --from-[lines|git|gitsvn] can be given.\n";
+  }
+
+  if (! $opt_catalogue) {
+    $opt_catalogue = "/home/httpd/html/catalogue";
+  }
+
+  if ($opt_catalogue_compare) {
+    $opt_no_revision_check = 0 unless defined $opt_no_revision_check;
+  }
+  
+  if ($opt_dry_run) {
+    $opt_no_commit = 1;
+    $opt_fix_reverse_revisions = 0;
+    $opt_no_revision_check = 1 unless defined $opt_no_revision_check;
+    $opt_output = "/tmp/tlut" if ! $opt_output;
+  }
+  
+  our $tlc = undef;
+  if (-r $opt_catalogue) {
+    if (-s $opt_catalogue_dump) { # if dump file exists, use it.
+      info("$prg: reading TeX Catalogue dump $opt_catalogue_dump ...\n");
+      require $opt_catalogue_dump;
+    } else {
+      info("$prg: reading TeX Catalogue $opt_catalogue ...\n");
+      $tlc = TeXLive::TeXCatalogue->new("location" => $opt_catalogue);
+      if ($opt_catalogue_dump) {
+        # Way to dump the catalogue and then use it instead of reparsing,
+        # to save time when developing/debugging.
+        # Maybe someday have the energy to merge this with the same dumping
+        # code in TLUtils as a common function.
+        require Data::Dumper;
+        $Data::Dumper::Indent = 1;
+        $Data::Dumper::Sortkeys = 1;  # stable output
+        $Data::Dumper::Purity = 1; # recursive structures must be safe
+        info("$prg: dumping TeX Catalogue to $opt_catalogue_dump ...\n");
+        my $catdump = ">$opt_catalogue_dump";
+        open (my $fh, $catdump) || die "open($catdump) failed: $!\n";
+        print $fh Data::Dumper->Dump([$tlc], [qw(::tlc)]);
+        close ($fh) || die "close($catdump) failed: $!\n";
+      }
+    }
+  } else {
+    tlwarn("$prg: reusing Catalogue data, since source is not readable: "
+           . "$opt_catalogue\n");
+    if ($opt_catalogue_compare) {
+      tlwarn("$prg: unsetting --catalogue-compare since no Catalogue\n");
+      $opt_catalogue_compare = "";
+    }
+  }
+
+  # Create our new working tlpdb with Catalogue data.
+  my ($newtlpdb,$pkgcount) = create_tlpdb($tlc);
+
+  my $oldtlpdb = undef;
+  my $OLDTLPDB = "$opt_master/$DatabaseLocation";
+  if (-s $OLDTLPDB) {
+    $oldtlpdb = TeXLive::TLPDB->new("root" => $opt_master);
+  }
+  if (!defined($oldtlpdb)) {
+    tlwarn("$prg: no revision check since no old tlpdb: $OLDTLPDB\n");
+    finish($newtlpdb, $pkgcount);
+  }
+
+  if ($opt_no_revision_check) {
+    if ($opt_keep_revisions) {
+      copy_revisions_over($oldtlpdb, $newtlpdb);
+      info("$prg: keeping old revisions due to --keep-revisions\n");
+    } else {
+     info("$prg: not checking revisions due to --no-reverse-revision-check\n");
+    }
+    finish($newtlpdb, $pkgcount);
+  }
+
+  # compare_and_fix_tlpdbs returns true if any reversed revisions were
+  # found. If the option --fix-reverse-revisions (etc.) was specified,
+  # it also tried to fix them, by committing changes.
+  my $buggy_tlpdb = 0;
+  if (compare_and_fix_tlpdbs($oldtlpdb, $newtlpdb)) {
+    $buggy_tlpdb = 1;
+    #
+    # There have been reversed revisions that have already been warned about
+    # and that have been (hopefully) fixed by compare_and_fix_tlpdbs.
+    #
+    # If we are running from svn (--from-files is not given),
+    # and we tried to fix revisions (--fix-reverse-revisions is given),
+    # and we are committing the changes (--no-commit is not given),
+    # then we recreate the tlpdb, else we will report as buggy.
+    #
+    if (!$opt_fromfiles && $opt_fix_reverse_revisions && !$opt_no_commit) {
+      info("$prg: regenerating tlpdb after fixing\n");
+      ($newtlpdb,$pkgcount) = create_tlpdb($tlc);
+      #
+      # now recheck, but do NOT try to check in changes again, since it
+      # already failed: forcibly unset $opt_fix_reverse_revisions.
+      info("$prg: unsetting --fix-reverse-revisions for second check\n");
+      $opt_fix_reverse_revisions = 0;
+      #
+      # Also do not do catalogue checks, since the Catalogue comparison
+      # tree, which has old data, has not changed, so they would just
+      # fail again. (We should save and restore these values, or pass
+      # them as arguments, instead of just eradicating them, but in
+      # practice we do not use them again.)
+      info("$prg: unsetting --catalogue-compare for second check\n");
+      $opt_catalogue_compare = "";
+      # 
+      if (compare_and_fix_tlpdbs($oldtlpdb, $newtlpdb)) {
+        tlwarn("$prg: *** OOPS, should not happen!\n"
+                . "  After one iteration of compare_tlpdbs\n"
+                . "  the new tlpdb still has changes;\n"
+                . "  check output above and fix!\n");
+        # $buggy_tlpdb is already set to 1
+      } else {
+        # fixing succeeded
+        $buggy_tlpdb = 0;
+      }
+    }
+  }
+  
+  # $newtlpdb points to the right one
+  if ($buggy_tlpdb) {
+    tlwarn("$prg: the newly created tlpdb seems to be buggy.\n");
+    if ($opt_output) {
+      tlwarn("$prg: saving it anyway due to --output (to $opt_output)\n");
+      $buggy_tlpdb = 0;
+    } elsif ($opt_save_anyway) {
+      tlwarn("$prg: saving it anyway due to --save-anyway\n");
+      $buggy_tlpdb = 0;
+    } else {
+      tlwarn("$prg: not saving it, use --save-anyway or --output "
+             . "if you want it\n");
+    }
+  }
+  if (!$buggy_tlpdb) {
+    finish($newtlpdb, $pkgcount);
+  } else {
+    # return error to the shell script, it is evaluated in cron.tl!
+    return 1;
+  }
+}
+
+
+# Set the revision of each package in NEWTLPDB
+# to its revision in OLDTLPDB (if the pkg exists in OLDTLPDB).
+# 
+sub copy_revisions_over {
+  my ($oldtlpdb,$newtlpdb) = @_;
+  for my $pkg ($newtlpdb->list_packages) {
+    my $oldtlp = $oldtlpdb->get_package($pkg);
+    if (defined($oldtlp)) {
+      my $oldrev = $oldtlp->revision;
+      my $newrev = $newtlpdb->get_package($pkg)->revision;
+      debug("pkg $pkg: changing revision from $newrev to $oldrev\n");
+      $newtlpdb->get_package($pkg)->revision($oldtlp->revision);
+    }
+  }
+}
+
+
+# Compare OLDTLPDB and NEWTLPDB, returning whether any packages needed
+# special fixing. Within the list of packages that differ, the
+# problematic ones are those where either (a) files were added or
+# removed, or (b) NEWTLPDB has Catalogue data changes compared to the
+# --catalogue-compare tree, but the revision did not increase.
+# 
+# If a package has been removed or added (or not changed at all) that is
+# fine for here, as it will be dealt with in tl-update-containers.
+#
+sub compare_and_fix_tlpdbs {
+  my ($oldtlpdb,$newtlpdb) = @_;
+  my %packages_needing_fixup;
+  
+  my %cmp = TeXLive::TLUtils::compare_tlpdbs($oldtlpdb, $newtlpdb);
+  if (exists $cmp{'different_packages'}) {
+    for my $p (sort keys %{$cmp{'different_packages'}}) {
+      if (defined($cmp{'different_packages'}->{$p}->{'added'}) ||
+          defined($cmp{'different_packages'}->{$p}->{'removed'}) ||
+          defined($cmp{'different_packages'}->{$p}->{'fmttrigger'})) {
+        if (!defined($cmp{'different_packages'}->{$p}->{'revision'})) {
+          # no revision change reported, but files or fmttriggers have
+          # been added or removed, try fixing it
+          $packages_needing_fixup{$p} = 1;
+        } else {
+          # revision change has been reported, if the revision is increasing
+          # that is fine, otherwise try fixing it
+          my ($rA, $rB) = split(':', 
+                            $cmp{'different_packages'}->{$p}->{'revision'});
+          if ($rA >= $rB) {
+            $packages_needing_fixup{$p} = 1;
+          }
+        }
+      } else {
+        # there have been no changed filelists, but we still check that
+        # revision is not going backward for some other strange reason.
+        if (defined($cmp{'different_packages'}->{$p}->{'revision'})) {
+          # revision change has been reported, if the revision is increasing
+          # that is fine, otherwise try fixing it
+          my ($rA, $rB) = split(':', 
+                            $cmp{'different_packages'}->{$p}->{'revision'});
+          # since we only register 'revision' key when there is a
+          # change, we have either rA < rB or rA > rB
+          if ($rA > $rB) {
+            tlwarn("$prg: BIG WARNING for $p: file lists didn't change "
+                   . "but revision is going backward ($rA > $rB)!\n");
+            $packages_needing_fixup{$p} = 1;
+          } # if strange revision change
+        }   # no revision changes
+      }     # not (added or removed)
+    }       # loop through differing packages
+  } # no different_packages
+
+  # if requested, also may need to fix up packages with catalogue changs.
+  if ($opt_catalogue_compare) {
+    my %cat_fixup = tlpdb_catalogue_compare($newtlpdb, $opt_catalogue_compare);
+    info("$prg: ", 0 + keys %cat_fixup, " packages with Catalogue changes: ",
+         join(" ", sort keys %cat_fixup), "\n") if (keys %cat_fixup);
+    # hash slice to merge %cat_fixup into %packages_needing_fixup;
+    # all the values are 1, so that doesn't matter.
+    @packages_needing_fixup{ keys %cat_fixup } = values %cat_fixup;
+  }
+
+  my $do_commit = 0;
+  my @svn_changed_files = ();
+
+  for my $p (sort keys %packages_needing_fixup) {
+    tlwarn("$prg: package $p has different files but "
+           . "same/decreasing revision number",
+           $opt_fix_reverse_revisions ? "\n" 
+                        : " [skipping fix due to no fix_reverse_revisions]\n");
+    if ($opt_fix_reverse_revisions) {
+      my $fixfile = "$opt_master/tlpkg/tlpsrc/$p.tlpsrc";
+      # make sure that we actually fix a file of the right package
+      if (! -r $fixfile) {
+        # we might be trying to fix a .ARCH package with decreasing
+        # revision number, but since we do NOT include the .tlpsrc file
+        # in the computation of the .ARCH packages, we have to find a file
+        # in the packages
+        my $tlp = $newtlpdb->get_package($p);
+        if (!defined($tlp)) {
+          tlwarn("$prg: Very strange, $p is said to have changed files,\n");
+          tlwarn("but it is not found in new tlpdb;\n");
+          tlwarn("skipping $p.\n");
+          next;
+        }
+        my @allf = $tlp->all_files;
+        if ($#allf < 0) {
+          tlwarn("$prg: no files found in $p, and no tlpsrc file present.\n");
+          tlwarn("don't know how to fix decreasing version in this case;\n");
+          tlwarn("skipping $p.\n");
+          next;
+        } 
+        # still here, so use the first file in the list.
+        $fixfile = "$opt_master/";
+        if ($tlp->relocated) {
+          $fixfile .= "$RelocTree/";
+        }
+        $fixfile .= $allf[0];
+      }
+      tlwarn("$prg: trying to fix it by running:\n");
+      my $time = time();
+      my $cmd = "svn propset texlive:force_incr_after_delete $time $fixfile";
+      $do_commit = 1;
+      tlwarn("  $cmd\n");
+      TeXLive::TLUtils::xsystem($cmd);
+      push @svn_changed_files, $fixfile;
+    }
+  }
+
+  if (@svn_changed_files > $opt_commit_max) {
+    tlwarn(<<TOO_MUCH_CHANGED);
+$prg: more than $opt_commit_max files have been changed ($#svn_changed_files+1).
+This probably means a bug. Forcing --no-commit.
+
+If it's actually correct, rerun and set --commit-max=999 (or whatever
+value); probably easiest to do by editing cron.tl and rerunning.
+TOO_MUCH_CHANGED
+    $opt_no_commit = 1;
+  }
+  if ($opt_no_commit) {
+    if ($do_commit) {
+      tlwarn("$prg: tlpsrc files have been changed but not committed.\n");
+      tlwarn("$prg: svn status output follows:\n");
+      my $r = `svn status @svn_changed_files 2>&1`;
+      tlwarn("$r\n");
+    }
+    $do_commit = 0;
+  }
+  if ($do_commit) {
+    tlwarn("$prg: committing changes to tlpsrc files:\n");
+    TeXLive::TLUtils::xsystem("svn commit "
+      . "-m'($prg) force increased revision after Catalogue change"
+      . " or file removal' "
+      . "@svn_changed_files");
+  }
+  
+  return (keys %packages_needing_fixup >= 1);
+}
+
+
+# Return a TLPDB object based on $opt_master, using passed $TLC for the
+# Catalogue source and various $opt_... globals for all else.
+#
+sub create_tlpdb {
+  my ($tlc) = @_;
+  
+  if (defined($opt_w32warning)) {
+    $::tlpsrc_pattern_warn_win = 1;
+  }
+  my $tlpsrc_dir = "$opt_master/tlpkg/tlpsrc";
+
+  if (@ARGV) {
+    # if we have cmd line arguments act as if --tlpsrc-from-cmdline was given.
+    if (!$opt_tlpsrc_from_cmdline) {
+      debug("$prg: generating tlpdb in /tmp/tlut from tlpsrc args\n");
+      ddebug("$prg: @ARGV\n");
+      $opt_tlpsrc_from_cmdline = 1;
+    }
+  }
+  if (!$opt_tlpsrc_from_cmdline) {
+    # if not otherwise given, use all tlpsrc files.
+    chdir($tlpsrc_dir) || die "$prg: chdir($tlpsrc_dir) failed: $!";
+    @ARGV = glob("*.tlpsrc");
+  }
+  
+  info("$prg: reading Master $opt_master ...\n");
+  my $tltree = TeXLive::TLTREE->new("svnroot" => $opt_master);
+  if ($opt_fromfiles) {
+    $tltree->init_from_files;
+  } elsif ($opt_fromgit) {
+    $tltree->init_from_git;
+  } elsif ($opt_fromgitsvn) {
+    $tltree->init_from_gitsvn;
+  } else {
+    $tltree->init_from_svn;
+  }
+
+  info("$prg: updating from tlpsrc ...\n");
+  my $tldb = TeXLive::TLPDB->new;
+  my $src_count = 0;
+  my $found_texlive_installation = 0;
+  foreach my $f (@ARGV) {
+    next if ($f =~ m/^00texlive\.autopatterns/);
+    $src_count++;
+
+    my $tlsrc = new TeXLive::TLPSRC;
+    $tlsrc->from_file($f);
+    my $tlp = $tlsrc->make_tlpobj($tltree, $opt_master);
+
+    (my $base_f = $f) =~ s/\.tlpsrc$//;
+    $base_f = TeXLive::TLUtils::basename($base_f);
+    warn "$f: package name " . $tlp->name . " does not match filename\n"
+      if $tlp->name ne $base_f;
+      
+    if ($tlc) {
+      # merge TeX Catalogue information
+      $tlp->update_from_catalogue($tlc);
+    }
+   
+    # split bin packages off unless requested otherwise (no reason to so
+    # request these days).
+    unless ($opt_no_binsplit) {
+      # - split: texlive.infra but NO OTHER PACKAGE containing \.
+      # - NO split: 00texlive
+      # packages which have already a .SOMETHING extension or the 
+      # 00texlive.something package are NOT split, never!
+      if (($tlp->name !~ m/\./ || $tlp->name =~ m/texlive\.infra/)
+          && $tlp->name !~ m/^00texlive/) {
+        my @binobjs = $tlp->split_bin_package;
+        foreach my $binobj (@binobjs) {
+          # we recompute the revision numbers of the binary packages
+          # since that might be much smaller, and we don't want to 
+          # update every package only because one binary for one arch
+          # was changed
+          #
+          # we do NOT use the tlpsrc file for computing the file revision
+          # as this is actually wrong ..
+          $binobj->recompute_revision($tltree);
+          if ($binobj->revision == 0) {
+            ddebug("Package with revision number 0 not added: " .
+                   $binobj->name . "\n");
+          } else {
+            $tldb->add_tlpobj($binobj);
+          }
+        }
+        # we have to recompute the revision of the package itself 
+        # since the binfiles have been removed and that might lower the
+        # revision number
+        $tlp->recompute_revision($tltree,
+                            $tltree->file_svn_lastrevision("tlpkg/tlpsrc/$f"));
+      }
+    }
+    if ($tlp->name eq "00texlive.installation") {
+      $found_texlive_installation = 1;
+    }
+    if ($tlp->name eq "00texlive.config") {
+      # defaults for these options are from %TeXLive::TLConfig::TLPDBConfigs
+      # but can be overriden by putting them into this source package
+      my %cfgs;
+      # first read the default settings
+      for my $k (keys %TeXLive::TLConfig::TLPDBConfigs) {
+        $cfgs{$k} = $TeXLive::TLConfig::TLPDBConfigs{$k};
+      }
+      # next parse the ones set in the tlpsrc
+      for my $dep ($tlp->depends) {
+        my ($k,$v) = split('/',$dep,2);
+        if (defined($k)) {
+          if (defined($cfgs{$k})) {
+            # override setting
+            $cfgs{$k} = $v;
+          } else {
+            die("Unknown key in 00texlive.config.tlpsrc: $dep");
+          }
+        }
+      }
+      my @bar;
+      for my $k (sort keys %cfgs) {
+        push @bar, "$k/" . $cfgs{$k};
+      }
+      # add the latest revision
+      push @bar, "revision/".$tltree->revision;
+      $tlp->depends(@bar);
+    }
+    $tldb->add_tlpobj($tlp);
+  }
+  $tldb->root($opt_master);
+
+  # we set several options in 00texlive.installation only in two cases:
+  # 1) we are updating from *all* tlpsrc file, so no cmd line options
+  # 2) we are updating from cmd line tlpsrc file, but 00texlive.installation
+  #    is contained in the list
+  #
+  if (!$opt_tlpsrc_from_cmdline || $found_texlive_installation) {
+    # do set the option_archs from the dirs in Master/bin
+    my @archs = $tltree->architectures;
+    $tldb->setting("available_architectures", sort @archs);
+
+    # reset options to what we have by default
+    $tldb->add_default_options();
+  }
+
+  return($tldb, $src_count);
+}
+
+
+# Compare Catalogue data (and nothing else) in MASTER_TLPDB to the tlpdb
+# found in CMP_TLPDB_STR. Return hash (only keys matter, values are 1)
+# of packages that so differ.
+# 
+# We do not worry about packages found in one tlpdb and not the other;
+# those will get dealt with elsewhere. Our goal here is just to compare
+# the Catalogue data in packages common to the two tlpdbs.
+# 
+# In practice, CMP_TLPDB is tlnet (or tlpretest). This whole check is
+# necessary because we intentionally do not (normally) update packages
+# in tlnet when only Catalogue data has changed; that can easily lead to
+# extra downloads for a single real update of the package, since the
+# metadata often needs tweaking after an upload.
+# 
+# On the other hand, we do want to get current Catalogue data into TL
+# sometimes, or it would grow stale forever; so that's what this
+# comparison is for. We enable it once a month or so from cron.tl.
+# 
+# We do update Catalogue data in the texlive.tlpdb checked into the
+# repository (under Master/) nightly, but that is not what users
+# (typically) use.
+# 
+# This was not an issue before the switch to versioned containers in
+# November 2019 and the TL'20 release; before then, we recreated all
+# packages at every yearly release, so got all Catalogue updates at that
+# time. But nowadays we don't ever blindly recreate all packages.
+# 
+sub tlpdb_catalogue_compare {
+  my ($master_tlpdb,$cmp_tlpdb_str) = @_;
+  my %ret;
+  
+  my $cmp_tlpdb = TeXLive::TLPDB->new("root" => $cmp_tlpdb_str);
+  die "$prg: could not get comparison tlpdb from: $cmp_tlpdb_str\n"
+    if ! defined $cmp_tlpdb;  
+
+  for my $p ($master_tlpdb->list_packages()) {
+    my $tlpA = $master_tlpdb->get_package($p);
+    my $tlpB = $cmp_tlpdb->get_package($p);
+    
+    next unless defined $tlpA && defined $tlpB;
+    
+    # The Master tree isn't relocatable, so for the comparison (tlnet) tree,
+    # must swap RELOC marker for actual tree so we can compare strings.
+    $tlpB->replace_reloc_prefix();
+    
+    if (! &tlpobj_catalogue_equal($tlpA, $tlpB)) {
+      debug("$prg: Catalogue changes in package: $p\n");
+      $ret{$p} = 1;
+    }
+  }
+  debug("$prg: ", 0 + keys %ret, " packages with Catalogue changes\n");
+
+  return %ret;
+}
+
+# Return true if TLPOBJ arguments TLPA and TLPB have the same
+# Catalogue-related data. Includes short and long descriptions,
+# catalogue-* keys (cataloguedata), and tags of docfiles (docfiledata).
+# 
+sub tlpobj_catalogue_equal {
+  my ($tlpA,$tlpB) = @_;
+  my $ret = 0;
+  
+  my $pkg = $tlpA->name; # just for debugging output
+  ddebug("$pkg: comparing catalogue info:\n");
+  
+  # The shortdesc and longdesc usually come from the Catalogue,
+  # but sometimes are in the tlpsrc.
+  if (! &suredef($tlpA->shortdesc) eq &suredef($tlpB->shortdesc)) {
+    # Maybe someday combine this silly code to avoid redundancy,
+    # and show strings (hashes) for all.
+    debug("$pkg:  shortdesc now: ", &suredef($tlpA->shortdesc), "\n",
+          " " x length($pkg),
+            "    vs. compare db: ", &suredef($tlpB->shortdesc), "\n");
+    
+  } elsif (! &suredef($tlpA->longdesc) eq &suredef($tlpB->longdesc)) {
+    debug("$pkg:  longdesc now: ", &suredef($tlpA->longdesc), "\n",
+          " " x length($pkg),
+            "   vs. compare db: ", &suredef($tlpB->longdesc), "\n");
+
+  } elsif (! &suredef($tlpA->catalogue) eq &suredef($tlpB->catalogue)) {
+    debug("$pkg: catalogue value changed (", &suredef($tlpA->catalogue),
+          " -> ", &suredef($tlpB->catalogue), ")\n");
+
+  } elsif (! &equal_hashes($tlpA->cataloguedata, $tlpB->cataloguedata)) {
+    debug("$pkg: ", debug_hash_str("cataloguedata now", $tlpA->cataloguedata),
+      " " x (length($pkg) + 7),
+                    debug_hash_str("vs. compare db", $tlpB->cataloguedata));
+
+  } elsif (! &equal_hashes($tlpA->docfiledata, $tlpB->docfiledata)) {
+    debug("$pkg: docfiledata changed\n");
+  
+  } else {
+    $ret = 1; # seems there were no Catalogue changes.
+  }
+  
+  return $ret;
+}
+
+
+# Return ARG if it is defined, or empty string if ARG is undef.
+# It is irritating to have to do this, but it seems the best available
+# option to avoid uninitialized warnings. We could use the pragma, but
+# cleaner to program the checks. 
+# 
+sub suredef {
+  return defined $_[0] ? $_[0] : "";
+}
+
+
+# Return true if both H1 and H2 are references to hashes
+# with identical contents -- same keys, same values, recursively.
+# (Or are both undef.)
+# 
+# Only checks strings and hash references, not lists or other types.
+# 
+sub equal_hashes {
+  my ($h1,$h2) = @_;
+
+  # if both are undef, that's ok.
+  return 1 if !defined $h1 && !defined $h2;
+  
+  # both must be hash references.
+  if (! (&is_hash_ref($h1) && &is_hash_ref($h2))) {
+    debug(" not both hash ref: $h1 vs. $h2\n");
+    return 0;
+  }
+
+  # if they have no keys, they are the same (we won't go through the loop).
+  my $ret = (keys %$h1 == 0);
+  #
+  for my $k (keys %$h1) {
+    #debug(" checking key $k\n");
+    
+    my $aval = $h1->{$k};
+    my $bval = $h2->{$k};
+    
+    if (!defined $aval && !defined $bval) {
+      # ok if both are undefined.
+      $ret = 1;
+      next;
+    } else {
+      # else both have to be defined.
+      #debug("  for $k, aval=$aval, bval=$bval\n");
+      return 0 unless (defined $aval && defined $bval);
+    }
+
+    #debug(" comparing key $k: $aval vs. $bval\n");
+    if (&is_hash_ref($aval)) {
+      # if both are hashes compare, else must be not equal.
+      $ret = &is_hash_ref($bval) ? &equal_hashes($aval, $bval) : 0;
+    } else {
+      # we don't have arrays, non-strings, etc., so this is enough.
+      $ret = &suredef($aval) eq &suredef($bval);
+    }
+
+    last if $ret == 0; # as soon as something is not equal, we're done
+  }
+  
+  # check that h2 doesn't have any keys besides those in h1.
+  for my $k (keys %$h2) {
+    next if exists $h1->{$k};
+    ddebug("  key $k exists in h2 but not h1\n");
+    $ret = 0;
+    last;
+  }
+
+  #debug("equal_hashes returns: $ret\n");
+  return $ret;
+}
+
+# Return true if arg H is a reference to a hash.
+# 
+sub is_hash_ref {
+  my ($h) = @_;
+  return defined $h && ref $h && $h =~ /HASH/;
+}
+
+
+sub finish {
+  my ($tlpdb,$pkgcount) = @_;
+  if ($opt_output) {
+    if (open(OUT, ">$opt_output")) {
+      $tlpdb->writeout(\*OUT);
+      info("$prg: output $pkgcount packages to $opt_output.\n");
+    } else {
+      tldie("$prg: open(>$opt_output) failed: $!");
+    }
+  } else {
+    $tlpdb->save;
+    info("$prg: saved $pkgcount packages to " . $tlpdb->root . ".\n");
+  }
+  exit(0);
+}
+__END__
+
+=head1 NAME
+
+tl-update-tlpdb - generate/update a TeX Live database from tlpsrc files
+
+=head1 SYNOPSIS
+
+tl-update-tlpdb [OPTION]... [TLPSRC]...
+
+=head1 OPTIONS
+
+=over 4
+
+=item B<--catalogue> I<Catalogue_dir>
+
+The I<Catalogue_file> must point to a valid TeX Catalogue checkout; the
+default is C</home/httpd/html/catalogue>.  If the directory is readable,
+the generated tlpobj files will contain information gathered from the
+TeX Catalogue.  To disable this, specify a nonexistent filename, e.g.,
+C<--catalogue=/nonesuch>.
+
+=item B<--catalogue-compare> I<tlpdb>
+
+By default, packages for which the only change is in the Catalogue data
+are not marked as updated and written with new revisions. This option
+checks the Catalogue data against that in I<tlpdb> (typically tlnet or
+tlpretest), and forces the package to be updated if there are
+differences. We enable this from time to time to re-sync the package
+information even if the package contents have not changed.
+
+As a consequence, after this has been invoked the first time, the same
+packages will continue to be found as different until I<tlpdb> is
+updated. Beware of confusion when testing/developing.
+
+This implies C<--reverse-revision-check>, since the same mechanism is
+used to force the new version numbers.
+
+=item B<--catalogue-dump> I<file>
+
+This is for debugging and development. If specified, and I<file> is
+nonempty, it is <C>require</C>d, instead of reading the XML files from
+I<Catalogue_dir> from C<--catalogue>. If I<file> is empty or does not
+exist, the XML tree is read, and then dumped (with L<Data::Dumper>) to
+I<file>.
+
+The idea is to specify this, the dump gets written, and then subsequent
+runs will use it, which is much faster than reading the XML. Don't
+forget to delete the file when done, though, since there is no check for
+staleness.
+
+Also, don't use this if you are actually working on the Catalogue
+reading routines (L<TeXLive::TeXCatalogue>), since they won't get
+invoked at all if the dump is read.
+
+=item B<--commit-max> I<integer>
+
+If more than I<integer> files have been changed, do not do any commits
+(like C<--no-commit>). The default is 100; that is, if more than 100
+files have been changed, no commit will be done and a warning issued. If
+by some strange chance more than 100 files actually need to be
+committed, you can override with this option (probably best by editing
+C<cron.tl>, if it was part of the nightly build).
+
+=item B<--fix-reverse-revisions>
+
+If a package with revision number going backward is found, this option
+forces a dummy change (C<svn propset>) to the package's tlpsrc (or
+other) file to artificially increase its version number.
+
+=item B<--from-files>
+
+=item B<--from-git>
+
+=item B<--from-gitsvn>
+
+Use C<find>, C<git>, and git-over-svn, respectively, instead of C<svn
+-status> to create the list of files. This amounts to calling the
+respective function in L<TeXLive::TLTree> to initialize the tree of
+files. By default, Subversion is used.
+
+With C<--from-files>, all the revision numbers will be 1.
+
+=item B<--keep-revisions>
+
+If B<--no-reverse-revision-check> is also specified, this option copies
+revision numbers from the existing tlpdb to the new one. Normally this
+dos not happen.
+
+=item B<--master> I<Master_dir>
+
+The I<Master/dir> directory must point to a valid repository of TeX
+Live's Master directory (Subversion by default; depends on the
+C<--from...> options given). Defaults to C<../..> of C<$0>.
+
+=item B<-n>, B<--dry-run>
+
+Don't make permanent changes: same as C<--no-commit> and
+C<--no-fix-reverse-revisions>, plus C<--no-reverse-revision-check> (if
+not otherwise specified) plus output to C</tmp/tlut> (if no C<--output>
+file is given) rather than updating the current tlpdb.
+
+=item B<--no-bin-split>
+
+Do not split files with binaries into several packages (one for the arch
+independent and one for each of the architectures with only the respective
+binaries).  There is no reason to use this option.
+
+=item B<--no-commit>
+
+If changes have been made to the tlpsrc files (because reversed
+revisions have been found and C<--fix-reverse-revisions> is enabled)
+these changes will by default be committed using C<svn commit> on the
+tlpsrc directory.  With this option the commit step is skipped.
+
+=item B<--no-reverse-revision-check>
+
+By default, C<tl-update-tlpdb> checks that in the generated tlpdb the
+revision numbers of packages are not going backward compared to the
+current tlpdb (see below). This option disables this check.
+
+=item B<--output> I<filename>
+
+By default, C<tl-update-tlpdb> saves/updates the tlpdb in the default
+place, except that with C<-n>, the default is C</tmp/tlut>. This option
+specifies the place where the output should go to.
+
+=item B<--save-anyway>
+
+If the newly created tlpdb is considered buggy due to (unfixed) reversed
+revisions, it will normally not be saved. This switch allows saving it
+anyway. It can be useful in combination with the C<--from-files> option
+for testing, or if the revision numbers will be adjusted afterwards by
+an external program.
+
+=item B<--tlpsrc-from-cmdline>
+
+By default, C<tl-update-tlpdb> recreates the tlpdb from all the tlpsrc
+files present in the current tree. If this option is given, the tlpsrc
+file(s), or package names, are given on the command line. If you're
+trying to debug the conversion of one particular package, this is the
+option to use (along with C<-n> and C<--catalogue=/nonesuch>, most
+likely). Indeed, if any non-option arguments are given, the program
+assumes you meant to specify this option.
+
+=item B<--w32-pattern-warning>
+
+Normally, this program issues a warning for patterns without a matching
+file, with the exception that it does I<not> warn for binpatterns
+related to Windows. Giving this option makes it issue all warnings,
+i.e., also those where a W32-related binpattern does not hit.
+
+=back
+
+The standard options C<-q>, C<-v>, and C<-logfile>=I<file> are also
+accepted; see the C<process_logging_options> function in
+L<TeXLive::TLUtils> for details.
+
+=head1 DESCRIPTION
+
+C<tl-update-tlpdb> converts a TeX Live directory hierarchy, along with
+TeX Live source package files (tlpsrc) files, into a TeX Live package
+database (tlpdb).
+
+By default, it looks at Subversion output to determine the files in the
+current tree to place into the tlpdb. With the C<--from-files> option,
+it reads the filesystem with C<find>, and analogously for C<--from-git>
+and C<--from-gitsvn>.
+
+In addition, if at the same location there is already a tlpdb, it
+compares the revision number of packages and checks if a package is
+going back in time (i.e., has a smaller revision number in the new
+tlpdb). This can happen, for example, when a file is removed and no
+other changes to the package made. In this case it does an C<svn
+propset> on the package's tlpsrc (or other) file to ensure that
+revisions are always increasing. The check is omitted if
+C<--no-reverse-revision-check> is specified, and the property changes
+are not committed unless C<--fix-reverse-revisions> is given.
+
+If a TeX Catalogue hierarchy is available, additional information from
+the Catalogue is merged into the database (see L<TeXLive::TeXCatalogue>
+and L<TeXLive::TLPOBJ>).
+
+=head1 SEE ALSO
+
+The modules in C<Master/tlpkg/TeXLive/> (L<TeXLive::TLConfig> and
+the rest), and the other scripts in C<Master/tlpg/bin/> (especially
+C<tl-update-containers>), the documentation in C<Master/tlpkg/doc/>, etc.
+
+=head1 AUTHORS AND COPYRIGHT
+
+This script and its documentation were written for the TeX Live
+distribution (L<http://tug.org/texlive>) and both are licensed under the
+GNU General Public License Version 2 or later.
+
+=cut
+
+### Local Variables:
+### perl-indent-level: 2
+### tab-width: 2
+### indent-tabs-mode: nil
+### End:
+# vim:set tabstop=2 expandtab: #

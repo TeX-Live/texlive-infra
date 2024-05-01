@@ -1,0 +1,74 @@
+#!/bin/sh 
+# $Id$
+# Originally written by Karl Berry. Public domain.
+# 
+# Front-front-end script for c2l to update
+# (with first arg "3") LaTeX3,
+# or (with first arg "e") LaTeX2e,
+# or (with first arg "dev") latex-dev,
+# each of which is comprised of several
+# packages that should be updated together. Look at the end of the output
+# for the summarized results for each package, e.g., to see if any files
+# ended up getting misplaced.
+# 
+# Additional argument "p" runs place also (same as c2l --place).
+
+dirsfile=/tmp/`id -u`.tlplace.dirs
+cp /dev/null $dirsfile.tmp
+cp /dev/null /tmp/first
+
+if test "x$1" = xe || test "x$1" = x2e; then
+  shift; label=l2e
+  pkgs="amsmath cyrillic graphics tools latex firstaid latex-lab l3build"
+elif test "x$1" = xdev; then
+  shift; label=ldev
+  pkgs="latex-amsmath-dev latex-firstaid-dev latex-graphics-dev latex-lab-dev"
+  pkgs="$pkgs latex-tools-dev latex-base-dev l3build"
+elif test "x$1" = x3; then
+  shift; label=l3
+  pkgs="l3kernel l3packages l3experimental l3build l3backend"
+elif test "x$1" = xdeng; then
+  shift; label=deng
+  pkgs="elegantbook elegantnote elegantpaper"
+elif test "x$1" = xhep; then
+  shift; label=hep
+  pkgs="hep-font hep-math-font hep-acronym hep-bibliography hep-float"
+  pkgs="$pkgs hep-graphic hep-math hep-paper hep-reference hep-text hep-title"
+elif test "x$1" = xjxu; then
+  shift; label=jxu
+  pkgs="colorist crefthe einfart minimalist simplivre"
+  #pkgs="$pkgs beaulivre  create-theorem mindflow projlib q-and-a homework lebhart"
+elif test "x$1" = xluamath-all; then
+  shift; label=luamath-all # not really all
+  pkgs="lualinalg luanumint luaplot"
+  #luagcd luamodulartables luatruthtable luacomplex luamaths luaset
+elif test "x$1" = xminim-all; then
+  shift; label=minim
+  pkgs="minim-hatching minim-math minim-mp minim-pdf minim-xmp minim"
+elif test "x$1" = xqyi; then
+  shift; label=qyi
+  pkgs="easybook spbmark"
+elif test "x$1" = xzref-all; then
+  shift; label=zref
+  pkgs="zref-check zref-clever zref-vario"
+else
+  echo "$0: unknown latex or group type: $1" >&2
+  echo "$0: must be one of: e dev 3 deng jxu qyi minim-all" >&2
+  exit 1
+fi
+
+echo "`basename $0`: $label pkgs: $pkgs"
+
+for p in $pkgs; do
+  echo "${label} pkg $p" >&2 # progress report of a sort
+  printf "\f ${label} pkg $p\n"
+  c2l "$@" $p | tee /tmp/c2l.out
+  sed -n "1,/`printf '\f'`/p" /tmp/c2l.out >>/tmp/first
+  echo >>/tmp/first
+  cat $dirsfile >>$dirsfile.tmp
+done
+
+sort -u $dirsfile.tmp >$dirsfile
+wc $dirsfile
+echo
+cat /tmp/first

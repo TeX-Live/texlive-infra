@@ -1,0 +1,64 @@
+#!/bin/sh
+# $Id$
+# Public domain. Originally written 2020, Norbert Preining.
+# gpg --verify ARG.asc. If verification fails, show all output.
+# Adapted from TeXLive/TLCrypto.pm.
+
+if test $# -ne 1; then
+  echo "$0: Exactly one argument must be given, the file to verify," >&2
+  echo "$0: with or without the .asc." >&2
+  exit 1
+fi
+
+if echo "$1" | grep '\.asc$' >/dev/null; then
+  data_file=`echo "$1" | sed 's/\.asc$//'`
+  asc_file=$1
+else
+  data_file=$1
+  asc_file=$1.asc
+fi
+
+if test ! -s "$asc_file"; then
+  echo "$0: $asc_file nonexistent or empty, goodbye." >&2
+  exit 1
+fi
+
+mydir=`cd \`dirname $0\` && pwd`
+PATH=$mydir:$PATH # for our tlgpg command
+
+status_out=`mktemp`
+verify_out=`mktemp`
+verify_cmd="tlgpg --status-file=$status_out --verify --verbose"
+
+# gpg exit status is zero with expired keys,
+# but we want to fail in that case.
+# As of gpg 2.2, apparently both asc and data files must be given.
+if $verify_cmd "$asc_file" "$data_file" >$verify_out 2>&1; then
+  if grep EXPKEYSIG $status_out >/dev/null; then
+    err="expired key"
+  elif grep REVKEYSIG $status_out >/dev/null; then
+    err="revoked key"
+  else
+    err= # ok we hope
+  fi
+else
+  err="other error ($?)"
+fi
+
+if test -n "$err"; then
+  echo "$0: gpg verification failed for: $asc_file" >&2
+  echo "$0: moving $asc_file to $asc_file.badv." >&2
+  mv "$asc_file" "$asc_file".badv || exit 1
+  echo "$0: gpg verify command was:" >&2
+  echo "$0:   $verify_cmd" "$asc_file" "$data_file" >&2
+  echo "$0: GPG STATUS FILE OUTPUT:" >&2
+  cat $status_out >&2
+  echo "$0: GPG STDOUT/STDERR:" >&2
+  cat $verify_out >&2
+  echo "$0: goodbye and good luck." >&2
+  rm -f $status_out $verify_out
+  exit 1
+fi
+rm -f $status_out $verify_out
+
+exit 0

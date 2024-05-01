@@ -1,0 +1,33 @@
+#!/bin/sh -ex
+# $Id$
+# Public domain. Originally written 2018, Karl Berry.
+# 
+# Test tl-makeself-from-tlnt, e.g., with spaces in filenames.
+# First arg is TL installation in which to run the updater [/tmp/ki];
+# second arg is test dir in which to create the updater [/tmp/krit].
+# 
+# Assumes $lc is set to the tlcritical dir; copies {archive,tlpkg} from
+# there to make the test directory in which we run makeself.
+# 
+# Although having the source in a spaceful directory is not
+# needed, might as well test that too unless inconvenient.
+
+# to set up:
+testdir=${2-"/tmp/krit"} # spc"
+rm -rf "$testdir"
+mkdir "$testdir"
+rsync -a "$lc"/{archive,tlpkg} "$testdir"
+
+cd "$testdir"    # because tl-makeself-* outputs to the current directory
+rm -f update*sh  # remove previous attempts
+tl-makeself-from-tlnet "$testdir"
+ls -l "$testdir"
+
+# Using ../dev/profiles/TLspace.pro results in "/tmp/ki sp",
+# but most of the dev/profiles just install in /tmp/ki.
+tl=${1-"/tmp/ki"} # sp"
+cd "$tl"
+
+# Now try running the updater in the installed tree.
+PATH=$tl/bin/x86_64-linux:/usr/bin
+"$testdir"/update-tlmgr-r*.sh --noprogress #-- --debug

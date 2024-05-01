@@ -1,0 +1,265 @@
+#!/bin/sh -e
+# $Id$
+# Copyright 2008-2023 Norbert Preining
+# This file is licensed under the GNU General Public License version 2
+# or any later version.
+# 
+# Creates an executable script update-tlmgr-r*.sh (in the current
+# directory) for updating the texlive.infra package and its per-platform
+# subpackages on Unix, similar to the .exe we create for Windows.  (Both
+# are created in the nightly cron from tl-update-tlcritical.)  We use
+# the makeself utility to create the executable.
+# 
+# The resulting update-tlmgr-*.sh is run (by the user) in the TL
+# installation directory to be updated; it uses kpsewhich from PATH to
+# determine what to do update.
+# 
+# Debugging/development/testing:
+# - create test hierarchy; either run install-tl as you like, or:
+#  tl-try-install Master/tlpkg/dev/profiles/TLinfra+exe.pro # or whatever
+#   This creates /tmp/ki with various platforms.
+# - then see tl-try-makeself:
+#   running that will copy tlcritical to /tmp/krit,
+#   run this script (tl-makeself-from-tlnet) there,
+#   then update /tmp/ki from /tmp/krit, that is,
+#   doing an update as a user would do in their installed hierarchy.
+#
+# update-tlmgr-r*.sh --list     # list files included in archive
+# update-tlmgr-r*.sh -- --debug # run embedded script with -vx and more
+
+mydir=`cd \`dirname "$0"\` && pwd`  # Master/tlpkg/bin
+PATH=$mydir:$PATH # for tlpkginfo
+
+TLNET=$1
+if test ! -d "$TLNET"; then
+  echo "$0: No tlnet directory given as argument, aborting." >&2
+  exit 1
+fi
+
+ARCHIVE=$TLNET/archive
+if test ! -d "$ARCHIVE"; then
+  echo "$0: Subdirectory archive/ in $TLNET not found, aborting." >&2
+  exit 1
+fi
+
+# extract some version values from the tlnet tlpdb.
+NETRELEASE=`sed -n 's!^depend release/!!p' "$TLNET/tlpkg/texlive.tlpdb"`
+MINRELEASE=`sed -n 's!^depend minrelease/!!p' "$TLNET/tlpkg/texlive.tlpdb"`
+if test -z "$NETRELEASE" || test -z "$MINRELEASE"; then
+  echo "$0: could not find (min)release in $TLNET/tlpkg/texlive.tlpdb, bye"\
+  >&2; exit 1
+fi
+
+CWD=`pwd`        # save original dir
+TMP=`mktemp --suffix=tlmksel -d`  # work in new temp dir
+cd "$TMP"
+mkdir master
+cd master
+
+# unpack texlive.infra archives for all platforms, except w32.
+# this gives us the tlpobj files along with the actual content files.
+infrapkg=texlive.infra
+#
+# determine revision of infrastructure while we're here,
+# for naming the archive later.
+infrarev=`tlpkginfo --revision $infrapkg "$TLNET"`
+if test -z "$infrarev"; then
+  echo "$0: tlpkginfo --revision $infrapkg $TLNET failed, goodbye." >&2
+  exit 1
+fi
+#
+for i in "$ARCHIVE"/$infrapkg*.tar.xz; do
+  : "uncompressing $i" # for debugging
+  xz -d <"$i" | tar -xf - || exit 1
+done
+
+cd .. # back to the (temp) dir where we building things up
+
+# 
+# create the script which will be run on the user's machine to do the update.
+# 
+cat >runme.sh <<END_RUNME
+#!/bin/sh
+# \$Id$
+# Updater for tlmgr and TL infrastructure on Unix. Public domain.
+# Runs in unpacked archive directory.
+# Created by `basename $0` at `date`.
+
+creation_date="`date`"
+NETRELEASE=$NETRELEASE
+MINRELEASE=$MINRELEASE
+infrapkg=$infrapkg
+END_RUNME
+
+# append to runme literally now -- no more variable expansions.
+cat >>runme.sh <<'END_RUNME'
+
+# see if we can determine where the TL to be upgraded lives.
+# need tlpdb and a tlpobj dir (i.e., not the svn Master tree) at least.
+# We are depending on the user's PATH to find kpsewhich, tlmgr, etc.
+ROOT=`kpsewhich --var-value=SELFAUTOPARENT`
+if test -r "$ROOT/tlpkg/texlive.tlpdb" && test -d "$ROOT/tlpkg/tlpobj/"; then
+  echo "$0: updating in $ROOT..."
+
+  tlmgrversion=`tlmgr version | grep '^TeX Live.*version' | awk '{print $NF}'`
+  if test -z "$tlmgrversion"; then
+    echo "$0: tlmgr version did not include version, goodbye." >&2
+    tlmgr version >&2
+    echo "($0: makeself creation date = $creation_date.)" >&2
+    exit 1
+  fi
+  #
+  echo "$0: tlmgr version says this is TeX Live $tlmgrversion,"
+  echo "$0: and this updater script created: $creation_date."
+  #
+  # Extra-verbose debugging option.
+  if test "x$1" = "x--debug"; then
+    shift
+    opt_debug=1
+    set -vx
+  else
+    opt_debug=
+  fi
+  #
+  if test "x$1" = "x--upgrade"; then
+    if test "x$NETRELEASE" = "x$tlmgrversion"; then
+      echo "$0: have TL $tlmgrversion, new version also $NETRELEASE;">&2
+      echo "$0: using --upgrade doesn't make sense; terminating." >&2
+      echo "($0: makeself creation date = $creation_date.)" >&2
+      exit 1
+    elif test "$tlmgrversion" -lt "$MINRELEASE"; then
+      echo "$0: upgrading from $tlmgrversion not supported;" >&2
+      echo "$0:   can only upgrade from $MINRELEASE to $NETRELEASE." >&2
+      echo "$0: terminating." >&2
+      echo "($0: makeself creation date = $creation_date.)" >&2
+      exit 1
+    else
+      echo "$0: ok, doing full release upgrade " \
+           "from $tlmgrversion to $NETRELEASE."
+    fi
+  else
+    echo "$0: proceeding with tlmgr update."
+  fi
+
+  # move the architecture-specific files away so we don't blindly copy
+  # them all. The loop below and tlmgr invocation at the end will update.
+  mv ./master/bin .
+  mkdir ./installer
+  mv ./master/tlpkg/installer/tar.exe ./installer
+  mv ./master/tlpkg/installer/xz   ./installer
+  mv ./master/tlpkg/installer/wget ./installer
+  mv ./master/tlpkg/installer/lz4  ./installer # could be anywhere
+
+  # install the architecture-independent files.
+  (cd master && tar cf - *) | (cd "$ROOT" && tar xf -) || exit 1
+
+  t_instdir=$ROOT/tlpkg/installer  # target installer dir
+  t_xzdir=$t_instdir/xz
+  t_wgetdir=$t_instdir/wget
+  #
+  # ensure these target directories exist.
+  mkdir -p "$t_xzdir" "$t_wgetdir"
+
+  # Start the list of tlpobjs we will install with the
+  # platform-independent part of the infrastructure package.
+  # 
+  # We use the tlpobjs from our own dir here, using relative names,
+  # since we constructed this directory tree and thus know there are no
+  # spaces in the names. That is not true for $ROOT. (The files are the
+  # same since we just updated $ROOT with the untar above.)
+  src_tlpobj=master/tlpkg/tlpobj
+  tlpobjs=$src_tlpobj/$infrapkg.tlpobj
+
+  if test -n "$opt_debug"; then
+    (: "here (`pwd`):"; ls) >&2
+    (: "installer:"; ls installer) >&2
+    (: "installer/wget:"; ls installer/wget) >&2
+    (: "installer/xz:"; ls installer/xz) >&2
+    (: "ROOT/bin=$ROOT/bin:"; ls "$ROOT"/bin) >&2
+  fi
+
+  # for each installed directory of binaries ...
+  for a in "$ROOT"/bin/*; do
+    test -d "$a" || continue  # skip any cruft files
+    b=`basename "$a"`         # just the architecture name
+    # skip 'man' directories if they are still present
+    if test "$b" = "man"; then
+      continue
+    fi
+    echo "$0: updating $a ..."
+
+    # add the tlpobjs for this platform to the list.
+    tlpobjs="$tlpobjs $src_tlpobj/$infrapkg.$b.tlpobj"
+
+    # install the bin dir for this platform.
+    (cd bin >&2 && tar cf - "$b") | (cd "$ROOT/bin" && tar xf -) || exit 1
+
+    # copy the xz binaries:
+    if test -r installer/xz/xz."$b"; then
+      cp installer/xz/xz."$b" "$t_xzdir/" || exit 1
+    elif test -r installer/xz/xz."$b".exe; then
+      # with .exe, for Cygwin.
+      cp installer/xz/xz."$b".exe "$t_xzdir/" || exit 1
+    elif echo "$b" | egrep 'win32|windows' >/dev/null \
+         && test -r installer/xz/xz.exe; then
+      # annoyingly, we left windows out of the name, special cases all around:
+      cp installer/xz/xz.exe "$t_xzdir/" || exit 1
+      cp installer/wget/wget.exe "$t_wgetdir/" || exit 1
+      cp installer/tar.exe "$t_instdir/" || exit 1
+    else
+      echo "$0: no xz.[$b][.exe] binary for $a in `pwd`/installer/xz." >&2
+      exit 1
+    fi
+    #
+    # Cygwin (among others) does not need to provide wget, so don't
+    # worry about .exe here.
+    test -r installer/wget/wget.$b \
+      && { cp installer/wget/wget.$b "$t_wgetdir/" || exit 1; }
+  done
+
+else
+  cat <<END_ABORT_NODIR >&2
+$0: Cannot find TeX Live root using kpsewhich --var-value=SELFAUTOPARENT.
+$0: (no tlpkg/texlive.tlpdb and/or tlpkg/tlpobj/.)
+$0: Please set your PATH as needed, otherwise it's hopeless.
+END_ABORT_NODIR
+  exit 1
+fi
+
+# Invoke special tlmgr action with the tlpobjs we found.
+# Hopefully the result will be a clean tlpdb state.
+# We are running the new tlmgr, from our own archive, here,
+# due to the untar above.
+tlmgr_path=`which tlmgr 2>/dev/null`      # provide complete path if we can
+test -z "$tlmgr_path" && tlmgr_path=tlmgr # but no biggie if we can't
+echo "$0: $tlmgr_path including objects: $tlpobjs"
+#debug: (pwd; ls -l $tlpobjs; ls -lR) >/tmp/ls
+#debug: -vv here gives more info. (Also -vx on the #! line above.)
+if tlmgr -v _include_tlpobj $tlpobjs; then :; else
+  echo "$0: $tlmgr_path failed, goodbye." >&2
+  exit 1
+fi
+echo "$0: done."
+END_RUNME
+
+# 
+#debug: cp -f runme.sh /tmp
+chmod ugo+x runme.sh
+
+# make the self-extracting archive back in the directory from which
+# we were invoked.
+cd "$CWD"
+
+# we must use the non-distro (Alma Linux 8) version of makeself, because
+# that happened to have a bug causing unnecessary hard links to end up
+# in the archive, which bsdtar (aka macOS) fails on.
+# https://tug.org/pipermail/tlu/2023-November/000639.html
+/usr/local/share/makeself/makeself.sh -q --keep-umask \
+  $TMP \
+  update-tlmgr-r$infrarev.sh \
+  "TeX Live Manager Updater" \
+  ./runme.sh
+
+rm -rf $TMP
+
+# vim:set tabstop=2 expandtab: #

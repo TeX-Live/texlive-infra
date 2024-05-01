@@ -1,0 +1,59 @@
+#!/bin/sh
+# $Id$
+# Assuming tlcritical and tlnet repos at same level under $tlftp,
+# show diffs of non-architecture-dependent files.
+
+: ${tlftp=/home/ftp/texlive}
+cd $tlftp || exit 1
+
+tlcrit=tlcritical/archive
+if test ! -d $tlcrit; then
+  echo "$0: no $tlcrit under `pwd`" >&2
+  exit 1
+fi
+#
+tlnet=tlnet/archive
+if test ! -d $tlnet; then
+  echo "$0: no $tlnet under `pwd`" >&2
+  exit 1
+fi
+
+# Function to compare two tar files.
+# For our purposes here, assume $1 is for tlnet and $2 for tlcrit.
+tmp=/tmp/tlcritdiff
+rm -rf $tmp
+tardiff () 
+{
+  mkdir -p $tmp/tlnet $tmp/tlcrit
+  origdir=`pwd`
+  cd $tmp/tlnet && tar xf $origdir/$1
+  cd $tmp/tlcrit && tar xf $origdir/$2
+  cd $tmp || exit 1
+  diff -u0r tlnet tlcrit
+  cd $origdir || exit 1
+}
+
+# all the critical generic packages have a corresponding doc archive,
+# so use that pattern to find the list, for simplicity.
+# assume no weird characters.
+for tlcrit_docpkg in $tlcrit/*.doc.tar.xz; do
+  tlcrit_pkg=`echo $tlcrit_docpkg | sed 's/doc\.//'`
+  if test ! -s "$tlcrit_pkg"; then
+    echo "$0: no tlcritical package: $tlcrit_pkg (in `pwd`)" >&2
+    exit 1
+  fi
+  
+  tlnet_docpkg=`echo $tlcrit_docpkg | sed s,$tlcrit,$tlnet,`
+  if test ! -s $tlnet_docpkg; then
+    echo "$0: no tlnet doc package: $tlnet_docpkg (in `pwd`)" >&2
+    exit 1
+  fi
+  tlnet_pkg=`echo $tlnet_docpkg | sed 's/doc\.//'`
+  if test ! -s "$tlnet_pkg"; then
+    echo "$0: no tlnet package: $tlnet_pkg (in `pwd`)" >&2
+    exit 1
+  fi
+  
+  tardiff $tlnet_docpkg $tlcrit_docpkg
+  tardiff $tlnet_pkg $tlcrit_pkg
+done

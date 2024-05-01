@@ -1,0 +1,32 @@
+#!/bin/sh -ex
+# $Id$
+# Public domain.  Originally written by Karl Berry, 2015.
+# This tiny script is used from ctan2tds as a specialinsrunner.
+# 
+# The problem is that a number of packages make it impossible to
+# generate derived files (.sty) from their .dtx without also
+# regenerating the documentation (.pdf).  Which we do not want to do,
+# because remaking the doc generally involves many steps, external
+# programs, and who knows what else.
+# 
+# Thus this script saves foo.pdf, runs pdflatex foo.tex, then restores
+# foo.pdf.  That way we get the derived files but the author's .pdf.
+# 
+# Authors are sometimes responsive to supporting an alternate method for
+# running the dtx that does not remake the doc (e.g., \ifpdf), but not
+# always.  So we need this workaround.
+# 
+# With a first arg --engine, the second arg is the name of the program
+# to invoke, instead of pdflatex.
+
+if test x"$1" = x--engine; then
+  shift
+  engine=$1; shift
+else
+  engine=pdflatex
+fi
+
+basefile=`echo "$1" | sed 's/\.[^.]*$//'`
+mv "$basefile.pdf" save.pdf
+yes y | head -100 | $engine "$@" # emisa: also asks for overwrite
+mv save.pdf "$basefile.pdf"

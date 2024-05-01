@@ -1,0 +1,151 @@
+#!/usr/bin/env perl
+# $Id$
+# Copyright 2011-2023 Norbert Preining
+# This file is licensed under the GNU General Public License version 2
+# or any later version.
+#
+# Write parsable list of active CTAN mirrors; run from tl-update-auto cron.
+# Needed input:
+#   http://ctan.org/mirrors (aka CTAN.sites and README.mirrors)
+#   rsync://comedy.dante.de/MirMon/mirmon.state
+#     (on web: https://ctan.org/mirrors/mirmon)
+
+use strict;
+$^W = 1;
+use Data::Dumper;
+
+my $prg;
+my $verbose = 0;
+
+exit (&main ());
+
+sub main {
+  if (@ARGV != 2 && @ARGV != 3) {
+    die "Usage: $0 [-v[v]] CTAN_SITES MIRMON_STATE.\n";
+  }
+  ($prg = $0) =~ s,^.*/,,;
+  
+  if ($ARGV[0] eq "-v") {
+    $verbose = 1;
+    shift @ARGV;
+  } elsif ($ARGV[0] eq "-vv") {
+    $verbose = 2;
+    shift @ARGV;
+  }
+  
+  my %good_urls = read_mstate($ARGV[1]);
+  my %ctan_sites = read_readme_mirror($ARGV[0], \%good_urls);
+  $Data::Dumper::Indent = 1;
+  $Data::Dumper::Sortkeys = 1;      # stable output
+  $Data::Dumper::Purity = 1;        # make recursive structures safe
+  $Data::Dumper::Trailingcomma = 1; # avoid spurious diffs
+  print Data::Dumper->Dump([\%ctan_sites], [qw(mirrors)]);
+  
+  return 0;
+}
+
+# 
+# Return hash of good and bad urls from mirmon state data.
+#
+sub read_mstate {
+  my ($mstate) = @_;
+  my %good_urls;
+
+  open (MSTATE, "<$mstate") || die "$0: open($mstate) failed: $!\n";
+  while (<MSTATE>) {
+    my ($m, $age, $status_last_probe, $time_last_succesful_probe,
+      $probe_history, $state_history, $last_probe)
+      = split (' ');
+    $good_urls{$m} = 0;
+    if ($status_last_probe eq "no_time") {
+      warn "last probe $status_last_probe, skipping: $m\n" if $verbose;
+    } else {
+      # mirrors can be stale and yet not have no_time for their status.
+      my $age_hours = (time() - $age) / (60 * 60);
+      if ($age_hours > 36) {
+        printf STDERR "mirror age %.1f hours, skipping: $m\n", $age_hours
+          if $verbose;
+      } else {
+        #warn "probe ok $m\n";
+        $good_urls{$m} = 1;
+      }
+    }
+  }
+  close(MSTATE);
+  
+  die "no good urls found in ctan mirmon: $mstate" if keys %good_urls == 0;
+  return %good_urls;
+}
+
+# 
+# return hash of CTAN.sites info.
+# 
+sub read_readme_mirror {
+  my ($ctan_sites,$good_urls_ref) = @_;
+  my %mirrors;
+
+  open (CTAN_SITES,"<$ctan_sites") || die "$0: open($ctan_sites) failed: $!\n";
+
+  my $nmirrors = 0;
+  my ($continent,$country,$mirror);
+  while (<CTAN_SITES>) {
+    chomp;
+    if (m/^ (Africa|Asia|Oceania|Europe|North America|South America)/) {
+      $continent = $1;
+      warn "got continent $continent\n" if $verbose;
+      
+    } elsif (m/^  ([-a-zA-Z0-9.]+) \((.*)\)\s*$/) {
+      $mirror = $1;
+      $country = $2;
+      # make many names a little shorter
+      $country =~ s/^The //;
+      warn " got country $country, with mirror $mirror\n" if $verbose > 1;
+
+    } elsif (m!^ +URL: (ftp|https?|rsync)://([-a-zA-Z0-9.]+)/([-\w/]*)!) {
+      next if $1 eq "rsync"; # we can't use rsync, so skip
+      next if $1 eq "ftp";   # ftp not well supported anymore, skip
+      my $protocol = $1;
+      my $ppath = "$2/$3";
+      $nmirrors += &maybe_add_mirror(\%mirrors, $continent, $country, $mirror,
+                                     $protocol, $ppath, $good_urls_ref);
+
+    } else {
+      last if /^Please send updates/; # quite at final blurb
+      warn "$prg: ignored CTAN.sites url: $_\n" if /URL:/;
+      # some other kind of line, e.g., ==== or blank. Silently Ignore.
+    }
+  }
+
+  die "too few ($nmirrors) ctan mirrors found in $ctan_sites"
+    if $nmirrors < 50; # if tons have failed, probably better to preserve list
+  warn "$nmirrors mirrors found in $ctan_sites.\n" if $verbose;
+
+  return %mirrors;
+}
+
+# Subroutine for read_readme_mirror to check $P://$PPATH.
+# Return 1 if ok, 0 else.
+# 
+sub maybe_add_mirror {
+  my ($mirref,$continent,$country,$mirror,$p,$ppath,$good_urls_ref) = @_;
+  my $url = "$p://$ppath";
+  warn "  considering $url ($continent $country)\n" if $verbose > 1;
+  my $ok = 0;
+  
+  if (exists $good_urls_ref->{$url}) {
+    if ($good_urls_ref->{$url}) {
+      $mirref->{$continent}{$country}{$url} = 1;
+      warn "   ok: $url\n" if $verbose > 1;
+      $ok = 1;
+    } else {
+      warn "   probe not ok, skipped: $url\n" if $verbose;
+    }
+  } else {
+    # CTAN.sites has many more urls than mirmon, so don't worry about it.
+    warn "   not in mirmon file, skipped: $url\n" if $verbose > 1;
+    # Also the mirmon file has some old urls that aren't in CTAN.sites,
+    # so don't worry about that direction either, on occasion.
+  }
+  
+  return $ok;
+}

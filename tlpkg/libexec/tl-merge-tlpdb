@@ -1,0 +1,217 @@
+#!/usr/bin/env perl
+# 
+# Copyright 2013
+# Norbert Preining
+# This file is licensed under the GNU General Public License version 2
+# or any later version.
+#
+# merge a tlpdb into another
+# we expect the script to be located in the root of the tlnet hierarchy
+# *into* which stuff should be merged
+#
+# Actual files are *NOT* copied, please use wget or cp to cp the contents
+# of the archive directory
+
+my $tlnetroot;
+
+BEGIN {
+  $^W = 1;
+  {
+    my $me = $0;
+    $me =~ s!\\!/!g if $^O =~ /^MSWin(32|64)$/i;
+    if ($me =~ m!/!) {
+      ($tlnetroot = $me) =~ s!(.*)/[^/]*$!$1!;
+    } else {
+      $tlnetroot = ".";
+    }
+  }
+  unshift (@INC, "$tlnetroot/tlpkg");
+}
+
+use strict;
+use TeXLive::TLPDB;
+use TeXLive::TLPOBJ;
+use TeXLive::TLUtils qw(win32);
+use Digest::MD5;
+
+use Getopt::Long qw(:config no_autoabbrev);
+use Pod::Usage;
+
+my $opt_quiet = 0;
+my $opt_save = 0;
+my $opt_help = 0;
+my $opt_nocleanup = 0;
+GetOptions(
+  "save"    => \$opt_save,
+  "nocleanup" => \$opt_nocleanup,
+  "quiet|q"   => \$opt_quiet,
+  "help|h|?"  => \$opt_help) or pod2usage(1);
+
+if ($opt_help) {
+  show_usage_and_exit(0);
+}
+
+if ($#ARGV != 0) {
+  show_usage_and_exit(1);
+}
+
+my ($to_merge_tlpdbroot) = @ARGV;
+
+printf STDERR "loading main tlpdb from $tlnetroot ...\n"
+  unless $opt_quiet;
+my $main_tlpdb = TeXLive::TLPDB->new(root => $tlnetroot);
+if (!defined($main_tlpdb)) {
+  die "Cannot load main tlpdb from $tlnetroot: $!";
+}
+printf STDERR "loading to merge tlpdb from $to_merge_tlpdbroot ...\n"
+  unless $opt_quiet;
+my $sub_tlpdb = TeXLive::TLPDB->new(root => $to_merge_tlpdbroot);
+if (!defined($sub_tlpdb)) {
+  die "Cannot load to merge tlpdb from $to_merge_tlpdbroot: $!";
+}
+
+# check that some important settings agree
+for my $o (qw/config_src_container config_doc_container config_container_format/) {
+  if ($main_tlpdb->$o ne $sub_tlpdb->$o) {
+    die "Option $o of the two tlpdbs does not agree, merging not possible.";
+  }
+}
+if (substr($main_tlpdb->config_release, 0, 4) ne
+    substr($sub_tlpdb->config_release, 0, 4)) {
+  die "Option config_release (first 4 digits) of the two tlpdbs does not agree, merging not possible.";
+}
+
+# merge the packages
+for my $p ($sub_tlpdb->list_packages()) {
+  next if ($p =~ m/^00texlive/);
+  $main_tlpdb->add_tlpobj( $sub_tlpdb->get_package($p) );
+}
+
+#
+if ($opt_save) {
+  printf STDERR "overwriting main tlpdb ...\n"
+    unless $opt_quiet;
+  $main_tlpdb->save();
+  if (!$opt_nocleanup) {
+    # update the md5sum
+    my $ctx = Digest::MD5->new;
+    my $fh;
+    open $fh, "<$tlnetroot/tlpkg/texlive.tlpdb" or die("Cannot open tlpdb: $!");
+    binmode $fh;
+    $ctx->addfile($fh);
+    open MDFILE, ">$tlnetroot/tlpkg/texlive.tlpdb.md5" or die ("Cannot open md5sum: $!");
+    print MDFILE $ctx->hexdigest . "  texlive.tlpdb\n";
+    close MDFILE;
+    close $fh;
+    # we also have to remove the .xz file
+    unlink "$tlnetroot/tlpkg/texlive.tlpdb.xz";
+  }
+} else {
+  printf STDERR "writing generated tlpdb to stdout ...\n"
+    unless $opt_quiet;
+  $main_tlpdb->writeout();
+}
+
+if (!$opt_quiet) {
+  printf STDERR "Don't forget to actually copy the files from the archive dir!\n";
+  printf STDERR "Finished.\n";
+}
+
+exit 0;
+
+  
+sub show_usage_and_exit {
+  my ($exitstatus) = @_;
+  if (win32()) {
+    pod2usage(-exitstatus => $exitstatus,
+              -verbose => 2,
+              -noperldoc => 1,
+              -output  => \*STDOUT);
+  } else {
+    pod2usage(-exitstatus => $exitstatus, -verbose => 2, -file => $0);
+  }
+}
+
+__END__
+
+=head1 NAME
+
+tl-merge-tlpdb - merge a tlpdb into another
+
+=head1 SYNOPSIS
+
+tl-merge-tlpdb [--save|--help|-?|--quiet|-q] I<from-tlpdb-root>
+
+=head1 DESCRIPTION
+
+This script merges the tlpdb which is located in the usual place within
+the hierarchy of I<from-tlpdb-root> into the tlpdb from the hierarchy where
+the script is located. The script has to be located in the root of the
+tlnet hierarchy I<into> which another tlpdb should be merged.
+
+No comparison of revisions whatsoever is done, all package are simply added,
+overriding already present package or adding new ones.
+
+The script does I<not> copy the actual containers from 
+I<from-tlpdb-root>C</archive>, this has to be done manually.
+
+The script checks whether important options as set in the tlpdbs agree,
+most importantly the format of the container and splitting of doc and 
+src files.
+
+=head1 OPTIONS
+
+=over 4
+
+=item B<-save>
+
+Default operation is to write the generated tlpdb to stdout, from where
+it can be captured and compared with the existing one. If one does not
+want to take this extra safety step, providing this options overwrites
+the tlpdb immediately.
+
+=item B<-nocleanup>
+
+In case of B<-save> being present, by default, the script updates 
+the C<texlive.tlpdb.md5> file with the correct value, and also
+removes the file C<texlive.tlpdb.xz> to facilitate easy integration
+into a web service.
+
+Giving the option B<-nocleanup> prevents the script from executing
+these steps.
+
+=item B<-quiet>, B<--quiet>, B<-q>
+
+Do not give any informative messages besides errors.
+
+=item B<-help>, B<--help>, B<-h>, B<-?>
+
+Display this help and exit.
+
+=back
+
+=head1 EXAMPLES
+
+Assuming that the script is located in the root of a tlnet checkout, one
+can merge the packages of another tlnet-like repository into it with
+
+  tl-merge-tlpdb -save /path/to/tlptexlive
+
+Usage of an URL for the argument is also possible
+
+  tl-merge-tlpdb -save http://tug.org/~preining/tlptexlive/
+
+=head1 AUTHORS AND COPYRIGHT
+
+This script and its documentation were written for the TeX Live
+distribution (L<http://tug.org/texlive>) and both are licensed under the
+GNU General Public License Version 2 or later.
+
+=cut
+
+### Local Variables:
+### perl-indent-level: 2
+### tab-width: 2
+### indent-tabs-mode: nil
+### End:
+# vim:set tabstop=2 expandtab: #

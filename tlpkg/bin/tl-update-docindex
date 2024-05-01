@@ -1,0 +1,210 @@
+#!/usr/bin/env perl
+# $Id$
+# Make index file of all HTML and PDF documentation (printed on stdout).
+# Originally written 2009, Manuel P\'egouri\'e-Gonnard. WTFPL v2.
+
+BEGIN {
+    $0 =~ m#(.*)/(.*)#; ($progdir, $progname) = ($1, $2);
+    unshift @INC, "$progdir/..";
+}
+
+use warnings FATAL => 'all';
+use Fatal qw(:void open close opendir closedir chdir mkdir);
+
+use TeXLive::TLPDB;
+use File::Basename;
+
+my $CATALOGUE_DIR = "/home/httpd/html/catalogue/entries";
+
+exit(main());
+
+
+sub main {
+  my $tlpdb = TeXLive::TLPDB->new('root' => "$progdir/../..");
+  die "$progname: unable to load TLPDB\n" unless defined $tlpdb;
+
+  print <<END_HEADER;
+<html><head>
+<title>TeX Live documentation</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style type="text/css"> ol { padding-left: 4em } </style>
+</head><body>
+<h1>TeX Live documentation</h1>
+
+<p>This document lists links to all HTML and PDF files for packages and guides
+contained in <a href="https://tug.org/texlive/">TeX Live</a> (<a
+href="https://tug.org/texlive/doc.html">TL documentation web page),
+sorted by package name.</p>
+
+<p>For documentation on TeX Live itself, see the <a
+href="#texlive-en">texlive-en</a> package below and its several nearby
+translations, as well as the <a href="#texlive.infra">texlive.infra</a>
+and <a href="#texlive-scripts">texlive-scripts</a> packages. There are
+also links from the <a href=".">index.html</a> page here.
+END_HEADER
+
+  print_all_pkg($tlpdb);
+
+  # print footer
+  chomp (my $date = `LC_ALL=C date`);
+  print <<END_TRAILER;
+<hr>
+<small>Generated $date by $progname.</small>
+</body></html>
+END_TRAILER
+
+  return 0;
+}
+
+
+# print the links for letters, then packages
+#
+sub print_all_pkg {
+  my ($tlpdb) = @_;
+
+  # @lines is the big list, @letters the list of initials of package names
+  local (@lines, @letters, $current_letter, $n);
+  $current_letter = "\0";
+
+  # first build the output and the list of initials
+  for my $tlpn (sort {lc $a cmp lc $b} $tlpdb->list_packages) {
+    # don't show our infra packages, just confusing:
+    next if $tlpn =~ /^00texlive\.|texlive-docindex/;
+    my $tlpkg = $tlpdb->get_package($tlpn);
+    push_pkg_list($tlpkg);
+  }
+  push @lines, "\n</ol>\n\n";
+
+  # then actually print them
+  my $access = "\n<p>" . join(" - ", @letters) . "</p>\n";
+  print $access;
+  print @lines;
+  print $access;
+}
+
+
+# push the content for a package to the list of lines
+#
+sub push_pkg_list {
+  my ($tlpkg) = @_;
+  my $name = $tlpkg->name;
+  my @docfiles = $tlpkg->docfiles;
+
+  # almost always the documentation is in doc, where it should be.
+  @docfiles = grep { m/\.(html|pdf)/ } @docfiles;
+  if (@docfiles == 0) {
+    # but in one notable case, koma-script, it is in runfiles,
+    # per the author's specification.
+    my @runfiles = $tlpkg->runfiles;
+    @docfiles = grep { m/\.(html|pdf)/ } @runfiles;
+  }
+
+  # if no adequate documentation is found, print nothing
+  return if @docfiles == 0;
+  $n++; # list counter
+
+  # check initial
+  my $init = uc(substr($name, 0, 1));
+  unless ($init eq $current_letter) {
+    $current_letter = $init;
+    # put header in the big list...
+    push @lines, "\n</ol>\n" unless $n == 1;
+    push @lines, qq#\n<h2 id="letter-$init">$init</h2>\n#;
+    push @lines, qq#\n<ol start="$n">\n#;
+    # ... and a reference in quick access list
+    push @letters, qq!<a href="#letter-$init">$init</a>!;
+  }
+
+  # if there is an index.html file, drop the rest
+  # catches, e.g.: FAQ-en bosisio epspdf fontname jadetex
+  # metapost ppower4 sttools tds tex4ht
+  my @index = grep /\/index\.html/, @docfiles;
+  if (@index == 1) {
+    #warn "Using index.html for $name\n";
+    @docfiles = @index;
+  }
+
+  # print package name with ctan link and shortdesc
+  my $id = qq!id="$name"!; # should be unique
+  my $dir = &find_doc_dir($name, @docfiles);
+  push @lines, qq#\n<li $id><b><a href="$dir/">$name</a></b><small>\n#;
+  #
+  # Don't link to CTAN if the package doesn't exist.
+  # We could find more by looking at the .tlpsrc, but let's skip
+  # until someone notices. Except 12many works, and it's the very
+  # first one, so add that in.
+  my $lc_name = lc($name);
+  my $name1 = substr($name, 0, 1); # for Catalogue check
+  push @lines, qq#(<a href="https://ctan.org/pkg/$name">CTAN</a>):\n#
+    if -r "$CATALOGUE_DIR/$name1/$lc_name.xml" || $name eq "12many";
+  #
+  my $shortdesc = $tlpkg->shortdesc;
+  # a few shortdescs already end with a period:
+  $shortdesc =~ s/\.$// if defined $shortdesc;
+  push @lines, "$shortdesc.&nbsp;\n" if defined $shortdesc;
+  #warn "$name\n" if not defined $shortdesc;
+
+  # now the list of docfiles
+  my $list;
+  for my $file (@docfiles) {
+    my $name = basename($file);
+    $list .= qq#<a href="$file">$name</a>#;
+    my $dflanguage = $tlpkg->{'docfiledata'}{$file}{'language'};
+    $list .= "&nbsp;($dflanguage)&nbsp;"
+             if (defined $dflanguage && $dflanguage ne "en");
+    $list .= "\n";
+  }
+  $list =~ s/(&nbsp;)?\n$//;
+  push @lines, "$list\n</small></li>\n";
+}
+
+
+# Return best documentation directory for package NAME among @DOCFILES.
+# 
+sub find_doc_dir {
+  my ($name,@docfiles) = @_;
+
+  my $shortest_dir = "a" x 1000;
+  my $name_dir = "";
+  for my $f (@docfiles) {
+    next if $f eq "doc.html"; # top-level doc.html is just confusing
+    my $dir = dirname($f);
+    
+    # if we find a file in a directory named for the package,
+    # that seems like the best possible choice.
+    if ($dir =~ m,/$name$,) {
+      return $dir;
+
+    # if we are in the $name/base/ directory, e.g., amstex/base.
+    } elsif ($dir =~ m,/$name/base$,) {
+      return $dir;
+
+    # else if we are one directory from the package name,
+    # e.g., authorarchive/examples, can probably use it.
+    } elsif ($dir =~ m,/$name/[^/]+$,) {
+      $name_dir = dirname($dir);
+      
+    # otherwise, shorter is probably better.
+    } elsif (length($dir) < length($shortest_dir)) {
+      $shortest_dir = $dir;
+      ; #warn "set shortest $shortest_dir from $f for $name\n";
+    } else {
+      ; #warn "have $shortest_dir, ignoring $dir from $f\n";
+    }
+  }
+
+  # a directory by name is probably better than just the shortest.
+  return $name_dir if $name_dir;
+  
+  if ($shortest_dir !~ m,/,) {
+    # should never happen except for texlive.infra, which has the
+    # top-level index.html.
+    warn "no shortest dir for $name, should never happen! docfiles=@docfiles"
+      unless $name eq "texlive.infra";
+    return "";
+  } else {
+    ; #warn "returning shortest $shortest_dir for $name\n";
+    return $shortest_dir;
+  }
+}

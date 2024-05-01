@@ -1,0 +1,98 @@
+#!/bin/sh
+# Public domain. Originally written 2019, Karl Berry.
+# Try a TL installation into /tmp/ki (by default),
+# using install-tl with a given profile.
+
+vc_id='$Id$'
+
+renice 20 $$ >/dev/null 2>&1
+
+# don't let cwd or existing PATH interfere
+cd "$HOME" || exit 1
+PATH=/usr/local/bin:/usr/bin:/bin # /usr/local/bin for good perl on tug
+
+real0=`realpath $0`
+mydir=`cd \`dirname "$real0"\` && pwd`  # Master/tlpkg/bin
+Master=`cd $mydir/../.. && pwd`
+profiledir=$Master/tlpkg/dev/profiles
+
+instdir=/tmp/ki
+profile=$profiledir/TLinfra.pro
+quiet=false
+repo=$Master
+verbose=
+
+while test $# -gt 0; do
+  case $1 in
+  -o)           shift; instdir=$1;;
+  -p|--profile) shift; profile=$1;;
+  -q|--quiet)   quiet=true;;
+  -r|--repo)    shift; repo=$1;;
+  -v|-vv)       verbose=$1;;
+  --help)       echo "ustl. sorry."; exit 0;;
+  --version)    echo "$vc_id"; exit 0;;
+  *) echo "$0: unrecognized argument \`$1'." >&2
+     exit 1;;
+  esac
+  shift
+done
+
+if test ! -f "$profile"; then
+  # convenience silliness
+  if test -f "$profiledir/$profile"; then
+    profile=$profiledir/$profile
+  elif test -f "$profiledir/$profile.pro"; then
+    profile=$profiledir/$profile.pro
+  elif test -f "$profiledir/TL$profile"; then
+    profile=$profiledir/TL$profile
+  elif test -f "$profiledir/TL$profile.pro"; then
+    profile=$profiledir/TL$profile.pro
+  else
+    echo "$0: goodbye, no profile \`$profile' (not in $profiledir either)." >&2
+    exit 1
+  fi
+fi
+
+if test ! -x "$repo/install-tl"; then
+  echo "$0: goodbye, no install-tl in repository: $repo" >&2
+  exit 1
+fi
+
+# The installation directory specified in *.pro has to match.
+profile_instdir=`awk '$1=="TEXDIR" {print $2}' $profile`
+if test x"$profile_instdir" != x"$instdir"; then
+  echo "$0: instdir ($instdir) != profile TEXDIR ($profile_instdir)" >&2
+  exit 1
+fi
+
+rm -rf $instdir && echo "$0: removed $instdir"
+
+if $quiet; then
+  # make installations quieter?
+  TEXLIVE_INSTALL_ENV_NOCHECK=1; export TEXLIVE_INSTALL_ENV_NOCHECK
+  TEXLIVE_INSTALL_NO_WELCOME=1; export TEXLIVE_INSTALL_NO_WELCOME
+fi
+
+#TEXLIVE_INSTALL_PAPER=letter; export TEXLIVE_INSTALL_PAPER # testing
+
+pro=--profile=$profile
+set -x
+exec time $repo/install-tl $verbose $pro --repo $repo
+
+cust= #--custom-bin=$wb
+exec time $lp/install-tl $pro
+exec time $Master/install-tl $cust $pro
+exec time $lp/install-tl $pro --repo ftp://ftp.cstug.cz/pub/tex/local/tlpretest
+exec time $ln/install-tl $pro --repo ctan #--in-place
+
+thisrel=/usr/local/texlive/`date +%Y` # not necessarily, but whatever
+prevrel=/usr/local/texlive/`expr "$(date +%Y)" - 1`
+exec time $thisrel/install-tl $pro
+exec time $prevrel/install-tl $pro
+exit $?
+
+# above are just assorted invocations that have been useful from time to
+# time, nothing magic. do what's needed.
+# 
+# $lp = pretest, /home/ftp/texlive/tlpretest on tug.org.
+# $ln = tlnet,   /home/ftp/texlive/tlnet     on tug.org.

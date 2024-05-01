@@ -1,0 +1,34 @@
+#!/bin/sh
+# $Id$
+# Public domain.  Originally written 2019, Karl Berry.
+# Run an update of tlnet, but in a test directory.
+
+testnet=/home/texlive/tstftp/tstlive/tstnet
+# the subdirectories there are necessary because we make the trial
+# directories two levels up. Imagine tstftp = ~ftp, tstlive = ~ftp/texlive.
+
+fast=true
+if $fast; then
+  scheme=minimal
+  install_pkg=--no-install-pkg
+  consistency=--no-consistency
+else
+  scheme=full
+  install_pkg=
+  consistency=
+fi
+
+# We assume the texlive.tlpdb file is up to date. It could be rebuilt
+# with the command here, but it's usually not desirable, because with
+# --fix-reverse updates can get committed, and without it, the result
+# may not be consistent.
+# 
+#catup= #--catalogue-compare=$tlnet_dir
+#./tlpkg/bin/tl-update-tlpdb -v --fix-reverse-revisions $catup
+
+# run out of PATH, not the reference tree.
+tl-update-tlnet --dest $testnet --scheme $scheme $install_pkg $consistency
+
+# for when we were testing with cow-shell; we have given up on it nowadays.
+# tl-update-testcow is in archive/.
+#tl-update-testcow --cow --dest $testnet --scheme $scheme $install_pkg $consistency

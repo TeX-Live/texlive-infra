@@ -1,0 +1,120 @@
+#!/usr/bin/env perl
+# $Id$
+# Public domain. Originally written by Karl Berry, 2022.
+# 
+# Top-level script to update from CTAN to TL.
+# 
+# First (unless placing was explicitly specified with [-]p),
+# run a test import with c2l.
+# Then, if no files were added or removed (and it was an existing
+# package), or if placing was explicitly specified, automatically run
+# c2l p to "place" the new package in svn with adds/removes.
+# Do not run svn commit.
+# 
+# By the way, we accept "p" as well as "-p" because it's convenient for
+# word deletion on the command line not to have a - lying around. For
+# the same reason, the [-]p is given after the package, so we can
+# add/remove it without having to edit the package name. Since we run
+# this command multiple times a day, must optimize every keystroke.
+
+use strict; use warnings;
+
+(my $prg = $0) =~ s,.*/,,;
+
+exit (&main ());
+
+sub main {
+  die "Usage: $0 PKGNAME [-][p]\n" if (@ARGV == 0 || @ARGV > 2); # USTL
+  my $status = 1; # default to failure
+
+  my $place = 0;
+  if ($ARGV[$#ARGV] =~ /^-?p$/) {
+    pop (@ARGV);
+    $place = 1;
+  }
+
+  if ($place) {
+    $status = &do_place ("$prg: p(lace) explicitly given");
+    exit $status;
+  }
+
+  # no explicit place, run c2l to check if we can do it implicitly.
+  printf "$prg: running c2l...";
+  my @lines;
+  ($status,@lines) = &run_c2l ("");
+  if ($status) {
+    print "first c2l failed, exiting.\n";
+    print @lines;
+    exit $status;
+  }
+
+  my $i;
+  for ($i = 0; $i < @lines; $i++) {
+    if ($lines[$i] =~ /^current vs.\ new/) {
+      my $nextline = $lines[$i+1];
+      if ($nextline =~ /^[0-9]+ common files, ([0-9]+) changed/) {
+        if ($1 == 0) {
+          print "seems nothing has changed, done.\n";
+          print @lines;
+	  $status = 0;
+          last;
+        } else {
+          $status = &do_place ("no new or removed files");
+          last;
+        }
+
+      } elsif ($place) {
+        $status = &do_place ("new/removed files, but p(lace) given");
+        last;
+      
+      } else {
+        print "have new/removed files, exiting.\n";
+        print @lines;
+        last;
+      }
+    }
+  }
+  
+  if ($i == @lines) {
+    print "no current vs. new, exiting.\n";  # new package, presumably
+    print @lines;
+  }
+  
+  return $status;
+}
+
+
+# Run c2l to "place" (svn add/remove, but not commit) file.
+# Return exit status.
+# 
+sub do_place {
+  my ($desc) = @_;
+
+  print "$desc, running for svn.\n";
+  my ($status,@placelines) = &run_c2l ("p");
+  print @placelines;
+  if ($status) {
+    print "$prg: *** do_place failed, exiting.\n";
+  }
+  
+  return $status;
+}
+
+
+# Run c2l, specifying ARG. Return a list with the exit status
+# and then all output lines.
+# 
+sub run_c2l {
+  my ($arg) = @_;
+  my $tmpfile = "/tmp/c2l$arg.out";
+  
+  # don't bother with svn update unless we are doing place.
+  if ($arg eq "p") {
+    delete $ENV{"TLPKGINFO_CATALOGUE_NO_UPDATE"};
+  } else {
+    $ENV{"TLPKGINFO_CATALOGUE_NO_UPDATE"} = 1;
+  }
+  
+  my @ret = `set -o pipefail; c2l $arg @ARGV </dev/null 2>&1 | tee $tmpfile`;
+  return ($?, @ret);
+}

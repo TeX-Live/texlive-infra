@@ -1,0 +1,200 @@
+#!/bin/sh
+# $Id$
+# Public domain.  Originally written 2005, Karl Berry.
+#
+# Attempt to push a package from CTAN into TL.
+
+renice 20 $$ >/dev/null 2>&1
+unset CDPATH  # avoid extraneous output
+LC_ALL=C; export LC_ALL # avoid problems with diff, comm, etc
+umask 022
+
+# to avoid the svn hit on every run when developing.
+TLPKGINFO_CATALOGUE_NO_UPDATE=1; export TLPKGINFO_CATALOGUE_NO_UPDATE
+
+mydir=`cd \`dirname $0\` && pwd`	# Master/tlpkg/bin
+libexec=`cd $mydir/../libexec && pwd`	# Master/tlpkg/libexec
+PATH=$mydir:$libexec:$PATH  # we call lots of our other tools
+
+Build=`cd $mydir/../../../Build && pwd`
+raw=$Build/tmp.raw
+test -d $raw || mkdir $raw
+cd $raw || exit 1
+
+if test "x$1" = x--help; then
+  echo "Usage: $0 [--place] [--no-ctan] [--git] TLPKGNAME"
+  echo
+  echo "Install a package from CTAN into TeX Live."
+  echo
+  echo "--place,-p,p  perform repository adds/removes."
+  echo "--no-ctan     if already have files in Build/tmp.raw/PKG."
+  echo "--contrib     for https://contrib.texlive.info."
+  echo "--git         for git."
+  echo
+  echo "This never actually commits anything to the repository,"
+  echo "but it does svn update the potentially affected directories."
+  echo
+  echo "Without --place, it only creates files in Build/tmp.{raw,cooked}."
+  echo "With --place, it also does repository adds and removes,"
+  echo "but never commits."
+  echo
+  echo "Read and understand https://tug.org/texlive/pkgupdate.html"
+  echo "before running this."
+  exit 0
+fi
+
+place_chicken=-n
+copy_from_ctan=true
+contrib_ctan2tds_arg=
+contrib_place_arg=
+mode=svn
+pkg=
+while test $# -gt 0; do
+  case "$1" in
+    'p'|'-p'|'--place')
+      place_chicken=
+      shift;;
+    '--no-ctan')
+      copy_from_ctan=false
+      shift;;
+    '--contrib')
+      do_contrib=true; shift
+      contrib_place="$1"; shift
+      contrib_ctan2tds_arg=--contrib
+      contrib_place_arg="--contrib=$contrib_place --mode=git"
+      ;;
+    '--git')
+      mode="git"
+      shift;;
+    */*)
+      echo "$0: package name must not contain /: $1" >&2
+      exit 1;;
+    *)
+      if test -n "$pkg"; then
+        echo "$0: package $pkg already specified, unexpected second: $1" >&2
+        exit 1
+      fi
+      pkg=$1
+      shift;;
+  esac
+done
+
+if test -z "$pkg"; then
+  echo "$0: no TL package name specified." >&2
+  exit 1
+fi
+
+if $copy_from_ctan; then
+  ctan_dir=`tlpkginfo --prepare $pkg`
+else
+  ctan_dir=$pkg
+fi
+
+if test -z "$ctan_dir"; then
+  echo "$0: can't find CTAN directory for $pkg." >&2
+  exit 1
+fi
+
+# trying to sync catalogue changes as much as possible.
+#catfile=/home/httpd/html/catalogue/entries/$letter/
+#svn update $catfile
+
+echo "$0: ctan dir for $pkg"
+echo "$0: is $ctan_dir"
+
+test -r "$ctan_dir/TDS_READY" \
+&& echo "... from `cat $ctan_dir/TDS_READY`"
+
+# help in keeping things in sync.
+if egrep " $pkg"'( |$)' $mydir/tlpkg-ctan-check >/dev/null; then :; else
+  echo
+  echo "*** $0: $pkg not in $mydir/tlpkg-ctan-check, add?"
+fi
+
+if grep "^depend  *$pkg\$" $mydir/../tlpsrc/collection-* >/dev/null; then :
+else
+  echo
+  echo "*** $0: $pkg not in any collection, add?"
+fi
+
+# 
+if $copy_from_ctan; then
+
+# remove whatever dregs in raw that might be lying around.
+rm -rf $pkg
+
+if test "$pkg" = genmisc; then  # remove files after copying in ctan2tds
+  # do not copy subdirs, symlinks, or any files but .sty and .tex
+  # (that is, no patch.doc or pmat.zip).
+  mkdir -p $pkg
+  cp -p \
+    `find $ctan_dir/* '(' -type d -o -type l ')' -prune -o \
+                          '(' -name '*.sty' -o -name *.tex ')' -print` \
+    $pkg || exit 1
+
+else
+  # normal case (/. to deref symlinks, e.g., arabtex)
+  cp -pr $ctan_dir/. $pkg || exit 1
+fi
+
+# Sometimes files on CTAN have future dates. Silently change them
+# to now. Otherwise the build might eventually fail because of the
+# warning from tar ("time stamp ... in the future"). We could silence
+# the warning instead, but it seems better not to have future mtimes in
+# the repository.
+find $pkg -mtime -0 | xargs --no-run-if-empty touch
+
+# clean up the tmpdir possibly created by tlpkginfo --prepare.
+ctan_root=`tlpkginfo --ctan-root`
+if echo "$ctan_dir" | egrep "^$ctan_root" >/dev/null; then :; else
+  ctan_dir=`cd $ctan_dir && pwd`  # canonicalize
+  slashes=`echo $ctan_dir | tr -cd /`
+  if test "$slashes" = /; then
+    echo "$0: only one directory level in CTAN directory: $ctan_dir" >&2
+    exit 1
+  fi
+  rm -rf $ctan_dir
+fi
+fi  # end of copying from CTAN.
+
+
+# 
+printf "\n$0: calling ctan2tds\n"
+cooked=$Build/tmp.cooked
+rm -rf $cooked/$pkg
+test -d $cooked || mkdir $cooked
+ctan2tds --ctan-dir=$ctan_dir $contrib_ctan2tds_arg $pkg || exit 1
+
+cd $cooked || exit 1
+printf "\n\f cooked\n"
+find $pkg -name TDS_READY -exec rm '{}' \;     # remove sentinel file
+find $pkg -depth -type d | xargs rmdir 2>/dev/null  # remove empty directories
+
+spacenames="`find $pkg -name \*\ \*`"
+if test -n "$spacenames"; then
+  echo "$0: cooked hierarchy contains files with spaces, goodbye:" >&2
+  echo "in `pwd`/$pkg:" >&2
+  echo "$spacenames" >&2
+  exit 1
+fi
+
+# check for file names differing in case only.
+find $pkg \( -name .svn \) -prune -o -print | sort -f | uniq -i -d >&2
+
+# not group-writable; cron checks also.
+chmod -R u+w,go-w,a+rX-st $pkg
+
+# check for symlinks
+find $pkg -type l -ls | grep -v /Master/bin | sort >&2
+
+# show list of files (and tee to tmp).
+find $pkg \! -type d -printf "%TY%Tm%Td.%TH%TM %p\n" | sort -k2 \
+| tee ${TMPDIR-/tmp}/ctan2tl.files
+
+printf "\n$0: calling place $place_chicken $contrib_place_arg $pkg\n"
+rm -rf $pkg.done
+place $place_chicken --mode $mode $contrib_place_arg $pkg
+status=$?
+
+$copy_from_ctan && rm -rf $raw/$pkg
+exit $status

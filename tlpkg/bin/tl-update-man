@@ -1,0 +1,75 @@
+#!/bin/sh
+# $Id$
+# Public domain.  Originally written 2008, Karl Berry.
+# 
+# This script is run by hand at the end of a release cycle to copy changed
+# man pages from the temporary install tree resulting from a normal
+# build to the live Master hierarchy.
+# 
+# For a way to undo, see kludge script ~karl/bin/tl-unman.
+
+chicken= #echo
+
+mydir=`cd \`dirname $0\` && pwd`
+Master=`cd $mydir/../.. && pwd`
+Build=`cd $Master/../Build && pwd`
+Build_inst=`cd $Build/source/inst && pwd`
+
+: ${TMPDIR=/tmp}
+
+for sect in 1 5; do
+  # existing:
+  rundir=$Master/texmf-dist/doc/man/man$sect
+  (cd $rundir && ls) >$TMPDIR/now
+
+  # from a current build:
+  cd $Build_inst/texmf-dist/doc/man/man$sect || exit 1
+  # maintained/updated via CTAN and ctan2tl:
+  rm -f pmxab.1 scor2prt.1 msxlint.1
+  ls >$TMPDIR/new
+
+  if test -n "`find -type l`"; then
+    echo "$0: unexpected man symlinks in `pwd`" >&2
+    echo "$0: everything should use .so; goodbye" >&2
+    exit 1
+  fi
+
+  # copy files from build to runtime, if contents have changed.
+  for f in *.$sect; do
+    if cmp -s $f $rundir/$f; then :; else
+      echo $f
+      $chicken cp -pf $f $rundir/$f
+    fi
+  done
+
+  # add new:
+  needed=$TMPDIR/needed.$sect
+  comm -13 $TMPDIR/now $TMPDIR/new >$needed
+  test -s $needed && (cd $rundir && svn add `cat $needed`) 
+
+  # do not delete, since many man pages aren't installed from the build,
+  # but just in case we want to look:
+  comm -23 $TMPDIR/now $TMPDIR/new | grep -v '\.pdf$' >>$TMPDIR/extraman.$sect
+  #
+  # and we can check against the binaries.
+  if test $sect = 1; then
+    bindir=$Master/bin/x86_64-linux
+    for m in *; do
+      f=`basename $m .1`
+      if test ! -r "$bindir/$f"; then
+        printf "$0: $f in man but not bin"
+        (test "$f" = cweb || test "$f" = psutils) && printf " (expected)"
+        echo
+      fi
+    done
+
+    # for man1, generate make fragment for checking against man1/Makefile.
+    (cd $rundir/.. && make so.rules >$TMPDIR/so.rules)
+    echo "$0: check $TMPDIR/so.rules against `pwd`"
+  fi
+  
+  # see what we've done:
+  (cd $rundir && pwd && svn status)
+done
+
+echo "And run make in the man directory to remake pdfs..."

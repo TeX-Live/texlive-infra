@@ -1,0 +1,9 @@
+#!/bin/sh
+# $Id$
+# Public domain. Originally written by Karl Berry, 2021.
+# c2b - run c2l but inside /home/texlive/branch.
+
+PATH=`echo $PATH | sed -e s,karl/Master,branch/Master,g`
+cd $HOME || exit 1   # just in case . is a trunk bin directory
+exec ${c2a-c2a} "$@" # allowing overriding with c2lx, as in:
+                     #   c2a=c2lx c2b jxu

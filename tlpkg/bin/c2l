@@ -1,0 +1,161 @@
+#!/usr/bin/env perl
+# $Id$
+# Originally written by Karl Berry. Public domain.
+# 
+# Convenience front-end script to run ctan2tl. It rearranges the output
+# so error messages come first, then the list of changed files. Also
+# accepts platform abbreviations to run tl-update-bindir, etc. Don't
+# take it too seriously, it's just for convenience.
+
+use Cwd;
+use File::Basename;
+
+$| = 1;
+umask 022;
+exit (&main ());
+
+sub main {
+  my $arg = $ARGV[0];
+  if ($arg =~ m![^a-z0-9-_]!) {
+    die "$0: package name must contain only a-z0-9-_: $arg\n";
+  }
+
+  my $real0 = Cwd::abs_path ($0);
+  my $scriptdir = File::Basename::dirname ($real0);   # .../Master/tlpkg/bin
+  my $TLROOT = Cwd::abs_path ("$scriptdir/../../.."); # ...
+  chdir ($scriptdir) || die "chdir($scriptdir) failed"; # avoid . in PATH confusion
+
+  # platform abbrev
+  if ($arg eq "asy") {
+    exec ("tl-update-asy --build");
+  } elsif ($arg eq "aarch") {
+    $arg = "aarch64-linux";
+  } elsif ($arg eq "alpha") {
+    $arg = "alpha-linux";
+  } elsif ($arg eq "armel") {
+    $arg = "armel-linux";
+  } elsif ($arg eq "armhf") {
+    $arg = "armhf-linux";
+  } elsif ($arg eq "cygwin") {
+    $arg = "i386-cygwin";
+  } elsif ($arg eq "dar32") {
+    $arg = "i386-darwin";
+  } elsif ($arg eq "darwin" || $arg eq "dar" || $arg eq "mac") {
+    $arg = "universal-darwin";
+  } elsif ($arg eq "darleg") {
+    $arg = "x86_64-darwinlegacy";
+  } elsif ($arg eq "irix") {
+    $arg = "mips-irix";
+  } elsif ($arg eq "kfreebsd") {
+    exec ("tl-update-bindir i386-kfreebsd && tl-update-bindir amd64-kfreebsd");
+  } elsif ($arg eq "linux32" || $arg eq "lin32") {
+    $arg = "i386-linux";
+  } elsif ($arg eq "mipsel") {
+    $arg = "mipsel-linux";
+  } elsif ($arg eq "netbsd") {
+    exec ("tl-update-bindir i386-netbsd && tl-update-bindir amd64-netbsd");
+  } elsif ($arg eq "powdar") {
+    $arg = "powerpc-darwin";
+  } elsif ($arg eq "powlin") {
+    $arg = "powerpc-linux";
+  } elsif ($arg eq "sol") {
+    exec ("tl-update-bindir i386-solaris && tl-update-bindir x86_64-solaris");
+  } elsif ($arg eq "sparc") {
+    $arg = "sparc-solaris";
+  } elsif ($arg eq "linux64" || $arg eq "lin64") {
+    $arg = "x86_64-linux";
+  } elsif ($arg eq "musl") {
+    $arg = "x86_64-linuxmusl";
+
+  } elsif ($arg eq "norbert" || $arg eq "nor" || $arg eq "gh") {
+    # see Build/source/.github/ for workflows and scripts.
+    for my $p (qw(amd64-freebsd
+                  i386-freebsd i386-linux i386-solaris
+                  x86_64-linux x86_64-linuxmusl x86_64-solaris)) {
+      system ("$0 $p") && die "github/$p failed";
+    }
+    print "$0: gh (github/norbert) update done.\n";
+    exit 0;
+  
+  } elsif ($arg eq "aarmgh") {
+    # usually we get these from cg, but sometimes mojca doesn't build.
+    for my $p (qw(aarch64-linux-gh armhf-linux-gh)) {
+      system ("$0 $p") && die "aarm/$p failed";
+    }
+    print "$0: gh (aarm/norbert) update done.\n";
+    exit 0;
+  
+  } elsif ($arg eq "cg" || $arg eq "moj" || $arg eq "mojca") {
+    for my $p (qw(aarch64-linux armhf-linux x86_64-darwinlegacy
+                 )) {
+      system ("$0 $p") && die "cg/$p failed";
+    }
+    print "$0: cg (contextgarden/mojca) updates done.\n";
+    exit 0;
+
+  } elsif ($arg eq "all") {
+    for my $p (qw(dar cg norbert)) {
+      system ("$0 $p") && die "all/$p failed";
+    }
+    print "$0: all updates done.\n";
+    exit 0;
+
+  } elsif ($arg =~ /^(lmtx|luametatex)$/) {
+    print ("tl-update-bindir $arg\n");
+    exec ("tl-update-bindir", $arg);
+  }
+  
+  # if known platform name, call tl-update-bindir.
+  # so far no clashes with normal packages.
+  (my $arg_no_gh = $arg) =~ s/-gh$//;
+  if (-d "$TLROOT/Master/bin/$arg"              # platform name
+      || -d "$TLROOT/Master/bin/$arg_no_gh") {  # maybe with -gh signal
+    print ("tl-update-bindir $arg\n");
+    exec ("tl-update-bindir", $arg);
+  }
+
+  $ARGV[0] = "-p" if $ARGV[0] eq "p";
+  
+  print "$0: running ctan2tl @ARGV\n";
+  # we want our exit status to be from ctan2tl, not tee, hence the
+  # pipefail bash-ism.
+  my @lines = `set -o pipefail; ctan2tl @ARGV </dev/null 2>&1 | tee /tmp/cl.out`;
+  my $status = $?;
+
+  my $cooked = "$TLROOT/Build/tmp.cooked";
+  -d $cooked && system ("cp /tmp/cl.out $cooked/$ARGV[$#ARGV].out");
+  
+  # *** and other notable messages.
+  my @msgs = grep { /^\*\*\*.* \S/
+                    && ! /\* Generating /
+                  } @lines;
+  push (@msgs, grep { /at \/.* line / } @lines);        # perl errors
+  push (@msgs, grep { /^svn: E/ } @lines);              # svn errors
+  push (@msgs, grep { /: no hit for pattern/ } @lines); # tlpsrc updates
+  # map file changes; should do better, check .tlpsrc for existing ...
+  push (@msgs, grep { /(svn .*|^	)[A-z]*\.map$/ } @lines);
+  print map { (/^\*/ ? "" : "*** ") . $_ } @msgs;
+  
+  if ($status != 0) {
+    warn "*** ctan2tl exit status: $status\n";
+    print STDERR @lines;
+    return 1;
+  }
+  
+  my $whole_string = join ("", @lines);
+  my @page = split (/\f */, $whole_string, 4);
+  
+  my $diff_list
+    = `test -s /tmp/$<.tlplace.diff && sed -n -e 's/^--- //' \\
+              -e 's/[ \\t].*//' \\
+              -e 's,/home/texlive/karl/, ,p' \\
+           /tmp/$<.tlplace.diff`;
+  $diff_list = "";
+
+  # page 0: build stuff.
+  # page 1: cooked hierarchy.
+  # page 2: new vs. present (what's interesting).
+  # page 3: place output.
+  print "$page[2]$diff_list\n\f $page[1]\n\f $page[0]\n\f $page[3]\n";
+  return 0;
+}

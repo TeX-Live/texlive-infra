@@ -1,0 +1,44 @@
+#!/bin/sh
+# $Id$
+# Public domain. Originally written 2016, Norbert Preining.
+# Sign a file for release in TeX Live. Used in tl-update-images,
+# tl-update-tlnet, et al. See tlpkg/gpg/tl-key-extension.txt for some info.
+# Perhaps someday we will rename this to tlgpg-sign at some point,
+# to be more parallel with tlgpg-verify.
+
+if test $# -ne 1; then
+  echo "$0: Exactly one argument must be given, the file to sign." >&2
+  exit 1
+fi
+
+mydir=`cd \`dirname $0\` && pwd`
+PATH=$mydir:$PATH # for our tlgpg* commands
+
+# remove any previous signature, else gpg will bail out.
+rm -f "$1.asc"
+
+sign_cmd="tlgpg --detach-sign --armor"
+if $sign_cmd "$1"; then
+  # signing will succeed even with expired keys and other problems, so
+  # do verification; our tlpgpg-verify script will report the errors, so
+  # just exit if it fails.
+  if tlgpg-verify "$1"; then :; else
+    echo "$0: gpg signing did not verify, exiting." >&2
+    exit 1
+  fi
+  
+else # original gpg signing failed.
+  echo "$0: gpg signing failed." >&2
+  if test -r "$1".asc; then
+    echo "$0: moving $1.asc to $1.asc.bads." >&2
+    mv "$1".asc "$1".asc.bads || exit 1
+  else
+    echo "$0: no file $1.asc" >&2
+  fi
+  echo "$0: gpg command was:" >&2
+  echo "$0: $gpg_prog $gpg_sign_opts $gpg_opts" "$1" >&2
+  echo "$0: goodbye and good luck." >&2
+  exit 1
+fi
+
+exit 0

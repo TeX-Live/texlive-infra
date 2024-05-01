@@ -1,0 +1,23 @@
+#!/bin/sh -e
+# $Id$
+# Originally written by Karl Berry. Public domain.
+# 
+# Replace symlinks to files with the actual files.
+# Symlinks to anything else are not touched.
+
+if test x"$1" = x--save-links; then
+  savelinks=true
+  shift
+else
+  savelinks=false
+fi
+
+for f in "$@"; do
+  test -h "$f" || continue  # skip non-symlinks
+  test -f "$f" || continue  # skip links to anything but regular files
+  
+  cp -p --dereference "$f" "$f".file  # expand link
+  mv -v "$f" "$f".link                # move link out of the way
+  mv -v "$f".file "$f"                # replace with regular file
+  $savelinks || rm "$f".link          # remove link unless keeping
+done

@@ -1,0 +1,29 @@
+#!/bin/sh
+# $Id$
+# Commit after TL package update. We rely on PATH to deal with trunk vs.
+# branch. (See c2a and c2b.)
+
+test $# -eq 0 && cd /
+/bin/pwd >/dev/null || exit 1
+
+msg=`echo "$1" | sed "s/^-m//"`
+shift
+
+dirlist=${TMPDIR-/tmp}/`id -u`.tlplace.dirs
+tlroot=`tail -n 1 $dirlist | sed 's,/Master.*,,'`
+if test ! -d "$tlroot/Master"; then
+  echo "$0: failed to get tlroot from $dirlist: $tlroot" >&2
+  exit 1
+fi
+echo "$tlroot"
+sleep 1
+
+svn commit -m"$msg" `cat $dirlist` \
+  "$tlroot"/Master/tlpkg/bin/tlpkg-ctan-check \
+  "$tlroot"/Master/tlpkg/bin/tlpkginfo \
+  "$tlroot"/Master/tlpkg/libexec/ctan2tds \
+  "$tlroot"/Master/tlpkg/bin/ctan2tl \
+  "$tlroot"/Master/tlpkg/bin/c2lx \
+  "$tlroot"/Master/tlpkg/tlpsrc/ \
+  "$tlroot"/TODO \
+  "$@"

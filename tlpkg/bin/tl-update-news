@@ -1,0 +1,50 @@
+#!/bin/sh -e
+# $Id$
+# Public domain. Originally written 2022, Karl Berry.
+# 
+# NEWS and ChangeLog files are maintained with the sources; we want to
+# copy almost all the NEWS, and ChangeLog if NEWS is not available, to
+# the runtime. We install a few README files too.
+# 
+# This is run, by hand, during the release process, along with updating
+# the man pages, Texinfo manuals, and more. See tlpkg/doc/releng.txt.
+#
+# pdftex, luatex, mpost, cweb and related, ptex and related;
+#   the manuals are updated separately, not in this script,
+#   but we update some of the NEWS here.
+# 
+# (By the way, we don't ordinarily use sh -e, but since all we're doing
+# here is a bunch of copies, it seemed the simplest.)
+
+mydir=`cd \`dirname $0\` && pwd`  # Master/tlpkg/bin
+tlroot=`cd $mydir/../../../ && pwd`
+Build=$tlroot/Build
+Master=$tlroot/Master
+#
+xist_doc=$Master/texmf-dist/doc
+#
+cp="cp -pfv"
+
+cd $Build/source/texk/ || exit 1
+#
+$cp dvipsk/NEWS $xist_doc/dvips/
+$cp dvipsk/README $xist_doc/dvips/
+#
+$cp dvipdfm-x/README $xist_doc/dvipdfmx/
+#
+$cp kpathsea/NEWS $xist_doc/kpathsea/
+
+cd $Build/source/texk/web2c || exit 1
+$cp NEWS $xist_doc/web2c/
+#
+$cp alephdir/ChangeLog $xist_doc/aleph/base/
+$cp etexdir/ChangeLog $xist_doc/etex/base/
+$cp etexdir/README $xist_doc/etex/base/
+$cp luatexdir/NEWS $xist_doc/luatex/base/
+$cp mplibdir/NEWS $xist_doc/metapost/base/
+$cp pdftexdir/NEWS $xist_doc/pdftex/
+$cp pdftexdir/README $xist_doc/pdftex/
+$cp xetexdir/NEWS $xist_doc/xetex/base/
+#
+# do this last just because we do it via make.
+make -C hitexdir/doc install

@@ -1,0 +1,104 @@
+#!/bin/sh
+# $Id$
+# Public domain. Originally written 2019, Karl Berry.
+#
+# Make TL containers (in $1[/archive] || cwd) that are regular files
+# into symlinks. That is, if we have foo.tar.xz as a regular file, look
+# inside it for the revision number NNN, and move it (and
+# foo.{doc,src}.tar.xz if they exist) to foo[.src,doc].rNNN.tar.xz, and
+# leave symlinks behind.
+#
+# We needed to do this for TL20 to make all packages into symlinks to
+# such versioned containers. Packages which had been updated since Nov 27
+# or so were already versioned, but time to make it happen universally.
+# No need to change the revision numbers.
+# 
+# We're not going to worry about quoting filename arguments.
+# All our package names are simple strings, by design.
+
+verbose=echo
+
+if test -d "$1"; then
+  cd "$1" || exit 1
+  test -d archive && { cd archive || exit 1; }
+fi
+
+tmpdir=/tmp/fixtmp
+rm -rf $tmpdir
+mkdir $tmpdir || exit 1
+
+getrev () {
+  tarfile=$1
+  test -s $tarfile || { echo "$0: empty tar file: $tarfile" >&2; exit 1; }
+  #
+  # let accumulate, for fun? rm -rf $tmpdir/*
+  # only need/want tlpobj file, so just extract that:
+  tar -C $tmpdir -xf $tarfile tlpkg/tlpobj || exit 1
+  #
+  # make sure we have it:
+  name_without_tar=`echo $tarfile | sed 's/\.tar\.xz$//'`
+  objfile=$tmpdir/tlpkg/tlpobj/$name_without_tar.tlpobj
+  test -s $objfile || { echo "$0: empty tlpobj file: $objfile" >&2; exit 1; }  
+  #
+  rev=`awk '$1=="revision" {print $2}' $objfile`
+  if echo "$rev" | egrep '^[0-9]+$' >/dev/null; then :; else
+    echo "$0: goodbye, revision $rev not numeric in: $objfile" >&2
+    exit 1
+  fi
+  echo $rev
+}
+
+linkit () {
+  what=$1
+  name=$2
+  if test -h $name; then
+    $verbose "$name: $what symlink, skipping."
+  else
+    #echo "$name: linking $what"
+    rev=`getrev $name`
+    if echo "$rev" | egrep '^[0-9]+$' >/dev/null; then :; else
+      echo "$name: goodbye, revision not numeric: $rev" >&2
+      exit 1
+    fi
+    #echo "got rev $rev"
+    name_without_tar=`echo $name | sed 's/\.tar\.xz$//'`
+    versioned_name=$name_without_tar.r$rev.tar.xz
+    mv $name $versioned_name || exit 1
+    ln -sv $versioned_name $name || exit 1
+    #exit 0
+  fi
+}
+
+if test ! -h texlive.infra.tar.xz; then
+  # this can't be the right place.
+  echo "$0: texlive.infra.tar.xz is not a link, goodbye." >&2
+  exit 1
+fi
+
+for f in *; do
+  if echo $f | egrep '^[^.]+(\.(doc|source))?\.tar\.xz$' >/dev/null; then
+    # foo.tar.xz | foo.{doc,sourc}.tar.xz
+    linkit pkg $f
+  
+  elif echo $f | egrep '^[^.]+(\.[^.]+)?\.r[0-9]+\.tar\.xz$' >/dev/null; then
+    # foo.rNNN.tar.xz | foo.{doc,source,ARCH}.rNNN.tar.xz
+    $verbose "$f: versioned, skipping."
+
+  elif echo $f \
+       | egrep '^(texlive\.infra|wintools\.windows).*\.tar\.xz$' >/dev/null; then
+    # texlive.infra and wintools.windows special cases, maybe with arches.
+    # some are already linked, but not all.
+    if echo $f | egrep '\.r[0-9]+\.' >/dev/null; then
+      $verbose "$f: versioned special, skipped."
+    else
+      linkit special $f
+    fi
+
+  elif echo $f | egrep '^[^.]+\.[^.]+\.tar\.xz$' >/dev/null; then
+    # foo.ARCH.tar.xz
+    linkit arch $f
+  
+  else
+    echo "$f: unknown" >&2
+  fi
+done

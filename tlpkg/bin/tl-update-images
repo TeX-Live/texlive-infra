@@ -1,0 +1,348 @@
+#!/bin/sh
+# $Id$
+# Create the .iso image(s) for TeX Live.
+# 
+# Copyright 2007-2024 Karl Berry.
+# Copyright 2003, 2004, 2005 Sebastian Rahtz.
+#
+# This file is licensed under the GNU General Public License version 2
+# or any later version.
+#
+# Send bug reports or suggestions to tex-live@tug.org.
+# Historical notes at the end of the script.
+
+renice 20 $$ >/dev/null 2>&1
+LANG=C; export LANG
+LC_ALL=C; export LC_ALL
+unset CDPATH  # avoid output from cd
+umask 022
+
+NAME=texlive
+V=2024
+D=`date +%Y%m%d`
+target=/home/ftp/texlive/Images/test
+
+XZ_OPT=-6e; export XZ_OPT # compression level, -9 for slowest-but-most,
+                          # which is not worth the (excessive) time.
+                          # The -e is also for better compression.
+
+mydir=`cd \`dirname $0\` && /bin/pwd`
+cd $mydir || exit 1  # the Master/tlpkg/bin directory
+master=`cd ../.. && /bin/pwd`
+test -z "$master" && exit 1
+
+lockfile=/dev/shm/cron.tlimg.lock  # so it'll go away on reboot
+lockfile -r 0 $lockfile || exit 1  # from procmail
+#
+release_savefile=/tmp/tluirt.txt
+release_livefile=$master/release-texlive.txt
+#
+# On exit, remove the lockfile and undo the release-texlive.txt without
+# using svn.
+#
+trap "set -x; rm -f $lockfile; \
+  test -s $release_savefile && cp $release_savefile $release_livefile; \
+  rm -f $release_savefile
+exit 0;" 0 1 2 15
+
+debug=${OVERRIDE_DEBUG-false}
+mkisofs="xorriso -read_mkisofsrc -as mkisofs"   # mkisofs
+makeinst=true
+maketar=true
+tar_all=true
+tar_bin_only=false
+tar_devsource_only=false
+tar_extra_only=false
+tar_source_only=false
+tlnet=/home/ftp/texlive/tlpretest
+quiet=  # for passing to mkisofs
+
+while test $# -gt 0; do
+  case $1 in
+  --debug)     debug=true; quiet=;;
+  --help)      echo "$0: Helpless, use the source, sorry."; exit 0;;
+  --mkisofs=*) mkisofs=`echo $1 | sed 's/.*=//'`;;
+  --noinst)    makeinst=false;;
+  --notar)     maketar=false;;
+  --quiet)     quiet=-quiet;;
+  --target=*)  target=`echo $1 | sed 's/.*=//'`;;
+  --tar-bin-only)       tar_all=false; makeinst=false; tar_bin_only=true;;
+  --tar-devsource-only) tar_all=false; makeinst=false;tar_devsource_only=true;;
+  --tar-extra-only)     tar_all=false; makeinst=false; tar_extra_only=true;;
+  --tar-source-only)    tar_all=false; makeinst=false; tar_source_only=true;;
+  --tlnet=*)   tlnet=`echo $1 | sed 's/.*=//'`;;
+  --version)   echo "$0 for $NAME-$V ($D)"; exit 0;;  # who cares ...
+  *) echo "$0: unknown option $1; try --help if you need it." >&2; exit 1;;
+  esac
+  shift
+done
+
+if $debug; then
+  echo "master = $master"
+  echo "target = $target"
+fi
+mkdir -p $target
+
+# From the days when we made multiple images.  Keep it factored out in
+# case they come back.
+common_mkisofs_options="$quiet -pad -J -dir-mode 0755 -r -x .svn"
+
+# 
+MAKEINST ()
+{
+  origdir=`pwd`
+  prefix=$target/$NAME$V # directory and prefix for our files within
+  iso=$prefix-$D.iso
+  echo "-- `date` writing iso to $iso"
+
+  # remove old images, checksums, signatures, versioned and generic.
+  rm -f $iso* $prefix*.iso*
+
+  # the image consists of a tlnet tree and the top-level files
+  # from master, more or less.
+  imgdir=${prefix}imgtmp
+  rm -rf $imgdir
+  mkdir $imgdir
+  
+  # files and a few dirs from master.
+  cp -p $master/.mkisofsrc $imgdir || exit 1    # mkisofs control
+  cp -p $master/* $imgdir 2>/dev/null           # intentionally skip dirs
+  cp -pr $master/readme* $master/source $imgdir # but do these few dirs
+  
+  # included preformatted doc in new dir for the DVD.
+  mkdir $imgdir/texlive-doc
+  (cd $master/texmf-dist/doc/texlive && tar cf - \
+     index.html */*.html */*.pdf */*.png \
+   | (cd $imgdir/texlive-doc && tar xf -))
+  
+  # files from network dist.
+  cd $tlnet || exit 1
+  if $debug; then
+    echo "source = `pwd`"
+  fi
+  if test ! -r install-tl; then
+    echo "$0: no install-tl in `pwd`, goodbye." >&2
+    exit 1
+  fi
+  cp -pr install-tl *.bat tlpkg $imgdir || exit 1
+
+  # We don't want the symlinks since we don't need them and we want to
+  # make Joliet images (though that format may not be needed anymore).
+  # Every symlink provokes a warning from xorrisofs under Joliet. But
+  # copy all the regular files, they are the basic constitutents of TL.
+  archivedir=$imgdir/archive
+  mkdir $archivedir || exit 1
+  find archive -type l -prune -o -type f -print \
+  | xargs cp --target-directory=$archivedir || exit 1
+
+ if false; then
+  # Until 2024, we pruned some platforms away to make the image smaller.
+  # In 2024, we no longer made a physical DVD, so may as well include
+  # everything. Even a maximimally-pruned image is too large to fit on a
+  # single-layer DVD, so no benefit for the 2024 volunteer burners.
+  # More info: https://tug.org/texcollection.
+
+  # Save all tlpdb files before pruning platforms; these will be posted
+  # to historic later; see releng.txt.
+  preprune=$target/preprune-tlpdb
+  rm -rf $preprune && mkdir $preprune
+  cp -p tlpkg/texlive.tlpdb* $preprune || exit 1
+  
+  # remove platforms to save space on the dvd.
+  # do this here so that they can be kept in the tree,
+  # and thus installed normally over the net.
+  # keep in sync with info on http://tug.org/texlive/doc.html.
+  prune="aarch64-linux amd64-netbsd armhf-linux \
+         i386-freebsd i386-linux i386-netbsd i386-solaris \
+         x86_64-linuxmusl x86_64-solaris"
+    # testing removal of more platforms:
+    # amd64-freebsd x86_64-cygwin x86_64-darwinlegacy"
+    # that would leave only x86_64-linux universal-darwin windows.
+  echo "-- pruning platforms: $prune..."
+  mkdir $imgdir/tlpkg/bin
+  cp $mydir/tl-prune-platforms $imgdir/tlpkg/bin
+  $imgdir/tlpkg/bin/tl-prune-platforms $prune >/tmp/pruneimg.out || exit 1
+
+  # due to the pruning, must re-checksum and re-sign the tlpdb in the image.
+  md5sum $imgdir/tlpkg/texlive.tlpdb >$imgdir/tlpkg/texlive.tlpdb.md5 \
+    || exit 1
+  sha512sum $imgdir/tlpkg/texlive.tlpdb >$imgdir/tlpkg/texlive.tlpdb.sha512 \
+    || exit 1
+  $master/tlpkg/bin/tl-sign-file $imgdir/tlpkg/texlive.tlpdb.sha512 \
+    || exit 1
+ fi # false
+
+  # A few of those files we don't want in the image.
+  rm -rf $imgdir/tlpkg/texlive.tlpdb.xz $imgdir/tlpkg/bin
+  
+  # the actual iso creation.
+  cd $imgdir || exit 1
+  cmd="$mkisofs $common_mkisofs_options -o $iso ."
+  echo "-- `date` with: $cmd"
+  $cmd
+  status=$?
+  if test $status -ne 0; then
+    echo "$0: $mkisofs failed (status $status), goodbye." >&2
+    exit $status
+  fi
+  
+  cd $target || exit 1
+  rm -rf $imgdir
+
+  # make checksums after making the iso.
+  rm -f $prefix.iso.md5; md5sum `basename $iso` >$iso.md5 || exit 1
+  rm -f $prefix.iso.sha512; sha512sum `basename $iso` >$iso.sha512 || exit 1
+
+  # in the checksum files, adjust the embedded filename for generic names.
+  rm -f $prefix.iso.md5; sed "s,-$D,," $iso.md5 >$prefix.iso.md5
+  rm -f $prefix.iso.sha512; sed "s,-$D,," $iso.sha512 >$prefix.iso.sha512
+
+  # sign both the versioned and generic checksums, separately.
+  rm -f $iso.sha512.asc
+  $master/tlpkg/bin/tl-sign-file $iso.sha512 || exit 1
+  #
+  rm -f $prefix.iso.sha512.asc
+  $master/tlpkg/bin/tl-sign-file $prefix.iso.sha512 || exit 1
+
+  # symlinks with short name (potentially used in /etc/fstab).
+  rm -f $prefix.iso; ln -s `basename $iso` $prefix.iso             # with year
+  rm -f $target/$NAME.iso; ln -s `basename $iso` $target/$NAME.iso # no year
+
+  # at the end, all the files should be non-empty.
+  all_ok=true
+  for f in *.md5 *.sha512 *.asc *.iso; do
+    if test ! -s $f; then
+      echo "$0: MAKEINST: unexpected empty file: $f" >&2
+      all_ok=false
+    fi
+  done
+  $all_ok || exit 1  # give up now if empty files
+  
+  cd $origdir || exit 1
+  echo "-- `date` iso files:"
+  ls -l $iso $iso.sha512 $iso.sha512.asc 
+}
+
+
+# 
+# Make the tar files: the sources, the texmf trees, the binaries, the
+# minor "extra" files.  Each should unpack into its directory name.  We
+# use the GNU tar --transform option to avoid copying the whole
+# hierarchy to a temp directory.  The do_tar function takes that
+# temp directory name as its first argument, and the files to archive as
+# the rest.
+# 
+do_tar ()
+{
+  name=$1; shift
+  #
+  if false; then # ddebug
+    verbose="-v --show-transformed-names"
+  else
+    verbose=
+  fi
+  #
+  compress=--xz
+  #
+  excludes="--exclude-vcs"
+  if echo "$name" | grep 'source$' >/dev/null; then
+    # more excludes for source tarball.
+    excludes="$excludes --exclude=Work --exclude=inst"
+    excludes="$excludes --exclude=autom4te.cache"
+    excludes="$excludes --exclude=asymptote/binaries" # also distclean asy
+  fi
+  #
+  tar_common_opt="$verbose $compress $excludes"
+  #
+  tarfile=$target/$name.tar.xz
+  tar -cf $tarfile --owner=0 --group=0 \
+      --transform="s,^,$name/," $tar_common_opt \
+      "$@"
+  if test $? -ne 0; then
+    echo "$0: tar failed, goodbye." >&2
+  fi
+  
+  origdir=`pwd`
+  cd $target || exit 1
+  #
+  rm -f $tarfile.sha512
+  sha512sum `basename $tarfile` >$tarfile.sha512 || exit 1
+  #
+  rm -f $tarfile.sha512.asc
+  $master/tlpkg/bin/tl-sign-file $tarfile.sha512 || exit 1
+  #
+  cd $origdir || exit 1
+
+  echo
+  ls -l $tarfile $tarfile.sha512 $tarfile.sha512.asc
+}
+
+MAKETAR ()
+{
+  echo; echo "-- `date` writing tars to $target" # ~2 hours
+
+  # remove old tarballs and checksums.
+  rm -f $target/$NAME-*.tar.*
+
+  # make tar files using the contents of the tree we are running out of.
+  if $tar_extra_only || $tar_all; then
+    cd $master || exit 1
+    do_tar $NAME-$D-extra \
+         LICENSE* README* autorun.inf *.html install* re* tl-* \
+         tlpkg/TeXLive tlpkg/texlive.tlpdb tlpkg/tlpostcode tlpkg/translations
+    $tar_extra_only && return  # for debugging
+  fi
+  
+  # compiled binaries.
+  if $tar_bin_only || $tar_all; then
+    cd $master/bin || exit 1
+    do_tar $NAME-$D-bin *
+    $tar_bin_only && return
+  fi
+  
+  # compilable sources.
+  if $tar_source_only || $tar_all; then
+    cd $master/../Build/source || exit 1
+    do_tar $NAME-$D-source *
+    $tar_source_only && return
+  fi
+  
+  # development sources, which we record in the
+  # 00texlive.image (fake) package; see its .tlpsrc.
+  if $tar_devsource_only || $tar_all; then
+    cd $master || exit 1
+    do_tar $NAME-$D-devsource `$mydir/tlpfiles 00texlive.image`
+    $tar_devsource_only && return
+  fi
+
+  # the big tree; must have $tar_all if we get here.
+  cd $master || exit 1
+  do_tar $NAME-$D-texmf texmf*
+}
+
+
+#  main program.
+
+# Add our exact version to the release file.  Ensure a line of its own,
+# although a blank line should already be there.
+rm -f $release_savefile
+cp $release_livefile $release_savefile || exit 1
+printf "\ntexlive-$D\n" >>$release_livefile || exit 1
+
+$makeinst && MAKEINST
+$maketar && MAKETAR
+
+exit 0
+
+# Until 2010, we also produced:
+# live: full live distribution which can be run as is (CD/DVD)
+# but this was dropped in 2010.  TeX Live is no longer live.  Oh well.
+#
+# From 2004-2007, we produced:
+# inst: compressed zip files and installer only (CD)
+# but this was dropped in 2008, and restored in a different form in 2010
+# for DVD.
+# 
+# In 2003, we produced:
+# demo: live subset which can be run as is (CD)
+# but this was dropped in 2004.

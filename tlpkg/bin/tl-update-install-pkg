@@ -1,0 +1,283 @@
+#!/usr/bin/env perl
+# $Id$
+# Copyright 2008-2023 Reinhard Kotucha, Norbert Preining, Karl Berry
+# This file is licensed under the GNU General Public License version 2
+# or any later version.
+
+# This script creates the zip (everything) and exe (everything, made
+# with nsi) and tgz (omits windows files) files that are how users
+# install TL over the net.  Invoked from tl-update-tlnet.
+
+BEGIN {
+  $^W = 1;
+  my $me = $0;
+  chomp ($thisdir = `pwd`);
+  if ($me =~ m!/!) {
+    ($::installerdir = $me) =~ s!(.*)/.*$!$1/../..!;
+  } else {
+    $::installerdir = '../..';
+  }
+  chdir ($installerdir) || die "$prg: chdir($installerdir) failed: $!";
+  chomp ($installerdir = `pwd`);
+  unshift (@INC, "$::installerdir/tlpkg");
+  #
+  $ENV{"PATH"} = "/usr/local/gnu/bin:$ENV{PATH}";  # for sha*sum
+}
+
+use Cwd qw(abs_path);
+use Getopt::Long;
+$Getopt::Long::autoabbrev=0;
+
+use TeXLive::TLPDB;
+use TeXLive::TLPOBJ;
+use TeXLive::TLUtils qw(:DEFAULT mkdirhier copy);
+use TeXLive::TLConfig;
+
+$opt_help = 0;
+$opt_verbose = 0;
+$opt_texlivedocs = 0;
+my $opt_gpgcmd = "$::installerdir/tlpkg/bin/tl-sign-file";
+
+sub usage {
+  print <<'EOF';
+Usage: $0 [-h|--help] [-v|--verbose] -o|--outputdir=DIR
+
+Generate a .tar.gz file for Unix, a .exe for Windows, and a .zip file
+for all systems containing all the files needed to install TeX Live from
+the network.  An existing directory must be specified as the output
+location.
+
+Options:
+  -h, --help        Print this message and exit.
+  -t, --texlivedocs Include the pdf and html versions of the texlive guide.
+  -o, --outputdir   Target directory. Must exist and be writable.
+  -v, --verbose     Extra messages.
+  --gpgcmd          Use value instead of tl-sign-file.
+EOF
+;
+  exit 0;
+}
+
+usage if (@ARGV<1);
+
+TeXLive::TLUtils::process_logging_options();
+GetOptions(
+  "outputdir|o=s",
+  "texlivedocs|t",
+  "verbose|v",
+  "gpgcmd=s"    => \$opt_gpgcmd,
+  "help|h") or usage();
+
+usage if $opt_help;
+die "$0: extra argument(s) @ARGV; try --help if you need it.\n" if @ARGV;
+
+my $prg = TeXLive::TLUtils::basename($0);
+
+# determine directories.
+my $sys_tmp = TeXLive::TLUtils::initialize_global_tmpdir() 
+  || die ("cannot get temporary directory"); 
+
+# top directory we will generate the install pkgs in.
+my $tmpdir = "$sys_tmp/install-tl-$$";
+
+# subdirectory we will copy the files to.
+chomp (my $YYYYMMDD = `date +%Y%m%d`);
+my $install_tl_name = "install-tl-$YYYYMMDD";
+my $inst_tmp = "$tmpdir/$install_tl_name";
+
+die "$prg: output directory must be specified; try --help if you need it.\n"
+  if ! $opt_outputdir;
+my $outputdir = $opt_outputdir;
+
+my @signals = qw(HUP INT ILL FPE SEGV TERM ABRT QUIT BUS PIPE);
+#
+sub cleanup {
+  if (-d $tmpdir) {
+    system ('rm', '-rf', $tmpdir);
+  }
+}
+#
+for my $signal (@signals) {
+  $SIG{"$signal"} = \&cleanup;
+}
+
+# create directories.
+die "$tmpdir already exists" if -d $tmpdir;
+mkdir "$tmpdir" or die "Can't mkdir($tmpdir)";
+mkdir "$inst_tmp" or die "Can't mkdir($inst_tmp)";
+
+if ($opt_verbose) {
+  info("thisdir:      \"$thisdir\"\n");
+  info("installerdir: \"$installerdir\"\n");
+  info("sys_tmp:      \"$sys_tmp\"\n");
+  info("tmpdir:       \"$tmpdir\"\n");
+  info("inst_tmp:     \"$inst_tmp\"\n");
+  info("outputdir:    \"$outputdir\"\n");
+}
+
+die "$prg: Output directory does not exist: $outputdir.\n" unless -e $outputdir;
+die "$prg: $outputdir not a directory.\n" unless -d $outputdir;
+die "$prg: Output directory not writable: $outputdir.\n" unless -w $outputdir;
+
+# read TLPDB and extract files
+
+my $tlpdb = TeXLive::TLPDB->new ("root" => $installerdir);
+die "$prg: Cannot find tlpdb in $installerdir.\n" unless defined $tlpdb;
+
+my $tlpinst = $tlpdb->get_package("00texlive.installer");
+die "$prg: no 00texlive.installer in ${installerdir}'s texlive.tlpdb" 
+  unless defined $tlpinst;
+
+my $tlpinfra = $tlpdb->get_package("texlive.infra");
+die "$prg: no texlive.infra in ${installerdir}'s texlive.tlpdb"
+  unless defined $tlpinfra;
+
+my $tlptrans = $tlpdb->get_package("texlive-msg-translations");
+die "$prg: no texlive-msg-translations in ${installerdir}'s texlive.tlpdb"
+  unless defined $tlptrans;
+
+my @unix = ();
+push @unix, $tlpinst->runfiles;
+push @unix, grep (! /^texmf\//, $tlpinfra->runfiles);
+push @unix, $tlpinst->docfiles;   # doc
+push @unix, $tlptrans->runfiles;  # translations
+
+# add the texlive-LL docs in pdf and html format if the option is given.
+# 
+if ($opt_texlivedocs) {
+  for my $p (qw(texlive-en texlive-de texlive-fr texlive-it texlive-cz
+                    texlive-pl texlive-ru texlive-zh-cn)) {
+    my $tlpdocs = $tlpdb->get_package($p);
+    if (!defined $tlpdocs) {
+      warn "Cannot find package $p in tlpdb";
+      next;
+    }
+    push (@unix, $tlpdocs->docfiles);
+  }
+}
+
+my %tlpbin = %{$tlpinst->binfiles};
+for my $a (keys %tlpbin) {
+  next if ($a =~ m/windows/);
+  push (@unix, @{$tlpbin{$a}});
+}
+
+my @windows = ();
+push (@windows, @unix);
+if (defined $tlpbin{"windows"}) {
+  push (@windows, @{$tlpbin{"windows"}});
+}
+
+
+# main.
+copy_files (@unix);
+make_zip ("tgz");
+
+copy_files (@windows);
+make_zip ("zip");
+make_zip ("nsis");
+
+install_files ();
+
+cleanup ();
+exit (0);
+
+
+# copy files from the repository to $inst_tmp.
+#
+sub copy_files {
+  my ($dir, $file);
+  for (@_) {
+    if ($_ !~ m!/!) {
+      # file in the root, missing ./
+      $_ = "./$_";
+    }
+    ($dir, $file) = /^(.*)\/(.*)/;
+    mkdirhier ("$inst_tmp/$dir");
+    copy ($_, "$inst_tmp/$dir");
+    -r "$inst_tmp/$dir/$file"
+    || die "copy of $_ to $inst_tmp/$dir failed (cwd=$ENV{PWD})";
+  }
+}
+
+
+# create the .tar.gz, .zip, .exe (nsis) install packages.
+#
+sub make_zip {
+  my ($type) = @_;
+  info ("$prg: Making $type...\n");
+
+  chomp (my $prevdir = `pwd`);
+  &xchdir ($tmpdir);
+  if ($type eq 'zip') {
+    &xsystem ('zip', '-rq', 'install-tl.zip', $install_tl_name);
+
+  } elsif ($type eq 'nsis') {
+    # write include file for dated install directory.
+    my $nsh = "$tmpdir/tlsubdir.nsh";
+    system ("echo !define YYYYMMDD '$YYYYMMDD' >$nsh");
+    system ("echo !define INST_TL_NAME '$install_tl_name' >>$nsh");
+    copy ("$::installerdir/tlpkg/libexec/install-tl.nsi", $tmpdir);
+    &xsystem ("makensis -V4 install-tl >$tmpdir/install-tl-nsis.log");
+
+  } elsif ($type eq 'tgz') {
+    &xsystem ('tar', '-czf', 'install-tl-unx.tar.gz',
+    $install_tl_name); 
+
+  } else {
+    die "unknown install package type $type";
+  }
+  &xchdir ($prevdir);
+}
+
+
+# copy generated install packages to outputdir,
+#
+sub install_files {
+  $outputdir = abs_path ($outputdir);
+  info ("$prg: Installing to $outputdir\n");
+  for my $f ("install-tl-unx.tar.gz", "install-tl.zip",
+             "install-tl-windows.exe") {
+    copy ("$tmpdir/$f", $outputdir);
+    xsystem ("cd $outputdir && $TeXLive::TLConfig::ChecksumProgram $f >$f.$TeXLive::TLConfig::ChecksumExtension");
+    xsystem ("cd $outputdir && rm -f $f.$TeXLive::TLConfig::ChecksumExtension.asc");
+    xsystem ("cd $outputdir && $opt_gpgcmd $f.$TeXLive::TLConfig::ChecksumExtension");
+    system ('ls', '-l', "$outputdir/$f");
+  }
+
+  # create unpacked installer that can run in that directory,
+  # for the sake of people mirroring.
+  # We'd like to specify exactly what we want to unpack,
+  # but unzip doesn't support recursively unpacking a directory,
+  # and it's too painful to specify all the (many dozens of) files.
+  # So unpack directly in the real dir.  Scary.
+  # Since we're doing this in the trial directory created by tl-update-tlnet,
+  # there are no existing files to save.
+  xchdir ($outputdir);
+
+  # unpack in a temp directory.
+  my $junkdir = "junkdir";
+  mkdir ($junkdir);
+  xsystem ("cd $junkdir && unzip -q $outputdir/install-tl.zip");
+  
+  # move what we want and erase the rest.
+  -d "tlpkg"
+    || mkdir ("tlpkg", 0777)
+    || die "mkdir(tlpkg) failed in $outputdir: $!";
+  xsystem ("mv $junkdir/$install_tl_name/install-tl* .");
+  
+  # These tlpkg/ subdirs exist when installing via tl-update-tlnet (?),
+  # though not when testing this script standalone.
+  my $tlpkg_subdirs = "TeXLive installer tlperl tltcl translations gpg";
+  xsystem ("cd tlpkg && rm -rf $tlpkg_subdirs");
+  xsystem ("mv $junkdir/$install_tl_name/tlpkg/* tlpkg/");
+  xsystem ("rm -rf $junkdir");
+}
+
+
+### Local Variables:
+### perl-indent-level: 2
+### tab-width: 2
+### indent-tabs-mode: nil
+### End:
+# vim:set tabstop=2 expandtab: #

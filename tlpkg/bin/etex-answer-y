@@ -1,0 +1,21 @@
+#!/bin/sh
+# $Id$
+# Public domain. Originally written by Karl Berry, 20201.
+# lua-ul and other packages do not set \askforoverwritefalse.
+# and docstrip spuriously asks about overwriting when a file to be
+# generated exists anywhere in the tree, not just when something will
+# actually be overwritten. So answer y.
+# https://github.com/latex3/latex2e/issues/558
+# 
+# An alternative would be to create a temporary docstrip.cfg file
+# setting \askforoverwritefalse. Perhaps interaction is required in
+# other cases also, though.
+
+if test x"$1" = x--engine; then
+  shift
+  engine=$1; shift
+else
+  engine=etex
+fi
+
+yes y | head -128 | $engine --8bit "$@" 

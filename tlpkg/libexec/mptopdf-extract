@@ -1,0 +1,44 @@
+#!/bin/sh
+# $Id$
+# Public domain. Originally written by Karl Berry, 2013.
+# Get the mptopdf files out of the context zip.  We distribute mptopdf
+# as a separate package, since it can be used with LaTeX.  See
+# description in mptopdf.tlpsrc for details.
+
+tlbindir=`cd \`dirname $0\` && cd ../bin && pwd`
+PATH=$tlbindir:$PATH # tlpfiles
+
+# Get files of our mptopdf package, ignoring top-level directory
+# and ignoring the man pages in TL locations.
+files=`tlpfiles mptopdf | sed 's,[^/]*/,,' | grep -v doc/man`
+if test -z "$files"; then
+  echo "$0: tlpfiles for mptopdf failed." >&2
+  exit 1
+fi
+
+# We will extract them from the current context release.
+ctan=/home/ftp/mirror/rsync.tex.ac.uk/CTAN
+context_zip=/home/ftp/mirror/www.pragma-ade.nl/context/latest/cont-tmf.zip
+if unzip -tq $context_zip; then :; else
+  echo "$0: unzip -t failed on:" >&2
+  ls -l $context_zip >&2
+  exit 1
+fi
+
+# Working directory.
+workdir=/home/ftp/tex/mptopdf
+rm -rf $workdir.new
+mkdir $workdir.new
+cd $workdir.new || exit 1
+unzip -q $context_zip $files || exit 1
+
+cd ..
+if diff -ru0 $workdir $workdir.new; then
+  rm -rf $workdir.new # same, nothing to do.
+else
+  # changed files, so work -> prev, new -> work.
+  # differences shown above.
+  rm -rf $workdir.prev
+  mv $workdir $workdir.prev || exit 1
+  mv $workdir.new $workdir || exit 1
+fi

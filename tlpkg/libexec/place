@@ -1,0 +1,538 @@
+#!/usr/bin/env perl
+# $Id$
+# Public domain.  Originally written by Sebastian Rahtz.
+# 
+# Process a "cooked" tree directory (probably created by ctan2tds in
+# Build/tmp.cooked), and integrate into the main texmf trees.
+# 
+# Basic usage: place PKG
+# to process ./PKG.  Best invoked from ctan2tl, not directly.
+
+BEGIN {
+  chomp ($mydir = `dirname $0`);  # we are in Master/tlpkg/bin
+  unshift (@INC, "$mydir/..");
+}
+
+use File::Basename;
+use File::Find;
+use Cwd;
+use TeXLive::TLConfig qw/$InfraLocation $DatabaseName/;
+use TeXLive::TLPSRC;
+use TeXLive::TLPOBJ;
+use TeXLive::TLPDB;
+use TeXLive::TLTREE;
+use Getopt::Long;
+
+my $chicken = 0;
+my $opt_contrib;
+my $opt_mode = "svn";
+exit 2 unless Getopt::Long::GetOptions (
+  "n" => \$chicken,
+  "contrib=s" => \$opt_contrib,
+  "mode=s"    => \$opt_mode,
+);
+
+print "place: chicken mode = $chicken\n";
+
+die "usage: $0 PKGNAME\n" unless @ARGV == 1;
+$package = $ARGV[0];
+# $::opt_verbosity = 3;  # debug tlpdb reading
+
+# Negative patterns are used to avoid conflicts when the name of a given
+# package happens to match the name of a subdirectory in another package.
+# For example, cell.tlpsrc contains:
+#   docpattern +!d texmf-dist/doc/latex/cals/test/cell
+# to avoid including that test/cell subdirectory in the cals package
+# when building tlpdb.  Ordinarily, if the pattern being excluded
+# doesn't match anything, there is a warning (e.g., cals might get rid
+# of that subdir someday, and then we'd want to delete the pattern from cell.)
+# 
+# But when we update cell from CTAN, of course cals is not present,
+# therefore the negative pattern has nothing to match, therefore warning
+# about it is noise, therefore omit the warning.
+$::tlpsrc_pattern_no_warn_negative = 1;
+
+%dirs = ();  # dirs we make changes in
+$TMP = $ENV{"TMPDIR"} || "/tmp";
+$tmpfile = "$TMP/$>.tlplace"; # use effective uid in temp file names
+
+$cooked_top = getcwd ();  # ctan2tl invokes us in the top-level cooked dir
+
+&xchdir ("$mydir/../..");
+my $M = $DEST = getcwd ();  # svn Master, ordinarily where we write
+
+$M = $DEST = $opt_contrib if (defined($opt_contrib));
+
+#
+&xchdir ("..");
+
+# top-level.  For historical reasons, is usually just relative to
+# Master, e.g., has texmf-dist.  But when a package has to write to both
+# Master and Build (e.g., biber), it will have Master and Build subdirs.
+my $TOP = getcwd ();
+
+&xchdir ("$cooked_top/$package");
+my $cooked_pkg = getcwd ();
+
+print "place: checking for case-insensitive clashes\n"; # Windows/Mac checkouts
+my @caseclash = `find . -print | sort | uniq -i -d`;
+die "place: case clashes: @caseclash\n" if @caseclash;
+
+print "place: checking for trailing dot clashes\n";
+# this typically happens with a README generated from a dtx, thus
+# named "README.", and the package author also includes a
+# manually-renamed README in the package.  This causes a clash with
+# Windows checkouts.  So remove the README. if it's the same, else give up.
+# (= have to do something in ctan2tds to fix it.)
+#
+my @trailingdots = `find . -type f -name \*. -print | sort`;
+for my $dot (@trailingdots) {
+  chomp ($dot);
+  (my $nodot = $dot) =~ s/\.$//;
+  print "place:   checking $dot vs. $nodot\n";
+  next if ! -e $nodot;  # just foo., no foo -- unlikely, but ok
+  if (system ("cmp -s $dot $nodot") == 0) {
+    print "place:   same, removing dot: $dot\n";
+    unlink ($dot) || die "unlink($dot) failed: $!";
+  } else {
+    die "place: clash between $dot and $nodot; fix in ctan2ds\n";
+  }
+}
+# we do those checks (and possible removals) before making the new TL
+# package, so the "README."  file doesn't get into the data structures.
+
+
+if (-d "Master") {  # maybe have both Build and Master
+  &xchdir ("Master");
+  $DEST = $TOP;
+}
+my $cooked_master = getcwd ();
+
+if (-d "texmf-dist") {
+  $Type = "Package";
+} else {
+  die "$cooked_master: no top level texmf-dist";
+}
+
+die "top-level README under $TOP, that can't be right" if <*/README>;
+
+# get all files in the existing package, if there is one.
+# In the unusual case when we have both Master and Build, we'll assume
+# we also want all the platform-specific files under bin/; else not.
+our %Old = &find_old_files ($package, $DEST eq $TOP ? "with-arch" : "");
+
+# create new tlpsrc.
+my $tlpsrc = TeXLive::TLPSRC->new ();
+my $tlpsrcfile = "$M/tlpkg/tlpsrc/$package.tlpsrc";
+if (! -r $tlpsrcfile) {
+  $tlpsrc->name($package);
+  $tlpsrc->category($Type);
+  if (! $chicken) {
+    local *TLPSRC;
+    $TLPSRC = ">$tlpsrcfile";
+    open (TLPSRC) || die "open($TLPSRC) failed: $!";
+    # not needed, we only set name and category which are taken
+    # be default from the file name, so do not create useless entries
+    # but only empty files
+    # $tlpsrc->writeout (\*TLPSRC);
+    close TLPSRC;
+  }
+} else {
+  $tlpsrc->from_file($tlpsrcfile);
+}
+
+# make the new tlpobj.
+# create TLTREE from stuff in cooked.
+my $tltree = TeXLive::TLTREE->new ("svnroot" => $cooked_master);
+$tltree->init_from_files;
+my $tlpnew = $tlpsrc->make_tlpobj($tltree, $M);
+
+
+
+# show comparison of old and new.
+print "\n\f ";
+
+&compare_disk_vs_tlpobj ($cooked_master, $tlpnew);
+&show_tlp_diffs ($tlpnew, %Old);
+
+# xx need svn cp, too?
+my ($new_build_files,$existing_build_files) = &build_files ($cooked_pkg,$DEST);
+my @new_build_files = @$new_build_files;
+
+# Figure out removals relative to old package.
+my %dirs_with_removals;
+&xchdir ($cooked_master);
+find (\&files, ".");  # sets %New to all new files under Master
+foreach $file (sort keys %Old) {
+  my $status = $New{$file} ? "retained" : "removed";
+  print "* $file\t[$status]\n";
+
+  # if the old file does not exist, don't try to remove it -- we
+  # probably did so by hand and didn't bother to update.
+  next unless -e "$M/$file";
+
+  # remove no longer existing files.
+  if (! $New{$file}) {
+    if ($opt_mode eq "svn") {
+      &xsystem ("svn remove \"$M/$file\"");
+    } else {
+      # we cannot use the full path since git does not allow this
+      &xsystem ("cd \"$M\" && git rm \"$file\"");
+    }
+    (my $old_dir = "$M/$file") =~ s,/[^/]*$,,;
+    $dirs_with_removals{$old_dir}++;
+  }
+
+  my $dname = dirname ("$M/$file");
+  $dirs{$dname}++;
+}
+
+
+
+# Copy in new files.
+&xchdir ($cooked_pkg);
+&xsystem ("tar cf - . | (cd $DEST && tar xf - )");
+
+# Processed everything out of the tmp cooked dir now, mv it aside.
+&xchdir ($cooked_top);
+&xsystem ("mv $package $package.done");
+
+# sort so dirs will be added before subdirs.
+for my $build_file (sort @new_build_files) {  # usually none
+  &add_file ($build_file);
+}
+#
+for my $file (sort keys %New) {
+  &add_file ("$M/$file") if ! $Old{$file};
+}
+
+if (keys %Old == 0) {  # new package
+  &add_file ("$M/tlpkg/tlpsrc/$package.tlpsrc");
+}
+
+# this file will often change, so be sure and include it.
+$dirs{"$M/tlpkg/tlpsrc/$package.tlpsrc"}++;
+
+# Now that all the files have been added, look for newly-empty
+# directories in the previous package incarnation.  We can only do this
+# when not chicken, since otherwise the old files will still exist and
+# the directories will not be empty.
+if (! $chicken) {
+  for my $empty_dir (&empty_dirs (keys %dirs_with_removals)) {
+    # every once in a while a directory consists only of newly-empty
+    # dirs. This will catch some of those; not worth trying to do full
+    # recursive search to get everything, cron.tl will report on leftovers.
+    chomp (my $empty_dir_parent = `cd $empty_dir/.. && pwd`);
+    my ($parent_if_empty) = &empty_dirs ($empty_dir_parent);
+    my $cmd = $opt_mode eq "svn" ? "svn remove" : "rmdir";
+    &xsystem ("cd $M && $cmd $empty_dir $parent_if_empty # emptydir");
+    #
+    # already in %dirs, so don't need to add.
+  }
+}
+
+
+# include any directories with existing files in Build.
+for my $bf (@$existing_build_files) {
+  (my $dir = $bf) =~ s,/[^/]*$,,;
+  $dirs{$dir}++;
+}
+
+# if we have a directory Build/.../linked_scripts/foo, 
+# include the linked_scripts directory, since the Makefile.am and .in
+# should have been changed (by hand) if the script was new.
+for my $dir (keys %dirs) {
+  next unless $dir =~ m,Build/.*/linked_scripts,;
+  $dir =~ s,/linked_scripts/.*$,/linked_scripts,;
+  $dirs{$dir}++;
+}
+
+# print dirs with changed files, and write the dir list to a file, for
+# passing to svn commit.  if other files have been modified in those
+# same dirs, though, this won't detect it.  It would be better to list
+# exactly the *files* which should be committed.
+# 
+my $dirlist_file = "$tmpfile.dirs";
+$DIRLIST = ">$dirlist_file";
+open (DIRLIST) || die "open($DIRLIST) failed: $!";
+#
+print "\nplace: directories are:\n";
+for my $dir (sort keys %dirs) {
+  print "$dir\n";
+  print DIRLIST "$dir\n";
+}
+close (DIRLIST) || warn "close($DIRLIST) failed: $!";
+
+# Always run svn update, even without --place.  This can help a worker
+# detect that a package update has already been done by someone else.
+if ($opt_mode eq "svn") {
+  print ("\nsvn status of those directories:\n");
+  system ("svn status `sort -u $dirlist_file`");
+  print ("\nsvn update of those directories:\n");
+  system ("svn update `sort -u $dirlist_file`");
+}
+# do nothing in git mode
+
+exit (0);
+
+
+
+# return hash whose keys are all the files in PACKAGE from the main
+# tlpdb.  If second arg is "with-arch", include platform-specific
+# files.  If PACKAGE is not defined, return undef or the empty list.
+# 
+sub find_old_files {
+  my ($package,$control) = @_;
+  my %ret;
+
+  # initialize TLPDB.
+  my $tlpdb = new TeXLive::TLPDB ("root" => $M);
+
+  my $tlpold = $tlpdb->get_package ($package);
+  if (defined($tlpold)) {
+    my @oldpkgs;
+    if ($control eq "with-arch") {
+      # also retrieve the platform-specific files, which are dependencies.
+      @oldpkgs = $tlpdb->expand_dependencies ("-only-arch", $tlpdb,($package));
+    } else {
+      @oldpkgs = ($package);
+    }
+    for my $oldpkgname (@oldpkgs) {
+      my $oldp = $tlpdb->get_package ($oldpkgname);
+      for my $f ($oldp->all_files) {
+        $ret{$f} = 1;
+      }
+    }
+  }
+
+  return %ret;
+}
+
+
+
+# add a file to the repository.  for svn, we also have to add the
+# containing dir, and the parent of that dir, if they are new.
+# 
+sub add_file {
+  my ($newfile) = @_;
+#warn "adding file $newfile";
+
+  # when it's needed, (grand*)parents must come first, else have svn
+  # "not working copy" error.
+  my $newdir = $dir = dirname ($newfile);
+
+  if ($opt_mode eq "git") {
+    &xsystem ("cd $M && git add $newfile");
+    $dirs{$newdir}++;
+    return;
+  }
+
+  my $needed_dirs = "";
+  #until (-d "$dir/.svn") {
+  until (&is_svn_dir($dir)) {
+    $needed_dirs = "$dir $needed_dirs";  # parents first
+    $dirs{$dir}++;
+    $dir = dirname ($dir);
+    die "no .svn dir found above $newdir? (in `pwd`)" if $dir eq ".";
+  }
+  &xsystem ("svn add -N $needed_dirs") if $needed_dirs;
+
+  # sometimes the add fails due to svn guessing wrongly about a file
+  # being binary vs. text, or mixed eol conventions.  Attempt to repair
+  # -- just with pdf for now.  This is not tested and needs work.
+  # 
+  if (!defined (eval qq(xsystem("svn add '$newfile'")))
+      && $newfile =~ /\.pdf\$/) {
+    &xsystem ("svn proplist --verbose $newfile");
+    &xsystem ("svn propset svn:mime-type application/pdf $newfile");
+  }
+
+  # remember that we changed this directory.
+  $dirs{$newdir}++;
+}
+
+
+
+# compare against independent list of files in the new hierarchy, in
+# case some of them did not get matched by the patterns.
+#
+sub compare_disk_vs_tlpobj {
+  my ($diskdir,$tlp) = @_;
+  chomp (my @files_on_disk = `cd $diskdir && find \! -type d`);
+  s,^\./,, foreach @files_on_disk;      # remove leading ./
+  @files_on_disk{@files_on_disk} = ();  # make list into hash
+  
+  for my $tlpfile ($tlp->all_files) {
+    if (exists $files_on_disk{$tlpfile}) {
+      delete $files_on_disk{$tlpfile};
+    } else {
+      print "$tlpfile in tlp but not on disk?!\n";
+    }
+  }
+  
+  print "\n*** not matched in new tlp:\n",
+        map ("  $_\n", sort keys %files_on_disk)
+    if keys %files_on_disk;
+}
+
+
+
+# write summary of changes to stdout and full diffs to a temp file so
+# humans can inspect if desired.
+# 
+sub show_tlp_diffs {
+  my ($tlpnew, %Old) = @_;
+  if (keys %Old == 0) {
+    print "place: $package not present in $M/$InfraLocation/$DatabaseName";
+  } else {
+    print "current vs. new $package (new is indented)\n";
+    my @oldfiles = keys %Old;
+    unlink ("$tmpfile.old");
+    foreach (sort @oldfiles) {
+      `echo "$_" >>$tmpfile.old`;
+    }
+    my @newfiles = $tlpnew->all_files;
+    unlink ("$tmpfile.new");
+    foreach (sort @newfiles) {
+      `echo "$_" >>$tmpfile.new`;
+    }
+    print `comm -3 $tmpfile.old $tmpfile.new`;
+    my @difffiles = `comm -12 $tmpfile.old $tmpfile.new`;
+    chomp (@difffiles);
+    my $sum = 0;
+    my $identical = 0;
+    #
+    my $diff_file = "$tmpfile.diff";
+    unlink ($diff_file);
+    #
+    # The --text is because we want to see the real changes, always.
+    # The space-related options are because those changes aren't real.
+    # (The diff is only run if the files are different according to our
+    #  own test, so it's ok if the options eliminate all the diffs; it'll
+    #  still get reported as needing an update.)
+    # The -s reports identical files.
+    # 
+    my $diff_cmd ="diff --text --strip-trailing-cr --ignore-all-space -U 0 -s";
+    #
+    for my $f (@difffiles) {
+      my $master_file = "$M/$f";
+      my $cooked_file = "$cooked_master/$f";
+      # diff has no options for handling Mac line endings, 
+      # so use our own script for the initial comparison.
+      if (system ("cmp-textfiles '$master_file' '$cooked_file'") == 0) {
+        $identical++;
+      } else {
+        my $tee = "tee -a $diff_file";
+        my @diff_out = `$diff_cmd $master_file $cooked_file | $tee`;
+        $sum += $#diff_out - 2; # zero-based, so first line doesn't count.
+                                # subtract another two lines for the heading
+                                # and at least one hunk marker.
+      }
+    }
+    my $nrcommfiles = @difffiles;
+    #
+    my $changed = $nrcommfiles - $identical;
+    print "$nrcommfiles common files, $changed changed, ~$sum lines different"
+          . " ($diff_file)";
+  }
+  print "\n\n\f\n";
+}
+
+
+
+# return list of new files under Build, if any.
+# do nothing to try to remove files under Build, that doesn't make sense.
+# 
+sub build_files {
+  my ($cooked_pkg, $svn_dest) = @_;
+  my @new_ret = ();
+  my @existing_ret = ();
+ 
+  return unless -d "$cooked_pkg/Build";
+  die "no Build subdir in $svn_dest?!" if ! -d "$svn_dest/Build";
+
+  # get list of files in cooked Build dir.
+  &xchdir ("$cooked_pkg");
+  local %New;  # dynamically hide global %New.
+  find (\&files, "Build");
+  
+  # compare against the svn Build dir; we only want the new files.
+  for my $file (keys %New) {
+    my $dest_file = "$svn_dest/$file";
+    my $status = -e $dest_file ? "existing" : "new";
+    print "* $file\t[$status]\n";
+    if ($status eq "new") {
+      push (@new_ret, $dest_file);
+    } else {
+      push (@existing_ret, $dest_file);
+    }
+  }
+  
+  return (\@new_ret, \@existing_ret);
+}
+
+
+
+# return list of empty (except for .svn) DIRS.
+# 
+sub empty_dirs {
+  my (@dirs) = @_;
+  my @ret = ();
+  
+  for my $d (@dirs) {
+    if (opendir (DIR, $d)) {
+      my @dirents = readdir (DIR);
+      closedir (DIR) || warn "closedir($d) failed: $!";
+      my @remainder = grep { $_ !~ /^\.(|\.|svn)$/ } @dirents;
+      push (@ret, $d) if @remainder == 0;
+    } else {
+      if ($opt_mode eq "svn") {
+        die "opendir($d) failed: $!";
+      }
+      # in git mode we don't die, git removes the empty dirs anyway
+    }
+  }
+  return @ret;
+}
+
+
+
+# subroutine for &find, updating the global %New.
+#
+sub files {
+  if (-f || -l) {  # consider files and symlinks
+    my $This = $File::Find::name;
+    $This =~ s,^\./,,;  # omit leading ./
+    $New{$This} = 1;
+  }
+}
+
+
+
+sub xchdir {
+  my ($dir) = @_;
+  chomp (my $pwd = `pwd`);
+  chdir ($dir) || die "chdir($dir) failed: $!\n(cwd=$pwd)";
+  print "place: chdir($dir)\n";
+}
+
+
+sub is_svn_dir {
+  my ($dir) = @_;
+
+  my $ret = system ("svn info $dir 2>/dev/null >/dev/null");
+  $ret /= 256;
+  return !$ret;
+}
+
+sub xsystem {
+  my ($cmd) = @_;
+  
+  print "place: SYSTEM $cmd\n";
+
+  unless ($chicken) {
+    my $ret = system ($cmd);
+    $ret /= 256;
+    die "`$cmd' failed, status=$ret, goodbye\n" if $ret != 0;
+  }
+}

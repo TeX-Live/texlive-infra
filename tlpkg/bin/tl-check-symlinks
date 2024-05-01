@@ -1,0 +1,30 @@
+#!/usr/bin/env perl
+# $Id$
+# Check given directory tree(s) (default to .) for broken symlinks;
+# report any found, and exit accordingly.
+
+use strict;
+use warnings;
+use File::Find;
+
+our $fail = 0;
+$ARGV[0] = "." if ! @ARGV;
+find(\&process_file, @ARGV);
+exit $fail;
+
+# $File::Find::dir is the current directory name,
+# $_ is the current filename within that directory
+# $File::Find::name is the complete pathname to the file.
+#
+sub process_file {
+  return unless -l;
+  return if -r;
+  $fail = 1;
+  print "broken link $File::Find::name -> ", readlink($_), "\n";
+}
+
+# Doesn't get to the warning in Find.pm, dunno. Anyway, our warning is
+# better since it includes the target.
+#!/bin/sh
+# exec perl -w -MFile::Find -e 'my $wanted=sub{};
+#   find({wanted=>$wanted, dangling_symlinks=>1}, "/home/karl/bin");'

@@ -1,0 +1,48 @@
+$Id$
+Master/texmf-dist/scripts/texlive
+(This file is public domain.)
+
+This directory contains scripts for TeX Live. The scripts here are in
+fact maintained here, and not under Build, unlike almost everything else
+under Master/texmf-dist/scripts. (The other directory of
+Master-maintained scripts is the sibling scripts/texlive-extra/.)
+
+There are slave copies of these Master-maintained scripts in
+Build/source/texk/texlive/linked_scripts, just as for the multitude of
+scripts updated from CTAN.  tlpkg/bin/tl-update-linked-scripts keeps
+them in sync; it's invoked from the nightly cron.
+
+The man pages for the programs here, though, are still maintained in
+Build/, since that is almost 100% true in TL, and it seems better not to
+break that.
+
+Additional scripts maintained as part of TeX Live, but not important for
+infrastructure or installation, are in ../texlive-extra.
+
+One reason for doing this is so we can have $Id expansion, so
+svn:keywords is set for the scripts maintained here. When they were
+maintained in Build, the --version option and doc of the copies in bin/
+svn->git mirror process does not preserve $Id strings. (Note from Karl:
+Although many people and processes hate keyword expansion, I'm afraid
+that I find it quite useful, so I don't want to give it up as long as I
+am working here. Feel free to change it after I'm gone. :)
+
+Another reason is that almost all scripts in the bin/*/ directories are
+now symlinks into texmf-dist/scripts/, so it's nice for these to follow
+suit for consistency and clarity.
+
+Summary of packages maintained as part of TeX Live,
+and whether they are included in scheme-infraonly:
+----------------------------------------------------
+texlive.infra - infraonly, core (tlmgr and support),
+  changes only pushed as a critical update.
+kpathsea - infraonly, binaries (kpsewhich) and non-user-visible scripts,
+  binaries only rebuilt for the annual release.
+texlive-scripts - infraonly, important scripts (fmtutil, updmap,
+  mktexlsr, ...), changes pushed normally.
+texlive-scripts-extra - not infraonly, little-used scripts (allcm, allec,
+  texconfig, ...), changes pushed normally.
+
+The principal mailing list is https://lists.tug.org/tex-live.
+
+All of these scripts are free software, mostly public domain.
