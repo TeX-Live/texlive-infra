@@ -38,6 +38,7 @@ use Getopt::Long qw(:config no_autoabbrev ignore_case_always);
 use File::Basename;
 use File::Spec;
 use Cwd;
+use Parallel::ForkManager;
 
 # don't import anything automatically, this requires us to explicitly
 # call functions with TeXLive::TLUtils prefix, and makes it easier to
@@ -469,38 +470,48 @@ sub callback_build_formats {
   my $nobuild = 0;
   my $notavail = 0;
   my $total = 0;
+  my $nproc = 24; # TODO should be dynamically tweaked to actual CPU
+  my $pm = Parallel::ForkManager->new($nproc);
+  $pm->run_on_finish(sub {
+    my ($pid, $exit_code, $ident, $exit_signal, $core_dump, $data_structure_reference) = @_;
+    my ($fmt, $eng) = @{$data_structure_reference};
+    if ($exit_code == $FMT_DISABLED)    {
+      log_to_status("DISABLED", $fmt, $eng, $what, $whatarg);
+      $disabled++;
+    } elsif ($exit_code == $FMT_NOTSELECTED) {
+      log_to_status("NOTSELECTED", $fmt, $eng, $what, $whatarg);
+      $nobuild++;
+    } elsif ($exit_code == $FMT_FAILURE)  {
+      log_to_status("FAILURE", $fmt, $eng, $what, $whatarg);
+      $err++;
+      push (@err, "$eng/$fmt");
+    } elsif ($exit_code == $FMT_SUCCESS)  {
+      log_to_status("SUCCESS", $fmt, $eng, $what, $whatarg);
+      $suc++;
+    } elsif ($exit_code == $FMT_NOTAVAIL) {
+      log_to_status("NOTAVAIL", $fmt, $eng, $what, $whatarg);
+      $notavail++;
+    }
+    else {
+      log_to_status("UNKNOWN", $fmt, $eng, $what, $whatarg);
+      print_error("callback_build_format (round 1): unknown return "
+        . "from select_and_rebuild.\n");
+    }
+  });
   for my $swi (qw/format=engine format!=engine/) {
     for my $fmt (keys %{$alldata->{'merged'}}) {
       for my $eng (keys %{$alldata->{'merged'}{$fmt}}) {
         next if ($swi eq "format=engine" && $fmt ne $eng);
         next if ($swi eq "format!=engine" && $fmt eq $eng);
         $total++;
+        $pm->start("select_and_rebuild_format($fmt, $eng, $what, $whatarg)") and next;
         my $val = select_and_rebuild_format($fmt, $eng, $what, $whatarg);
-        if ($val == $FMT_DISABLED)    {
-          log_to_status("DISABLED", $fmt, $eng, $what, $whatarg);
-          $disabled++;
-        } elsif ($val == $FMT_NOTSELECTED) {
-          log_to_status("NOTSELECTED", $fmt, $eng, $what, $whatarg);
-          $nobuild++;
-        } elsif ($val == $FMT_FAILURE)  {
-          log_to_status("FAILURE", $fmt, $eng, $what, $whatarg);
-          $err++;
-          push (@err, "$eng/$fmt");
-        } elsif ($val == $FMT_SUCCESS)  {
-          log_to_status("SUCCESS", $fmt, $eng, $what, $whatarg);
-          $suc++;
-        } elsif ($val == $FMT_NOTAVAIL) {
-          log_to_status("NOTAVAIL", $fmt, $eng, $what, $whatarg);
-          $notavail++; 
-        }
-        else {
-          log_to_status("UNKNOWN", $fmt, $eng, $what, $whatarg);
-          print_error("callback_build_format (round 1): unknown return "
-           . "from select_and_rebuild.\n");
-        }
+        my @array = ($fmt, $eng);
+        $pm->finish($val, \@array);
       }
     }
   }
+  $pm->wait_all_children;
 
   # if the user asked to rebuild something, but we did nothing, report
   # unless we tried to rebuild only missing formats.
