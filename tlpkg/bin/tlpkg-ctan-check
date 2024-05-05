@@ -240,7 +240,7 @@ my @TLP_working = qw(
     culmus cuprum cursolatex cuisine
     currency currfile curriculum-vitae currvita curve curve2e curves
     custom-bib customdice customenvs cutwin cv cv4tw cvss cweb-latex
-    cyber cybercic cyklop cyrillic cyrplain
+    cyber cybercic cyklop cyrillic cyrillic-modern cyrplain
   dad dancers dantelogo darkmode
     dashbox dashrule dashrulex dashundergaps dataref datax datatool
     dateiliste datenumber datestamp
@@ -326,7 +326,7 @@ my @TLP_working = qw(
     fail-fast faktor familytree
     fancybox fancyhandout fancyhdr fancyhdr-it fancylabel fancynum fancypar
     fancyqr fancyref fancyslides fancytabs fancytooltips fancyvrb fandol
-    fascicules fast-diagram fbb fbithesis fbox fbs
+    faq-fr fascicules fast-diagram fbb fbithesis fbox fbs
     fc fcavtex fcltxdoc fcolumn fdsymbol fduthesis featpost fei
     fenetrecas fenixpar
     fetamont fetchcls

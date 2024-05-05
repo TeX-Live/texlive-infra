@@ -426,6 +426,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'cweb',        "die 'skipping, programs'",
  'cwpuzzle',    "die 'skipping, in crossword package'",
  'cyklop',      "&MAKEcopy",
+ 'cyrillic-modern',   "&MAKEflatten",
  'dantelogo',   "&MAKEflatten",
  'dataref',     "&MAKEflatten",
  'datatooltk',  "die 'skipping, Java installation'",
@@ -551,7 +552,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'fancyvrb',    "&MAKEflatten",
  'faq',         "die 'skipping, use FAQ-en'",
  'faq-en',      "die 'skipping, use FAQ-en'",
- 'faq-fr',      "die 'skipping, just a tarball'",
  'fax',         "die 'skipping, nosell license'",
  'fbox',	"&MAKEflatten",
  'fc',          "&MAKEflatten",
@@ -3606,7 +3606,8 @@ $standardpro='\.pro$';
  'brushscr'     => 'config.pbsi',
  'cm-super'     => 'config.cm-super|cm-super.GS',
  'countriesofeurope' => 'config.*',
- 'dvipsconfig'  => '.*',   # addpsctrl should be in bin, but ...
+ 'cyrillic-modern'   => 'config.*',
+ 'dvipsconfig'  => '.*',   # addpsctrl should be in bin, but oh well
  'epspdf'       => 'NULL', # makegray.pro goes in scripts
  'esint-type1'  => 'config.esint',
  'initials'     => 'config.*',
