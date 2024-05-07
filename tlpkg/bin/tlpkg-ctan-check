@@ -801,7 +801,7 @@ my @TLP_working = qw(
     svn svn-multi svn-prov svninfo svrsymbols
     swebib swfigure swimgraf swrule swungdash syllogism
     symbats3 symbol sympycalc sympytexpackage
-    syntax synproof syntaxdi syntrace synttree
+    synproof syntax syntaxdi synthslant syntrace synttree
     systeme
   t-angles t2
     tabbing tabfigures table-fct tableaux tablefootnote tableof

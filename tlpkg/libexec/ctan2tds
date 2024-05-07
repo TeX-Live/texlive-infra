@@ -1366,6 +1366,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'symbol',	"die 'skipping, part of urw-base35, frozen'",
  'symbolindex', "die 'skipping, requires binary'",
  'syntaxdi',	"&MAKEflatten",
+ 'synthslant',	"&MAKEflatten",
  't2',          "&MAKEt2",
  'tablestyles', "die 'skipping, obsolete on CTAN'",
  'tabto',       "die 'skipping, use tabto-generic or tabto-ltx'",
@@ -3445,6 +3446,7 @@ $standardinsrunner = "latex -8bit";
  'pgf-spectra'		=> 'NULL',      # doc
  'pst-eucl-translation-bg' => 'NULL',   # doc
  'seuthesis'            => 'NULL',      # doc
+ 'synthslant'           => 'NULL',      # doc
  'tipfr'                => 'NULL',      # doc
  'ticollege'            => 'NULL',      # doc
  'tzplot'		=> 'NULL',      # doc
@@ -3481,6 +3483,7 @@ $standardmp = '\.mp$';
  'polski',      'NULL',         # not sample-*.mp
  'profcollege',	'\.dat|' . $standardmp,
  'semioneside', 'NULL',         # not figure*.mp
+ 'synthslant',	'NULL',         # doc figures
  'textpath',    'textpath.mp',  # not textpathfigs.mp
 );
 
