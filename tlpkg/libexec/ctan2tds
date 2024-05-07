@@ -1484,6 +1484,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'typedref',    "die 'skipping, nonfree license'",
  'typespec',    "die 'skipping, nonfree font specimens'",
  'typingtex',	"die 'skipping, ancient mac docs'",
+ 'typog',	"&MAKEflatten",
  'uafthesis',   "&MAKEnosymlinks",
  'uebungsblatt',"&MAKEflatten",
  'ufrgscca',	"&MAKEflatten",
@@ -3449,6 +3450,7 @@ $standardinsrunner = "latex -8bit";
  'synthslant'           => 'NULL',      # doc
  'tipfr'                => 'NULL',      # doc
  'ticollege'            => 'NULL',      # doc
+ 'typog'                => 'NULL',      # doc
  'tzplot'		=> 'NULL',      # doc
  'turnthepage'          => 'NULL',      # doc
  'voss-mathmode'        => 'NULL',      # doc
@@ -3485,6 +3487,7 @@ $standardmp = '\.mp$';
  'semioneside', 'NULL',         # not figure*.mp
  'synthslant',	'NULL',         # doc figures
  'textpath',    'textpath.mp',  # not textpathfigs.mp
+ 'typog',	'NULL',         # doc figures
 );
 
 
@@ -3867,6 +3870,7 @@ $standardttf = '\.ttf|\.TTC';
  'thumbpdf'             => '\.pl$',
  'tikztosvg'		=> '^tikztosvg$',
  'tlcockpit'		=> '\.sh$',
+ 'typog'		=> 'typog-grep.pl$',
  'ulqda'                => '\.pl$',
  'urlbst'               => 'urlbst$',
  'vpe'                  => '\.pl$',
@@ -3957,6 +3961,7 @@ $standardttf = '\.ttf|\.TTC';
  'texlogsieve'		=> '\.1$',
  'tikztosvg'		=> '\.1$',
  'tlcockpit'		=> '\.man$',
+ 'typog'                => '\.1$',
  'webquiz'              => '\.1$',
  'wheretotrim'          => '\.1$',
 );

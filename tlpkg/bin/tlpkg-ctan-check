@@ -876,7 +876,7 @@ my @TLP_working = qw(
     twemoji-colr twemojis twoinone twoup twoxtwogame
     txfonts txfontsb txgreeks txuprcal
     type1cm typed-checklist typeface typehtml typeoutfileinfo typewriter
-    typicons typoaid typogrid typstfun tzplot
+    typicons typoaid typog typogrid typstfun tzplot
   uaclasses uafthesis uantwerpendocs uassign ucalgmthesis
     ucharcat ucharclasses ucbthesis ucdavisthesis ucph-revy
     ucs ucsmonograph
