@@ -27,6 +27,9 @@ elif test "x$1" = xdev; then
 elif test "x$1" = x3; then
   shift; label=l3
   pkgs="l3kernel l3packages l3experimental l3build l3backend"
+elif test "x$1" = x3dev; then
+  shift; label=l3dev
+  pkgs="l3kernel-dev l3backend-dev"
 elif test "x$1" = xdeng; then
   shift; label=deng
   pkgs="elegantbook elegantnote elegantpaper"
@@ -53,7 +56,7 @@ elif test "x$1" = xzref-all; then
   pkgs="zref-check zref-clever zref-vario"
 else
   echo "$0: unknown latex or group type: $1" >&2
-  echo "$0: must be one of: e dev 3 deng jxu qyi minim-all" >&2
+  echo "$0: must be one of: e dev 3 3dev deng jxu qyi minim-all" >&2
   exit 1
 fi
 
