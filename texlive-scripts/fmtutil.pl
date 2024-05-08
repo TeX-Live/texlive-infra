@@ -3,7 +3,7 @@
 # fmtutil - utility to maintain format files.
 # (Maintained in TeX Live:Master/texmf-dist/scripts/texlive.)
 # 
-# Copyright 2014-2023 Norbert Preining
+# Copyright 2014-2024 Norbert Preining
 # This file is licensed under the GNU General Public License version 2
 # or any later version.
 #
@@ -38,7 +38,6 @@ use Getopt::Long qw(:config no_autoabbrev ignore_case_always);
 use File::Basename;
 use File::Spec;
 use Cwd;
-use Parallel::ForkManager;
 
 # don't import anything automatically, this requires us to explicitly
 # call functions with TeXLive::TLUtils prefix, and makes it easier to
@@ -46,6 +45,8 @@ use Parallel::ForkManager;
 use TeXLive::TLUtils qw(wndws);
 
 require TeXLive::TLWinGoo if wndws();
+
+my $USE_FORKMANAGER = 0;
 
 # numerical constants
 my $FMT_NOTSELECTED = 0;
@@ -129,6 +130,7 @@ our @cmdline_options = (  # in same order as help message
   "no-engine-subdir",
   "no-error-if-no-engine=s",
   "no-error-if-no-format",
+  "no-fork",
   "nohash",
   "recorder",
   "refresh",
@@ -203,6 +205,17 @@ sub main {
     if (@ARGV) {
       die "$0: Unexpected non-option argument(s): @ARGV\n"
           . "Try \"$prg --help\" for more information.\n";
+    }
+    # for full fmtutil, let us try to use ForkManager if available
+    if ($opts{"no-fork"}) {
+      $USE_FORKMANAGER = 0;
+    } else {
+      eval { require Parallel::ForkManager; };
+      if ($@) {
+        $USE_FORKMANAGER = 0;
+      } else {
+        $USE_FORKMANAGER = 1;
+      }
     }
   }
 
@@ -470,11 +483,8 @@ sub callback_build_formats {
   my $nobuild = 0;
   my $notavail = 0;
   my $total = 0;
-  my $nproc = 24; # TODO should be dynamically tweaked to actual CPU
-  my $pm = Parallel::ForkManager->new($nproc);
-  $pm->run_on_finish(sub {
-    my ($pid, $exit_code, $ident, $exit_signal, $core_dump, $data_structure_reference) = @_;
-    my ($fmt, $eng) = @{$data_structure_reference};
+  my $finish_sub = sub {
+    my ($exit_code, $fmt, $eng) = @_;
     if ($exit_code == $FMT_DISABLED)    {
       log_to_status("DISABLED", $fmt, $eng, $what, $whatarg);
       $disabled++;
@@ -494,24 +504,42 @@ sub callback_build_formats {
     }
     else {
       log_to_status("UNKNOWN", $fmt, $eng, $what, $whatarg);
-      print_error("callback_build_format (round 1): unknown return "
+      print_error("callback_build_format: unknown return "
         . "from select_and_rebuild.\n");
     }
-  });
+  };
+  my $pm;
+  if ($USE_FORKMANAGER) {
+    my $nproc = 24; # TODO should be dynamically tweaked to actual CPU
+    $pm = Parallel::ForkManager->new($nproc);
+    $pm->run_on_finish(sub {
+      my ($pid, $exit_code, $ident, $exit_signal, $core_dump, $data_structure_reference) = @_;
+      my ($fmt, $eng) = @{$data_structure_reference};
+      $finish_sub->($exit_code, $fmt, $eng);
+    });
+  }
   for my $swi (qw/format=engine format!=engine/) {
     for my $fmt (keys %{$alldata->{'merged'}}) {
       for my $eng (keys %{$alldata->{'merged'}{$fmt}}) {
         next if ($swi eq "format=engine" && $fmt ne $eng);
         next if ($swi eq "format!=engine" && $fmt eq $eng);
         $total++;
-        $pm->start("select_and_rebuild_format($fmt, $eng, $what, $whatarg)") and next;
+        if ($USE_FORKMANAGER) {
+          $pm->start("select_and_rebuild_format($fmt, $eng, $what, $whatarg)") and next;
+        }
         my $val = select_and_rebuild_format($fmt, $eng, $what, $whatarg);
-        my @array = ($fmt, $eng);
-        $pm->finish($val, \@array);
+        if ($USE_FORKMANAGER) {
+          my @array = ($fmt, $eng);
+          $pm->finish($val, \@array);
+        } else {
+          $finish_sub->($val, $fmt, $eng);
+        }
       }
     }
+    # We need to wait for format=engine round to be finished before
+    # we can run the format!=engine round
+    $pm->wait_all_children if ($USE_FORKMANAGER);
   }
-  $pm->wait_all_children;
 
   # if the user asked to rebuild something, but we did nothing, report
   # unless we tried to rebuild only missing formats.
@@ -815,8 +843,12 @@ sub rebuild_one_format {
     $ENV{'TEXPOOL'} = cwd() . $sep . ($texpool ? $texpool : "");
   }
 
-  # in mktexfmtMode we must redirect *all* output to stderr
-  $cmdline .= " >&2" if $mktexfmtMode;
+  if ($opts{'quiet'} || $USE_FORKMANAGER) {
+    $cmdline .= " >$nul 2>$nul";
+  } else {
+    # in mktexfmtMode we must redirect *all* output to stderr
+    $cmdline .= " >&2" if $mktexfmtMode;
+  }
   $cmdline .= " <$nul";
   my $retval = system("$DRYRUN$cmdline");
 
@@ -1483,6 +1515,7 @@ Options:
   --no-error-if-no-engine=ENGINE1,ENGINE2,...
                           exit successfully even if a required ENGINE
                            is missing, if it is included in the list.
+  --no-fork               do not try to use forking format creation
   --no-strict             exit successfully even if a format fails to build
   --nohash                don't update ls-R files
   --recorder              pass the -recorder option and save .fls files
