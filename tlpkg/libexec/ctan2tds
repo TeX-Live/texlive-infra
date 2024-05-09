@@ -2245,6 +2245,7 @@ $standardtex
  'iaria-lite',	'\.cls',		# not docstrip.cfg
  'ibygrk',      'iby4extr.tex|ibycus4.tex|ibycusps.tex|pssetiby.tex|setiby4.tex|tlgsqq.tex|version4.tex|' . $standardtex,
  'ieejtran',	'NULL',			# not .py
+ 'ifis-macros',	'ifis[^-].*.tex',	# not ifis-macros-doc
  'ifmslide',    '[^n]\.(eps|pdf|jpg)|' . $standardtex,  # not ifmman.pdf
  'ijsra',	'ijsra_logo.*|' . $standardtex,
  'insbox',      'insbox.tex',

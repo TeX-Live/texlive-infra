@@ -427,7 +427,7 @@ my @TLP_working = qw(
   iaria iaria-lite ibarra ibrackets ibycus-babel ibygrk icite icsv
     ideavault identkey idxcmds idxlayout
     ieeeconf ieejtran ieeepes ieeetran ietfbibs iexec
-    ifallfalse iffont ifmslide ifmtarg ifnextok ifoddpage
+    ifallfalse iffont ifis-macros ifmslide ifmtarg ifnextok ifoddpage
     ifplatform ifptex ifsym iftex ifthenx ifxptex
     iitem ijmart ijqc ijsra
     imac image-gallery imakeidx impatient impatient-cn
