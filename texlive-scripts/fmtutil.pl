@@ -207,7 +207,8 @@ sub main {
           . "Try \"$prg --help\" for more information.\n";
     }
     # for full fmtutil, let us try to use ForkManager if available
-    if ($opts{"no-fork"}) {
+    # do not try this on Windows
+    if (wndws() || $opts{"no-fork"}) {
       $USE_FORKMANAGER = 0;
     } else {
       eval { require Parallel::ForkManager; };
@@ -510,7 +511,13 @@ sub callback_build_formats {
   };
   my $pm;
   if ($USE_FORKMANAGER) {
-    my $nproc = 24; # TODO should be dynamically tweaked to actual CPU
+    # get number of cores/cpus according to https://stackoverflow.com/questions/45181115
+    # checked on Linux, MacOS
+    # We have forking disabled for Windows
+    my $nproc = `getconf _NPROCESSORS_ONLN 2>/dev/null || sysctl -n hw.ncpu`;
+    # if we get something not numerical here, reset it to 0
+    # which means don't do any forking
+    $nproc = 0 if ($nproc !~ s/[0-9]+//);
     $pm = Parallel::ForkManager->new($nproc);
     $pm->run_on_finish(sub {
       my ($pid, $exit_code, $ident, $exit_signal, $core_dump, $data_structure_reference) = @_;
