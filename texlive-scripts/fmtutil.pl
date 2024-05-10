@@ -517,11 +517,13 @@ sub callback_build_formats {
     my $nproc = `getconf _NPROCESSORS_ONLN 2>/dev/null || sysctl -n hw.ncpu`;
     # if we get something not numerical here, reset it to 0
     # which means don't do any forking
-    $nproc = 0 if ($nproc !~ s/[0-9]+//);
+    $nproc = 0 if ($nproc !~ m/[0-9]+/);
     $pm = Parallel::ForkManager->new($nproc);
     $pm->run_on_finish(sub {
       my ($pid, $exit_code, $ident, $exit_signal, $core_dump, $data_structure_reference) = @_;
-      my ($fmt, $eng) = @{$data_structure_reference};
+      my ($fmt, $eng, $ref_deferred_stdout, $ref_deferred_stderr) = @{$data_structure_reference};
+      push @deferred_stdout, @$ref_deferred_stdout;
+      push @deferred_stderr, @$ref_deferred_stderr;
       $finish_sub->($exit_code, $fmt, $eng);
     });
   }
@@ -536,7 +538,7 @@ sub callback_build_formats {
         }
         my $val = select_and_rebuild_format($fmt, $eng, $what, $whatarg);
         if ($USE_FORKMANAGER) {
-          my @array = ($fmt, $eng);
+          my @array = ($fmt, $eng, \@deferred_stdout, \@deferred_stderr);
           $pm->finish($val, \@array);
         } else {
           $finish_sub->($val, $fmt, $eng);
@@ -850,17 +852,24 @@ sub rebuild_one_format {
     $ENV{'TEXPOOL'} = cwd() . $sep . ($texpool ? $texpool : "");
   }
 
-  if ($opts{'quiet'} || $USE_FORKMANAGER) {
-    $cmdline .= " >$nul 2>$nul";
-  } else {
-    # in mktexfmtMode we must redirect *all* output to stderr
-    $cmdline .= " >&2" if $mktexfmtMode;
-  }
   $cmdline .= " <$nul";
-  my $retval = system("$DRYRUN$cmdline");
+  
+  my ($out, $retval);
+
+  if ($mktexfmtMode) {
+    # in mktexfmtMode we must redirect *all* output to stderr
+    $out = "";
+    $retval = system("$DRYRUN$cmdline >&2");
+  } else {
+    # we want to catch stdout and stderr into $out
+    ($out, $retval) = TeXLive::TLUtils::run_cmd("$DRYRUN$cmdline 2>&1");
+    $out =~ s/\n+$//; # trailing newlines don't seem interesting
+  }
 
   # report error if it failed.
   if ($retval != 0) {
+    # print out all the output for debugging
+    print($out);
     $retval /= 256 if ($retval > 0);
     print_deferred_error("running \`$cmdline' return status: $retval\n");
   }
