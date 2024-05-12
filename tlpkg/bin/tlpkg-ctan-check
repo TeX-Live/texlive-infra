@@ -491,11 +491,12 @@ my @TLP_working = qw(
     latexdemo latexdiff latexfileinfo-pkgs latexfileversion
     latexgit latexindent
     latexmk latexmp latexpand
-    latino-sine-flexione lato lato-math layaureo layouts lazylist
+    latino-sine-flexione lato layaureo layouts lazylist
     lccaps lcd lcg lcyw leading leadsheets leaflet
     lebhart lecturer lectures lectureslides
     ledmac leftidx leftindex leipzig lengthconvert
-    letgut letltxmacro letterspacing letterswitharrows lettre lettrine
+    lete-sans-math letgut letltxmacro
+    letterspacing letterswitharrows lettre lettrine
     levy lewis lexend lexikon lexref
     lfb lgreek lgrmath lh lhcyr lhelp
     libertine libertinegc libertinus
@@ -853,7 +854,7 @@ my @TLP_working = qw(
     timbreicmc times timetable timing-diagrams tinos tipa tipa-de tipauni tipfr
     tiscreen titlecaps titlefoot titlepages titlepic titleref titlesec titling
     tkz-base tkz-berge tkz-bernoulli tkz-doc tkz-elements tkz-euclide
-    tkz-fct tkz-graph tkz-orm tkz-tab tkzexample
+    tkz-fct tkz-graph tkz-grapheur tkz-orm tkz-tab tkzexample
     tlc-article tlc2 tlc3-examples tlcockpit tlmgr-intro-zh-cn tlmgrbasics
     to-be-determined tocbibind tocdata tocloft tocvsec2 todo todonotes
     tokcycle tokenizer tonevalue toolbox tools
