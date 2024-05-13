@@ -200,7 +200,8 @@ my @TLP_working = qw(
     cochineal codeanatomy codebox codedescribe codedoc
     codehigh codepage codesection codicefiscaleitaliano
     coelacanth coffeestains collargs collcell collectbox collref
-    colophon color-edits colordoc coloredbelts coloredtheorem colorframed
+    colophon color-edits colorblind colordoc
+    coloredbelts coloredtheorem colorframed
     colorinfo coloring colorist colorprofiles
     colorsep colorspace colortab
     colortbl colorwav colorweb colourchange
@@ -732,7 +733,8 @@ my @TLP_working = qw(
     rerunfilecheck rescansync resmes resolsysteme
     resphilosophica responsive rest-api
     resumecls resumemac returntogrid reverxii revquantum revtex revtex4-1
-    rgltxdoc ribbonproofs rit-fonts rjlparshap rlepsf rmathbr rmpage
+    rgltxdoc ribbonproofs rigidnotation rit-fonts
+    rjlparshap rlepsf rmathbr rmpage
     robotarm roboto robust-externalize robustcommand robustindex rojud
     romanbar romanbarpagenumber romande romanneg romannum
     rorlink rosario rotfloat rotpages rouequestions roundbox roundrect
