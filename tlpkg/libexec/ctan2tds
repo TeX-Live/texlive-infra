@@ -6677,18 +6677,17 @@ sub POSTbiber {
     # Put the executable in the Master bin directory.
     # biber-2.18-1-MSWIN64.zip       -> MSWIN64
     # biber-linux_x86_32.tar.gz      -> linux_x86_32
-    # biber-linux_x86_64-musl.tar.gz -> linux_x86_64-musl
     # etc.
     # hopefully biber won't have any platform names starting with a numeral.
     # $1 = possible version number
     # $2 = biber platform name, with trailing -
     # $3 = archive extension
-    $archive =~ m/^$package-([0-9.-]+-)?([a-zA-Z].*?)\.(zip|tar\..z)/;
+    $archive =~ m/^$package-([0-9.-]+-)?([a-zA-Z].*?)\.(zip|tar(\..z|$))/;
     my $biber_platform = $2;
     #(my $biber_platform = $archive) =~ s/$package.*-(.*?)\.(zip|tar\..z)/$1/;
     die "failed to get biber platform name from $archive, goodbye"
       if ! $biber_platform;
-    print "\t got biber_platform=$biber_platform from archive=$archive\n";
+    print "\t *** got biber_platform=$biber_platform from archive=$archive\n";
     #
     my $tl_platform = $tl_platform{$biber_platform};
     die "unknown biber platform $biber_platform (from $archive), goodbye"
@@ -6722,7 +6721,7 @@ sub unarchiver {
   my ($archive) = @_;
   my $unarch;
   
-  if ($archive =~ /\.tar\./) {
+  if ($archive =~ /\.tar(\.|$)/) {
     $unarch = "tar xf";
   } elsif ($archive =~ /\.zip$/) {
     $unarch = "unzip -q";
