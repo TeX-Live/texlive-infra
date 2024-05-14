@@ -1331,6 +1331,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'sistyle',	"&MAKEflatten",
  'skak',        "&MAKEflatten",
  'skeyval',     "&MAKEmv_doctex",
+ 'skillicons',  "die 'skipping, '",
  'slashbox',    "die 'skipping, noinfo license, c.1993'",
  'slidenotes',  "die 'skipping, nonfree'",
  'smallcap',    "die 'skipping, questionable license, 1996'",
