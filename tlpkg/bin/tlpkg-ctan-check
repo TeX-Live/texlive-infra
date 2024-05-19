@@ -757,7 +757,7 @@ my @TLP_working = qw(
     sdaps sdrt sduthesis
     se2thesis secdot secnum section sectionbox sectionbreak sectsty seealso
     selectp selinput selnolig semantex semantic semantic-markup semaphor
-    semesterplanner seminar semioneside semproc semtex
+    semesterplanner semesterplannerlua seminar semioneside semproc semtex
     sepfootnotes sepnum seqsplit
     serbian-apostrophe serbian-date-lat serbian-def-cyr serbian-lig
     sesamanuel sesstime setdeck setspace setspaceenhanced
