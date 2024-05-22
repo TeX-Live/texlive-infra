@@ -583,7 +583,8 @@ my @TLP_working = qw(
     monofill montex moodle
     moreenum morefloats morehype moresize
     moreverb morewrites morisawa movement-arrows movie15 mp3d
-    mparhack mparrows mpattern mpchess mpcolornames mpfonts mpgraphics
+    mparhack mparrows mpattern mpchess mpcolornames
+    mpfonts mpgraphics mpkiviat
     mpman-ru mpostinl mptopdf mptrees ms msc msg mslapa msu-thesis mtgreek
     mucproc mugsthesis muling multenum
     multiaudience multibbl multibib multibibliography

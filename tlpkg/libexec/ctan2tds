@@ -1808,6 +1808,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'moderncv'		=> '&POST_deref_symlink',
  'montex'		=> '&POSTmontex',
  'mpfonts'		=> '&POSTmpfonts',
+ 'mpkiviat'		=> '&POST_onelevel',
  'mptopdf'		=> '&POSTmptopdf',
  'musixtex'		=> '&POSTmusixtex',
  'musixtnt'		=> '&POSTmusixtnt',
