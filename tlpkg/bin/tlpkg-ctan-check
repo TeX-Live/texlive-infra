@@ -620,7 +620,7 @@ my @TLP_working = qw(
     numberedblock numberpt
     numerica numerica-plus numerica-tables numericplots
     numname numnameru numprint numspell nunito
-    nwafuthesis nwejm
+    nwafuthesis nwejm nxuthesis
   oberdiek objectz obnov
     ocg-p ocgx ocgx2 ocherokee ocr-b ocr-b-outline ocr-latex octave octavo
     odesandpdes odsfile ofs
