@@ -333,6 +333,9 @@ sub compare_pkgs_and_triggers {
           # The hyphen-* packages get loaded anyway? Not sure.
           next if $r =~ /hyph-utf8|hyphen-.*/;
           next if $r =~ /dehyph|dehyph-exptl|ruhyph|ukrhyph/;
+          # LaTeX loads these if available, so they end up in the
+          # recorder, but they are not required.
+          next if $r =~ /atbegshi|atveryend/; 
           push (@recorded_only, $r);
         }
       }
@@ -345,7 +348,8 @@ sub compare_pkgs_and_triggers {
         # luaotfload doesn't show up in the recorder output,
         # unfortunately. It's used in the lualatex patterns.
         # 
-        my @skip_tlpdb = qw(firstaid l3backend l3kernel latex
+        my @skip_tlpdb = qw(firstaid 
+                            l3backend l3backend-dev l3kernel latex
                             luaotfload
                             tex-ini-files unicode-data);
         my %skip_tlpdb; @skip_tlpdb{@skip_tlpdb} = 1; # make into hash
