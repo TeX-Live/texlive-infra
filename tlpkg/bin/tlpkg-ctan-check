@@ -742,7 +742,7 @@ my @TLP_working = qw(
     rorlink rosario rotfloat rotpages rouequestions roundbox roundrect
     rpgicons rrgtrees rsc rsfs rsfso
     rterface rtkinenc rtklage
-    rubik ruhyphen ruler rulerbox rulercompass
+    rub-kunstgeschichte rubik ruhyphen ruler rulerbox rulercompass
     runcode runtexshebang ruscap russ rutitlepage
     rviewport rvwrite ryersonsgsthesis ryethesis
   sa-tikz sacsymb sageep sanitize-umlaut sankey
