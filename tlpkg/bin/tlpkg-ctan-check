@@ -873,7 +873,7 @@ my @TLP_working = qw(
     translation-filecontents-de translation-moreverb-de
     translation-natbib-fr translation-tabbing-fr
     translations translator transparent transparent-io
-    tree-dvips treetex trfsigns
+    tree-dvips treesvr treetex trfsigns
     trigonometry trimspaces trivfloat trivialpursuit trsym truncate truthtable
     tsemlines tsvtemplate
     tucv tuda-ci tudscr tufte-latex tugboat tugboat-plain

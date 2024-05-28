@@ -1471,7 +1471,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'translation-footmisc-de',     "die 'skipping, nocommercial'",
  'translation-pst-jtree-de',    "die 'skipping, nocommercial'",
  'translations',"&MAKEflatten",
- 'treesvr',     "die 'skipping, await request, 1995'",
  'trig',	"die 'skipping, core LaTeX'",
  'tuda-ci', 	"&MAKEflatten",
  'tugboat-toc', "die 'skipping, nonfree, CTAN enough'",
