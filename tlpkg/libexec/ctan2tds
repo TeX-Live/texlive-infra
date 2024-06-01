@@ -1636,6 +1636,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'kotex-utf'		=> '&PREHOOK_flatten1',
  'kotex-oblivoir'	=> '&PREHOOK_flatten1',
  'ktv-texdata'          => '&PREHOOK_ktv_texdata',
+ 'latex-git-log'        => '&PREHOOK_latex_git_log',
  'latexdiff'            => '&PREHOOK_latexdiff',
  'latexindent'          => '&PREHOOK_latexindent',
  'latex2e-help-texinfo-spanish' => '&PREHOOK_latex2e_help_texinfo_spanish',
@@ -1778,7 +1779,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'kotex-utf'		=> '&POSTkotex_utf',
  'l3build'		=> '&POST_do_man',
  'latex-base-dev'	=> '&POSTlatex_base_dev',
- 'latex-git-log'	=> 'change to use pod2man',
  'latex2e-help-texinfo' => '&POSTlatex2e_help_texinfo',
  'latexindent'		=> '&POSTlatexindent',
  'lettrine'		=> '&POST_onelevel',
@@ -3417,6 +3417,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'tikz-page'	=> 'tex -8bit',    # no doc remake, 8-bit name
  'tikzmark'	=> 'tex',
  'todonotes'    => 'latex',  # requires interaction
+ 'tqft'		=> 'etex',
  'transparent'	=> 'etex',
  'tudscr'       => 'tex',
  'uadocs'       => 'latex',  # requires interaction
@@ -6393,6 +6394,12 @@ sub PREHOOK_ktv_texdata {
   &SYSTEM ("$RM -rf latex");
 }
 
+sub PREHOOK_latex_git_log {
+  print "PREHOOK_$package - make .1 with pod2man\n";
+  &prehook_pod2man ("Robin Schneider", "$package");
+  &SYSTEM ("$RM $package.pdf");
+}
+
 sub PREHOOK_latex2e_help_texinfo_spanish {
   print "POST$package - include only spanish translation\n";
   &SYSTEM ("$RM *"); # do not remove subdirs
@@ -6484,12 +6491,6 @@ sub PREHOOK_stix {
 sub PREHOOK_texdraw {
   print "PREHOOK_$package - mv manual/* files\n";
   &SYSTEM ("$MV manual/* .");  
-}
-
-sub PREHOOK_texfot {
-  print "PREHOOK_$package - make .1 with pod2man\n";
-  &prehook_pod2man ("Karl Berry", "$package.pl");
-  &SYSTEM ("$RM $package.pdf");
 }
 
 sub PREHOOK_texlogfilter {
