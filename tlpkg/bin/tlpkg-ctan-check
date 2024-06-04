@@ -61,7 +61,7 @@ my @TLP_working = qw(
     askinclude askmaps asmeconf asmejour aspectratio
     assignment association-matrix assoccnt asternote astro asyfig
     asymptote-faq-zh-cn asymptote-by-example-zh-cn asymptote-manual-zh-cn
-    asypictureb atbegshi atenddvi atendofenv atkinson atveryend
+    asy-overview asypictureb atbegshi atenddvi atendofenv atkinson atveryend
     attachfile attachfile2
     aucklandthesis augie auncial-new aurical aurl
     auto-pst-pdf-lua autobreak autopdf
@@ -301,7 +301,7 @@ my @TLP_working = qw(
     emo emoji emojicite emotion emp emptypage emulateapj
     enctex encxvlna endfloat endheads endiagram
     endnotes endnotes-hy endnotesj endofproofwd
-    engpron engrec engtlc enigma enotez
+    engpron engrec engtlc enigma enotez ensps-colorscheme
     enumitem enumitem-zref envbig environ envlab eolang
     epcqrcode epigrafica epigram epigraph epigraph-keys epiolmec eplain
     epsdice epsf epsf-dvipdfmx epsincl epslatex-fr
