@@ -3,7 +3,7 @@
 # fmtutil - utility to maintain format files.
 # (Maintained in TeX Live:Master/texmf-dist/scripts/texlive.)
 # 
-# Copyright 2014-2023 Norbert Preining
+# Copyright 2014-2024 Norbert Preining
 # This file is licensed under the GNU General Public License version 2
 # or any later version.
 #
@@ -450,6 +450,9 @@ sub callback_build_formats {
   # for MFBASES.
   $ENV{'TEXFORMATS'} ||= "";
   $ENV{'TEXFORMATS'} = "$tmpdir$sep$ENV{TEXFORMATS}";
+  #
+  # ensure that LC_ALL is set to C to guarantee luatex generating formats
+  $ENV{'LC_ALL'} = "C";
 
   # switch to temporary directory for format generation; on the other hand,
   # for -n, the tmpdir won't exist, but we don't want to find a spurious
