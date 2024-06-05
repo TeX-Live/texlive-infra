@@ -1911,6 +1911,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'writeongrid'		=> '&POST_onelevel',
  'xetex-pstricks'	=> '&POSTxetexpstricks',
  'xindex'		=> '&POSTxindex',
+ 'xint-regression'	=> '&POST_onelevel',
  'xsim'			=> '&POSTxsim',
  'xymtex'		=> '&POSTxymtex',
  'zhmetrics'		=> '&POSTzhmetrics',

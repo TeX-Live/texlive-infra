@@ -933,7 +933,7 @@ my @TLP_working = qw(
     xetexfontinfo xetexko
     xetexref xevlna xfakebold xfor xfrac xgreek xhfill
     xifthen xii xii-lat ximera
-    xindex xindy-persian xint xintsession xistercian xits
+    xindex xindy-persian xint xint-regression xintsession xistercian xits
     xkcdcolors xkeymask xkeyval xlop xltabular xltxtra
     xml2pmx xmltex xmpincl xmuthesis xnewcommand
     xoptarg xpatch xpeek xpiano xpicture xpinyin xprintlen xpunctuate
