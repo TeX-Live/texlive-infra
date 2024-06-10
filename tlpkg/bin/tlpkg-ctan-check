@@ -790,7 +790,8 @@ my @TLP_working = qw(
     sphack sphdthesis splines splitbib splitindex
     spot spotcolor spreadtab spverbatim
     sr-vorl srbook-mem srbtiks srcltx srdp-mathematik srcredact sseq sslides
-    stack stackengine stage standalone stanli starfont startex
+    stack stackengine stage standalone standardsectioning stanli
+    starfont startex
     statex statex2 statistics statistik statmath staves starray
     stdclsdv stdpage stealcaps steinmetz
     stellenbosch stellenbosch-2 step stepgreek stex

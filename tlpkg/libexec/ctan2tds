@@ -3404,6 +3404,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'sillypage'	=> 'etex',
  'skdoc'        => 'tex',
  'spath3'	=> 'etex',
+ 'standardsectioning' => etex,
  'stix2-type1'	=> 'tex',
  'svg'		=> 'etex',
  'svn-multi'    => 'latex',  # interaction for .pl
