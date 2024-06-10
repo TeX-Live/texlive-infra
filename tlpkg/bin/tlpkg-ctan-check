@@ -505,7 +505,7 @@ my @TLP_working = qw(
     libertinus-fonts libertinus-otf libertinus-type1 libertinust1math
     libgreek librarian librebaskerville librebodoni librecaslon librefranklin
     libris lie-hasse liftarm light-latex-make ligtype lilyglyphs limap limecv
-    lineara linebreaker linegoal
+    lineara linearregression linebreaker linegoal
     lineno ling-macros linguex linguisticspro linop
     lion-msc lipsum lisp-on-tex
     listbib listing listings listings-ext listingsutf8 listlbls listliketab
