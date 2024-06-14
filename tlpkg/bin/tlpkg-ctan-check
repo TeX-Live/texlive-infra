@@ -228,7 +228,8 @@ my @TLP_working = qw(
     coop-writing cooperhewitt
     coordsys copyedit copyrightbox cormorantgaramond correctmathalign coseoul
     couleurs-fr
-    counterz countriesofeurope counttexruns courier courier-scaled courierten
+    count1to counterz countriesofeurope counttexruns
+    courier courier-scaled courierten
     courseoutline coursepaper
     coverpage covington
     cprotect cprotectinside cqubeamer cquthesis
@@ -585,11 +586,12 @@ my @TLP_working = qw(
     moreverb morewrites morisawa movement-arrows movie15 mp3d
     mparhack mparrows mpattern mpchess mpcolornames
     mpfonts mpgraphics mpkiviat
-    mpman-ru mpostinl mptopdf mptrees ms msc msg mslapa msu-thesis mtgreek
+    mpman-ru mpostinl mptopdf mptrees msc msg mslapa msu-thesis mtgreek
     mucproc mugsthesis muling multenum
     multiaudience multibbl multibib multibibliography
     multicap multicolrule multidef multido multienv multiexpand
-    multifootnote multilang multiobjective multiple-choice multirow munich
+    multifootnote multilang multiobjective multiple-choice
+    multirow multitoc munich
     musical musicography musikui musixguit
     musixtex musixtex-fonts musixtnt musuos muthesis
     mversion mwcls mwe mweights mxedruli
