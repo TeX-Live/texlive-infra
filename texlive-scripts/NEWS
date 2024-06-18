@@ -1,6 +1,9 @@
 (This file public domain.  Originally written by Norbert Preining and
 Karl Berry, 2010.)
 
+<p><b>tlmgr 71331 (released 18jun24):</b>
+<li>tlmgr search: format to avoid Perl warnings.
+
 <p><b>tlmgr 71079 (released 27apr24):</b>
 <li>tlmgr search accepts --json option.
 <li>Windows: Visual Basic usage in uninstall-windows and runscript.tlu
