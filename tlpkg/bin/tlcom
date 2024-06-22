@@ -1,7 +1,9 @@
 #!/bin/sh
 # $Id$
 # Commit after TL package update. We rely on PATH to deal with trunk vs.
-# branch. (See c2a and c2b.)
+# branch (see c2a and c2b). See also libexec/ctan2tds for the real work
+# of importing from CTAN; c2l and ctan2tl are additional wrappers
+# (called by c2a).
 
 test $# -eq 0 && cd /
 /bin/pwd >/dev/null || exit 1
