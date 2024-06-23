@@ -843,7 +843,7 @@ my @TLP_working = qw(
     thinsp thmbox thmlist thmtools
     threadcol threeddice threeparttable threeparttablex
     thuaslogos thubeamer thucoursework thumb thumbpdf thumbs thumby thuthesis
-    ticket ticollege tidyres
+    ticket ticollege tidyres tiet-question-paper
     tikz2d-fr tikz3d-fr tikz-3dplot
     tikz-among-us tikz-bagua tikz-bayesnet tikz-bbox
     tikz-cd tikz-dependency tikz-dimline tikz-ext
