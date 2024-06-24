@@ -13,9 +13,9 @@
 # 
 # Additional argument "p" runs place also (same as c2l --place).
 
-dirsfile=/tmp/`id -u`.tlplace.dirs
+dirsfile=/tmp/@{[getlogin()]}-`id -u`.tlplace.dirs
 cp /dev/null $dirsfile.tmp
-cp /dev/null /tmp/first
+cp /dev/null /tmp/@{[getlogin()]}-first
 
 if test "x$1" = xe || test "x$1" = x2e; then
   shift; label=l2e
@@ -65,13 +65,13 @@ echo "`basename $0`: $label pkgs: $pkgs"
 for p in $pkgs; do
   echo "${label} pkg $p" >&2 # progress report of a sort
   printf "\f ${label} pkg $p\n"
-  c2l "$@" $p | tee /tmp/c2l.out
-  sed -n "1,/`printf '\f'`/p" /tmp/c2l.out >>/tmp/first
-  echo >>/tmp/first
+  c2l "$@" $p | tee /tmp/@{[getlogin()]}-c2l.out
+  sed -n "1,/`printf '\f'`/p" /tmp/@{[getlogin()]}-c2l.out >>/tmp/@{[getlogin()]}-first
+  echo >>/tmp/@{[getlogin()]}-first
   cat $dirsfile >>$dirsfile.tmp
 done
 
 sort -u $dirsfile.tmp >$dirsfile
 wc $dirsfile
 echo
-cat /tmp/first
+cat /tmp/@{[getlogin()]}-first

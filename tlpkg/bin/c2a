@@ -106,7 +106,7 @@ sub do_place {
 # 
 sub run_c2l {
   my ($arg) = @_;
-  my $tmpfile = "/tmp/c2l$arg.out";
+  my $tmpfile = "/tmp/@{[getlogin()]}-c2l$arg.out";
   
   # don't bother with svn update unless we are doing place.
   if ($arg eq "p") {

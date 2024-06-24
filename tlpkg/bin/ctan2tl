@@ -189,7 +189,7 @@ find $pkg -type l -ls | grep -v /Master/bin | sort >&2
 
 # show list of files (and tee to tmp).
 find $pkg \! -type d -printf "%TY%Tm%Td.%TH%TM %p\n" | sort -k2 \
-| tee ${TMPDIR-/tmp}/ctan2tl.files
+| tee ${TMPDIR-/tmp}/"$USER"-ctan2tl.files
 
 printf "\n$0: calling place $place_chicken $contrib_place_arg $pkg\n"
 rm -rf $pkg.done
