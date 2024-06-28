@@ -800,6 +800,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'latexalpha2',	"die 'skipping, only for mathematica'",
  'latexdb',     "die 'skipping, needs sql, etc.'",
  'latexmp',     "&MAKEflatten",
+ 'latexscreenshooter', "die 'skipping, java, no wrapper, no man page, ?no doc source'", 
  'lato',        "&MAKEcopy",
  'lato-math',	"die 'skipping, as of 12may24 lete-sans-math'", 
  'layaureo',    "&MAKEflatten",
