@@ -1,6 +1,9 @@
 (This file public domain.  Originally written by Norbert Preining and
 Karl Berry, 2010.)
 
+<p><b>TLUtils.pm 71593 (released 23jun24):</b>
+<li>typo caused tlmgr install --file to fail.
+
 <p><b>tlmgr 71331 (released 18jun24):</b>
 <li>tlmgr search: format to avoid Perl warnings.
 

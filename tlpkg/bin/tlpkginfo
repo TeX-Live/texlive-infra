@@ -474,7 +474,7 @@ sub prepare {
 sub copy_to_tmpdir {
   my ($pkgname,$src) = @_;
   
-  my $pkgdir = "$TMPDIR/tl.$pkgname";
+  my $pkgdir = "$TMPDIR/$<.tl.$pkgname";
   system ("rm -rf $pkgdir");
   mkdir ($pkgdir, 0777) || die "mkdir($pkgdir) failed: $!";
 
