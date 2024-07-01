@@ -67,6 +67,8 @@ END_NO_TLPDB
   exit 1
 fi
 
+mkdir -p /tmp/$USER-tl-update-tlnet
+
 if test -z "$Master"; then
   mydir=`dirname $0`
   Master=`cd $mydir/../.. && pwd`
@@ -87,7 +89,7 @@ echo "$0: working in   tltry=$tltry"
 echo "$0: output to    tlweb=$tlweb"
 
 # Save current tlpdb in case of disaster.
-cp --force --backup $tlweb/tlpkg/texlive.tlpdb* /tmp
+cp --force --backup $tlweb/tlpkg/texlive.tlpdb* /tmp/$USER-tl-update-tlnet
 
 # 
 # Be sure we're starting the test cleanly.
@@ -291,7 +293,7 @@ if test $failure = false; then
     basecmd=`basename $cmdname`
     echo "$prg: `date`"
     echo "$prg: Running $basecmd ($cmd)"
-    outfile=/tmp/$tlnet_target.$basecmd
+    outfile=/tmp/$USER-tl-update-tlnet/$tlnet_target.$basecmd
     if $cmd >$outfile 2>&1; then
       echo "$prg:   $basecmd ok."
     else
@@ -318,16 +320,16 @@ else
   : # appease -e
 fi
 
-# In all cases, make copies in /tmp for inspection in case of
+# In all cases, make copies in /tmp/$USER-tl-update-tlnet for inspection in case of
 # undetected failure.
-cp -f $tlnet_install_log /tmp
-test ! -r $install_tl_log || cp -f $install_tl_log /tmp
+cp -f $tlnet_install_log /tmp/$USER-tl-update-tlnet
+test ! -r $install_tl_log || cp -f $install_tl_log /tmp/$USER-tl-update-tlnet
 
 if $failure || $chicken; then
   echo >&2
   echo "$prg: tl-update-tlnet transcript file: $tlnet_install_log" >&2
   echo "$prg: install-tl log file: $install_tl_log" >&2
-  echo "$prg: Copies of both are in /tmp." >&2
+  echo "$prg: Copies of both are in /tmp/$USER-tl-update-tlnet." >&2
   echo "$prg: Please rm -rf the trial dir." >&2
   if $failure; then
     echo
@@ -359,7 +361,7 @@ rm -rf $tltrybase
 
 # We checked this above also, but check again.
 # We've removed the cwd, so cd out of it.
-cd /tmp || exit 1
+cd /tmp/$USER-tl-update-tlnet || exit 1
 $Master/tlpkg/bin/tlgpg-verify $tlweb/tlpkg/texlive.tlpdb.sha512
 
 echo "$0: Done."
