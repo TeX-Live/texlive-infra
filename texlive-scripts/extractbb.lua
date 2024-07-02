@@ -42,7 +42,7 @@ local TARGET_PATH_NAME = "xdvipdfmx"
 
 -- The name to use when calling the target program. Equivalent to ``argv[0]''
 -- in C. (Example: ``extractbb'')
-local TARGET_EXEC_NAME = "xbb"
+local TARGET_EXEC_NAME = "ebb"
 
 -- Any extra arguments to be prepended to the target program, before any
 -- user-supplied arguments. Equivalent to ``argv[1], ...'' in C.
