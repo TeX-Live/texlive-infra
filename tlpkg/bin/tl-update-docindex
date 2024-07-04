@@ -14,9 +14,10 @@ use Fatal qw(:void open close opendir closedir chdir mkdir);
 use TeXLive::TLPDB;
 use File::Basename;
 
-my $CATALOGUE_DIR = "/home/httpd/html/catalogue/entries";
+my $top_cat = $ENV{"TEX_CATALOGUE"} || "/home/texlive/catalogue";
+our $CATALOGUE_DIR = "$top_cat/entries";
 
-exit(main());
+exit (main());
 
 
 sub main {

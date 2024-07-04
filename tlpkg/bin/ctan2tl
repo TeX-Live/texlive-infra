@@ -95,10 +95,6 @@ if test -z "$ctan_dir"; then
   exit 1
 fi
 
-# trying to sync catalogue changes as much as possible.
-#catfile=/home/httpd/html/catalogue/entries/$letter/
-#svn update $catfile
-
 echo "$0: ctan dir for $pkg"
 echo "$0: is $ctan_dir"
 

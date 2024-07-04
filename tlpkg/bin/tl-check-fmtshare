@@ -258,6 +258,7 @@ for fmt in $fmts; do
   echo "$0: built fmtfile: `ls -l $fmtfile` (on `hostname`)"
   engineversion=`$enginedir/$engine --version | sed 1q`
   echo "$0:   with engine: $enginedir/$engine ($engineversion)"
+  echo "$0:  full command: $ecmd"
 
   # The TeX \command to exit a job immediately. Assume a LaTeX fmt
   # if "latex" is in the name, else plain (enough).

@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 # $Id$
-# Copyright 2007-2023 Norbert Preining
+# Copyright 2007-2024 Norbert Preining
 # This file is licensed under the GNU General Public License version 2
 # or any later version.
 # 
@@ -81,7 +81,7 @@ sub main {
   }
 
   if (! $opt_catalogue) {
-    $opt_catalogue = "/home/httpd/html/catalogue";
+    $opt_catalogue = "/home/texlive/catalogue";
   }
 
   if ($opt_catalogue_compare) {
@@ -731,11 +731,11 @@ tl-update-tlpdb [OPTION]... [TLPSRC]...
 
 =item B<--catalogue> I<Catalogue_dir>
 
-The I<Catalogue_file> must point to a valid TeX Catalogue checkout; the
-default is C</home/httpd/html/catalogue>.  If the directory is readable,
-the generated tlpobj files will contain information gathered from the
-TeX Catalogue.  To disable this, specify a nonexistent filename, e.g.,
-C<--catalogue=/nonesuch>.
+The I<Catalogue_file> must point to a valid TeX Catalogue checkout, with
+subdirectory C</entries>; the default is C</home/texlive/catalogue>. If
+the directory is readable, the generated tlpobj files will contain
+information gathered from the TeX Catalogue. To disable this, specify a
+nonexistent filename, e.g., C<--catalogue=/nonesuch>.
 
 =item B<--catalogue-compare> I<tlpdb>
 

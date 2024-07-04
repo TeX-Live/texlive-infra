@@ -67,10 +67,11 @@ sub tlpkgrevision {
 sub ctaninfo {
   $CTAN = $ENV{"CTAN"} || "/home/ftp/tex-archive";
   $TMPDIR = $ENV{"TMPDIR"} || "/tmp";
-  $CATALOGUE = $ENV{"TEX_CATALOGUE"} || "/home/httpd/html/catalogue/entries";
+  my $top_cat = $ENV{"TEX_CATALOGUE"} || "/home/texlive/catalogue";
+  $CATALOGUE = "$top_cat/entries";
   -d "$CATALOGUE/k"
-    || die "$0: TEX_CATALOGUE ($CATALOGUE) must point to entries/ subdir"
-           . " of a TeX Catalogue checkout.\n";
+    || die "$0: TEX_CATALOGUE ($CATALOGUE) must point to the top level"
+           . " of a TeX Catalogue checkout (with entries/ subdir).\n";
   
   # erroneous or problematic tds files (when new, tell CTAN and author).
   # ieeeconf: capitals in directory names.
