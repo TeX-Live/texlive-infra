@@ -616,6 +616,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'garuda-c90',  "&MAKEgaruda_c90",
  'gatech-thesis',"die 'skipping, obsolete on CTAN'",
  'gene',        "die 'skipping, complicated, some have sources, sorry'",
+ 'gelasiomath', "&MAKEflatten",
  'genmisc',     "die 'skipping, split into separate packages'",
  'gentium',     "die 'skipping, use gentium-tug'",
  'gentl-gr',    "die 'skipping, nonfree license'",
