@@ -1876,6 +1876,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'stex',		=> '&POSTstex',
  'superiors'		=> '&POST_onelevel',
  'sympycalc'		=> '&POST_onelevel',
+ 'tango'		=> '&POST_onelevel',
  'tangramtikz'		=> '&POST_onelevel',
  'tap'			=> '&POSTtap',
  'tds'			=> '&POST_rmsymlink', # no README.html

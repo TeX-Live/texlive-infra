@@ -817,7 +817,7 @@ my @TLP_working = qw(
     tabriz-thesis tabstackengine tabto-generic tabto-ltx
     tabu tabularborder tabularray tabularcalc tabularew
     tabulary tabvar tagging tagpair tagpdf talk talos tamefloats
-    tamethebeast tangocolors tangramtikz tap tapir tasks
+    tamethebeast tango tangocolors tangramtikz tap tapir tasks
     tblr-extras tcldoc tcolorbox tdclock tds tdsfrmath
     technics technion-thesis-template ted
     templates-fenn templates-sommer templatetools tempora
