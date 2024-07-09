@@ -1672,6 +1672,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'tlcockpit'		=> '&PREHOOK_tlcockpit',
  'tudscr'		=> '&PREHOOK_tudscr',
  'tui'                  => '&PREHOOK_tui',
+ 'typog'                => '&PREHOOK_typog',
  'univie-ling'		=> '&PREHOOK_flatten1',
  'utf8mex'              => '&PREHOOK_flatten1',
  'vhistory'             => '&PREHOOK_vhistory',
@@ -4358,7 +4359,7 @@ sub MAKEcopy {
   &SYSTEM ("$CP -r * $dest");
 
   # allow for playing around after the copy. The prehook stuff was
-  # invented before the following special cases; not worth cleaning up.
+  # invented after the following special cases; not worth cleaning up.
   # Many of them would be better as posthooks anyway.
   &xchdir ($dest);
   &run_prehook ();
@@ -6517,6 +6518,12 @@ sub PREHOOK_tudscr {
 sub PREHOOK_tui {
   print "PREHOOK_$package - flatten only doc/ and tex/\n";
   &SYSTEM ("$MV doc/* tex/* .");
+}
+
+sub PREHOOK_typog {
+  print "PREHOOK_$package - make script and man page\n";
+  # clever build-time substitutions
+  &SYSTEM ("make typog-grep.pl typog-grep.1");
 }
 
 sub PREHOOK_unzip {
