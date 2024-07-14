@@ -10,7 +10,7 @@ LC_ALL=C; export LC_ALL # avoid problems with diff, comm, etc
 umask 022
 
 # to avoid the svn hit on every run when developing.
-TLPKGINFO_CATALOGUE_NO_UPDATE=1; export TLPKGINFO_CATALOGUE_NO_UPDATE
+#TLPKGINFO_CATALOGUE_NO_UPDATE=1; export TLPKGINFO_CATALOGUE_NO_UPDATE
 
 mydir=`cd \`dirname $0\` && pwd`	# Master/tlpkg/bin
 libexec=`cd $mydir/../libexec && pwd`	# Master/tlpkg/libexec
