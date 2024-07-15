@@ -540,7 +540,7 @@ my @TLP_working = qw(
     luaquotes luarandom
     luaset luasseq luatex85 luatexbase luatexja luatexko luatextra
     luatodonotes luatruthtable luavlna luaxml
-    lutabulartools lwarp lxfonts ly1 lyluatex
+    lutabulartools luwiantype lwarp lxfonts ly1 lyluatex
   macrolist macros2e macroswap mafr magaz magicnum magra
     mahjong mailing mailmerge
     make4ht makebarcode makebase makebox
@@ -582,7 +582,7 @@ my @TLP_working = qw(
     modref modroman modular modulus
     moloch mongolian-babel montserrat
     monofill montex moodle
-    moreenum morefloats morehype moresize
+    moreenum morefloats morehype moremath moresize
     moreverb morewrites morisawa movement-arrows movie15 mp3d
     mparhack mparrows mpattern mpchess mpcolornames
     mpfonts mpgraphics mpkiviat

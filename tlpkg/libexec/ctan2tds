@@ -893,6 +893,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'lucidabr',            "die 'skipping, nonfree font'",
  'lucold',              "die 'skipping, nonfree font'",
  'lug',		"skipping, specific script (with too-short name)",
+ 'luwiantype',	"&MAKEflatten",
  'lxfonts',     "&MAKEflatten",
  'ly1',         "&MAKEcopy",
  'lyx',         "die 'skipping, container directory'",
