@@ -2059,7 +2059,7 @@ $standardfmt='latex';
 $standardtex
    = '(\.(.bx|4ht|cls|clo|cmap|(code|lib)\.tex'
     . '|def|dfu|fd|fontspec|ldf|lua|opm|py|sty|trsl)'
-    . '|.*[^c]\.cfg)$'; # not ltxdoc.cfg
+    . '|^lbx|.*[^c]\.cfg)$'; # not ltxdoc.cfg
 %specialtex = (
  '2up',         '2up\.tex|' . $standardtex,
  'FAQ-en',      'NULL',
