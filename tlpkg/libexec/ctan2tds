@@ -2379,6 +2379,7 @@ $standardtex
  'mkpattern',   'mkpatter.tex',
  'mlawriter',	'mlawriter.tex',
  'mnhyphn',	'mnhyphn.tex',
+ 'moderncv',	'moderncv.*\.tex|' . $standardtex,
  'montex',      '(mlsgalig|mlstrans|mnhyphex)\.tex|' . $standardtex,
  'mpman-ru',    'NULL',         # doc package
  'msg',         '-msg\.tex|' . $standardtex,
