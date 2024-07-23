@@ -212,7 +212,7 @@ my @TLP_working = qw(
     complexity components comprehensive computational-complexity
     concepts concmath concmath-fonts concmath-otf concprog concrete
     conditext confproc constants conteq
-    context-calendar-examples
+    context-calendar-examples context-chat
     context-collating-marks
     context-cyrillicnumbers
     context-filter

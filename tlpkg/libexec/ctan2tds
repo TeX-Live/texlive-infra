@@ -345,6 +345,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'context-annotation',  "die 'skipping, obsolete on CTAN'",
  'context-bnf',         "die 'skipping, obsolete on CTAN'",
  'context-calendar-examples',	"&MAKEcopy",
+ 'context-chat',	"&MAKEcopy",
  'context-chromato',    "die 'skipping, obsolete on CTAN'",
  'context-cmscbf',	"die 'skipping, obsolete on CTAN'",
  'context-cmttbf',	"die 'skipping, obsolete on CTAN'",
