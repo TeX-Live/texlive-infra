@@ -147,7 +147,7 @@ my @TLP_working = qw(
     bjfuthesis blacklettert1 blindtext blkarray
     blochsphere block blockdraw_mp blopentype bloques blowup blox
     bmstu bmstu-iu8 bnumexpr bodegraph bodeplot bohr boisik bold-extra
-    boites boldtensors bondgraph bondgraphs book-of-common-prayer
+    boites boldtensors bondgraph bondgraphs bonum-otf book-of-common-prayer
     bookcover bookdb bookest bookhands booklet bookman bookmark
     bookshelf booktabs booktabs-de booktabs-fr boolexpr boondox bophook
     borceux bosisio

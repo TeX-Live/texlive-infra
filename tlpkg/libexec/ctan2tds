@@ -1713,6 +1713,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'bibtex'		=> '&POSTbibtex',
  'bibtexperllibs'	=> '&POSTbibtexperllibs',
  'blopentype'		=> '&POST_onelevel',
+ 'bonum-otf'		=> '&POST_onelevel',
  'cfr-lm'		=> '&POSTcfr_lm',
  'circularglyphs'	=> '&POST_onelevel',
  'citation-style-language' => '&POST_do_man',
