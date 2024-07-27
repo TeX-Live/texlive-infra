@@ -423,7 +423,7 @@ my @TLP_working = qw(
     hpsdiss href-ul hrefhide hrlatex
     hu-berlin-bundle huawei huaz huffman hulipsum hustthesis
     hvarabic hvextern hvfloat hvindex hvlogos hvpygmentex hvqrurl
-    hwemoji hycolor hypdestopt hypdoc hypdvips
+    hwemoji hycolor hypcap hypdestopt hypdoc hypdvips
     hyper hyperbar hypernat hyperref hyperxmp
     hyph-utf8 hyphen-base
     hyphenat hyphenex hyplain
@@ -660,7 +660,7 @@ my @TLP_working = qw(
     pgf pgf-blur pgf-interference pgf-periodictable pgf-pie
     pgf-soroban pgf-spectra pgf-umlcd pgf-umlsd
     pgfgantt pgfkeysearch pgfkeyx pgfmath-xfp pgfmolbio pgfmorepages
-    pgfopts pgfornament pgfornament-han pgfplots
+    pgfopts pgfornament pgfornament-han pgfplots pgfplotsthemebeamer
     phaistos phfcc phfextendedabstract phffullpagefigure
     phfnote phfparen phfqit phfquotetext
     phfsvnwatermark phfthm
@@ -820,7 +820,7 @@ my @TLP_working = qw(
     tabulary tabvar tagging tagpair tagpdf talk talos tamefloats
     tamethebeast tango tangocolors tangramtikz tap tapir tasks
     tblr-extras tcldoc tcolorbox tdclock tds tdsfrmath
-    technics technion-thesis-template ted
+    technics technion-thesis-template ted telprint
     templates-fenn templates-sommer templatetools tempora
     tengwarscript
     tensind tensor termcal termcal-de termes-otf termlist termmenu termsim

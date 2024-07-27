@@ -2439,6 +2439,7 @@ $standardtex
  'pgf-spectra', 'pgf-spectra.*(library|data).*tex|' . $standardtex,
  'pgfmolbio',   'pgfmolbio\..*\.|' . $standardtex, # .lua+.tex submodules
  'pgfornament-han', 'han$|' . $standardtex,
+ 'pgfplotsthemebeamer',	'pgfplotsthemebeamer.sty', # not doc-settings
  'phonenumbers','[A-Z][A-Z]_.*|Landes.*tex|' . $standardtex,
  'pictex',      '\.sty|\.tex',
  'pictexsum',   'NULL',         # doc pkg
@@ -3328,6 +3329,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'hu-berlin-bundle' => 'luatex',
  'hycolor'	=> 'tex',
  'hypdestopt'	=> 'etex',
+ 'hypcap'	=> 'tex',
  'hypdoc'	=> 'tex',
  'hyperbar'	=> 'tex',
  'inputnormalization' => 'etex -8bit',
@@ -3418,6 +3420,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'svn-multi'    => 'latex',  # interaction for .pl
  'swfigure'	=> 'etex',
  'teubner'      => 'latex',  # interaction
+ 'telprint'	=> 'tex',
  'termlist'     => 'tex',    # interaction for .pl
  'termsim',	=> 'etex',
  'thmtools'	=> 'latex',
