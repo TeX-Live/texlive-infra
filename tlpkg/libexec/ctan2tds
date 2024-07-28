@@ -2101,7 +2101,6 @@ $standardtex
  'beamer-rl',	'\.dict|' . $standardtex,
  'beamer2thesis','\.jpg|' . $standardtex,
  'beamertheme-npbt',	'images|' . $standardtex,
- 'beamertheme-tcolorbox', '[^s]\.sty$', # not *-doc-settings.sty
  'bezierplot',	'\.lua|' . $standardtex,
  'bghyphen',    '\.tex',
  'biblatex-ext','\.lua|' . $standardtex,
@@ -2438,7 +2437,6 @@ $standardtex
  'pgf-spectra', 'pgf-spectra.*(library|data).*tex|' . $standardtex,
  'pgfmolbio',   'pgfmolbio\..*\.|' . $standardtex, # .lua+.tex submodules
  'pgfornament-han', 'han$|' . $standardtex,
- 'pgfplotsthemebeamer',	'pgfplotsthemebeamer.sty', # not doc-settings
  'phonenumbers','[A-Z][A-Z]_.*|Landes.*tex|' . $standardtex,
  'pictex',      '\.sty|\.tex',
  'pictexsum',   'NULL',         # doc pkg
@@ -2556,8 +2554,7 @@ $standardtex
  'tikz-qtree',  '(pgf|tikz-)(subpic|q?tree(-compat)?)\.(tex|sty)',
  'tikz-sfc',		'\.code\.tex$',
  'tikz-trackschematic',	'\.code\.tex$|tic\.sty$', # not *documentation.sty
- 'tikzducks',	'(code|-(generic|plain)).tex$|ducks\.sty|\.mkiv$', # not *doc-settings.sty
- 'tikzmarmots',	'\.code\.tex$|tikzmarmots(|-v1)\.sty$', # not *doc-settings.sty
+ 'tikzducks',	'(code|-(generic|plain)).tex$|ducks\.sty|\.mkiv$',
  'tikzposter',  'tikzposter[^-].*\.tex|' . $standardtex,
  # tipa: we want to install all .sty except tipaman|boxchar|codelist.
  # i can't explain why ^(?!...), the "zero-width negative look-ahead
@@ -4578,6 +4575,8 @@ sub runins {
   &killfiles ($specialclean{$package} || $standardclean);
 }
 
+# Install files into DESTDIR matching THISPATT.
+#
 sub install {
   my ($destdir,$thispatt) = @_;
   return unless $thispatt;
@@ -4590,6 +4589,7 @@ sub install {
 
   for my $file (@files) {
     next if $file eq "dtx-style.sty";  # this should never be in runtime
+    next if $file =~ /-doc-settings.sty$/;  # ditto
     &SYSTEM ("$MV $file $destdir");
   }
 }
