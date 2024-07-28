@@ -882,7 +882,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'lua-visual-debug',    "&MAKEflatten",
  'lua2dox',		"die 'skipping, author request'",
  'luabidi',		"&MAKEflatten",
- 'luacensor',		"die 'skipping, awaited Redacted-Regular.ttf own pkg'",
  'luafindfont',		"&MAKEflatten",
  'luaintro',		"die 'skipping, obsolete per author (hvoss)'",
  'lualatex-doc',	"die 'skipping, obsolete on ctan (hvoss)'",
