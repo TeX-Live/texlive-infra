@@ -3251,6 +3251,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'beamerswitch' => 'tex -8bit',    # no doc remake
  'biblatex-bath'  => 'luatex', # no doc remake
  'biblatex-oxref' => 'luatex', # no doc remake
+ 'bib2qr'	=> 'etex',
  'bguq'         => 'latex',  # requires interaction
  'bhcexam'      => 'latex',  # requires interaction
  'bnumexpr'	=> 'etex',
