@@ -678,7 +678,7 @@ my @TLP_working = qw(
     plnfss plstmary plweb pm-isomath
     pmboxdraw pmdraw pmgraph pmhanguljamo pmx pmxchords pnas2009
     poemscol poetry poetrytex poiretone polexpr polski poltawski
-    polyglossia polyhedra polynom polynomial
+    polyglossia polyhedra polynom polynomial polyomino
     polytable poormanlog postage postcards poster-mac postit postnotes
     powerdot powerdot-fuberlin powerdot-tuliplab
     ppmcheckpdf ppr-prv ppt-slides pracjourn practicalreports
