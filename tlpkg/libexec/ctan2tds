@@ -951,6 +951,8 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'metauml',     "&MAKEmetauml",
  'metropolis',	"die 'skipping, use beamertheme-metropolis'",
  'metsymb',     "&MAKEflatten",
+ 'mf',		"die 'skipping, compiled engine metafont'",
+ 'mfb-oldstyle',"&MAKEflatten",
  'mff',         "die 'skipping, noinfo license'",
  'mflogo',	"die 'skipping, must find logosl8.mf on CTAN'", # 11feb19
  'mflogo-font', "&MAKEflatten",

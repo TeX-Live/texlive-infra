@@ -566,7 +566,7 @@ my @TLP_working = qw(
     metafont-beginners metago metalogo metalogox metanorma metaobj metaplot
     metapost-colorbrewer metapost-examples metastr metatex metatype1 metauml
     method metre metrix metsymb
-    mf2pt1 mfirstuc mflogo mflogo-font mfnfss mfpic mfpic4ode mftinc
+    mf2pt1 mfb-oldstyle mfirstuc mflogo mflogo-font mfnfss mfpic mfpic4ode mftinc
     mgltex mhchem
     mhequ miama mi-solns
     microtype microtype-de midnight midpage miller milog milsymb
