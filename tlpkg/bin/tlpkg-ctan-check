@@ -541,7 +541,7 @@ my @TLP_working = qw(
     luaset luasseq luatex85 luatexbase luatexja luatexko luatextra
     luatodonotes luatruthtable luavlna luaxml
     lutabulartools luwiantype lwarp lxfonts ly1 lyluatex
-  macrolist macros2e macroswap mafr magaz magicnum magra
+  macrolist macros2e macroswap mafr magaz magicnum magicwatermark magra
     mahjong mailing mailmerge
     make4ht makebarcode makebase makebox
     makecell makecirc makecmds makecookbook
