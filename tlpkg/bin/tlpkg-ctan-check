@@ -337,7 +337,7 @@ my @TLP_working = qw(
     ffcode ffslides fge fgruler
     fifinddo-info fifo-stack
     fig4latex figbas figbib figchild figflow figput figsize
-    filecontents filecontentsdef filedate filehook fileinfo filemod
+    filecontents filecontentsdef filedate filehook fileinfo filemod fillwith
     findhyph fink finstrut fira firamath firamath-otf
     first-latex-doc firstaid fistrum fitbox fitch fithesis
     fix2col fixcmex fixdif fixfoot fixjfm fixlatvian
