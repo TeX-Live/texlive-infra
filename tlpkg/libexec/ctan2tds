@@ -1768,6 +1768,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'grverb'		=> '&POSTgrverb',
  'guide-latex-fr'	=> '&POST_rmsymlink',
  'haranoaji'		=> '&POST_preserve_postcode',
+ 'hebdomon'		=> '&POST_onelevel',
  'highlightx'		=> '&POST_onelevel',
  'hmtrump'		=> '&POSThmtrump',
  'huffman'		=> '&POST_onelevel',
