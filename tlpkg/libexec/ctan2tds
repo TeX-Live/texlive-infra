@@ -3359,6 +3359,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'lua-ul'	=> 'etex-answer-y',	# https://github.com/latex3/latex2e/issues/558
  'luacolor'	=> 'etex',
  'luaindex'     => 'lualatex --shell-escape',
+ 'luamml'	=> 'etex-answer-y',
  'luamathalign'	=> 'etex-answer-y',
  'luatexja'     => 'lualatex',
  'magicwatermark' => 'etex',

@@ -536,7 +536,7 @@ my @TLP_working = qw(
     luaimageembed luaindex luainputenc luakeys
     lualatex-doc-de
     lualatex-math lualatex-truncate lualibs lualinalg luamathalign luamaths
-    luamesh luamodulartables luamplib luanumint luaoptions luaotfload
+    luamesh luamml luamodulartables luamplib luanumint luaoptions luaotfload
     luapackageloader luaplot luaprogtable luapstricks
     luaquotes luarandom
     luaset luasseq luatex85 luatexbase luatexja luatexko luatextra
