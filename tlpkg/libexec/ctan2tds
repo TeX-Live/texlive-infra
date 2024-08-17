@@ -3317,6 +3317,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'grading-scheme' => 'etex-answer-y',
  'graphics-pln' => "env TEXINPUTS=$Master/texmf-dist/source/latex/base: latex",
  'grffile'	=> 'tex',
+ 'gridset'	=> 'tex',
  'halloweenmath' => 'latex',  # requires interaction
  'hamnosys'	=> 'etex-answer-y',
  'hanzibox'	=> 'etex',
@@ -4557,10 +4558,10 @@ sub runins {
     &runjob ("$invoke_insrunner $_");
     
     # bbold.dtx generates bbold.ins, and then does "low level hacks" to
-    # run the .ins itself.  mathfont.dtx generates mathfont.ins to no
-    # purpose (and it doesn't work). We don't want to do anything in
-    # either case.
-    next if $package =~ /^(bbold|mathfont)$/;
+    # run the .ins itself. mathfont.dtx and gridset.dtx generate
+    # .ins files to no purpose (and they don't work). We don't want to
+    # do anything in these cases.
+    next if $package =~ /^(bbold|mathfont|gridset)$/;
 
     # in the case of fullblck (et al.), the .dtx creates the .ins (so the
     # .ins is not in @filenames), and the .ins creates the .sty.
