@@ -271,6 +271,7 @@ for fmt in $fmts; do
   # copy to remote machine.
   #echo "$0: copying $fmtfile to $remotesys:$remotedir..."
   scp -pq "$fmtfile" "$remotesys:$remotedir" || exit 1
+  ls -l "$fmtfile"; shasum "$fmtfile"
 
   # load on remote machine.
   echo "$0: running ./$engine in $remotesys:$remotedir..."
