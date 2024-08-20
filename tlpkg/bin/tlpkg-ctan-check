@@ -290,7 +290,7 @@ my @TLP_working = qw(
     ebezier ebgaramond ebgaramond-maths ebong ebook ebproof ebsthesis
     ec ecc ecclesiastic ecltree eco ecobiblatex
     econ-bst econlipsum econometrics economic ecothesis
-    ecv eczar ed edfnotes edichokey edmac edmargin
+    ecv eczar ed edfnotes edichokey edmac edmargin edmaths
     eemeir eepic efbox egameps
     egpeirce egplot ehhline eiad eiad-ltx eijkhout einfart
     ejpecp ekaia ekdosis ektype-tanka
