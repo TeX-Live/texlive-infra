@@ -1780,6 +1780,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'interactiveworkbook'	=> '&POSTinteractiveworkbook',
  'ipsum'		=> '&POST_onelevel',
  'isodoc'		=> '&POSTisodoc',
+ 'isosafety'		=> '&POST_onelevel',
  'knitting'		=> '&POSTknitting',
  'knuth-lib'		=> '&POSTknuth_lib',
  'koma-script'		=> '&POSTkoma_script', #'&POST_rmsymlink',
@@ -2268,7 +2269,6 @@ $standardtex
  'iso10303',    'a.*tex|b.*tex|e.*tex|stp.*tex|\.sty|\.4ht',
  'isodate',     '\.idf|\.sty',
  'isodoc',      '\.cls|iso.*\.ldf',       # not *.sty
- 'isosafety',	'images|' . $standardtex,
  'jadetex',     '\.ltx|\.def|\.tex|\.ini|\.sty|\.fd',
  'jeuxcartes',	'CaJ.*\.(png|pdf)|' . $standardtex,
  'jieeetran',	'NULL',			# not .py
