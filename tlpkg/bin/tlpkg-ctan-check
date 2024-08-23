@@ -274,7 +274,7 @@ my @TLP_working = qw(
     dk-bib dlfltxb
     dnaseq dnp doc-pictex docbytex doclicense
     docmfp docmute docshots docsurvey doctools documentation docutils
-    doi doibanner doipubmed domitian
+    doi doibanner doipubmed domaincoloring domitian
     dosepsbin dotlessi dot2texi dotarrow dotseqn dottex
     doublestroke doulossil dowith download dox dozenal
     dpcircling dpfloat dprogress
