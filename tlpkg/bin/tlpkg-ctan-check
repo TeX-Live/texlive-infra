@@ -442,7 +442,7 @@ my @TLP_working = qw(
     inputenx inputnormalization inputtrc
     inriafonts insbox install-latex-guide-zh-cn installfont
     intcalc inter interactiveworkbook
-    interchar interfaces interpreter interval intopdf
+    interchar interfaces interlinear interpreter interval intopdf
     intro-scientific
     inversepath invoice invoice-class invoice2
     iodhbwm ionumbers iopart-num ipaex ipaex-type1 ipsum iran-bibtex
