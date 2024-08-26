@@ -462,6 +462,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'do-it-yourself-tex', "die 'skipping, huge documentation package'",
  'docassembly',	"die 'skipping, requires adobe (dps)'",
  'dogma',       "die 'skipping, requires nonfree font'",
+ 'domaincoloring' => '&MAKEflatten', 
  'dot2tex',     "die 'skipping, only useful with supporting python setup'",
  'domitian',	"&MAKEflatten",
  'dozenal',	"&MAKEflatten",
