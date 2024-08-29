@@ -3290,6 +3290,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'emisa'	=> 'pdflatex-preserve-pdf',
  'emo'		=> 'etex',
  'engpron'      => 'latex -translate-file=empty.tcx',   # no 8-bit
+ 'enverb'	=> 'etex',
  'ecclesiastic' => 'latex',  # requires interaction
  'emisa'	=> 'pdflatex-preserve-pdf',
  'epstopdf-pkg' => 'tex',

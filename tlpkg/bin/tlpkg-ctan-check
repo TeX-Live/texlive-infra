@@ -303,7 +303,7 @@ my @TLP_working = qw(
     enctex encxvlna endfloat endheads endiagram
     endnotes endnotes-hy endnotesj endofproofwd
     engpron engrec engtlc enigma enotez ensps-colorscheme
-    enumitem enumitem-zref envbig environ envlab eolang
+    enumitem enumitem-zref envbig enverb environ envlab eolang
     epcqrcode epigrafica epigram epigraph epigraph-keys epiolmec eplain
     epsdice epsf epsf-dvipdfmx epsincl epslatex-fr
     epspdfconversion epstopdf epstopdf-pkg
@@ -802,7 +802,7 @@ my @TLP_working = qw(
     stickstoo stix stix2-otf stix2-type1 stmaryrd storebox storecmd
     strands stricttex string-diagrams stringenc stringstrings
     structmech struktex
-    sttools stubs studenthandouts sty2dtx styledcmd suanpan
+    sttools stubs studenthandouts sty2dtx styledcmd suanpan suanpan-l3
     subdocs subdepth subeqn subeqnarray
     subfig subfigmat subfigure subfiles subfloat substances
     substr subsupscripts subtext
