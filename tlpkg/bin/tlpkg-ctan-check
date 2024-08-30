@@ -943,7 +943,7 @@ my @TLP_working = qw(
     xkcdcolors xkeymask xkeyval xlop xltabular xltxtra
     xml2pmx xmltex xmpincl xmuthesis xnewcommand
     xoptarg xpatch xpeek xpiano xpicture xpinyin xprintlen xpunctuate
-    xq xsavebox xsim xskak xstring xtab xtuthesis xunicode xurl
+    xq xreview xsavebox xsim xskak xstring xtab xtuthesis xunicode xurl
     xwatermark xyling xymtex xypic xypic-tut-pt xytree
   yafoot yagusylo yaletter yamlvars yannisgr yathesis yax yazd-thesis
     yb-book ycbook ydoc yet-another-guide-latex2e

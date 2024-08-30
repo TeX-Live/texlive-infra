@@ -185,6 +185,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'beamer-rl',		"&MAKEflatten",
  'beamer2thesis',       "&MAKEflatten",
  'beamerauxtheme',	"&MAKEflatten",
+ 'beamertheme-edmaths',		"die 'skipping, nonfree images'",
  'beamertheme-metropolis',	"&MAKEflatten",
  'beamertheme-trigon',		"&MAKEflatten",
  'beamertheme-upenn-bc',	"&MAKEflatten",
