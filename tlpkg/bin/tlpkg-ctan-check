@@ -237,7 +237,7 @@ my @TLP_working = qw(
     crossreference crossreftools crossrefenum crossrefware crossword crosswrd
     crumbs cryptocode cryst
     cs cs-techrep csassignments csbulletin cslatex csplain csquotes csquotes-de
-    css-colors cstex cstypo csvmerge csvsimple
+    css-colors cstex csthm cstypo csvmerge csvsimple
     ctan-o-mat ctan_chk ctanbib ctanify ctanupload
     ctable ctablestack ctex ctex-faq
     culmus cuprum cursolatex cuisine
