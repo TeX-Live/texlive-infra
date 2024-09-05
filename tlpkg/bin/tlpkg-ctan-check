@@ -31,7 +31,7 @@ my @TLP_working = qw(
     adjmulticol adfsymbols adjustbox adobemapping
     adrconv adtrees advdate advice
     ae aeguill aesupp affilauthor afparticle afthesis
-    aguplus aiaa aichej ajl akktex akletter akshar
+    aguplus aiaa aichej aiplans ajl akktex akletter akshar
     albatross alchemist alegreya alertmessage alfaslabone
     alg algobox algolrevived
     algorithm2e algorithmicx algorithms algpseudocodex algxpar
@@ -728,7 +728,7 @@ my @TLP_working = qw(
      qualitype quantikz quantumarticle quattrocento
      quickreaction quicktype quiver quiz2socrative quizztex
      quotchap quoting quotmark
-     quran quran-bn quran-de quran-en quran-id quran-ur qyxf-book
+     quran quran-bn quran-de quran-en quran-es quran-id quran-ur qyxf-book
   r_und_s ragged2e raleway ran_toks randbild randexam
     random randomlist randomwalk randtext
     rank-2-roots rbt-mathnotes rccol rcs rcs-multi rcsinfo
@@ -760,7 +760,7 @@ my @TLP_working = qw(
     schule schulschriften schwalbe-chess
     scikgtex sciposter scientific-thesis-cover scontents
     scrabble scrambledenvs scratch scratch3 scratchx screenplay screenplay-pkg
-    scripture scrjrnl scrlayer-fancyhdr scrlttr2copy scrwfile scsnowman
+    scrhack scripture scrjrnl scrlayer-fancyhdr scrlttr2copy scrwfile scsnowman
     sdaps sdrt sduthesis
     se2thesis secdot secnum section sectionbox sectionbreak sectsty seealso
     selectp selinput selnolig semantex semantic semantic-markup semaphor
