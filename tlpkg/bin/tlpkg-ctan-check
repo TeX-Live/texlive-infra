@@ -360,7 +360,8 @@ my @TLP_working = qw(
     formal-grammar formlett formation-latex-ul forms16be formular forum
     fouridx fourier fouriernc
     fp fpl
-    fragmaster fragments frame framed francais-bst frankenstein frcursive
+    fragmaster fragments frame framed framedsyntax
+    francais-bst frankenstein frcursive
     frederika2016 freealign frege frenchmath frimurer frletter frontespizio
     froufrou frpseudocode
     ftc-notebook ftcap ftnxtra
