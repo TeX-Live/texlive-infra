@@ -315,7 +315,8 @@ my @TLP_working = qw(
     etaremune etbb etdipa etex-pkg etexcmds etextools ethiop ethiop-t1 etl
     etoc etoolbox etoolbox-de etoolbox-generic etsvthor
     euclideangeometry euenc euflag eukdate
-    euler euler-math eulerpx eulervm euro euro-ce europasscv europecv eurosym
+    euler euler-math eulerpx eulervm
+    euro euro-ce euromoney europasscv europecv eurosym
     evangelion-jfm everyhook everypage everysel everyshi
     exam exam-lite exam-n exam-randomizechoices exam-zh
     examdesign example examplep examz
