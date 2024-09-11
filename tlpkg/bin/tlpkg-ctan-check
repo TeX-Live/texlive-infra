@@ -167,7 +167,7 @@ my @TLP_working = qw(
     canoniclayout cantarell
     capt-of captcont captdef caption
     carbohydrates carlisle carlito carolmin-ps cartonaugh
-    cascade cascadia-code cascadilla cases casyl
+    cascade cascadia-code cascadiamono-otf cascadilla cases casyl
     catchfile catchfilebetweentags catcodes catechis
     catoptions catppuccinpalette causets
     cbcoptic cbfonts cbfonts-fd
