@@ -954,7 +954,7 @@ my @TLP_working = qw(
   zapfchan zapfding zbmath-review-template zebra-goodies zed-csp zennote
     zhlineskip zhlipsum zhnumber zhmetrics zhmetrics-uptex zhspacing
     ziffer zitie zlmtt zootaxa-bst zref zref-check zref-clever zref-vario
-    zwgetfdate zwpagelayout
+    zugferd zwgetfdate zwpagelayout
     zx-calculus zxjafbfont zxjafont zxjatype zztex
 ); 
 
