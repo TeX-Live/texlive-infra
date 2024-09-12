@@ -463,7 +463,7 @@ my @TLP_working = qw(
   kalendarium kanaparser kanbun kantlipsum karnaugh karnaugh-map karnaughmap
     kastrup kaytannollista-latexia
     kblocks kdgdocs kdpcover kerkis kerntest ketcindy
-    keycommand keyfloat keyindex keyparse keyreader keystroke
+    keycommand keyfloat keyindex keyparse keyreader keystroke keytheorems
     keyval2e keyvaltable kfupm-math-exam khatalmaqala kinematikz kix kixfont
     knitting knittingpattern knowledge
     knuth-errata knuth-hint knuth-lib knuth-local knuth-pdf

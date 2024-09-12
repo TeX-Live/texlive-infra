@@ -1786,6 +1786,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'ipsum'		=> '&POST_onelevel',
  'isodoc'		=> '&POSTisodoc',
  'isosafety'		=> '&POST_onelevel',
+ 'keytheorems'		=> '&POST_onelevel',
  'knitting'		=> '&POSTknitting',
  'knuth-lib'		=> '&POSTknuth_lib',
  'koma-script'		=> '&POSTkoma_script', #'&POST_rmsymlink',
