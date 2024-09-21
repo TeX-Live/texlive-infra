@@ -1352,7 +1352,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'splint',      "die 'skipping, binary'",
  'springer',    "die 'skipping, licenses not checked'",
  'sprite',      "die 'skipping, noinfo license'",
- 'sqltex',	"die 'skipping, not self-locating'",
  'srbtiks',	"&MAKEflatten",
  'ssqquote',    "die 'skipping, nonfree license'",
  'startlatex2e',"die 'skipping, renamed to yet-another-guide-latex2e'",
@@ -1885,6 +1884,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'simple-resume-cv'	=> '&POST_simple_rmFonts',
  'simple-thesis-dissertation' => '&POST_simple_rmFonts',
  'splitindex'		=> '&POST_do_man',
+ 'sqltex',		=> '&POSTsqltex',
  'starray'		=> '&POST_onelevel',
  'startex'		=> '&POST_otherformat', 
  'stex',		=> '&POSTstex',
@@ -3137,6 +3137,7 @@ $standardsource = '(\.(bat|c|drv|[dem]tx|fea|fdd|ins|mk|sfd)'
  'ruhyphen',            '^[^.]*$|README.ru|hyphen.rules',
  'selnolig',            'NULL',                 # not .fea
  'shipunov',		'NULL',                 # .bat in scripts
+ 'sqltex',		'.',
  'stex',		'NULL',			# handled in post fn
  'tds',			'NULL',			# doc pkg
  'tex-vpat',		'NULL',
@@ -3876,6 +3877,7 @@ $standardttf = '\.ttf|\.TTC';
  'rubik'                => '\.pl$',
  'runtexshebang'	=> '\.lua$',
  'spix'			=> '\.py$',
+ 'sqltex'		=> 'sqltex$',
  'srcredact'		=> '\.pl$',
  'splitindex'           => 'splitindex\.pl$',
  'sty2dtx'              => '\.pl$',
@@ -6798,7 +6800,7 @@ sub POSTbibtex {
 }
 
 sub POSTbibtexperllibs {
-  print "POST$package - move modules to scripts/, man pages to doc/\n";
+  print "POST$package - move modules to scripts/, man pages to doc/, etc.\n";
   &xchdir ("$DEST/source/support/$package/");
   &mv_with_mkdir ("*/lib/*", "$DEST/scripts/$package/");
   #
@@ -7828,6 +7830,30 @@ sub POSTshipunov {
 sub POST_simple_rmFonts {
   print "POST$package - rm Fonts dir\n";
   &SYSTEM ("$RM -r Fonts");
+}
+
+sub POSTsqltex {
+  print "POST$package - move script to scripts/, man pages to doc/, etc.\n";
+  &xchdir ("$DEST/source/support/$package/");
+  #
+  # The user-level script, and accompanying data files, are in a subdir.
+  # Don't move Makefile.*.
+  &mv_with_mkdir ("src/[sS]*", "$DEST/scripts/$package/");
+  #
+  &xchdir ("$DEST/scripts/$package/");
+  @filenames = glob ("*"); # have to reset @filenames for install()
+  &doscripts ();
+  #
+  # Move the doc files to the doc tree. Don't move Makefile.*.
+  &xchdir ("$DEST/source/support/$package");
+  my $docdest = "$DEST/doc/support/$package";
+  &mv_with_mkdir ("doc/S*", $docdest);  
+  &domans ();
+  #
+  # The man page is in a different subdir.
+  &xchdir ("man");
+  @filenames = glob ("*.man"); # have to reset @filenames for install()
+  &domans ();
 }
 
 sub POSTstex {
