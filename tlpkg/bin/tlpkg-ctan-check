@@ -730,7 +730,7 @@ my @TLP_working = qw(
      quickreaction quicktype quiver quiz2socrative quizztex
      quotchap quoting quotmark
      quran quran-bn quran-de quran-en quran-es quran-id quran-ur qyxf-book
-  r_und_s ragged2e raleway ran_toks randbild randexam
+  r_und_s ragged2e raleway ran_toks randbild randexam randintlist
     random randomlist randomwalk randtext
     rank-2-roots rbt-mathnotes rccol rcs rcs-multi rcsinfo
     readablecv readarray realboxes realhats realscripts realtranspose rec-thy

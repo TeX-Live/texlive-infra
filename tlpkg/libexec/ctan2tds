@@ -1871,6 +1871,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'quran-en'		=> '&POST_onelevel',
  'quran-es'		=> '&POST_onelevel',
  'quran-id'		=> '&POST_onelevel',
+ 'randintlist'		=> '&POST_onelevel',
  'recipebook'		=> '&POST_rmsymlink',
  'regulatory'		=> '&POST_onelevel',
  'resolsysteme'		=> '&POST_onelevel',
