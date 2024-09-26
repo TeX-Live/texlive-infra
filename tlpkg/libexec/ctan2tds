@@ -1725,6 +1725,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'cmcyr'		=> '&POSTcmcyr',
  'codedescribe'		=> '&POST_onelevel',
  'coloredbelts'		=> '&POST_onelevel',
+ 'commalists-tools'	=> '&POST_onelevel',
  'context'		=> '&POSTcontext',
  'context-games'	=> '&POSTcontext_games',
  'context-legacy'	=> '&POSTcontext_legacy',

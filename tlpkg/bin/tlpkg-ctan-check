@@ -207,7 +207,8 @@ my @TLP_working = qw(
     colorsep colorspace colortab
     colortbl colorwav colorweb colourchange
     combelow combine combinedgraphics combofont comfortaa comicneue
-    comma commado commath commedit comment commonunicode commutative-diagrams
+    comma commado commalists-tools commath commedit comment
+    commonunicode commutative-diagrams
     compactbib compare competences
     complexity components comprehensive computational-complexity
     concepts concmath concmath-fonts concmath-otf concprog concrete
