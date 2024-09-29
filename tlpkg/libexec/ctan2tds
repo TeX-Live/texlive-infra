@@ -196,6 +196,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'bengali',             "&MAKEflatten",
  'bengali-omega',       "die 'skipping, duplicates odev.sty et al.'",
  'bera',        "&MAKEunzipandflatten",
+ 'baskervaldadf',"&MAKEflatten",
  'berenisadf',  "&MAKEflatten",
  'beuron',	"&MAKEflatten",
  'bezos',       "die 'skipping, split into constituent packages'",
