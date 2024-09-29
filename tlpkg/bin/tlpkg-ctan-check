@@ -295,7 +295,7 @@ my @TLP_working = qw(
     eemeir eepic efbox egameps
     egpeirce egplot ehhline eiad eiad-ltx eijkhout einfart
     ejpecp ekaia ekdosis ektype-tanka
-    elbioimp electrum eledform eledmac elements
+    elbioimp electrum electrumadf eledform eledmac elements
     ellipse ellipsis
     elmath elocalloc elpres els-cas-templates elsarticle
     elteiktdk elteikthesis eltex elvish elzcards
