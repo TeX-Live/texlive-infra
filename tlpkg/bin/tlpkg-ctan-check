@@ -893,7 +893,7 @@ my @TLP_working = qw(
   uaclasses uafthesis uantwerpendocs uassign ucalgmthesis
     ucharcat ucharclasses ucbthesis ucdavisthesis ucph-revy
     ucs ucsmonograph
-    ucthesis udepcolor udes-genie-these udesoftec
+    ucthesis udepcolor udes-genie-these udesoftec udiss
     uebungsblatt uestcthesis ufrgscca
     uhhassignment uhrzeit uiucredborder uiucthesis
     ukbill ukrhyph ulem ulqda ulthese
