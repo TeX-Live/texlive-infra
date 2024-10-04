@@ -2606,6 +2606,7 @@ $standardtex
  'ucs',		'data|' . $standardtex,
  'uestcthesis', '\.png|' . $standardtex,
  'udesoftec',   'udesoftec-cover|\.cls|\.def',
+ 'udiss',	'logos|' . $standardtex,
  'ulthese',     'ulthese.cls|ul_p\.(eps|pdf)', # logo for the university
  'underoverlap','underoverlap\.sty',
  'underscore',  '^..[^s].*\.sty',       # not miscdoc.sty
