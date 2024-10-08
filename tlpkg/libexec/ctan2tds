@@ -248,6 +248,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'bnf-plain',   "die 'skipping, unknown license (and c.1992)'",
  'bookhands',   "&MAKEwilson",
  'bookman',	"die 'skipping, part of urw-base35, frozen'",
+ 'bookshelf',	"&MAKEflatten",
  'booktabs-fr', "&MAKEnosymlinks",
  'boondox',     "&MAKEcopy",
  'borceux',     "&MAKEborceux",
@@ -3070,6 +3071,7 @@ $standardsource = '(\.(bat|c|drv|[dem]tx|fea|fdd|ins|mk|sfd)'
  'bibtools',		'.',			# everything but one bst
  'bigints',             'NULL',
  'blacklettert1',       '\.dtx|\.ins|\.pl|Makefile',
+ 'bookshelf',           'NULL',                 # all non-runtime in doc
  'booktabs-de',         'NULL',                 # doc package
  'booktabs-fr',         'NULL',                 # doc package
  'burmese',             '\.pl',
@@ -3792,6 +3794,7 @@ $standardttf = '\.ttf|\.TTC';
  'bibcop'		=> '\.pl$',
  'bibexport'            => 'bibexport\.sh$',
  'bibtexperllibs'	=> 'ltx2unitxt',
+ 'bookshelf'		=> 'bookshelf-(listallfonts|mkfontsel)$',
  'bundledoc'            => '(arlatex|bundledoc)$',
  'checkcites'           => '\.lua$',
  'checklistings'        => '\.sh$',
@@ -3952,6 +3955,7 @@ $standardttf = '\.ttf|\.TTC';
  'bib2gls'		=> '\.1$',
  'bibtexperllibs'	=> '\.1$',
  'bibcop'		=> '\.1$',
+ 'bookshelf'		=> '\.1$',
  'bundledoc'            => '\.1$',
  'chklref'		=> '\.1$',
  'citation-style-language' => '\.1$',
