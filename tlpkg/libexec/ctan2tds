@@ -3260,6 +3260,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'asciilist'	=> 'latex',  # requires interaction
  'askinclude'	=> 'tex',    # else doc is generated
  'atenddvi'	=> 'etex',
+ 'atveryend'	=> 'etex',
  'babel'	=> 'etex',
  'babel-belarusian'	=> 'tex -8bit', # do not make doc, no ^^
  'babel-french'		=> 'luatex',
