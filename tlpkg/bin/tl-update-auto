@@ -264,8 +264,9 @@ if $config_scripts_only; then :; else
     echo "$0: ctan mirror list already updated today, skipping update:" >&2
     ls -lt $mirrors4tl >&2
     
+#     && rsync rsync://rsync.dante.ctan.org/MirMon/mirmon.state $ctan_mirmon; then
   elif wget --quiet https://ctan.org/tex-archive/CTAN.sites -O $ctan_mirrors \
-     && rsync rsync://rsync.dante.ctan.org/MirMon/mirmon.state $ctan_mirmon; then
+     && scp -pq ctan.org:/serv/ctan/scripts/mirmon-2.11/mirmon.state $ctan_mirmon; then
     #echo "got new mirror data"; ls -ltr $TMPDIR
     $mydir/tl-update-ctan-mirrors -v $ctan_mirrors $ctan_mirmon \
       >$mirrors4tl.new

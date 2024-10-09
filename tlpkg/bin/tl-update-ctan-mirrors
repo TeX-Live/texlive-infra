@@ -5,9 +5,10 @@
 # or any later version.
 #
 # Write parsable list of active CTAN mirrors; run from tl-update-auto cron.
-# Needed input:
-#   http://ctan.org/mirrors (aka CTAN.sites and README.mirrors)
-#   rsync://comedy.dante.de/MirMon/mirmon.state
+# 
+# Needed input are the files from:
+#   https://ctan.org/mirrors (aka CTAN.sites and README.mirrors)
+#   (via scp) ctan.org:/serv/ctan/scripts/mirmon-2.11/mirmon.state
 #     (on web: https://ctan.org/mirrors/mirmon)
 
 use strict;
@@ -16,6 +17,8 @@ use Data::Dumper;
 
 my $prg;
 my $verbose = 0;
+my $AGE_HOURS_CUTOFF = 60; # omit a mirror if it's older than this
+# switch back to 36 after CTAN mirmon is back in shape.
 
 exit (&main ());
 
@@ -62,7 +65,7 @@ sub read_mstate {
     } else {
       # mirrors can be stale and yet not have no_time for their status.
       my $age_hours = (time() - $age) / (60 * 60);
-      if ($age_hours > 36) {
+      if ($age_hours > $AGE_HOURS_CUTOFF) {
         printf STDERR "mirror age %.1f hours, skipping: $m\n", $age_hours
           if $verbose;
       } else {
