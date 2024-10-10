@@ -2130,6 +2130,7 @@ $standardtex
  'bibtex',      'apalike\..*|' . $standardtex,
  'bidi',        '^bidi\.tex|' . $standardtex,
  'blockdraw_mp','NULL',                 # skip .sty's
+ 'bookshelf',	'^bookshelf-svgnam\.tex|' . $standardtex,
  'booktabs-de', 'NULL',                 # doc package
  'booktabs-fr', 'NULL',                 # doc package
  'bmstu',	'img|sty|logo.pdf|' . $standardtex,
