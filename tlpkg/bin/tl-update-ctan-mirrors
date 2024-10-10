@@ -17,8 +17,7 @@ use Data::Dumper;
 
 my $prg;
 my $verbose = 0;
-my $AGE_HOURS_CUTOFF = 60; # omit a mirror if it's older than this
-# switch back to 36 after CTAN mirmon is back in shape.
+my $AGE_HOURS_CUTOFF = 36; # omit a mirror if it's older than this
 
 exit (&main ());
 

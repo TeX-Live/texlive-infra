@@ -265,7 +265,7 @@ if $config_scripts_only; then :; else
     ls -lt $mirrors4tl >&2
     
 #     && rsync rsync://rsync.dante.ctan.org/MirMon/mirmon.state $ctan_mirmon; then
-  elif wget --quiet https://ctan.org/tex-archive/CTAN.sites -O $ctan_mirrors \
+  elif wget -nv https://ctan.org/tex-archive/CTAN.sites -O $ctan_mirrors \
      && scp -pq ctan.org:/serv/ctan/scripts/mirmon-2.11/mirmon.state $ctan_mirmon; then
     #echo "got new mirror data"; ls -ltr $TMPDIR
     $mydir/tl-update-ctan-mirrors -v $ctan_mirrors $ctan_mirmon \
