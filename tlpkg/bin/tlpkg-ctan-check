@@ -353,9 +353,9 @@ my @TLP_working = qw(
     foekfont foilhtml foliono fonetika
     font-change font-change-xetex
     fontawesome fontawesome5 fontaxes fontbook fontch fontinst
-    fontinstallationguide fontmfizz fontools fontscale
+    fontinstallationguide fontmfizz fontools
     fonts-churchslavonic fonts-tlwg
-    fontsetup fontsize fontspec fonttable fontwrap
+    fontscale fontscripts fontsetup fontsize fontspec fonttable fontwrap
     footbib footmisc footmisx footnotebackref footnotehyper
     footnoterange footnpag
     forarray foreign forest forest-quickstart forloop
