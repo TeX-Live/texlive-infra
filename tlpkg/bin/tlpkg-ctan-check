@@ -587,7 +587,7 @@ my @TLP_working = qw(
     moloch mongolian-babel montserrat
     monofill montex moodle
     moreenum morefloats morehype moremath moresize
-    moreverb morewrites morisawa movement-arrows movie15 mp3d
+    moreverb morewrites morisawa movement-arrows movie15 mp-geom2d mp3d
     mparhack mparrows mpattern mpchess mpcolornames
     mpfonts mpgraphics mpkiviat
     mpman-ru mpostinl mptopdf mptrees msc msg mslapa msu-thesis mtgreek
@@ -623,7 +623,7 @@ my @TLP_working = qw(
     notex-bst noto noto-emoji notoccite notomath
     novel nowidow nox
     nrc ntgclass nth ntheorem ntheorem-vn nuc nucleardata
-    numberedblock numberpt
+    numberedblock numberpt numbersets
     numerica numerica-plus numerica-tables numericplots
     numname numnameru numprint numspell nunito
     nwafuthesis nwejm nxuthesis
@@ -851,7 +851,7 @@ my @TLP_working = qw(
     ticket ticollege tidyres tiet-question-paper
     tikz2d-fr tikz3d-fr tikz-3dplot
     tikz-among-us tikz-bagua tikz-bayesnet tikz-bbox
-    tikz-cd tikz-dependency tikz-dimline tikz-ext
+    tikz-cd tikz-decofonts tikz-dependency tikz-dimline tikz-ext
     tikz-feynhand tikz-feynman tikz-imagelabels tikz-inet
     tikz-kalender tikz-karnaugh tikz-ladder tikz-lake-fig tikz-layers
     tikz-mirror-lens tikz-nef tikz-network tikz-nfold tikz-opm tikz-optics
