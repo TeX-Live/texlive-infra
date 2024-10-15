@@ -809,7 +809,7 @@ my @TLP_working = qw(
     subdocs subdepth subeqn subeqnarray
     subfig subfigmat subfigure subfiles subfloat substances
     substr subsupscripts subtext
-    sudoku sudokubundle suftesi sugconf
+    sudoku sudokubundle suftesi sugconf sunpath
     superiors supertabular suppose susy svg svg-inkscape svgcolor
     svn svn-multi svn-prov svninfo svrsymbols
     swebib swfigure swimgraf swrule swungdash syllogism
