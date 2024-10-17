@@ -796,7 +796,8 @@ my @TLP_working = qw(
     spectral spectralsequences spelatex spelling spie spix
     sphack sphdthesis splines splitbib splitindex
     spot spotcolor spreadtab spverbatim sqltex
-    sr-vorl srbook-mem srbtiks srcltx srdp-mathematik srcredact sseq sslides
+    sr-vorl srbook-mem srbtiks srcltx srdp-mathematik srcredact
+    sseq sshrc-insight sslides
     stack stackengine stage standalone standardsectioning stanli
     starfont startex
     statex statex2 statistics statistik statmath staves starray
@@ -825,7 +826,7 @@ my @TLP_working = qw(
     tamethebeast tango tangocolors tangramtikz tap tapir tasks
     tblr-extras tcldoc tcolorbox tdclock tds tdsfrmath
     technics technion-thesis-template ted telprint
-    templates-fenn templates-sommer templatetools tempora
+    templates-fenn templates-sommer templatetools tempora temporal-logic
     tengwarscript
     tensind tensor termcal termcal-de termes-otf termlist termmenu termsim
     testhyphens testidx
