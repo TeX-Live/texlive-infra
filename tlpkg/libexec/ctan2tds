@@ -1714,6 +1714,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'autosp'		=> '&POSTautosp',
  'barracuda'		=> '&POSTbarracuda',
  'beautybook'		=> '&POSTbeautybook',
+ 'bhcexam'		=> '&POST_rmsymlink',
  'bib2gls'		=> '&POSTbib2gls',
  'biber'		=> '&POSTbiber',
  'biber-ms'		=> '&POSTbiber',
