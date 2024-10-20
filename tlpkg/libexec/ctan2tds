@@ -2523,6 +2523,7 @@ $standardtex
  'sansmath',    '^..[^s].*\.sty',	# not miscdoc.sty
  'sapthesis',	'sapienzalogo.pdf|' . $standardtex,
  'scholax',	'.*-subs\.tex|' . $standardtex,
+ 'scrhack',	'.hak$|' . $standardtex,
  'scrlttr2copy','\.lco',
  'sdaps',	'\.dict$|code128|' . $standardtex,
  'sduthesis',	'figures|' . $standardtex,
