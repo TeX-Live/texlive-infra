@@ -98,7 +98,8 @@ my @TLP_working = qw(
     beamercolorthemeowl beamerdarkthemes beamerposter
     beamersubframe beamerswitch beamertheme-arguelles beamertheme-cuerna
     beamertheme-detlevcm beamertheme-epyt beamertheme-focus beamertheme-gotham
-    beamertheme-light beamertheme-metropolis beamertheme-npbt
+    beamertheme-light beamertheme-metropolis beamertheme-mirage
+    beamertheme-npbt
     beamertheme-phnompenh beamertheme-pure-minimalistic beamertheme-rainbow
     beamertheme-saintpetersburg beamertheme-simpledarkblue
     beamertheme-simpleplus
@@ -227,7 +228,8 @@ my @TLP_working = qw(
     cooking cooking-units cookingsymbols
     cool coolfn coollist coolstr coolthms cooltooltips
     coop-writing cooperhewitt
-    coordsys copyedit copyrightbox cormorantgaramond correctmathalign coseoul
+    coordsys copyedit copyrightbox
+    cora-macs cormorantgaramond correctmathalign coseoul
     couleurs-fr
     count1to counterz countriesofeurope counttexruns
     courier courier-scaled courierten
