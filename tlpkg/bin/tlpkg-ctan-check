@@ -374,7 +374,7 @@ my @TLP_working = qw(
   g-brief gaceta galois gamebook gamebooklib gammas
     garamond-libre garamond-math garuda-c90
     garrigues gastex gates gatherenum gauss
-    gb4e gbt7714 gcard gchords gcite gckanbun
+    gb4e gb4e-next gbt7714 gcard gchords gcite gckanbun
     gelasio gelasiomath genealogy genealogytree gender gene-logic genealogy-profiles
     genmpage gensymb gentium-tug gentle gentombow geometry
     geradwp german germbib germkorr geschichtsfrkl
