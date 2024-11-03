@@ -736,7 +736,8 @@ my @TLP_working = qw(
   r_und_s ragged2e raleway ran_toks randbild randexam randintlist
     random randomlist randomwalk randtext
     rank-2-roots rbt-mathnotes rccol rcs rcs-multi rcsinfo
-    readablecv readarray realboxes realhats realscripts realtranspose rec-thy
+    readablecv readarray realboxes realhats realscripts realtranspose
+    rebuttal rec-thy
     recipe recipebook recipecard recorder-fingering recycle rectopma
     refcheck refcount refenums reflectgraphics refman refstyle
     regcount regexpatch register regstats regulatory
