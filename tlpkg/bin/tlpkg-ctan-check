@@ -624,7 +624,7 @@ my @TLP_working = qw(
     nostarch notebeamer notes notes2bib notespages notestex
     notex-bst noto noto-emoji notoccite notomath
     novel nowidow nox
-    nrc ntgclass nth ntheorem ntheorem-vn nuc nucleardata
+    nrc nstc-proposal ntgclass nth ntheorem ntheorem-vn nuc nucleardata
     numberedblock numberpt numbersets
     numerica numerica-plus numerica-tables numericplots
     numname numnameru numprint numspell nunito
