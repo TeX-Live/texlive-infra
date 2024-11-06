@@ -443,7 +443,8 @@ my @TLP_working = qw(
     imfellenglish impnattypo import imsproc imtekda
     incgraph includernw inconsolata inconsolata-nerd-font
     index indextools infwarerr
-    initials inkpaper inline-images inlinebib inlinedef inlinelabel innerscript
+    initials inkpaper inline-images
+    inlinebib inlinedef inlinegraphicx inlinelabel innerscript
     inputenx inputnormalization inputtrc
     inriafonts insbox install-latex-guide-zh-cn installfont
     intcalc inter interactiveworkbook

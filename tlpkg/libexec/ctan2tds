@@ -1792,6 +1792,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'ibygrk'		=> '&POSTibygrk',
  'impatient'		=> '&POSTimpatient',
  'impatient-fr'		=> '&POSTimpatient_fr',
+ 'inlinegraphicx'	=> '&POST_onelevel',
  'interactiveworkbook'	=> '&POSTinteractiveworkbook',
  'ipsum'		=> '&POST_onelevel',
  'isodoc'		=> '&POSTisodoc',
