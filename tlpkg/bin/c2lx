@@ -3,8 +3,7 @@
 # Originally written by Karl Berry. Public domain.
 # 
 # Front-front-end script for c2l to update
-# (with first arg "3") LaTeX3,
-# or (with first arg "e") LaTeX2e,
+# (with first arg "e") LaTeX2e,
 # or (with first arg "dev") LaTeX-dev,
 # etc.,
 # each of which is comprised of several packages to be updated together.
@@ -27,15 +26,6 @@ elif test "x$1" = xdev; then
   shift; label=ldev
   pkgs="latex-amsmath-dev latex-firstaid-dev latex-graphics-dev latex-lab-dev"
   pkgs="$pkgs latex-tools-dev latex-base-dev l3build"
-elif test "x$1" = x3; then
-  shift; label=l3
-  pkgs="l3kernel l3packages l3experimental l3build l3backend"
-elif test "x$1" = x3dev; then
-  shift; label=l3dev
-  pkgs="l3kernel-dev l3backend-dev"
-elif test "x$1" = xdeng; then
-  shift; label=deng
-  pkgs="elegantbook elegantnote elegantpaper"
 elif test "x$1" = xhep; then
   shift; label=hep
   pkgs="hep-font hep-math-font hep-acronym hep-bibliography hep-float"
