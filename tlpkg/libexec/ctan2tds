@@ -2524,6 +2524,7 @@ $standardtex
  'sa-tikz',     'tikzlib.*tex|' . $standardtex,
  'sansmath',    '^..[^s].*\.sty',	# not miscdoc.sty
  'sapthesis',	'sapienzalogo.pdf|' . $standardtex,
+ 'scaletextbullet',	'\.sty$',	# not .cls
  'scholax',	'.*-subs\.tex|' . $standardtex,
  'scrhack',	'.hak$|' . $standardtex,
  'scrlttr2copy','\.lco',

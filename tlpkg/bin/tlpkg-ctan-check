@@ -158,7 +158,7 @@ my @TLP_working = qw(
     breakcites breakurl bredzenie breqn bropd brushscr
     bubblesort buctthesis bullcntr bundledoc burmese
     businesscard-qrcode bussproofs bussproofs-extra
-    bxbase bxcalc bxcjkjatype bxdpx-beamer bxdvidriver bxghost
+    bxbase bxcalc bxcjkjatype bxcoloremoji bxdpx-beamer bxdvidriver bxghost
     bxjaholiday bxjaprnind bxjatoucs bxpapersize bxpdfver bxeepic bxenclose
     bxjalipsum bxjscls bxnewfont bxorigcapt bxtexlogo bxwareki
     byo-twemojis byrne bytefield 
@@ -760,7 +760,7 @@ my @TLP_working = qw(
     sanskrit sanskrit-t1 sansmath sansmathaccent sansmathfonts
     sapthesis sasnrdisplay sauerj
     sauter sauterfonts saveenv savefnmark savesym savetrees
-    scale scalebar scalerel scanpages
+    scale scalebar scalerel scaletextbullet scanpages
     schedule schemabloc schemata schola-otf scholax schooldocs
     schulmathematik sclang-prettifier
     schule schulschriften schwalbe-chess
