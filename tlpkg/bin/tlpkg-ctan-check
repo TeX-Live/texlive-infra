@@ -163,7 +163,7 @@ my @TLP_working = qw(
     bxjalipsum bxjscls bxnewfont bxorigcapt bxtexlogo bxwareki
     byo-twemojis byrne bytefield 
   c90 c-pascal cabin cachepic cahierprof
-    caladea calcage calcfrac calctab calculation calculator
+    caladea calcage calcfrac calctab calculation calculator calculatoritems
     calligra calligra-type1 callouts calrsfs cals calxxxx-yyyy cancel
     canoniclayout cantarell
     capt-of captcont captdef caption
@@ -619,7 +619,8 @@ my @TLP_working = qw(
     nidanfloat nih nihbiosketch
     nimbus15 nimsticks ninecolors njurepo njustthesis njuthesis njuvisual
     nkarta nl-interval nlctdoc
-    nmbib nndraw nnext noconflict nodetree noindentafter noitcrul nolbreaks
+    nmbib nndraw nnext noconflict nodepthtext nodetree
+    noindentafter noitcrul nolbreaks
     nomencl nomentbl non-decimal-units nonfloat nonumonpart
     nopageno norasi-c90 normalcolor
     nostarch notebeamer notes notes2bib notespages notestex
@@ -932,7 +933,7 @@ my @TLP_working = qw(
     voss-mathcol
     vpe vruler vtable vwcol
   wadalab wallcalendar wallpaper wargame warning warpcol
-    was wasy wasy-type1 wasysym webguide webquiz weiqi wheelchart
+    was wasy wasy-type1 wasysym webguide webquiz weiqi whatsnote wheelchart
     widetable widows-and-orphans williams willowtreebook
     windycity withargs witharrows
     wnri wnri-latex wordcloud wordcount wordle wordlike worldflags worksheet
