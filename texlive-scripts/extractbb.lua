@@ -225,6 +225,9 @@ end
 for i = 1, #script_args do
     -- We use a numeric iterator here to avoid ``arg[-1]'' and ``arg[0]''.
     local this_arg = script_args[i]
+    if os.type == 'windows' then
+        this_arg = '"'..this_arg..'"'
+    end
     insert(target_args, this_arg)
 
     -- Show version information
