@@ -4238,11 +4238,7 @@ sub set_dir_defaults {
   my ($ctan_dir) = @_;
   my $guess = "";
   
-  if ($ctan_dir =~ m!/(CTAN|tex-archive)/biblio/bibtex/utils!) {
-    $standarddocfmt = $standardsourcefmt = "support";
-    $guess = "$standarddocfmt for docfmt/srcfmt";
-
-  } elsif ($ctan_dir =~ m!/(CTAN|tex-archive)/biblio/bib!) {
+  if ($ctan_dir =~ m!/(CTAN|tex-archive)/biblio/bib!) {
     $standarddocfmt = $standardsourcefmt = "bibtex";
     $guess = "$standarddocfmt for docfmt/srcfmt";
 
