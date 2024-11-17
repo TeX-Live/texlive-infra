@@ -44,7 +44,7 @@ add_list=
 
 
 #  autogenerate README.EN from readme.html.
-# (skip, better to generate when needed and avoid spurious changes.)
+# (skip, better to generate when needed to avoid spurious changes.)
 #
 #if $config_scripts_only; then :; else
 #$mydir/htmltext <readme-html.dir/readme.en.html >$temp
@@ -266,7 +266,8 @@ if $config_scripts_only; then :; else
     
 #     && rsync rsync://rsync.dante.ctan.org/MirMon/mirmon.state $ctan_mirmon; then
   elif wget -nv https://ctan.org/tex-archive/CTAN.sites -O $ctan_mirrors \
-     && scp -pq ctan.org:/serv/ctan/scripts/mirmon-2.11/mirmon.state $ctan_mirmon; then
+     && scp -pq ctan.org:/serv/ctan/scripts/mirmon-2.11/mirmon.state \
+                $ctan_mirmon; then
     #echo "got new mirror data"; ls -ltr $TMPDIR
     $mydir/tl-update-ctan-mirrors -v $ctan_mirrors $ctan_mirmon \
       >$mirrors4tl.new
@@ -285,7 +286,7 @@ if $config_scripts_only; then :; else
   else
     echo "$0: ctan mirror data not retrievable, skipping." >&2
   fi
-fi # !config_scripts_only || !odd_day_num
+fi # !config_scripts_only
 
 
 #  curl cert bundle. Every other day is more than often enough.
