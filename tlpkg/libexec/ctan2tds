@@ -1924,6 +1924,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'tikzquads'		=> '&POST_onelevel',
  'tikzquests'		=> '&POST_onelevel',
  'tipa-de'		=> '&POST_rmsymlink',
+ 'timeop'		=> '&POST_onelevel',
  'tkz-berge'		=> '&POSTtkz_berge',
  'tkz-bernoulli'        => '&POST_onelevel',
  'tkz-grapheur'		=> '&POST_onelevel',
@@ -2615,6 +2616,7 @@ $standardtex
  'tudscr',	'DDC.*|TUD.*|' . $standardtex,
  'tugboat-plain','\.cmn|' . $standardtex,
  'twemojis',	'all-twemojis\.pdf|' . $standardtex,
+ 'tuple',	'^tuple\.tex|' . $standardtex,
  'typstfun',	'NULL',			# doc pkg
  'ucs',		'data|' . $standardtex,
  'uestcthesis', '\.png|' . $standardtex,

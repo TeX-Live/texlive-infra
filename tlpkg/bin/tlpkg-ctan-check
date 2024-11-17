@@ -869,7 +869,8 @@ my @TLP_working = qw(
     tikzpackets tikzpagenodes tikzpeople tikzpfeile tikzpingus tikzposter
     tikzquads tikzquests tikzscale tikzsymbols
     tikztosvg tikzviolinplots tile-graphic tilings
-    timbreicmc times timetable timing-diagrams tinos tipa tipa-de tipauni tipfr
+    timbreicmc timeop times timetable timing-diagrams
+    tinos tipa tipa-de tipauni tipfr
     tiscreen titlecaps titlefoot titlepages titlepic titleref titlesec titling
     tkz-base tkz-berge tkz-bernoulli tkz-doc tkz-elements tkz-euclide
     tkz-fct tkz-graph tkz-grapheur tkz-orm tkz-tab tkzexample
@@ -890,7 +891,7 @@ my @TLP_working = qw(
     tree-dvips treesvr treetex trfsigns
     trigonometry trimspaces trivfloat trivialpursuit trsym truncate truthtable
     tsemlines tsvtemplate
-    tucv tuda-ci tudscr tufte-latex tugboat tugboat-plain
+    tucv tuda-ci tudscr tufte-latex tugboat tugboat-plain tuple
     tui turabian turabian-formatting turkmen turnstile turnthepage tutodoc
     twemoji-colr twemojis twoinone twoup twoxtwogame
     txfonts txfontsb txgreeks txuprcal
