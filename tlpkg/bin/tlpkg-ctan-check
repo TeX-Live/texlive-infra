@@ -328,7 +328,7 @@ my @TLP_working = qw(
     expdlist expex expex-acro expex-glossonly expkv-bundle export
     expose-expl3-dunkerque-2019 expressg
     exsheets exsol extarrows exteps
-    extpfeil extract extsizes ezedits
+    extpfeil extract extractbb extsizes ezedits
   facsimile factura facture facture-belge-simple-sans-tva fadingimage
     fail-fast faktor familytree
     fancybox fancyhandout fancyhdr fancyhdr-it fancylabel fancynum fancypar
