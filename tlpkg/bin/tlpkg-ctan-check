@@ -42,7 +42,7 @@ my @TLP_working = qw(
     amsaddr amscdx amscls amscls-doc amsfonts amslatex-primer
     amsldoc-it amsldoc-vn
     amsmath amsmath-it amsrefs amstex amsthdoc-it 
-    andika annee-scolaire animate annotate annotate-equations
+    andika annee-scolaire anima animate annotate annotate-equations
     anonchap anonymous-acm anonymouspro answers
     antanilipsum antique-spanish-units antiqua antomega antt anufinalexam
     anyfontsize anysize
