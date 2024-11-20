@@ -1073,6 +1073,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'optexcount',  "&MAKEflatten",
  'optima',      "die 'skipping, nonfree font'",
  'osa',         "die 'skipping, relies on endfloat.cfg and non-unique filenames'",
+ 'osda',	"die 'skipping, nonfree license due to logo, 20nov24 ulm mail'",
  'osmanian',    "die 'skipping, no good license info'",
  'oswald',	"&MAKEflatten",
  'ot2cyr',      "die 'skipping, nonfree font support'",
@@ -3455,7 +3456,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'sillypage'	=> 'etex',
  'skdoc'        => 'tex',
  'spath3'	=> 'etex',
- 'standardsectioning' => etex,
+ 'standardsectioning' => 'etex',
  'stix2-type1'	=> 'tex',
  'svg'		=> 'etex',
  'svn-multi'    => 'latex',  # interaction for .pl
@@ -3533,7 +3534,7 @@ $standardmp = '\.mp$';
  'latexmp',     'latexmp.mp',
  'latex-graphics-companion', 'NULL',    # doc package
  'luamesh',	'luamesh.mp',		# not doc file fond.mp
- 'mcf2graph',	'mcf2graph.mf',	# not the examples
+ 'mcf2graph',	'mcf2graph.mp|main_lib.mcf',	# not the examples
  'metapost-colorbrewer','colorbrewer-[cr].*mp',	# not -sampler
  'metapost-examples',	'NULL',		# doc package
  'minim-hatching',	'.*g\.mp',	# not doc.mp

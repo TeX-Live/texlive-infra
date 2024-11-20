@@ -639,7 +639,7 @@ my @TLP_working = qw(
     onedown onlyamsmath onrannual opbible opcit opencolor opensans oplotsymbl
     opteng optex optexcount optidef optional options
     orcidlink ordinalpt orientation orkhun
-    oscola osda oststud oswald ot-tableau othello othelloboard
+    oscola oststud oswald ot-tableau othello othelloboard
     oubraces oup-authoring-template
     outerhbox outilsgeomtikz outline outliner outlines outlining
     overarrows overlays overlock overpic
