@@ -3989,6 +3989,7 @@ $standardttf = '\.ttf|\.TTC';
  'easydtx'		=> '\.1$',
  'eolang'		=> '\.1$',
  'epstopdf'             => 'r?epstopdf.1|epstopdf.man1.pdf', # don't keep pdf
+ 'extractbb'            => '\.1$',
  'findhyph'             => 'findhyph.1',
  'fontools'             => '\.1$',
  'git-latexdiff'	=> '\.1$',
