@@ -111,7 +111,7 @@ my @TLP_working = qw(
     bera berenisadf besjournals bestpapers betababel beton beuron
     bewerbung bez123 bezierplot bfh-ci bgteubner bguq bhcexam
     bib-fr bib2gls bib2qr bibarts bibcop biber biber-ms bibhtml
-    biblatex biblatex-abnt biblatex-ajc2020unofficial
+    biblatex biblatex-abnt biblatex-accursius biblatex-ajc2020unofficial
     biblatex-anonymous biblatex-apa biblatex-apa6
     biblatex-archaeology biblatex-arthistory-bonn
     biblatex-bath biblatex-bookinarticle biblatex-bookinother biblatex-bwl

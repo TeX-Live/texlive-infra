@@ -3289,6 +3289,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'bath-bst'	=> 'luatex -interaction=nonstopmode',
  'bbold'	=> 'pdflatex',
  'beamerswitch' => 'tex -8bit',    # no doc remake
+ 'biblatex-accursius' => 'pdflatex-preserve-pdf --engine xelatex',
  'biblatex-bath'  => 'luatex', # no doc remake
  'biblatex-oxref' => 'luatex', # no doc remake
  'bib2qr'	=> 'etex',
