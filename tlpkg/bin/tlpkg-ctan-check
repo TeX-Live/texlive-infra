@@ -517,7 +517,7 @@ my @TLP_working = qw(
     lineno ling-macros linguex linguisticspro linop
     lion-msc lipsum lisp-on-tex
     listbib listing listings listings-ext listingsutf8 listlbls listliketab
-    listofitems listofsymbols litebook litesolution litetable
+    listofitems listofsymbols litetable
     lithuanian liturg lkproof llncs llncsconf lm lm-math lmake lni lobster2
     locality localloc logbox logical-markup-utils logicproof logicpuzzle logix
     logoetalab logpap logreq lollipop
@@ -851,7 +851,7 @@ my @TLP_working = qw(
     theanodidot theanomodern theanooldstyle theatre	
     thematicpuzzle theoremref thermodynamics
     thesis-ekf thesis-gwu thesis-qom thesis-titlepage-fhac
-    thinsp thmbox thmlist thmtools
+    thinsp thmbox thmtools
     threadcol threeddice threeparttable threeparttablex
     thuaslogos thubeamer thucoursework thumb thumbpdf thumbs thumby thuthesis
     ticket ticollege tidyres tiet-question-paper
