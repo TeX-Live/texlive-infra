@@ -46,6 +46,8 @@ fi
 echo "`basename $0`: $label pkgs: $pkgs"
 
 # 
+>$firstfile
+>$tmpfile
 for p in $pkgs; do
   echo "${label} pkg $p" >&2 # progress report of a sort
   printf "\f ${label} pkg $p\n"
