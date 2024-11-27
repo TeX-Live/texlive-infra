@@ -317,7 +317,7 @@ my @TLP_working = qw(
     eso-pic esrelation esstix estcpmm esvect
     etaremune etbb etdipa etex-pkg etexcmds etextools ethiop ethiop-t1 etl
     etoc etoolbox etoolbox-de etoolbox-generic etsvthor
-    euclideangeometry euenc euflag eukdate
+    euclidean-lattice euclideangeometry euenc euflag eukdate
     euler euler-math eulerpx eulervm
     euro euro-ce euromoney europasscv europecv eurosym
     evangelion-jfm everyhook everypage everysel everyshi
