@@ -3903,6 +3903,7 @@ $standardttf = '\.ttf|\.TTC';
  'pkfix-helper'         => 'pkfix-helper$',
  'pmxchords'            => 'pmxchords\.lua$',
  'petri-nets'		=> 'pn2pdf',
+ 'ppmcheckpdf'		=> 'ppmcheckpdf\.lua$',
  'pst-pdf'              => 'ps4pdf$',
  'pst2pdf'              => 'pst2pdf\.pl$',
  'ptex2pdf'             => 'ptex2pdf\.lua$',
