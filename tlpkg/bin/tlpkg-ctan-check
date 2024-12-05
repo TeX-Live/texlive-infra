@@ -325,7 +325,7 @@ my @TLP_working = qw(
     examdesign example examplep examz
     exceltex excludeonly exercise exercisebank exercisepoints exercises
     exercisesheets exesheet exframe exp-testopt
-    expdlist expex expex-acro expex-glossonly expkv-bundle export
+    expdlist expex expex-acro expex-glossonly expkv-bundle expltools export
     expose-expl3-dunkerque-2019 expressg
     exsheets exsol extarrows exteps
     extpfeil extract extractbb extsizes ezedits

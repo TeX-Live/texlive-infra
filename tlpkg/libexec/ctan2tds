@@ -554,6 +554,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'excel2latex', "die 'skipping, only supports excel?'",
  'expkv',	"die 'skipping, replaced by expkv-bundle'",
  'expl3',       "die 'skipping, now l3kernel, etc.'",
+ 'expltools',   "&MAKEflatten",
  'expressgx',   "&MAKEexpressg",
  'extractpdfmark', "die 'skipping, compiled program'",
  'fac',         "die 'skipping, noinfo license'",
@@ -2233,6 +2234,7 @@ $standardtex
  'europasscv',  '(icon|logo).*\.pdf|' . $standardtex,
  'europecv',    'EuropeFlag|europasslogo|\.cls|\.def',
  'exam-n',	'\.cls',		# not .clo example file
+ 'expltools',	'NULL',			# doc
  'fancyqr',	'\.code|' . $standardtex,
  'fancytooltips',       'fancytipmark[.1-4].*|' . $standardtex,
  'fewerfloatpages',	'\.sty$',	# not l3doc-TUB.cls
@@ -3497,6 +3499,7 @@ $standardinsrunner = "latex -8bit";
  'bibleref'		=> 'NULL',      # doc
  'einfuehrung'          => 'NULL',      # doc
  'einfuehrung2'         => 'NULL',      # doc
+ 'expltools'            => 'NULL',      # doc
  'hyperxmp'		=> 'NULL',      # doc
  'istgame'              => 'NULL',      # doc
  'labyrinth'            => 'NULL',      # doc
@@ -3766,6 +3769,7 @@ $standardttf = '\.ttf|\.TTC';
  'changes'		=> '\.py$',
  'cloze'		=> '\.lua$',
  'epspdf'               => '(epspdf(|\.help|\.tlu|.*tk.*)|\.rb|makegray\.pro)$',
+ 'expltools'		=> 'expl.*\.lua$',
  'extractbb'		=> 'extractbb-.*\.lua$',
  'latex2nemeth'         => '\.jar$',
  'latex-make'           => '\.py$',
@@ -3840,6 +3844,7 @@ $standardttf = '\.ttf|\.TTC';
  'eolang'		=> '\.pl$',
  'epstopdf'             => 'epstopdf\.pl',      # doscripts() does r*
  'exceltex'             => 'exceltex$',
+ 'expltools'		=> 'explcheck\.lua$',
  'extractbb'		=> 'extractbb\.lua$',
  'fig4latex'            => 'fig4latex',
  'findhyph'             => 'findhyph$',
@@ -7299,7 +7304,6 @@ sub POSTfixme {
   print "POST$package - move subdirectories\n";
   my $dstdir = "$DEST/tex/latex/$package";
   &xmkdir ($dstdir);
-  &SYSTEM ("$MV themes layouts $dstdir/");
 }
 
 sub POSTfont_change_xetex {
@@ -8082,7 +8086,7 @@ sub POST_onelevel {
       my $foundry = $specialfoundry{$package} || $standardfoundry;
       $format = "$dir/$foundry";
     } else {
-      die "$0: quitting, don't know about one-level directory: $dir\n";
+      die "$0: quitting, don't know about one-level directory: $dir";
     }
     &rename_with_mkdir ($dir, "$DEST/$destdir/$format/$package");
   }
