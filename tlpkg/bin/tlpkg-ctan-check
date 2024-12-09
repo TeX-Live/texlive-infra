@@ -545,7 +545,7 @@ my @TLP_working = qw(
     luamesh luamml luamodulartables luamplib luanumint luaoptions luaotfload
     luapackageloader luaplot luaprogtable luapstricks
     luaquotes luarandom
-    luaset luasseq luatex85 luatexbase luatexja luatexko luatextra
+    luaset luasseq luatex85 luatexbase luatexja luatexko luatextra luatikz
     luatodonotes luatruthtable luavlna luaxml
     lutabulartools luwiantype lwarp lxfonts ly1 lyluatex
   macrolist macros2e macroswap mafr magaz magicnum magicwatermark magra

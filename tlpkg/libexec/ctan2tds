@@ -2374,6 +2374,7 @@ $standardtex
  'luaprogtable','\.lua|' . $standardtex,
  'luapstricks',	'\.lua|' . $standardtex,
  'luatexko',    '\.lua|' . $standardtex,
+ 'luatikz',     '\.lua|' . $standardtex,
  'luatodonotes','\.lua|' . $standardtex, 
  'luavlna',	'luavlna.*\.lua|luavlna\.tex|' . $standardtex, 
  'luaxml',      '\.lua|' . $standardtex,
