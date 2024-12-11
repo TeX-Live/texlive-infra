@@ -401,7 +401,8 @@ my @TLP_working = qw(
     graph35 graphbox graphics
     graphics-cfg graphics-def graphics-pln
     graphicx-psmin graphicscache graphicxbox graphicxpsd
-    graphpaper graphviz grayhints greek-fontenc greek-inputenc
+    graphpaper graphviz gratzer-color-scheme grayhints
+    greek-fontenc greek-inputenc
     greekdates greektex greektonoi greenpoint gregoriotex
     grfext grffile grfpaste
     grid grid-system gridpapers gridset gridslides grotesq grundgesetze
