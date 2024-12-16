@@ -3766,7 +3766,7 @@ $standardttf = '\.ttf|\.TTC';
 # scripts to install under texmf*/.../scripts, but no bindir links.
 %specialscripts_nobin = (
  'albatross'		=> '\.jar$',
- 'bib2gls'		=> '\.jar$',
+ 'bib2gls'		=> '\.jar$|resources',
  'changes'		=> '\.py$',
  'cloze'		=> '\.lua$',
  'epspdf'               => '(epspdf(|\.help|\.tlu|.*tk.*)|\.rb|makegray\.pro)$',
