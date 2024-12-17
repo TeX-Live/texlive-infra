@@ -4877,7 +4877,7 @@ sub doscripts {
       } else {
         # Windows.  If a shell script, usually skip, except for Java
         # programs.  Else copy the wrapper.
-        if ($s !~ /albatross|arara|bib2gls|convertgls2bib
+        if ($s !~ /albatross|arara|bib2gls|convertgls2bib|datatool2bib
                    |texosquery|texplate|tlcockpit/x) {
           next if $s =~ /\.sh$/ && $s !~ /-sys\.sh$/;
         }
