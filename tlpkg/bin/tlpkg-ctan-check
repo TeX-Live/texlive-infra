@@ -518,7 +518,7 @@ my @TLP_working = qw(
     lineno ling-macros linguex linguisticspro linop
     lion-msc lipsum lisp-on-tex
     listbib listing listings listings-ext listingsutf8 listlbls listliketab
-    listofitems listofsymbols litetable
+    listofitems listofsymbols listparskip litetable
     lithuanian liturg lkproof llncs llncsconf lm lm-math lmake lni lobster2
     locality localloc logbox logical-markup-utils logicproof logicpuzzle logix
     logoetalab logpap logreq lollipop
