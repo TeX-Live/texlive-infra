@@ -30,7 +30,7 @@ my @TLP_working = qw(
     adfathesis adforn adhocfilelist adigraph
     adjmulticol adfsymbols adjustbox adobemapping
     adrconv adtrees advdate advice
-    ae aeguill aesupp affilauthor afparticle afthesis
+    ae aeguill aesupp affilauthor afthesis
     aguplus aiaa aichej aiplans ajl akktex akletter akshar
     albatross alchemist alegreya alertmessage alfaslabone
     alg algobox algolrevived
@@ -211,7 +211,8 @@ my @TLP_working = qw(
     comma commado commalists-tools commath commedit comment
     commonunicode commutative-diagrams
     compactbib compare competences
-    complexity components comprehensive computational-complexity
+    complexity complexpolylongdiv components
+    comprehensive computational-complexity
     concepts concmath concmath-fonts concmath-otf concprog concrete
     conditext confproc constants conteq
     context-calendar-examples context-chat

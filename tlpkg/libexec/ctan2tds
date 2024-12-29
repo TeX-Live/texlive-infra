@@ -101,6 +101,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'aeb_tilebg',  "die 'skipping, per author (dps) request'",
  'aecc',        "die 'skipping, obsolete on CTAN'",
  'aesupp',      "&MAKEflatten",
+ 'afparticle',  "die 'skipping, obsolete on CTAN'",
  'akktex',      "&MAKEflatten",
  'alatex',      "die 'skipping, 1995 LaTeX generalization'",
  'alfaslabone',	"&MAKEflatten",
