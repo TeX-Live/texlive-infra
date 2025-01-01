@@ -116,7 +116,7 @@ my @TLP_working = qw(
     biblatex-archaeology biblatex-arthistory-bonn
     biblatex-bath biblatex-bookinarticle biblatex-bookinother biblatex-bwl
     biblatex-caspervector biblatex-cheatsheet biblatex-chem
-    biblatex-chicago biblatex-claves biblatex-cv
+    biblatex-chicago biblatex-claves biblatex-cse biblatex-cv
     biblatex-dw biblatex-enc biblatex-ext
     biblatex-fiwi biblatex-gb7714-2015 biblatex-german-legal biblatex-gost
     biblatex-historian
@@ -187,7 +187,7 @@ my @TLP_working = qw(
     chhaya chicago chicagoa chicagolinks chicago-annote chickenize
     chifoot childdoc chinese-jfm chinesechess chivo
     chkfloat chklref chletter chngcntr chordbars chordbox chronology
-    chronosys chs-physics-report chscite churchslavonic
+    chronosys chs-physics-report chscite churchslavonic chuushaku
     cidarticle cinzel circ circledsteps circledtext circuit-macros circuitikz
     circularglyphs citation-style-language cite citeall citeref
     cje cjhebrew cjk cjk-gs-integrate cjk-ko cjkpunct cjs-rcs-article
@@ -547,7 +547,8 @@ my @TLP_working = qw(
     luamesh luamml luamodulartables luamplib luanumint luaoptions luaotfload
     luapackageloader luaplot luaprogtable luapstricks
     luaquotes luarandom
-    luaset luasseq luatex85 luatexbase luatexja luatexko luatextra luatikz
+    luaset luasseq
+    luatbls luatex85 luatexbase luatexja luatexko luatextra luatikz
     luatodonotes luatruthtable luavlna luaxml
     lutabulartools luwiantype lwarp lxfonts ly1 lyluatex
   macrolist macros2e macroswap mafr magaz magicnum magicwatermark magra
