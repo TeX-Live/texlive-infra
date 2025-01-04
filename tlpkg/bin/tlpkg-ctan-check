@@ -830,7 +830,7 @@ my @TLP_working = qw(
     tabbing tabfigures table-fct tableaux tablefootnote tableof
     tablists tablor tabls tablvar
     tabriz-thesis tabstackengine tabto-generic tabto-ltx
-    tabu tabularborder tabularray tabularcalc tabularew
+    tabu tabularborder tabularray tabularcalc tabularew tabularray-abnt
     tabulary tabvar tagging tagpair tagpdf talk talos tamefloats
     tamethebeast tango tangocolors tangramtikz tap tapir tasks
     tblr-extras tcldoc tcolorbox tdclock tds tdsfrmath
