@@ -2102,6 +2102,7 @@ $standardtex
  'acro',	'definitions\.tex|' . $standardtex,
  'algxpar',	'\.kw\.tex|' . $standardtex,
  'aobs-tikz',   'tikz.*tex',
+ 'aomart',	'aom_orcid_logo\.|' . $standardtex,
  'ae',          '\.fd$|\.sty', 
  'alchemist',	'alchemist.sty',	# not manual.sty
  'alertmessage','img|' . $standardtex,
