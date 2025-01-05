@@ -15,7 +15,7 @@ compare_and_copy () {
     
     echo "updating $Src/$file -> $Dest/$file"
     diff -u0 $Src/$file $Dest/$file
-    cp $Src/$file $Dest/$file || exit 1
+    cp -pv $Src/$file $Dest/$file || exit 1
   done
 }
 
@@ -29,30 +29,7 @@ test -r $Dest/scripts.lst || {
   exit 1
 }
 
-# echo "$Src => $Dest"
-
 . $Dest/scripts.lst
 
 compare_and_copy $texmf_scripts
 exit $?
-
-# Here is how we handled a second directory, that copied in the other
-# direction. As of January 2020, all the scripts in tl_scripts are gone,
-# now maintained in Master with slaves in the normal linked_scripts
-# handled above.
-# 
-## Build/source/texk/texlive/tl_scripts => Master/texmf-dist/scripts/texlive
-#
-#Src=`cd $Dest/../tl_scripts && pwd`
-#Dest=$Master/texmf-dist/scripts/texlive
-#
-#test -r $Src/scripts.lst || {
-#  echo "$0: \`$Src/scripts.lst' missing'"
-#  exit 1
-#}
-#
-## echo "$Src => $Dest"
-#
-#. $Src/scripts.lst
-#
-#compare_and_copy $tl_scripts
