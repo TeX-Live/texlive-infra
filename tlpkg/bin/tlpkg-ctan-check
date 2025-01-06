@@ -377,7 +377,7 @@ my @TLP_working = qw(
     garrigues gastex gates gatherenum gauss
     gb4e gb4e-next gbt7714 gcard gchords gcite gckanbun
     gelasio gelasiomath genealogy genealogytree gender gene-logic genealogy-profiles
-    genmpage gensymb gentium-tug gentle gentombow geometry
+    genmpage gensymb gentium-sil gentle gentombow geometry
     geradwp german germbib germkorr geschichtsfrkl
     getfiledate getitems getmap getoptk gettitlestring gfnotation
     gfsartemisia gfsbaskerville gfsbodoni gfscomplutum gfsdidot gfsdidotclassic
