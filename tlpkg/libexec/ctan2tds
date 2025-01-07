@@ -1816,6 +1816,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'latexindent'		=> '&POSTlatexindent',
  'lettrine'		=> '&POST_onelevel',
  'lhcyr'		=> '&POSTlhcyr',
+ 'libertinus-type1'	=> '&POSTlibertinus_type1',
  'light-latex-make'	=> '&tl_man_to_pdf',
  'lilyglyphs'		=> '&POSTlilyglyphs',
  'listbib'		=> '&POSTlistbib',
@@ -7543,6 +7544,11 @@ sub POSTlhcyr {
   for my $dir (glob ("lhcyr{alt,win}")) {
     &SYSTEM ("$MV $dir/*.mfj $DEST/source/latex/$package/");
   }
+}
+
+sub POSTlibertinus_type1 {
+  print "POST$package - clean spurious empty .sty\n";  
+  &SYSTEM ("$RM $DEST/tex/latex/libertinus-type1.sty");
 }
 
 sub POSTlilyglyphs {
