@@ -104,8 +104,9 @@ my @TLP_working = qw(
     beamertheme-saintpetersburg beamertheme-simpledarkblue
     beamertheme-simpleplus
     beamertheme-tcolorbox beamertheme-trigon beamertheme-upenn-bc
-    beamerthemeamurmaple beamerthemeconcrete beamerthemejltree beamerthemelalic
-    beamerthemenirma beamerthemenord
+    beamerthemeamurmaple beamerthemecelestia beamerthemeconcrete
+    beamerthemejltree beamerthemelalic
+    beamerthemenirma beamerthemenord beamertools
     bearwear beaulivre beautybook beautynote
     beebe begingreek begriff beilstein belleek bengali
     bera berenisadf besjournals bestpapers betababel beton beuron
@@ -342,7 +343,8 @@ my @TLP_working = qw(
     ffcode ffslides fge fgruler
     fifinddo-info fifo-stack
     fig4latex figbas figbib figchild figflow figput figsize
-    filecontents filecontentsdef filedate filehook fileinfo filemod fillwith
+    filecontents filecontentsdef filedate filehook fileinfo filemod
+    fillpages fillwith
     findhyph fink finstrut fira firamath firamath-otf
     first-latex-doc firstaid fistrum fitbox fitch fithesis
     fix2col fixcmex fixdif fixfoot fixjfm fixlatvian
@@ -377,7 +379,7 @@ my @TLP_working = qw(
     garrigues gastex gates gatherenum gauss
     gb4e gb4e-next gbt7714 gcard gchords gcite gckanbun
     gelasio gelasiomath genealogy genealogytree gender gene-logic genealogy-profiles
-    genmpage gensymb gentium-sil gentle gentombow geometry
+    genmpage gensymb gentium-otf gentium-sil gentle gentombow geometry
     geradwp german germbib germkorr geschichtsfrkl
     getfiledate getitems getmap getoptk gettitlestring gfnotation
     gfsartemisia gfsbaskerville gfsbodoni gfscomplutum gfsdidot gfsdidotclassic
@@ -613,7 +615,7 @@ my @TLP_working = qw(
     navigator navydocs
     ncclatex ncctools nchairx ncntrsbk
     nddiss ndsu-thesis ndsu-thesis-2022
-    needspace nestquot neuralnetwork nevelok
+    needspace neoschool nestquot neuralnetwork nevelok
     newcastle-bst newcommand newcomputermodern newenviron newfile newfloat
     newlfm newpax newpx
     newsletr newspaper
@@ -860,7 +862,7 @@ my @TLP_working = qw(
     thuaslogos thubeamer thucoursework thumb thumbpdf thumbs thumby thuthesis
     ticket ticollege tidyres tiet-question-paper
     tikz2d-fr tikz3d-fr tikz-3dplot
-    tikz-among-us tikz-bagua tikz-bayesnet tikz-bbox
+    tikz-among-us tikz-bagua tikz-bayesnet tikz-bbox tikz-bpmn
     tikz-cd tikz-decofonts tikz-dependency tikz-dimline tikz-ext
     tikz-feynhand tikz-feynman tikz-imagelabels tikz-inet
     tikz-kalender tikz-karnaugh tikz-ladder tikz-lake-fig tikz-layers
