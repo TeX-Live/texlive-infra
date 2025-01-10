@@ -461,7 +461,7 @@ my @TLP_working = qw(
     isphysicalmath issuulinks istgame itnumpar
     iwona iwonamath
   jablantile jacow jamtimes japanese-mathformulas japanese-otf
-    jbact jeuxcartes jfmutil jieeetran jigsaw
+    jbact jetbrainsmono-otf jeuxcartes jfmutil jieeetran jigsaw
     jknapltx jkmath jlabels jlreq jlreq-deluxe
     jmb jmlr jmsdelim jneurosci jnuexam
     jobname-suffix joinbox josefin jourcl jourrr
