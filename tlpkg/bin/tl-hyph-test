@@ -1,0 +1,208 @@
+#!/bin/sh
+# $Id$
+# Public domain. Karl Berry, 2021; Arthur Rosendahl, 2021--2022.
+# 
+# Method for testing hyph-utf8 before committing to TL.
+# The idea is to make a new TL tree, unzip the hyph-utf8.tds.zip there,
+# build TL from the modified (not committed) tree,
+# install from that TL into another temp dir.
+# Thus checking all the steps that will happen after commit.
+# It's complicated.
+
+# Usage:
+# Initial setup for first time:
+#tmpdir=/home/texlive/hyphtest # used in TLhyphtest.pro (used below).
+#                              # but otherwise could be anything
+#mkdir $tmpdir # e.g., , could be anywhere
+#cd $tmpdir
+# 
+# Get svn checkout of Master tree; need real checkout for the build below.
+#svn -q co svn://tug.org/texlive/trunk/Master # takes an hour
+# If on tug, slightly faster:
+#time nice -19 svn -q co file:///home/svn/texlive/trunk/Master
+#
+# After the first time, when the checkout already exists:
+#rm -rf inst
+#svn update -q Master  # get updates made in the meantime
+#svn status Master     # make sure it's completely clean
+# 
+# Unzip the new hyph-utf tree in our temp checkout.
+#pushd Master/texmf-dist
+#ls -l $CTAN/install/language/hyph-utf8.tds.zip # ensure new file
+#unzip !$                                       # overwrite All
+# In that unzip command, overwrite All symlinks with the regular files;
+#   on tug.org, CTAN=/home/ftp/tex-archive.
+#   (This unzip won't remove any no-longer-distributed files, but that
+#    seems like too much trouble to deal with here. The final commit
+#    will take care of it.)
+# 
+# Unzip new tlpsrc files (without leading directory):
+#cd tlpkg/tlpsrc
+#unzip -j ../../texmf-dist/source/generic/hyph-utf8/tlpsrc.zip  # overwrite All
+#
+# Back to top level of $tmpdir (the one with the ./Master subdir)
+# for cleanliness, and run this script.
+#popd
+#./Master/tlpkg/bin/tl-hyph-test
+#
+# Once it all works, can install hyph-utf8 with ctan2tl as usual;
+#   don't just commit here, for the sake of additions and removals.
+# Also, good to run a test build right after committing since there is a
+#   good chance of failure, despite all the testing:
+#force_rebuild=true cron.trunk
+# 
+# To clean up here:
+#rm -rf inst tmp catdump.pl
+#svn revert --depth infinity Master >/tmp/svri
+#rm `svn status Master | sed -n 's/\?//p'` # remove "?" files (new ones)
+#svn status Master  # ensure clean
+
+: ${do_mktexlsr=true}
+: ${do_tlpdb=true}
+: ${do_lang_files=true}
+: ${do_install=true}
+: ${do_pkgs=true}
+: ${newfile=hyph-rm.ec.tex} # some new file in the new release
+: ${newpkg=hyphen-romansh}  # and the package it's in
+
+real0=`realpath $0`
+mydir=`cd \`dirname "$real0"\` && pwd`  # top level
+
+Master=$mydir/Master
+test -d "$Master" || { echo "$0: no Master dir: $Master" >&2; exit 1; }
+
+# /usr/local/bin for updated perl on tug.
+PATH=$Master/bin/x86_64-linux:/usr/local/bin:/usr/bin
+TMPDIR=$mydir/tmp; export TMPDIR; test -d $TMPDIR || mkdir $TMPDIR
+
+unset TEXMFSYSVAR; unset TEXMFSYSCONFIG
+unset TEXMFVAR; unset TEXMFCONFIG
+MKTEXFMT=0; export MKTEXFMT
+MKTEXTFM=0; export MKTEXTFM
+
+if $do_mktexlsr; then
+  printf "\n\f `date`\n"
+  set -x
+  mktexlsr --verbose || exit 1; set +x
+fi
+#
+if kpsewhich $newfile >/dev/null; then :; else
+  echo "$0: kpsewhich could not find new file, ls-R problem?: $newfile" >&2
+  exit 1
+fi
+
+if $do_tlpdb; then
+  printf "\n\f `date`\n"
+  # It takes a long time to read the Catalogue info; it can be turned
+  # off as shown, but then the resulting texlive.tlpdb will be hugely
+  # different from the canonical one, which makes it hard to check.
+  nocat="--catalogue /nonesuch"; nocat=
+  
+  # If running this multiple times, can use --catalogue-dump
+  # to avoid rereading the XML every time; just don't forget
+  # to remove the dump file when done, or it will never get updated.
+  catdump="--catalogue-dump ./catdump.pl" #; catdump=
+  
+  # -v for progress; -vv for extremely voluminous debugging.
+  # --save-anyway because there will probably be revision decreases.
+  # --from-files because we don't want to commit the new files.
+  opts="-v --save-anyway --from-files $nocat $catdump"
+  set -x
+  $Master/tlpkg/bin/tl-update-tlpdb $opts || exit 1; set +x
+fi
+#
+# we intentionally use tlmgr instead of grepping tlpdb directly
+# just to make sure it's all working normally.
+if tlmgr info --list $newpkg | grep /$newfile'$' >/dev/null; then :; else
+  echo "$0: tlmgr could not find new file, tlpdb problem?: $newfile" >&2
+  exit 1
+fi
+
+# 
+# Remake the language.* files. Irritatingly different for different
+# formats and engines.
+
+# return 0 if files $1 and $2 are the same except for the first lines.
+# (we need to ignore the timestamps in the generation lines.)
+same_except_for_line1 ()
+{
+  rm -f $TMPDIR/sef1 $TMPDIR/sef2
+  sed 1d <"$1" >$TMPDIR/sef1
+  sed 1d <"$2" >$TMPDIR/sef2
+  cmp -s $TMPDIR/sef1 $TMPDIR/sef2
+}
+
+if $do_lang_files; then
+  printf "\n\f `date`\n"
+  echo "$0: updating language.* files ..."
+
+  cd $Master/texmf-dist/tex/generic/config || exit 1
+  for utype in language.dat language.def language.dat.lua; do
+    ufile=$utype
+    cmd="tlmgr -q generate --dest=$ufile.new $utype"
+    # -q to avoid the "helpful" message about running fmtutil.
+    printf "$ufile update with: $cmd\n"
+    $cmd || { echo "$0: $ufile generation failed: $cmd" >&2; exit 1; }
+    if same_except_for_line1 $ufile $ufile.new; then
+      printf "  same: "; ls -l `pwd`/$ufile
+      rm $ufile.new 
+    else
+      mv -v $ufile.new $ufile || exit 1
+      printf "  updated: "; ls -l `pwd`/$ufile
+      svn diff $ufile >$TMPDIR/$ufile.diff
+      echo "  (diff in $TMPDIR/$ufile.diff)"
+    fi
+  done
+fi
+
+# 
+# Install minimal, then install the packages with AddHyphen directives
+# (in practice: hyphen-* and dehyph-exptl), to avoid installing all the
+# non-language stuff, which is a ton.
+
+inst=$mydir/inst
+if $do_install; then
+  printf "\n\f `date`\n"
+  echo "$0: installing minimal TL into: $inst"
+
+  rm -rf $inst
+  date
+  set -x
+  $Master/tlpkg/bin/tl-try-install \
+    -o $inst \
+    --profile $Master/tlpkg/dev/profiles/TLhyphtest.pro \
+    --quiet \
+    --repo $Master \
+  || { echo "$0: tl-try-install failed." >&2; exit 1; }
+  set +x
+fi
+
+if $do_pkgs; then
+  printf "\n\f `date`\n"
+  echo "$0: installing hyph packages with tlmgr into: $inst"
+
+  tlpsrc=$Master/tlpkg/tlpsrc
+  hyphen_pkgs=`cd $tlpsrc && grep -l AddHyphen * | sed s/.tlpsrc//`
+  if test -z "$hyphen_pkgs"; then
+    echo "$0: no packages with AddHyphen found in: $tlpsrc" >&2
+    exit 1
+  fi
+
+  engine_pkgs="pdftex etex xetex luatex uptex "
+
+  echo "$0: installing hyphen packages: " $hyphen_pkgs
+  echo "$0:        and engine packages: " $engine_pkgs
+  
+  # reset PATH to run using our just-installed tree.
+  PATH=$inst/bin/x86_64-linux:/usr/local/bin:/usr/bin
+  date
+  set -x
+  tlmgr install $hyphen_pkgs $engine_pkgs || exit $?
+fi
+
+# also written into inst/ since we just changed PATH.
+printf "\n\f `date`\n"
+echo "$0: running one more fmtutil-sys for good measure"
+set -x
+fmtutil-sys --all
+# and that's our exit status.

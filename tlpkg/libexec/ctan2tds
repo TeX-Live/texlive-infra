@@ -705,8 +705,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'hvlogos',	"&MAKEflatten",
  'hvpygmentex',	"&MAKEflatten",
  'hvqrurl',     "&MAKEflatten",
- 'hybrid-latex', "die 'skipping, no self-locating of Python modules'",
- 'hyph-utf8',   "&MAKEcopy",
+ 'hybrid-latex',  "die 'skipping, no self-locating of Python modules'",
  'hyphen-german', "die 'skipping, part of hyph-utf8'",
  'hyphen-spanish',"die 'skipping, part of hyph-utf8'",
  'ibygrk',      "&MAKEflatten",
@@ -1784,7 +1783,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'frenchle'		=> '&POST_rmsymlink',
  'genealogy-profiles'	=> '&POST_onelevel',
  'gentium-tug'		=> '&POSTgentium_tug',
- 'mp-geom2d'		=> '&POST_onelevel',
  'ghsystem'		=> '&POSTghsystem',
  'gitinfo-lua'		=> '&POST_onelevel',
  'glossaries'		=> '&POST_do_man',
@@ -1800,6 +1798,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'huffman'		=> '&POST_onelevel',
  'hustthesis'		=> '&POSThustthesis',
  'hyperxmp'		=> '&POST_do_man',
+ 'hyph-utf8'		=> '&POSThyph_utf8',
  'ibygrk'		=> '&POSTibygrk',
  'impatient'		=> '&POSTimpatient',
  'impatient-fr'		=> '&POSTimpatient_fr',
@@ -1842,6 +1841,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'mitthesis'		=> '&POSTmitthesis',
  'moderncv'		=> '&POST_deref_symlink',
  'montex'		=> '&POSTmontex',
+ 'mp-geom2d'		=> '&POST_onelevel',
  'mpfonts'		=> '&POSTmpfonts',
  'mpkiviat'		=> '&POST_onelevel',
  'mptopdf'		=> '&POSTmptopdf',
@@ -1933,8 +1933,8 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'tikzdotncross'	=> '&POST_onelevel',
  'tikzquads'		=> '&POST_onelevel',
  'tikzquests'		=> '&POST_onelevel',
- 'tipa-de'		=> '&POST_rmsymlink',
  'timeop'		=> '&POST_onelevel',
+ 'tipa-de'		=> '&POST_rmsymlink',
  'tkz-berge'		=> '&POSTtkz_berge',
  'tkz-bernoulli'        => '&POST_onelevel',
  'tkz-grapheur'		=> '&POST_onelevel',
@@ -4196,7 +4196,7 @@ for (@ARGV) {
 
   if ($specialscripts_bin{$package}
       # special POSTcases:
-      || $package =~ /^(biber|context|mptopdf|musixtnt)$/) {
+      || $package =~ /^(biber|context|hyph-utf8|mptopdf|musixtnt)$/) {
     $BUILDDEST = "$COOKED_PKG/Build/source";
     $TOPDEST = "$COOKED_PKG/Master";
   } else {
@@ -4358,7 +4358,8 @@ sub rename_with_mkdir {
   &xsystem ("$MV $from $to");
 }
 
-# run a shell command.
+# run a shell command, ignoring return status (historic,
+# calls should be changed).
 # 
 sub SYSTEM {
  my ($job) = @_;
@@ -7391,6 +7392,24 @@ sub POSThustthesis {
   print "POST$package - move ref-example.bib\n";
   &SYSTEM ("$MV $DEST/bibtex/bib/$package/ref-example.bib"
             . " $DEST/doc/latex/$package/");
+}
+
+sub POSThyph_utf8 {
+  print "POST$package - unpack tlpsrc, etc.\n";
+  print "*** !!! c2l p failure? ran ctan2tl p by hand last time\n"; # ???
+  print "*** Before committing from this:\n";
+  print "*** read leading comments in tlpkg/bin/tl-hyph-test and run it!\n";
+  print "*** \n";
+  print "*** Many files will not be matched, ",
+            "because split into hyphen-* pkgs.\n";
+  print "*** Similarly, when committing, files will not be add-able.\n";
+  print "*** Finally, when ready here, add new hyphen-* pkgs to c-*.\n";
+  my $tlpsrc_dir = "$TOPDEST/tlpkg/tlpsrc";
+  &xmkdir ($tlpsrc_dir);
+  &xchdir ($tlpsrc_dir);
+  #
+  my $pkgsrc_dir = "$DEST/source/generic/$package";
+  &xsystem ("unzip -j $pkgsrc_dir/tlpsrc.zip"); # junk top dir in zip
 }
 
 sub POSTibygrk {

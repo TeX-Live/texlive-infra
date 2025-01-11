@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 # $Id$
-# Copyright 2007-2024 Norbert Preining
+# Copyright 2007-2025 Norbert Preining
 # This file is licensed under the GNU General Public License version 2
 # or any later version.
 # 
@@ -277,10 +277,12 @@ sub compare_and_fix_tlpdbs {
           my ($rA, $rB) = split(':', 
                             $cmp{'different_packages'}->{$p}->{'revision'});
           # since we only register 'revision' key when there is a
-          # change, we have either rA < rB or rA > rB
-          if ($rA > $rB) {
+          # change, we have either rA < rB or rA > rB.
+          # If read filesystem, the existing revision will always be 1,
+          # no use in giving a warning about every package.
+          if ($rA > $rB && (!$opt_fromfiles && $rB == 1)) {
             tlwarn("$prg: BIG WARNING for $p: file lists didn't change "
-                   . "but revision is going backward ($rA > $rB)!\n");
+                   . "but revision is going backward ($rA > $rB)\n");
             $packages_needing_fixup{$p} = 1;
           } # if strange revision change
         }   # no revision changes

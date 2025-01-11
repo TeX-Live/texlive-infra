@@ -126,7 +126,7 @@ sub main {
   -d $cooked && system ("cp /tmp/@{[getlogin()]}-cl.out $cooked/$ARGV[$#ARGV].out");
   
   # *** and other notable messages.
-  my @msgs = grep { /^\*\*\*.* \S/
+  my @msgs = grep { /^\*\*\*.* /
                     && ! /\* Generating /
                   } @lines;
   push (@msgs, grep { /at \/.* line / } @lines);        # perl errors
