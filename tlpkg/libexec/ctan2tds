@@ -2391,6 +2391,7 @@ $standardtex
  'lutabulartools', '\.lua|' . $standardtex,
  'lyluatex',	'\.sty',	# not *.cls
  'magyar',      'NULL',  # do not install in runtime, conflicts with babel
+ 'mahjong',	'tiles|' . $standardtex,
  'make4ht',	'NULL',  # all in scripts
  'makelabels',	'\.lco|' . $standardtex,
  'mandi',	'\.sty',	# not .py
