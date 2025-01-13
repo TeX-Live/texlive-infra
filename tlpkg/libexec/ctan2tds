@@ -4368,6 +4368,7 @@ sub SYSTEM {
  if ($opt_test) {
    print "\t SYSTEM $job # test\n";
  } else {
+   warn "PATH = $ENV{PATH}\n";
    print "\t SYSTEM $job\n" if $opt_debug;
    system ($job);
  }
