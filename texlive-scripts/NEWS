@@ -1,6 +1,9 @@
 (This file public domain.  Originally written by Norbert Preining and
 Karl Berry, 2010.)
 
+<p><b>tlmgr 73493 (released 17jan25):</b>
+<li>new option --only-files for tlmgr info to just report files of a package.
+
 <p><b>TLUtils.pm 71593 (released 23jun24):</b>
 <li>typo caused tlmgr install --file to fail.
 

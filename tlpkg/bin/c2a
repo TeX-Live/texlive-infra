@@ -43,9 +43,9 @@ sub main {
   my @lines;
   ($status,@lines) = &run_c2l ("");
   if ($status) {
-    print "first c2l failed, exiting.\n";
+    print "first c2l failed, exiting ($status).\n";
     print @lines;
-    exit $status;
+    exit $status / 256;
   }
 
   my $i;
