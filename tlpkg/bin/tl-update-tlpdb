@@ -143,8 +143,8 @@ sub main {
 
   if ($opt_no_revision_check) {
     if ($opt_keep_revisions) {
-      copy_revisions_over($oldtlpdb, $newtlpdb);
-      info("$prg: keeping old revisions due to --keep-revisions\n");
+     copy_revisions_over($oldtlpdb, $newtlpdb);
+     info("$prg: keeping old revisions due to --keep-revisions\n");
     } else {
      info("$prg: not checking revisions due to --no-reverse-revision-check\n");
     }
@@ -211,7 +211,7 @@ sub main {
     }
   }
   if (!$buggy_tlpdb) {
-    finish($newtlpdb, $pkgcount);
+    finish($newtlpdb, $pkgcount); # never returns
   } else {
     # return error to the shell script, it is evaluated in cron.tl!
     return 1;
@@ -704,6 +704,13 @@ sub is_hash_ref {
 
 sub finish {
   my ($tlpdb,$pkgcount) = @_;
+  
+  # uncommenting this line is the way to test parse_AddHyphen_line and
+  # similar, since that's the only time they are called. Seems like it
+  # would be cleaner to parse them when the *.tlpsrc is read. Someday.
+  #TeXLive::TLUtils::create_language_def($tlpdb, "/tmp/tlut-language.def",
+  #                                      "/dev/null");
+  
   if ($opt_output) {
     if (open(OUT, ">$opt_output")) {
       $tlpdb->writeout(\*OUT);
