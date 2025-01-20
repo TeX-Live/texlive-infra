@@ -1929,6 +1929,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'tikz-cd'		=> '&POSTtikz_cd',
  'tikz-decofonts'	=> '&POST_onelevel',
  'tikz-ext'		=> '&POSTtikz_ext',
+ 'tikz-triminos'	=> '&POST_onelevel',
  'tikz2d-fr'		=> '&POST_onelevel',
  'tikz3d-fr'		=> '&POST_onelevel',
  'tikzdotncross'	=> '&POST_onelevel',
@@ -2641,6 +2642,7 @@ $standardtex
  'underoverlap','underoverlap\.sty',
  'underscore',  '^..[^s].*\.sty',       # not miscdoc.sty
  'undolabl',    '\.sty|[^c]\.cfg',      # omit ltxdoc.cfg, would be system-wide
+ 'unibidi-lua',	'unibidi-lua.tex|' . $standardtex,
  'unicode-alphabets',	'\..sv|' . $standardtex,
  'unicode-math-input',	'\.sty|unicode-math-input-table\.tex',	# not .py
  'unicodefonttable',	'(\.sty|unicodefont.tex)$',	# not .cls
@@ -4163,6 +4165,7 @@ $standardclean = '\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
  'tikz-layers'	 => '.*\.pdf$',			        # no source
  'tree-dvips'    => 'avm.*',                            # author no response
  'ucs'		 => 'languages.ps.gz',			# no source
+ 'unibidi-lua'	 => 'unibidi-lua-doc.pdf',		# no source
  'unifith'	 => 'unifilogo\.pdf$',			# nonfree
  'xymtex'        => 'doc/.*\.pdf$',                     # no source
  'yannisgr'      => '^(digits|gen_acc)\.mf'             # levy dup

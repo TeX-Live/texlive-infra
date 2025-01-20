@@ -698,7 +698,7 @@ my @TLP_working = qw(
     ppmcheckpdf ppr-prv ppt-slides pracjourn practicalreports
     precattl prelim2e preprint prerex present
     pressrelease prettyref prettytok preview prftree
-    principia printlen proba probsoln prociagssymp
+    principia printlen prisma-flow-diagram proba probsoln prociagssymp
     prodint productbox profcollege proflabo proflycee profmaquette
     profsio program
     progress progressbar projlib
@@ -868,7 +868,8 @@ my @TLP_working = qw(
     tikz-kalender tikz-karnaugh tikz-ladder tikz-lake-fig tikz-layers
     tikz-mirror-lens tikz-nef tikz-network tikz-nfold tikz-opm tikz-optics
     tikz-osci tikz-page tikz-palattice tikz-planets tikz-qtree
-    tikz-relay tikz-sfc tikz-swigs tikz-timing tikz-trackschematic tikz-truchet
+    tikz-relay tikz-sfc tikz-swigs
+    tikz-timing tikz-trackschematic tikz-triminos tikz-truchet
     tikzbricks tikzcodeblocks tikzdotncross tikzducks
     tikzfill tikzinclude tikzlings
     tikzmark tikzmarmots tikzorbital
@@ -916,7 +917,7 @@ my @TLP_working = qw(
     undar-digitacion undergradmath underlin underoverlap underscore undolabl
     unfonts-core unfonts-extra
     uni-titlepage uni-wtal-ger uni-wtal-lin
-    unicode-alphabets unicode-data unicode-bidi
+    unibidi-lua unicode-alphabets unicode-data unicode-bidi
     unicode-math unicode-math-input
     unicodefonttable unifith unifront unigrazpub unimath-plain-xetex
     uninormalize uniquecounter unisc unisugar
