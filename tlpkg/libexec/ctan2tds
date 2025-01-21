@@ -4165,7 +4165,6 @@ $standardclean = '\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
  'tikz-layers'	 => '.*\.pdf$',			        # no source
  'tree-dvips'    => 'avm.*',                            # author no response
  'ucs'		 => 'languages.ps.gz',			# no source
- 'unibidi-lua'	 => 'unibidi-lua-doc.pdf',		# no source
  'unifith'	 => 'unifilogo\.pdf$',			# nonfree
  'xymtex'        => 'doc/.*\.pdf$',                     # no source
  'yannisgr'      => '^(digits|gen_acc)\.mf'             # levy dup
@@ -7406,10 +7405,9 @@ sub POSThyph_utf8 {
   print "*** Before committing from this:\n";
   print "*** read leading comments in tlpkg/bin/tl-hyph-test and run it!\n";
   print "*** \n";
-  print "*** Many files will not be matched, ",
-            "because split into hyphen-* pkgs.\n";
-  print "*** Similarly, when committing, files will not be add-able.\n";
-  print "*** Finally, when ready here, add new hyphen-* pkgs to c-*.\n";
+  print "*** All *hyph[en]-* files will not be matched, in own pkgs.\n";
+  print "*** Similarly, when committing, ignore svn add errors.\n";
+  print "*** Finally, when ready here, add new hyphen-* pkgs to coll*-*.\n";
   my $tlpsrc_dir = "$TOPDEST/tlpkg/tlpsrc";
   &xmkdir ($tlpsrc_dir);
   &xchdir ($tlpsrc_dir);
