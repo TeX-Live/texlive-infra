@@ -10,43 +10,46 @@
 # It's complicated.
 
 # Usage:
-# Initial setup for first time:
-#tmpdir=/home/texlive/hyphtest # used in TLhyphtest.pro (used below).
-#                              # but otherwise could be anything
-#mkdir $tmpdir # e.g., , could be anywhere
-#cd $tmpdir
-# 
-# Get svn checkout of Master tree; need real checkout for the build below.
-#svn -q co svn://tug.org/texlive/trunk/Master # takes an hour
-# If on tug, slightly faster:
-#time nice -19 svn -q co file:///home/svn/texlive/trunk/Master
+## Initial setup for first time:
+##tmpdir=/home/texlive/hyphtest # used in TLhyphtest.pro (used below).
+##                              # but otherwise could be anything
+##mkdir $tmpdir # e.g., , could be anywhere
+##cd $tmpdir
+## 
+## Get svn checkout of Master tree; need real checkout for the build below.
+##svn -q co svn://tug.org/texlive/trunk/Master # takes an hour
+## If on tug, slightly faster:
+##time nice -19 svn -q co file:///home/svn/texlive/trunk/Master
 #
+# 
 # After the first time, when the checkout already exists:
-#rm -rf inst
+#cd $tmpdir
+#rm -rf inst catdump.pl
 #svn update -q Master  # get updates made in the meantime
 #svn status Master     # make sure it's completely clean
 # 
 # Unzip the new hyph-utf tree in our temp checkout.
 #pushd Master/texmf-dist
-#ls -l $CTAN/install/language/hyph-utf8.tds.zip # ensure new file
+#ls -l $CTAN/install/language/hyph-utf8.tds.zip # ensure new file on ctan
 #unzip !$                                       # overwrite All
-# In that unzip command, overwrite All symlinks with the regular files;
-#   on tug.org, CTAN=/home/ftp/tex-archive.
+# In that unzip command, overwrite All symlinks with the regular files.
+#   On tug.org, CTAN=/home/ftp/tex-archive.
 #   (This unzip won't remove any no-longer-distributed files, but that
 #    seems like too much trouble to deal with here. The final commit
 #    will take care of it.)
 # 
 # Unzip new tlpsrc files (without leading directory):
-#cd tlpkg/tlpsrc
+#cd ../tlpkg/tlpsrc
 #unzip -j ../../texmf-dist/source/generic/hyph-utf8/tlpsrc.zip  # overwrite All
 #
 # Back to top level of $tmpdir (the one with the ./Master subdir)
 # for cleanliness, and run this script.
 #popd
+#svn diff Master >/tmp/sdh # review changes
 #./Master/tlpkg/bin/tl-hyph-test
 #
 # Once it all works, can install hyph-utf8 with ctan2tl as usual;
-#   don't just commit here, for the sake of additions and removals.
+#   don't just commit here, so additions and removals will be correct.
 # Also, good to run a test build right after committing since there is a
 #   good chance of failure, despite all the testing:
 #force_rebuild=true cron.trunk
@@ -57,6 +60,7 @@
 #rm `svn status Master | sed -n 's/\?//p'` # remove "?" files (new ones)
 #svn status Master  # ensure clean
 
+# 
 : ${do_mktexlsr=true}
 : ${do_tlpdb=true}
 : ${do_lang_files=true}
@@ -66,14 +70,18 @@
 : ${newpkg=hyphen-romansh}  # and the package it's in
 
 real0=`realpath $0`
-mydir=`cd \`dirname "$real0"\` && pwd`  # top level
+mydir=`cd \`dirname "$real0"\` && pwd`  # tlpkg/bin
 
-Master=$mydir/Master
+Master=`cd $mydir/../.. && pwd`
 test -d "$Master" || { echo "$0: no Master dir: $Master" >&2; exit 1; }
+
+top=`cd $Master/.. && pwd`
 
 # /usr/local/bin for updated perl on tug.
 PATH=$Master/bin/x86_64-linux:/usr/local/bin:/usr/bin
-TMPDIR=$mydir/tmp; export TMPDIR; test -d $TMPDIR || mkdir $TMPDIR
+TMPDIR=$top/tmp; export TMPDIR
+test -d $TMPDIR || mkdir $TMPDIR
+test -d $TMPDIR || { echo "$0: no tmpdir?: $TMPDIR" >&2; exit 1; }
 
 unset TEXMFSYSVAR; unset TEXMFSYSCONFIG
 unset TEXMFVAR; unset TEXMFCONFIG
@@ -101,7 +109,7 @@ if $do_tlpdb; then
   # If running this multiple times, can use --catalogue-dump
   # to avoid rereading the XML every time; just don't forget
   # to remove the dump file when done, or it will never get updated.
-  catdump="--catalogue-dump ./catdump.pl" #; catdump=
+  catdump="--catalogue-dump $top/catdump.pl" #; catdump=
   
   # -v for progress; -vv for extremely voluminous debugging.
   # --save-anyway because there will probably be revision decreases.
@@ -160,16 +168,16 @@ fi
 # (in practice: hyphen-* and dehyph-exptl), to avoid installing all the
 # non-language stuff, which is a ton.
 
-inst=$mydir/inst
+instdir=$top/inst
 if $do_install; then
   printf "\n\f `date`\n"
-  echo "$0: installing minimal TL into: $inst"
+  echo "$0: installing minimal TL into: $instdir"
 
-  rm -rf $inst
+  rm -rf $instdir
   date
   set -x
   $Master/tlpkg/bin/tl-try-install \
-    -o $inst \
+    -o $instdir \
     --profile $Master/tlpkg/dev/profiles/TLhyphtest.pro \
     --quiet \
     --repo $Master \
@@ -179,7 +187,7 @@ fi
 
 if $do_pkgs; then
   printf "\n\f `date`\n"
-  echo "$0: installing hyph packages with tlmgr into: $inst"
+  echo "$0: installing hyph packages with tlmgr into: $instdir"
 
   tlpsrc=$Master/tlpkg/tlpsrc
   hyphen_pkgs=`cd $tlpsrc && grep -l AddHyphen * | sed s/.tlpsrc//`
@@ -194,7 +202,7 @@ if $do_pkgs; then
   echo "$0:        and engine packages: " $engine_pkgs
   
   # reset PATH to run using our just-installed tree.
-  PATH=$inst/bin/x86_64-linux:/usr/local/bin:/usr/bin
+  PATH=$instdir/bin/x86_64-linux:/usr/local/bin:/usr/bin
   date
   set -x
   tlmgr install $hyphen_pkgs $engine_pkgs || exit $?
