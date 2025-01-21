@@ -226,7 +226,7 @@ my @TLP_working = qw(
     context-simpleslides context-squares context-sudoku
     context-transliterator context-typescripts context-vim
     context-visualcounter
-    continue contour contracard contract conv-xkv convbkmk
+    continue contour contracard contract conv-xkv convbkmk convert-jpfonts
     cooking cooking-units cookingsymbols
     cool coolfn coollist coolstr coolthms cooltooltips
     coop-writing cooperhewitt
