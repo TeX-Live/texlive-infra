@@ -61,7 +61,8 @@ my @TLP_working = qw(
     askinclude askmaps asmeconf asmejour aspectratio
     assignment association-matrix assoccnt asternote astro asyfig
     asymptote-faq-zh-cn asymptote-by-example-zh-cn asymptote-manual-zh-cn
-    asy-overview asypictureb atbegshi atenddvi atendofenv atkinson atveryend
+    asy-overview asypictureb atableau atbegshi
+    atenddvi atendofenv atkinson atveryend
     attachfile attachfile2
     aucklandthesis augie auncial-new aurical aurl
     auto-pst-pdf-lua autobreak autopdf
