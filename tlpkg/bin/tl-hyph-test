@@ -45,6 +45,7 @@
 # Back to top level of $tmpdir (the one with the ./Master subdir)
 # for cleanliness, and run this script.
 #popd
+#svn status Master # if new package/file has been added, set newpkg/file below
 #svn diff Master >/tmp/sdh # review changes
 #./Master/tlpkg/bin/tl-hyph-test
 #
@@ -66,8 +67,8 @@
 : ${do_lang_files=true}
 : ${do_install=true}
 : ${do_pkgs=true}
-: ${newfile=hyph-rm.ec.tex} # some new file in the new release
 : ${newpkg=hyphen-romansh}  # and the package it's in
+: ${newfile=hyph-rm.ec.tex} # some new file in the new release
 
 real0=`realpath $0`
 mydir=`cd \`dirname "$real0"\` && pwd`  # tlpkg/bin
@@ -164,6 +165,12 @@ if $do_lang_files; then
 fi
 
 # 
+printf "\n\f `date`\n"
+cmd="tlmgr check files runfiles"
+echo "$0: checking file consistency: $cmd"
+$cmd || exit $?
+
+# 
 # Install minimal, then install the packages with AddHyphen directives
 # (in practice: hyphen-* and dehyph-exptl), to avoid installing all the
 # non-language stuff, which is a ton.
@@ -210,7 +217,7 @@ fi
 
 # also written into inst/ since we just changed PATH.
 printf "\n\f `date`\n"
-echo "$0: running one more fmtutil-sys for good measure"
+echo "$0: running fmtutil-sys separately from install for reproducibility:"
 set -x
 fmtutil-sys --all
 # and that's our exit status.
