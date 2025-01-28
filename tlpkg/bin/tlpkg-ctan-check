@@ -597,7 +597,8 @@ my @TLP_working = qw(
     moloch mongolian-babel montserrat
     monofill montex moodle
     moreenum morefloats morehype moremath moresize
-    moreverb morewrites morisawa movement-arrows movie15 mp-geom2d mp3d
+    moreverb morewrites morisawa movement-arrows movie15
+    mp-geom2d mp-neuralnetwork mp3d
     mparhack mparrows mpattern mpchess mpcolornames
     mpfonts mpgraphics mpkiviat
     mpman-ru mpostinl mptopdf mptrees msc msg mslapa msu-thesis mtgreek
