@@ -651,7 +651,7 @@ my @TLP_working = qw(
     oubraces oup-authoring-template
     outerhbox outilsgeomtikz outline outliner outlines outlining
     overarrows overlays overlock overpic
-  pacioli padcount
+  pacioli packdoc padcount
     pagecolor pagecont pagegrid pagelayout
     pagella-otf pagenote pagerange pagesel pageslts
     palatino palette pangram panneauxroute paper papercdcase papermas papertex
