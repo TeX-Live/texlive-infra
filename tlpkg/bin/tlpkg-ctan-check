@@ -703,7 +703,7 @@ my @TLP_working = qw(
     principia printlen prisma-flow-diagram proba probsoln prociagssymp
     prodint productbox profcollege proflabo proflycee profmaquette
     profsio program
-    progress progressbar projlib
+    progress progressbar projlib pronunciation
     proof-at-the-end proofread prooftrees proposal properties
     prosper protex protocol prtec przechlewski-book
     psbao pseudo pseudocode psfrag psfrag-italian psfragx
