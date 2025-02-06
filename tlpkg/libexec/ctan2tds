@@ -3131,7 +3131,7 @@ $standardsource = '(\.(bat|c|drv|[dem]tx|fea|fdd|ins|mk|sfd)'
  'feynmf',              'feynmf\.pl|' . $standardsource,
  'findhyph',            'NULL',                 # leave makefile
  'fmtcount',            'fmtcount.perl|' . $standardsource,
- 'fontscripts',		'\.(lua|tex)$|' . $standardsource, # pdf/README in doc
+ 'fontscripts',		'\.(lua|tex|lvt)$|' . $standardsource, # pdf/README in doc
  'fpl',                 'Add|\.p[es]|' . $standardsource,
  'fullblck',            '\.asc|' . $standardsource,
  'grverb',              '\.vpl|' . $standardsource,
