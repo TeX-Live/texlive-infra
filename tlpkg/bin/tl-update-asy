@@ -32,7 +32,7 @@ if false && $update_sources_from_ctan; then
   
   # show list of files to remove:
   diff -qr . /home/ftp/tex-archive/graphics/asymptote/ \
-  | egrep -v ' differ' | egrep -v '\.svn' | tee /tmp/asyrm
+  | egrep -v ' differ' | egrep -v '\.svn|/binaries' | tee /tmp/asyrm
   sed -e 's,: ,/,' -e 's/^Only in //' /tmp/asyrm
   svn rm `!!`
 
@@ -48,10 +48,11 @@ elif test "x$1" = x--build; then
   # as a script, because it's so often necessary to redo.
   unset GREP_OPTIONS CDPATH
   PATH=/usr/bin:/usr/sbin; export PATH # system gcc for sake of shared libs
+  PATH=$PATH:/usr/local/gnu/bin	       # libtool required
   PATH=$lb:$PATH		       # get our kpsewhich
-  svn=/usr/local/bin/svn                # so we need our svn explicitly
+  svn=/usr/local/bin/svn               # so we need our svn explicitly
   set -x
-  rhtoolset=/opt/rh/devtoolset-10/enable
+  rhtoolset=/opt/rh/gcc-toolset-13/enable
   test -s $rhtoolset && . $rhtoolset
   
   set -e
