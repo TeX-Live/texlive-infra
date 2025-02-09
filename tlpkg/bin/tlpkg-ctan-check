@@ -906,7 +906,7 @@ my @TLP_working = qw(
     txfonts txfontsb txgreeks txuprcal
     type1cm typed-checklist typeface typehtml typeoutfileinfo typewriter
     typicons typoaid typog typogrid typstfun tzplot
-  uaclasses uafthesis uantwerpendocs uassign ucalgmthesis
+  uaclasses uafthesis ualberta uantwerpendocs uassign ucalgmthesis
     ucharcat ucharclasses ucbthesis ucdavisthesis ucph-revy
     ucs ucsmonograph
     ucthesis udepcolor udes-genie-these udesoftec udiss
