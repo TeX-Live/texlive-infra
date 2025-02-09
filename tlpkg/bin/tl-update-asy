@@ -39,17 +39,16 @@ if false && $update_sources_from_ctan; then
   # final check and commit:
   svn status | fgrep \? #  # don't worry about binaries.
   svn commit -m"asy $ver sources" . ../README
-  exit $?
 
 # 
 elif test "x$1" = x--build; then
   # this part is about building the x86 linux asymptote on tug.org.
-  # Despite all the dire warnings above, this part actually can be run
-  # as a script, because it's so often necessary to redo.
+  # Despite all the dire warnings above, this part can be executed.
   unset GREP_OPTIONS CDPATH
   PATH=/usr/bin:/usr/sbin; export PATH # system gcc for sake of shared libs
   PATH=$PATH:/usr/local/gnu/bin	       # libtool required
   PATH=$lb:$PATH		       # get our kpsewhich
+  PYTHON=python3.9; export PYTHON      # 3.6 is too old
   svn=/usr/local/bin/svn               # so we need our svn explicitly
   set -x
   rhtoolset=/opt/rh/gcc-toolset-13/enable
@@ -71,7 +70,8 @@ elif test "x$1" = x--build; then
     --with-latex=/tmp/ainst/latex --with-context=/tmp/ainst/context \
     --disable-fftw --disable-gl --disable-gsl --disable-lsp \
     --enable-texlive-build \
-    CFLAGS=-g CXXFLAGS=-std=c++11 LDFLAGS="-static-libgcc -static-libstdc++"
+    CFLAGS=-g \
+    LDFLAGS="-static-libgcc -static-libstdc++"
   make
   make check
   make install-prebuilt
