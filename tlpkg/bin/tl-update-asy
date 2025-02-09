@@ -130,21 +130,6 @@ elif false && $update_runtime_from_ainst; then
   scom -m"asymptote $ver support files, windows binary" $ci
 fi
 
-# the production build on x86_64-linux and i386-linux:
-# 
-# cd .../Build/source/utils
-# docker run -it -v "$(pwd)/asymptote:/asymptote" --entrypoint bash debian:10
-# 
-# In the docker container you are dropped in:
-# apt update
-# apt upgrade
-# # note we do NOT install libtirpc-dev because it cannot disabled by configure
-# apt install build-essential pkg-config libeigen3-dev libcurl4-openssl-dev libreadline-dev libboost-filesystem-dev flex libglu1-mesa-dev freeglut3-dev libosmesa6-dev libreadline6-dev zlib1g-dev bison libglm-dev libncurses-dev
-# cd /asymptote
-# ./configure --prefix=/tmp/asyinst --enable-static --enable-texlive-build CXXFLAGS=-std=c++11 --disable-gsl --disable-fftw --disable-lsp --disable-curl
-# sed -i -e 's/^LIBS = /LIBS = -static-libgcc -static-libstdc++ /' Makefile
-# make -j6
-# exit
-# Strip and copy the resulting asy.
-# For i386 binaries:
-#   docker run -it -v "$(pwd)/asymptote:/asymptote" --entrypoint bash i386/debian:10
+# The x86_64-linux binary and other platforms are built via github. See
+# Build/source/.github/scripts/build-asy.sh (and workflows/build-asy.yml),
+# siblings to the main TL build files there.
