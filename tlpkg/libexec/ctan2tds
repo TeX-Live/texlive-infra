@@ -4879,9 +4879,9 @@ sub doscripts {
         my $linktarget = "../../$DEST_TREE/scripts/$package/$s";
         &SYSTEM ("ln -s $linktarget $platdir/$linkname");
         #
-        # Scripts with special cases.
-        # xx should merge with bin_links in
-        # Build/source/texk/texlive/linked_scripts/Makefile.am, sigh.
+        # Scripts with multiple links.
+        # xxqqq should merge with bin_links in
+        # Build/source/texk/texlive/linked_scripts/Makefile.am.
         &SYSTEM ("ln -s $linkname $platdir/cllualatex")
           if $linkname eq "cluttex"; # cluttex->cllualatex
         &SYSTEM ("ln -s $linkname $platdir/clxelatex")
