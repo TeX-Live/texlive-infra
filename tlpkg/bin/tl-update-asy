@@ -116,7 +116,7 @@ elif false && $update_runtime_from_ainst; then
     $xist/asymptote/ $xist/tex/*/asymptote"
 
   svn status $ci | sed -n 's/^\?//p'
-  svn add `!!`
+b  svn add `!!`
 
   cd /tmp/ainst
   xmf=/home/texlive/karl/Master/texmf-dist
