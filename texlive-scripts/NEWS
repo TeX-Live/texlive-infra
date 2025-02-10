@@ -25,7 +25,7 @@ has been replaced by Powershell, since VB is optional as of Windows 11.
 <li>new action "bug" to output bug-reporting information.
 
 <p><b>tlmgr 69686 (released 7feb24):</b>
-<li>prune tlpdb backups of tlcrontrib (now mirrored).
+<li>prune tlpdb backups of tlcontrib (now mirrored).
 
 <p><b>tlmgr 69653 (released 1feb24):</b>
 <li>redirect output from context cache updates to tlmgr-commands.log.
