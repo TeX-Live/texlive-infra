@@ -10,8 +10,12 @@
 # define for myself; feel free to peruse tug.org:~karl/.bash_login, etc.
 # --karl
 
-test "x$1" = x--build || exit 1
+# but running the script is nevertheless useful sometimes, as described below.
+test "x$1" = x--build || test "x$1" = x--bin-github || exit 1
+
 renice +19 -p $$ >/dev/null 2>&1
+
+fatal () { echo "$0: goodbye, $*" >&2; exit 1; }
 
 # 
 if false && $update_sources_from_ctan; then
@@ -77,7 +81,6 @@ elif test "x$1" = x--build; then
   make install-prebuilt
   exit 0
 
-
 # 
 elif false && $update_runtime_from_ainst; then
   # this part is about copying the results of a successful build 
@@ -128,8 +131,49 @@ elif false && $update_runtime_from_ainst; then
 
   svn status $ci  # just to see
   scom -m"asymptote $ver support files, windows binary" $ci
-fi
 
-# The x86_64-linux binary and other platforms are built via github. See
-# Build/source/.github/scripts/build-asy.sh (and workflows/build-asy.yml),
-# siblings to the main TL build files there.
+# 
+elif test "x$1" = x--bin-github; then
+  # The x86_64-linux binary and other platforms are built via github. See
+  # Build/source/.github/scripts/build-asy.sh (and workflows/build-asy.yml),
+  # siblings to the main TL build files there.
+  # 
+  # The sources are synced every five minutes; see
+  #   https://github.com/TeX-Live/texlive-source/actions/.
+  #   
+  # The main.yml workflow will run automatically to build all of TL
+  # (and takes hours to complete); the build-asy.yml workflow has to be
+  # triggered manually from
+  #  https://github.com/TeX-Live/texlive-source/actions/workflows/build-asy.yml
+  # 
+  # Then, if it succeeds, the artifacts produced will appear on the
+  #   result page and can be downloaded from there. The download links
+  #   only work in a browser, not wget or curl.
+  # 
+  # Then can run this script with --bin-github *.zip to install the
+  #   available zips in the bin directories.
+  shift
+  mydir=`dirname $0`
+  Master=`cd $mydir/../.. && pwd`
+  bin=$Master/bin
+  test -d "$bin" || fatal "no bin directory: $bin"
+  echo "$0: installing into $bin..."
+
+  for f in "$@"; do
+    # filenames: asy-amd64-freebsd.zip  asy-i386-linux.zip
+    #            asy-i386-freebsd.zip   asy-x86_64-linux.zip
+    # and they unpack into a single file, asy-amd64-freebsd etc.
+    
+    # so, better be a known platform name.
+    platname=`echo "$f" | sed -e 's/^asy-//' -e 's/\.zip$//'`
+    platdir=$bin/$platname
+    test -d "$platdir" || fatal "no platform bin directory: $platdir"
+    
+    # and we should be able to unpack into it.
+    unzip -od "$platdir" "$f" || fatal "unzip -d $platdir failed"
+    
+    # and then we should be able to rename the binary to just asy.
+    mv -v "$platdir/asy-$platname" "$platdir/asy" || fatal "mv failed"
+  done
+  # then do the commit in Master/bin manually.
+fi
