@@ -4887,6 +4887,9 @@ sub doscripts {
         &SYSTEM ("ln -s $linkname $platdir/clxelatex")
           if $linkname eq "cluttex"; # cluttex->clxelatex
         #
+        &SYSTEM ("ln -s $linkname $platdir/ebb")
+          if $linkname eq "extractbb"; # ebb->extractbb
+        #
         &SYSTEM ("ln -s $linkname $platdir/r$linkname")
           if $linkname =~ /^(pdfcrop|epstopdf)$/; # rpdfcrop ->pdfcrop, ...
         #
