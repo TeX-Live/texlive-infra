@@ -682,7 +682,7 @@ my @TLP_working = qw(
     phfsvnwatermark phfthm
     philex philokalia philosophersimprint
     phonenumbers phonetic phonrule photo photobook
-    physconst physics physics2 physunits
+    physconst physics physics2 physics-patch physunits
     piano picinpar pict2e
     pictex pictex2 pictexsum pictochrono picture piechartmp piff pigpen
     pinlabel pinoutikz pitex piton pittetd pixelart pixelarttikz
