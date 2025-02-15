@@ -1419,6 +1419,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'tex-implementors',	"die 'skipping, verbatim mail archive'",
  'tex-in-practice',	"die 'skipping, old book examples'",
  'tex-it',	"die 'skipping, old support'",
+ 'tex-refs',    "die 'skipping, removed on CTAN'",
  'tex_it',	"die 'skipping, old support'",
  'texdoc',	"&MAKEflatten",
  'texdoctk',    "die 'skipping, moribund, only in tl'",

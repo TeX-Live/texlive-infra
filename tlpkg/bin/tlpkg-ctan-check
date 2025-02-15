@@ -846,7 +846,7 @@ my @TLP_working = qw(
     tetragonos teubner
     tex-ewd tex-font-errors-cheatsheet tex-gyre tex-gyre-math tex-ini-files
     tex-label tex-locale tex-nutshell tex-overview tex-ps
-    tex-refs tex-virtual-academy-pl tex-vpat
+    tex-virtual-academy-pl tex-vpat
     tex4ebook texaccents texapi texblend texbytopic texcount
     texdate texdef texdiff texdimens texdirflatten texdoc texdraw
     texfindpkg texfot texinfo texilikechaps texilikecover
@@ -878,7 +878,7 @@ my @TLP_working = qw(
     tikzpackets tikzpagenodes tikzpeople tikzpfeile tikzpingus tikzposter
     tikzquads tikzquests tikzscale tikzsymbols
     tikztosvg tikzviolinplots tile-graphic tilings
-    timbreicmc timeop times timetable timing-diagrams
+    timbreicmc timechart timeop times timetable timing-diagrams
     tinos tipa tipa-de tipauni tipfr
     tiscreen titlecaps titlefoot titlepages titlepic titleref titlesec titling
     tkz-base tkz-berge tkz-bernoulli tkz-doc tkz-elements tkz-euclide
