@@ -562,7 +562,7 @@ my @TLP_working = qw(
     makedtx makeglos makelabels makeplot maker makerobust
     makeshape mandi manfnt manfnt-font manuscript manyind
     marathi marcellus margbib
-    marginfit marginfix marginnote markdown marvosym
+    marginfit marginfix marginnote maritime markdown marvosym
     matapli matc3 matc3mem match_parens
     math-into-latex-4 mathabx mathabx-type1 mathalpha mathastext
     mathcommand mathcomp mathdesign mathdots mathexam
@@ -670,7 +670,8 @@ my @TLP_working = qw(
     pdfpagediff pdfpages pdfpc pdfpc-movie pdfprivacy pdfrender pdfreview
     pdfscreen pdfslide pdfsync
     pdftex-quiet pdftexcmds pdftricks pdftricks2 pdfx pdfxup
-    pecha pedigree-perl penlight penlightplus perception perfectcut perltex
+    pecha pedigree-perl pegmatch
+    penlight penlightplus perception perfectcut perltex
     permute persian-bib
     petiteannonce petri-nets pfarrei pfdicons
     pgf pgf-blur pgf-interference pgf-periodictable pgf-pie

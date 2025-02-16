@@ -1837,6 +1837,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'luaotfload'		=> '&POST_do_man',
  'luatexja'		=> '&POSTluatexja',
  'm-tx'			=> '&POSTmtx',
+ 'maritime'		=> '&POST_onelevel',
  'match_parens'		=> '&POST_do_man',
  'mathdesign'		=> '&POSTmathdesign',
  'memoize'		=> '&POST_do_man',
