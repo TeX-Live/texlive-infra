@@ -230,12 +230,14 @@ for tlplat in $tlplats; do
     # Can check status at:
     #   https://github.com/TeX-Live/texlive-source/actions
     # 
-    # After ~20min, should have some new release tarballs at:
+    # After ~35min, should have release tarballs for most at:
     #   https://github.com/TeX-Live/texlive-source/releases
     #     (this is a different page than where you're put after creating
     #      the release)
+    #   and can install them with "c2l gh".
     #   but arm and aarch are slow and will take hours to finish.
     #   Should be able to update the finished ones as they happen.
+    #     (For both: "c2l aargh".)
     #   
     # If try before ready, no harm, just get error message "missing url".
     # 
