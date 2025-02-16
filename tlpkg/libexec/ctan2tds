@@ -7406,19 +7406,26 @@ sub POSThustthesis {
 
 sub POSThyph_utf8 {
   print "POST$package - unpack tlpsrc, etc.\n";
-  print "*** !!! c2l p failure? ran ctan2tl p by hand last time\n"; # ???
   print "*** Before committing from this:\n";
-  print "*** read leading comments in tlpkg/bin/tl-hyph-test and run it!\n";
+  print "***  read leading comments in tlpkg/bin/tl-hyph-test and run it!\n";
   print "*** \n";
-  print "*** All *hyph[en]-* files will not be matched, in own pkgs.\n";
-  print "*** Similarly, when committing, ignore svn add errors.\n";
-  print "*** Finally, when ready here, add new hyphen-* pkgs to coll*-*.\n";
+  print "*** After tl-hyph-test is ok, and still before committing:\n";
+  print "***  add new hyphen-* pkgs to collection-lang*.\n";
+  print "*** \n";
+  print "*** If all ok, then commit.\n";
+  print "***  Final commit will have svn add errors per below; ignore.\n";
+  print "*** \n";
+  print "*** After commit, manually rebuild:\n";
+  print "*** env force_rebuild=true cron.trunk # or cron.pretest\n";
+  print "*** \n";
+  print "*** All *hyph[en]-* files (etc.) will not be matched, in own pkgs.\n";
   my $tlpsrc_dir = "$TOPDEST/tlpkg/tlpsrc";
   &xmkdir ($tlpsrc_dir);
   &xchdir ($tlpsrc_dir);
   #
   my $pkgsrc_dir = "$DEST/source/generic/$package";
-  &xsystem ("unzip -j $pkgsrc_dir/tlpsrc.zip"); # junk top dir in zip
+  &xsystem ("unzip -j $pkgsrc_dir/tlpsrc.zip"); # junk top dir in tlpsrc.zip
+  &SYSTEM ("$RM $pkgsrc_dir/tlpsrc.zip");       # no need for tlpsrc.zip
 }
 
 sub POSTibygrk {

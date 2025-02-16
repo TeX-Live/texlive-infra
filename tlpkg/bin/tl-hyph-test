@@ -24,15 +24,16 @@
 # 
 # After the first time, when the checkout already exists:
 #cd $tmpdir
-#rm -rf inst catdump.pl
-#svn update -q Master  # get updates made in the meantime
-#svn status Master     # make sure it's completely clean
+#rm -rf inst catdump.pl # clean up from last time
+#svn update -q Master   # get updates made in the meantime (30-60min)
+#svn status Master      # make sure it's completely clean
 # 
 # Unzip the new hyph-utf tree in our temp checkout.
 #pushd Master/texmf-dist
 #ls -l $CTAN/install/language/hyph-utf8.tds.zip # ensure new file on ctan
 #unzip !$                                       # overwrite All
 # In that unzip command, overwrite All symlinks with the regular files.
+# (Can't use -q since we have to do this overwrite.)
 #   On tug.org, CTAN=/home/ftp/tex-archive.
 #   (This unzip won't remove any no-longer-distributed files, but that
 #    seems like too much trouble to deal with here. The final commit
@@ -42,18 +43,23 @@
 #cd ../tlpkg/tlpsrc
 #unzip -j ../../texmf-dist/source/generic/hyph-utf8/tlpsrc.zip  # overwrite All
 #
-# Back to top level of $tmpdir (the one with the ./Master subdir)
-# for cleanliness, and run this script.
+# No tlpsrc should have any non-ASCII characters. If so, change them.
+#
+# Back to top level of $tmpdir (the one with the ./Master subdir).
 #popd
+#
+# See what we've got.
 #svn status Master # if new package/file has been added, set newpkg/file below
 #svn diff Master >/tmp/sdh # review changes
+#
+# When ready, run this script:
 #./Master/tlpkg/bin/tl-hyph-test
 #
 # Once it all works, can install hyph-utf8 with ctan2tl as usual;
 #   don't just commit here, so additions and removals will be correct.
 # Also, good to run a test build right after committing since there is a
 #   good chance of failure, despite all the testing:
-#force_rebuild=true cron.trunk
+#force_rebuild=true cron.trunk # or cron.pretest, if during pretest
 # 
 # To clean up here:
 #rm -rf inst tmp catdump.pl
@@ -67,8 +73,8 @@
 : ${do_lang_files=true}
 : ${do_install=true}
 : ${do_pkgs=true}
-: ${newpkg=hyphen-romansh}  # and the package it's in
-: ${newfile=hyph-rm.ec.tex} # some new file in the new release
+: ${newfile=hyph-he.tex}  # some new file in the new release
+: ${newpkg=hyphen-hebrew} # and the package it's in
 
 real0=`realpath $0`
 mydir=`cd \`dirname "$real0"\` && pwd`  # tlpkg/bin
@@ -110,18 +116,22 @@ if $do_tlpdb; then
   # If running this multiple times, can use --catalogue-dump
   # to avoid rereading the XML every time; just don't forget
   # to remove the dump file when done, or it will never get updated.
+  # If you want to sit around waiting for the Catalogue reading every time,
+  # can just disable as shown.
   catdump="--catalogue-dump $top/catdump.pl" #; catdump=
   
   # -v for progress; -vv for extremely voluminous debugging.
   # --save-anyway because there will probably be revision decreases.
-  # --from-files because we don't want to commit the new files.
+  # --from-files because we don't want to commit the new files,
+  #   so the script has to read the filesystem, not svn.
   opts="-v --save-anyway --from-files $nocat $catdump"
   set -x
   $Master/tlpkg/bin/tl-update-tlpdb $opts || exit 1; set +x
 fi
 #
 # we intentionally use tlmgr instead of grepping tlpdb directly
-# just to make sure it's all working normally.
+# to make sure it's working normally.
+
 if tlmgr info --list $newpkg | grep /$newfile'$' >/dev/null; then :; else
   echo "$0: tlmgr could not find new file, tlpdb problem?: $newfile" >&2
   exit 1
