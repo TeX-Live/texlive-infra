@@ -166,7 +166,7 @@ my @TLP_working = qw(
     byo-twemojis byrne bytefield 
   c90 c-pascal cabin cachepic cahierprof
     caladea calcage calcfrac calctab calculation calculator calculatoritems
-    calligra calligra-type1 callouts callouts-box calrsfs cals calxxxx-yyyy
+    calligra calligra-type1 callouts callouts-box calrsfs cals calxxxx-yyyyes
     cancel
     canoniclayout cantarell
     capt-of captcont captdef caption
@@ -562,7 +562,7 @@ my @TLP_working = qw(
     makecell makecirc makecmds makecookbook
     makedtx makeglos makelabels makeplot maker makerobust
     makeshape mandi manfnt manfnt-font manuscript manyind
-    marathi marcellus margbib
+    marathi marcellus margbib marginalia
     marginfit marginfix marginnote maritime markdown marvosym
     matapli matc3 matc3mem match_parens
     math-into-latex-4 mathabx mathabx-type1 mathalpha mathastext
