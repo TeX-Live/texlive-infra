@@ -76,7 +76,7 @@ elif test "x$1" = x--build; then
     --enable-texlive-build \
     CFLAGS=-g \
     LDFLAGS="-static-libgcc -static-libstdc++"
-  make
+  make SILENT_MAKE=
   make check
   make install-prebuilt
   exit 0
