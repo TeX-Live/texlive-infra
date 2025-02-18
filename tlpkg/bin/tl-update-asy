@@ -92,6 +92,7 @@ elif false && $update_runtime_from_ainst; then
   xu=$B/source/utils
   xy=$xu/asymptote
   cd $xy
+  make distclean
   ver=`awk -F\" '{print $2}' revision.cc | sed 1q`; echo $ver
   #
   $cp binaries/x86_64-windows/texlive/asy.exe $pg/asymptote64/
@@ -130,7 +131,7 @@ elif false && $update_runtime_from_ainst; then
   #svn rm ...
 
   svn status $ci  # just to see
-  scom -m"asymptote $ver support files, windows binary" $ci
+  scom -m"asymptote $ver support files + windows binary" $ci
 
 # 
 elif test "x$1" = x--bin-github; then
