@@ -644,7 +644,7 @@ my @TLP_working = qw(
     ocg-p ocgx ocgx2 ocherokee ocr-b ocr-b-outline ocr-latex octave octavo
     odesandpdes odsfile ofs
     ogham oinuit old-arrows oldlatin oldstandard
-    oldstyle olsak-misc
+    oldstyle olsak-misc omgtudoc-asoiu
     onedown onlyamsmath onrannual opbible opcit opencolor opensans oplotsymbl
     opteng optex optexcount optidef optional options
     orcidlink ordinalpt orientation orkhun
