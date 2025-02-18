@@ -43,7 +43,8 @@
 #cd ../tlpkg/tlpsrc
 #unzip -j ../../texmf-dist/source/generic/hyph-utf8/tlpsrc.zip  # overwrite All
 #
-# No tlpsrc should have any non-ASCII characters. If so, change them.
+# No tlpsrc should have any non-ASCII characters. If so, change them & report:
+#~karl/bin/nonascii *.tlpsrc
 #
 # Back to top level of $tmpdir (the one with the ./Master subdir).
 #popd
@@ -55,8 +56,16 @@
 # When ready, run this script:
 #./Master/tlpkg/bin/tl-hyph-test
 #
-# Once it all works, can install hyph-utf8 with ctan2tl as usual;
-#   don't just commit here, so additions and removals will be correct.
+# For files "present but not covered", check if they are in the original
+# hypf-utf8.tds.zip; if so, then it's a bug in the tlpsrc generation,
+# report. If not, then rm them from our working directory, and svn rm
+# them from the TL dev directory where we'll eventually commit. (The
+# usual method for determining when files have been removed won't work
+# here because hyph-utf8 is split into numerous TL packages.)
+#
+# Once it all works, can install hyph-utf8 with ctan2tl [p] as usual;
+#   copy any changed .tlpsrc (or other) files to dev, and
+#   don't commit in hyphtest, so additions and removals will be correct.
 # Also, good to run a test build right after committing since there is a
 #   good chance of failure, despite all the testing:
 #force_rebuild=true cron.trunk # or cron.pretest, if during pretest
