@@ -6913,6 +6913,7 @@ sub POSTcmcyr {
 
 
 # ConTeXt is complicated. Procedure for updating:
+# 0. ctxversion=whatever
 # 1. c2l context     # change code here until good
 #                      (all files match, no mkii, etc.), then:
 # 1b. c2l context p  # place new files in svn; don't commit yet.
@@ -6920,13 +6921,13 @@ sub POSTcmcyr {
 #                         # possibly no_lmtx_platforms in
 #                         #   00texlive.autopatterns.tlpsrc
 #                         # will need to be updated. Then commit:
-# 3. tlcom "context $version" $tlroot/Master/bin # commits runtime too
+# 3. tlcom "context $ctxversion" $tlroot/Master/bin # commits runtime too
 # 4. tl-update-tlpdb -v --fix-reverse-revisions  # must clean new context for:
 # 5. c2l context-legacy  # until good, then:
-# 6. c2l context-legacy p
-# 7. tlcom "context-legacy $version"
-# 8. If needed, update context-legacy by hand.
-# 9. Probably better to revert the interim texlive.tlpdb and let the
+# 5b. c2l context-legacy p
+# 6. tlcom "context-legacy $ctxversion"
+# 7. If needed, update context-legacy by hand.
+# 8. Probably better to revert the interim texlive.tlpdb and let the
 #    nightly build do the full update.
 # 
 sub POSTcontext {

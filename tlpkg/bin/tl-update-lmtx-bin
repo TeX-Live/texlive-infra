@@ -8,19 +8,16 @@ mydir=`cd \`dirname "$real0"\` && pwd`  # Master/tlpkg/bin
 Master=`cd $mydir/../.. && pwd`
 test -z "$Master" && exit 1
 
-cg=https://dl.contextgarden.net/build/luametatex/main
+cg=https://build.contextgarden.net/dl/luametatex/main
 
 for cgplat in  \
   aarch64-linux \
   amd64-freebsd \
-  armhf-linux \
   i386-freebsd \
   i386-linux \
-  i386-solaris \
   x86_64-darwinlegacy \
   x86_64-linux \
   x86_64-linuxmusl \
-  x86_64-solaris \
   x86_64-w64-mingw32 \
 ; do
   if test $cgplat = x86_64-w64-mingw32; then
@@ -35,13 +32,14 @@ for cgplat in  \
   url=$cg/$cgplat/$binfile
   if wget -nv $url -O lmtx.new; then
     mv lmtx.new $binfile || exit 1
-    echo "$tlplat/$binfile updated"
-    if $tlplat = windows; then;
-      cp -p $binfile context.exe
-      cp -p $binfile mtxrun.exe
+    echo $tlplat/$binfile
+    if test $tlplat = windows; then
+      cp -p $binfile context.exe || exit 1
+      cp -p $binfile mtxrun.exe || exit 1
     fi
   else
     echo "$0: goodbye, wget failed: $url" >&2
     exit 1
   fi
 done
+cd $Master/bin && svn status
