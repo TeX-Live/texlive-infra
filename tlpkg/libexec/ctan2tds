@@ -508,6 +508,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'ednotes',     "die 'skipping, use lineno'",
  'eforms',      "die 'skipping, per author (dps) request'",
  'efrench',     "die 'skipping, new bases and more, sorry'",
+ 'ebgaramond-maths', "&MAKEflatten",
  'eiad',        "&MAKEflatten",
  'einfuehrung', "die 'skipping, author request'",
  'einfuehrung2',"die 'skipping, author request'",
