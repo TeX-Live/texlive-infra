@@ -2461,6 +2461,7 @@ $standardtex
  'odsfile',     '\.lua|' . $standardtex,
  'ofs',         '^ofs\.tex|ofsdef\.tex|ofs-.*\.tex|\.sty|a.*\.tex|.*fn\.tex',
  'olsak-misc',	'(booklet|cropmarks|qrcode|scanbase|scancsv|xmlparser)\.tex',
+ 'omgtudoc-asoiu','\.tpt|' . $standardtex,
  'onedown',	'\.dict|' . $standardtex,
  'optex',	'\.opm|\.ini',
  'outerhbox',	'\.sty',
