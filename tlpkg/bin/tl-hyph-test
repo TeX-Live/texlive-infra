@@ -23,58 +23,68 @@
 #
 # 
 # After the first time, when the checkout already exists:
-#cd $tmpdir
-#rm -rf inst catdump.pl # clean up from last time
-#svn update -q Master   # get updates made in the meantime (30-60min)
-#svn status Master      # make sure it's completely clean
-# 
-# Unzip the new hyph-utf tree in our temp checkout.
-#pushd Master/texmf-dist
-#ls -l $CTAN/install/language/hyph-utf8.tds.zip # ensure new file on ctan
-#unzip !$                                       # overwrite All
-# In that unzip command, overwrite All symlinks with the regular files.
-# (Can't use -q since we have to do this overwrite.)
-#   On tug.org, CTAN=/home/ftp/tex-archive.
-#   (This unzip won't remove any no-longer-distributed files, but that
-#    seems like too much trouble to deal with here. The final commit
-#    will take care of it.)
-# 
-# Unzip new tlpsrc files (without leading directory):
-#cd ../tlpkg/tlpsrc
-#unzip -j ../../texmf-dist/source/generic/hyph-utf8/tlpsrc.zip  # overwrite All
-#
-# No tlpsrc should have any non-ASCII characters. If so, change them & report:
-#~karl/bin/nonascii *.tlpsrc
-#
-# Back to top level of $tmpdir (the one with the ./Master subdir).
-#popd
-#
-# See what we've got.
-#svn status Master # if new package/file has been added, set newpkg/file below
-#svn diff Master >/tmp/sdh # review changes
-#
-# When ready, run this script:
-#./Master/tlpkg/bin/tl-hyph-test
-#
-# For files "present but not covered", check if they are in the original
-# hypf-utf8.tds.zip; if so, then it's a bug in the tlpsrc generation,
-# report. If not, then rm them from our working directory, and svn rm
-# them from the TL dev directory where we'll eventually commit. (The
-# usual method for determining when files have been removed won't work
-# here because hyph-utf8 is split into numerous TL packages.)
-#
-# Once it all works, can install hyph-utf8 with ctan2tl [p] as usual;
-#   copy any changed .tlpsrc (or other) files to dev, and
-#   don't commit in hyphtest, so additions and removals will be correct.
-# Also, good to run a test build right after committing since there is a
-#   good chance of failure, despite all the testing:
-#force_rebuild=true cron.trunk # or cron.pretest, if during pretest
-# 
-# To clean up here:
-#rm -rf inst tmp catdump.pl
-#svn revert --depth infinity Master >/tmp/svri
-#rm `svn status Master | sed -n 's/\?//p'` # remove "?" files (new ones)
-#svn status Master  # ensure clean
+if false; then # better to run these one at a time
+  cd $tmpdir
+  rm -rf inst catdump.pl     # clean up from last time
+  cd Master
+  ~karl/bin/svri
+  time svn update -q  # get updates made in the meantime (could take an hour)
+  svn status          # make sure it's completely clean
+  # 
+  # Unzip the new hyph-utf tree in our temp checkout.
+  cd texmf-dist
+  ls -l $CTAN/install/language/hyph-utf8.tds.zip # ensure new file on ctan
+  unzip !$                                       # overwrite All
+  # In that unzip command, overwrite All symlinks with the regular files.
+  # (Can't use -q since we have to do this overwrite.)
+  #   On tug.org, CTAN=/home/ftp/tex-archive.
+  #   This unzip won't remove any no-longer-distributed files;
+  #   deal with that below.
+  # 
+  # Unzip new tlpsrc files (without leading directory):
+  cd ../tlpkg/tlpsrc
+  unzip -j ../../texmf-dist/source/generic/hyph-utf8/tlpsrc.zip # overwrite All
+  #
+  # No tlpsrc should have any non-ASCII characters.
+  # If so, fix them & report:
+  ~karl/bin/nonascii *.tlpsrc
+  #
+  # Back to top level of $tmpdir (the one with the ./Master subdir).
+  cd $tmpdir
+  #
+  # Remove the tlpsrc.zip.
+  rm Master/texmf-dist/source/generic/hyph-utf8/tlpsrc.zip
+  #
+  # See what we've got.
+  svn status Master # if new package/file has been added, set newpkg/file below
+  svn diff Master >/tmp/sdh # review changes, especially in tlpsrc files
+  #
+  # When ready, run this script:
+  #./Master/tlpkg/bin/tl-hyph-test >/tmp/tht.out
+  echo $?
+  # Make sure output is good, no errors building formats, etc.
+  # 
+  # If any files are "present but not covered" (in the "file
+  # consistency" check), look to see if they are in the original
+  # hypf-utf8.tds.zip; if so, then it's a bug in the tlpsrc generation,
+  # report. If not, then rm them from our working directory, and svn rm
+  # them from the TL dev directory where we'll eventually commit. (The
+  # usual method for determining when files have been removed won't work
+  # here because hyph-utf8 is split into numerous TL packages.)
+  #
+  # Once it all works, can install hyph-utf8 with ctan2tl [p] as usual;
+  #   copy any changed .tlpsrc (or other) files to dev, and
+  #   don't commit in hyphtest, so additions and removals will be correct.
+  # Also, good to run a test build right after committing since there is a
+  #   good chance of failure, despite all the testing:
+  #force_rebuild=true cron.trunk # or cron.pretest, if during pretest
+  # 
+  # To clean up here:
+  #rm -rf inst tmp catdump.pl
+  #svn revert --depth infinity Master >/tmp/svri
+  #rm `svn status Master | sed -n 's/\?//p'` # remove "?" files (new ones)
+  #svn status Master  # ensure clean
+fi
 
 # 
 : ${do_mktexlsr=true}
