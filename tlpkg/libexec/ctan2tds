@@ -2573,6 +2573,7 @@ $standardtex
  'songproj',	'\.sty',		# not .py
  'splitindex',  'splitindex\.tex|' . $standardtex,
  'spotcolor',   'spotcolor.*\.tex|' . $standardtex,
+ 'standalone',	'standalone\.tex|' . $standardtex,
  'startex',     '\.(tex|stx|lan)$',
  'stricttex',	'\.lua|' . $standardtex,
  'subfigure',   '\.sty|[^c]\.cfg',      # not ltxdoc.cfg, would be system-wide
