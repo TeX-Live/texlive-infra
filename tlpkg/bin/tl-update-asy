@@ -96,8 +96,7 @@ elif false && $update_runtime_from_ainst; then
   ver=`awk -F\" '{print $2}' revision.cc | sed 1q`; echo $ver
   #
   $cp binaries/x86_64-windows/texlive/asy.exe $pg/asymptote64/
-  # also check dlls:
-  ls -lR binaries/x86_64-windows/texlive/ $tm/tlpkg/asymptote64/
+  $cp binaries/x86_64-windows/*.dll $tm/tlpkg/asymptote64/
 
   cd /tmp/ainst
   $cp share/info/{*/,}*.info $xist/doc/info
