@@ -1,6 +1,9 @@
 (This file public domain.  Originally written by Norbert Preining and
 Karl Berry, 2010.)
 
+<p><b>tlmgr 74241 (released 24feb25):</b>
+<li>doc-only update: tlmgr paper rebuilds existing formats.
+
 <p><b>tlmgr 73493 (released 17jan25):</b>
 <li>new option --only-files for tlmgr info to just report files of a package.
 
