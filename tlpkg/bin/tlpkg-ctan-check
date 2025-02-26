@@ -315,7 +315,7 @@ my @TLP_working = qw(
     epsdice epsf epsf-dvipdfmx epsincl epslatex-fr
     epspdfconversion epstopdf epstopdf-pkg
     eq-pin2corr eqell eqexpl eqlist
-    eqnalign eqname eqnarray eqnnumwarn eqparbox
+    eqnalign eqname eqnarray eqnlines eqnnumwarn eqparbox
     erdc erewhon erewhon-math errata erw-l3
     esami es-tex-faq esdiff esieecv esindex esint esint-type1 esk eskd eskdx
     eso-pic esrelation esstix estcpmm esvect
