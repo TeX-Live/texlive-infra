@@ -448,7 +448,7 @@ my @TLP_working = qw(
     imac image-gallery imakeidx impatient impatient-cn
     imfellenglish impnattypo import imsproc imtekda
     incgraph includernw inconsolata inconsolata-nerd-font
-    index indextools infwarerr
+    index indextools indextra infwarerr
     initials inkpaper inline-images
     inlinebib inlinedef inlinegraphicx inlinelabel innerscript
     inputenx inputnormalization inputtrc
