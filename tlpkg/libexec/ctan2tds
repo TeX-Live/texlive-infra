@@ -1800,7 +1800,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'highlightx'		=> '&POST_onelevel',
  'hmtrump'		=> '&POSThmtrump',
  'huffman'		=> '&POST_onelevel',
- 'hustthesis'		=> '&POSThustthesis',
  'hyperxmp'		=> '&POST_do_man',
  'hyph-utf8'		=> '&POSThyph_utf8',
  'ibygrk'		=> '&POSTibygrk',
@@ -2295,6 +2294,7 @@ $standardtex
  'hobby',       'code\.tex|' . $standardtex,
  'hrefhide',    '\.sty|[^c]\.cfg',        # omit ltxdoc.cfg, would be system-wide
  'huawei',	'.*cover-picture\.pdf|' . $standardtex,
+ 'hustthesis',	'hust-title.pdf|' . $standardtex,
  'hvextern',	'hv(?!doctools).*\.sty|\.lua',  # negative lookahead fun
  'hvfloat',	'hvfloat.*\.inc|' . $standardtex,
  'hwemoji',	'hwemoji-assets.pdf|' . $standardtex,
@@ -7404,12 +7404,6 @@ sub POSThmtrump {
   print "POST$package - move .ttf from subdir\n";
   &mv_with_mkdir ("nkd04_playing_cards_index/nkd04_playing_cards_index.ttf",
                   "$DEST/fonts/truetype/public/$package");
-}
-
-sub POSThustthesis {
-  print "POST$package - move ref-example.bib\n";
-  &SYSTEM ("$MV $DEST/bibtex/bib/$package/ref-example.bib"
-            . " $DEST/doc/latex/$package/");
 }
 
 sub POSThyph_utf8 {
