@@ -189,7 +189,7 @@ find $pkg \! -type d -printf "%TY%Tm%Td.%TH%TM %p\n" | sort -k2 \
 
 printf "\n$0: calling place $place_chicken $contrib_place_arg $pkg\n"
 rm -rf $pkg.done
-place $place_chicken --mode $mode $contrib_place_arg $pkg
+place $place_chicken --no-final-svn-update --mode $mode $contrib_place_arg $pkg
 status=$?
 
 $copy_from_ctan && rm -rf $raw/$pkg

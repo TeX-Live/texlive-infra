@@ -6917,22 +6917,23 @@ sub POSTcmcyr {
 
 
 # ConTeXt is complicated. Procedure for updating:
-# 0. ctxversion=whatever
+# 0. ctxversion=`sed -n 's/define *luametatex_version_string/p \
+#                source/luametatex.h | sed 's/"//g'` # in unpacked tree
 # 1. c2l context     # change code here until good
 #                      (all files match, no mkii, etc.), then:
-# 1b. c2l context p  # place new files in svn; don't commit yet.
 # 2. tl-update-lmtx-bin   # download luametatex binaries (check this first);
 #                         # possibly no_lmtx_platforms in
 #                         #   00texlive.autopatterns.tlpsrc
-#                         # will need to be updated. Then commit:
-# 3. tlcom "context $ctxversion" $tlroot/Master/bin # commits runtime too
-# 4. tl-update-tlpdb -v --fix-reverse-revisions  # must clean new context for:
-# 5. c2l context-legacy  # until good, then:
-# 5b. c2l context-legacy p
-# 6. tlcom "context-legacy $ctxversion"
-# 7. If needed, update context-legacy by hand.
-# 8. Probably better to revert the interim texlive.tlpdb and let the
-#    nightly build do the full update.
+#                         # will need to be updated.
+# 3. c2l context p   # place new files in svn. Then we can commit:
+# 4. tlcom "context $ctxversion" $tlroot/Master/bin # commits runtime too
+# 5. tl-update-tlpdb -v --fix-reverse-revisions  # must clean new context for:
+# 6. c2l context-legacy  # until good, then:
+# 6b. c2l context-legacy p
+# 7. tlcom "context-legacy $ctxversion"
+# 8. If needed, other context-legacy updates by hand.
+# 9. svn revert tlpkg/texlive.tlpdb # revert interim texlive.tlpdb and let the
+#                                   # nightly build do the full update.
 # 
 sub POSTcontext {
   print "POST$package - remove context-legacy etc. files, rearrange for TL\n";
@@ -6941,12 +6942,44 @@ sub POSTcontext {
   
   &context_common_removals ();
 
-  # remove the mkii files we put into context-legacy.
+  print "still POST$package - make README.TEXLIVE\n";
+  my $RTL = "doc/context/README.TEXLIVE";
+  open (RTL, ">$RTL") || die "open(>$RTL) failed: $!";
+  print RTL <<END_RTL;
+For TeX Live, some files are (re)moved from the ConTeXt distribution.
+
+Files relating to ConTeXt MkII are in the context-legacy package.
+Files relating to mptopdf are in the mptopdf package.
+LuaMetaTeX's compiled sources are in Master/source/luametatex-*.tar.xz.
+
+The list of removed files follows; most relate to nonfree fonts. Others
+relate to the standalone ConTeXt distribution and would cause trouble
+within TeX Live. For the code implementing all this and more details,
+see the POSTcontext routine in the Master/tlpkg/libexec/ctan2tds script.
+
+END_RTL
+  close (RTL) || die "close(>$RTL) failed: $!";
+  #
+  my $before_rm = "/tmp/$<.ctx.before.rm";
+  my $after_rm = "/tmp/$<.ctx.after.rm";
+  &SYSTEM ("cd $RAW_DIR/$packagedir && find . -type f | sort >$before_rm");
+  &SYSTEM ("find . -type f | sort >$after_rm");
+  &SYSTEM ("comm -23 $before_rm $after_rm >>$RTL");
+
+  # remove the mkii files we put into context-legacy; don't list these
+  # in README.TEXLIVE. Hopefully there will be no new mkii files.
   &remove_files_of_pkg ("context-legacy");
+  #
+  # Ditto mptopdf. Although mptopdf is removed from both context and
+  # context-legacy, we don't do it in context_common_removals because we
+  # don't want to list its files in README.TEXLIVE, for consistency with
+  # how context-legacy is handled.
+  &remove_files_of_pkg ("mptopdf");
   
-  # remove mkii stuff that we omit from context-legacy, or may be new, etc.
+  # Remove two more mptopdf doc formats there's no need to distribute.
   &SYSTEM ("$RM -rf doc/context/scripts/mkii/");
-  &SYSTEM ("$RM -rf tex/context/*/mkii/"); # base, fonts, etc.
+  
+  # No more removals after this, just copying and moving around.
 
   # move some files to context subdirs for tl.
   &mv_with_mkdir ("colors/icc/context", "tex/context/colors/icc");
@@ -7004,6 +7037,9 @@ sub POSTcontext_legacy {
   
   &context_common_removals ();
 
+  # mptopdf is its own package. (See more comments above.)
+  &remove_files_of_pkg ("mptopdf");
+
   # remove the mkiv and newer files we have in context.
   # The context package should be committed first, and tlpdb updated,
   # before committing context-legacy, so new files get removed here.
@@ -7029,23 +7065,42 @@ sub POSTcontext_legacy {
 # Some files we remove from both context and context-legacy.
 sub context_common_removals {
   print "\t context_common_removals\n";
-  # mptopdf is its own package.
-  &remove_files_of_pkg ("mptopdf");
 
   # remove files Hans wants in his distribution but are confusing or
   # problematic in TeX Live.
   &SYSTEM ("$RM -rf colors/icc/profiles");         # nonfree
-  &SYSTEM ("$RM -rf fonts/truetype/hoekwater/lm/");# lmtypewriter10-regular.ttf
-  &SYSTEM ("$RM -rf fonts/data/tests/");           # texmfhome.otf
   &SYSTEM ("$RM -rf scripts/context/stubs/");      # install/setup
   &SYSTEM ("$RM -rf source");			   # entire engine source
   &SYSTEM ("$RM -rf web2c/");                   # context*cnf*, texlive*cnf.lua
 
-  # nonfree (first two) and unused (jmn) fonts.
-  &SYSTEM ("find -name \*koeiel\* -o -name \*lucida\* -o -name jmn"
-           . "| xargs rm -rfv");
-  }
+  # Taco, 14sep2012: IIRC, we decided to remove that file altogether.
+  # Its only reason for existence is that (at the time it was created)
+  # editors like SciTE did not handle .OTF files properly, so I created
+  # a truetype version with fontforge. That was five years ago or so,
+  # and it should no longer be needed. It's never been removed from
+  # ConTeXt, but for TL, let's avoid the complication of having an lm
+  # directory outside the normal lm package.
+  &SYSTEM ("$RM -rf fonts/truetype/hoekwater/lm/");# lmtypewriter10-regular.ttf
+  
+  # Mojca, 12sep2012: I'm not exactly sure how Hans uses this font
+  # [texmfhome.otf], but it has something to do with locating the tree
+  # where ConTeXt resides. It's not a real font Hans will be reluctant
+  # to move the font from "data" to "fonts" and unless/until someone
+  # needs the font in TL, I would just remove it and maybe put a comment
+  # to your script that if need arises, the font can be included into TL later.
+  &SYSTEM ("$RM -rf fonts/data/");	           # texmfhome.otf
 
+  # unused per hans (jmn) and nonfree (all the rest) fonts.
+  &SYSTEM ("find -name jmn "
+           . "-o -name \*cambria\* "
+           . "-o -name \*cleartype\* "
+           . "-o -name \*koeiel\* "
+           . "-o -name \*lucida\* "
+           . "-o -name \*minion\* "
+           . "| xargs rm -rfv");
+}
+
+
 # Remove all files from PKG (as reported by the tlpfiles script).
 # Used for ConTeXt.
 # 
