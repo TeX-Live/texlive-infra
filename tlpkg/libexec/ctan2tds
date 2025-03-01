@@ -4080,6 +4080,7 @@ $standardclean = '\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
  'axodraw2'     => 'axohelp.exe',			# done with binaries
  'bardiag'      => "example/.*(aux|log)",               # junk on CTAN
  'beebe'	=> '^([^bt].*|bibmods|bibunits)\.sty$|(gut.*|komoedie|litprog|sgml.*)\.bib$|\.ltx$',	# omit some bibs and support files
+ 'bibarts'      => 'bibsort.exe',			# not installed
  'bibleref'	=> $standardclean . '|sample.tex|sample-.*', # derived uploaded
  'bbm-macros'   => $standardclean . '|^bbm$',           # symlink
  'bundledoc'    => $standardclean . '|\.pdf$',          # regen for a4
