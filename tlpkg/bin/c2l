@@ -119,11 +119,11 @@ sub main {
   print "$0: running ctan2tl @ARGV\n";
   # we want our exit status to be from ctan2tl, not tee, hence the
   # pipefail bash-ism.
-  my @lines = `set -o pipefail; ctan2tl @ARGV </dev/null 2>&1 | tee /tmp/@{[getlogin()]}-cl.out`;
+  my @lines = `set -o pipefail; ctan2tl @ARGV </dev/null 2>&1 | tee /tmp/$<.cl.out`;
   my $status = $?;
 
   my $cooked = "$TLROOT/Build/tmp.cooked";
-  -d $cooked && system ("cp /tmp/@{[getlogin()]}-cl.out $cooked/$ARGV[$#ARGV].out");
+  -d $cooked && system ("cp /tmp/$<.cl.out $cooked/$ARGV[$#ARGV].out");
   
   # *** and other notable messages.
   my @msgs = grep { /^\*\*\*.* /
@@ -146,10 +146,10 @@ sub main {
   my @page = split (/\f */, $whole_string, 4);
   
   my $diff_list
-    = `test -s /tmp/@{[getlogin()]}-$<.tlplace.diff && sed -n -e 's/^--- //' \\
+    = `test -s /tmp/$<.tlplace.diff && sed -n -e 's/^--- //' \\
               -e 's/[ \\t].*//' \\
               -e 's,/home/texlive/karl/, ,p' \\
-           /tmp/@{[getlogin()]}-$<.tlplace.diff`;
+           /tmp/$<.tlplace.diff`;
   $diff_list = "";
 
   # page 0: build stuff.

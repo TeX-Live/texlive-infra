@@ -8,7 +8,7 @@ mydir=`cd \`dirname "$real0"\` && pwd`  # Master/tlpkg/bin
 Master=`cd $mydir/../.. && pwd`
 test -z "$Master" && exit 1
 
-cg=https://build.contextgarden.net/dl/luametatex/main
+cg=https://build.contextgarden.net/dl/luametatex/work
 
 for cgplat in  \
   aarch64-linux \

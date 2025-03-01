@@ -22,7 +22,7 @@ test -d $raw || mkdir $raw
 cd $raw || exit 1
 
 if test "x$1" = x--help; then
-  echo "Usage: $0 [--place] [--no-ctan] [--git] TLPKGNAME"
+  echo "Usage: $0 [OPTION]... TLPKGNAME"
   echo
   echo "Install a package from CTAN into TeX Live."
   echo
@@ -31,8 +31,8 @@ if test "x$1" = x--help; then
   echo "--contrib     for https://contrib.texlive.info."
   echo "--git         for git."
   echo
-  echo "This never actually commits anything to the repository,"
-  echo "but it does svn update the potentially affected directories."
+  echo "This never actually commits anything to the repository, but"
+  echo "by default it does svn update the potentially affected directories."
   echo
   echo "Without --place, it only creates files in Build/tmp.{raw,cooked}."
   echo "With --place, it also does repository adds and removes,"
@@ -48,6 +48,7 @@ copy_from_ctan=true
 contrib_ctan2tds_arg=
 contrib_place_arg=
 mode=svn
+opt_no_final_svn=
 pkg=
 while test $# -gt 0; do
   case "$1" in
@@ -66,6 +67,9 @@ while test $# -gt 0; do
     '--git')
       mode="git"
       shift;;
+     --no-final-svn-update)
+       opt_no_final_svn=$1
+       shift;;
     */*)
       echo "$0: package name must not contain /: $1" >&2
       exit 1;;
@@ -185,11 +189,11 @@ find $pkg -type l -ls | grep -v /Master/bin | sort >&2
 
 # show list of files (and tee to tmp).
 find $pkg \! -type d -printf "%TY%Tm%Td.%TH%TM %p\n" | sort -k2 \
-| tee ${TMPDIR-/tmp}/"$USER"-ctan2tl.files
+| tee ${TMPDIR-/tmp}/$UID.ctan2tl.files
 
 printf "\n$0: calling place $place_chicken $contrib_place_arg $pkg\n"
 rm -rf $pkg.done
-place $place_chicken --no-final-svn-update --mode $mode $contrib_place_arg $pkg
+place $place_chicken $opt_no_final_svn --mode $mode $contrib_place_arg $pkg
 status=$?
 
 $copy_from_ctan && rm -rf $raw/$pkg

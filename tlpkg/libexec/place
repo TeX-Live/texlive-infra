@@ -26,15 +26,18 @@ use Getopt::Long;
 my $chicken = 0;
 my $opt_contrib;
 my $opt_mode = "svn";
+my $opt_final_svn_update = 1;
 exit 2 unless Getopt::Long::GetOptions (
-  "n" => \$chicken,
+  "n"	      => \$chicken,
   "contrib=s" => \$opt_contrib,
   "mode=s"    => \$opt_mode,
+  "final-svn-update!" => \$opt_final_svn_update,
 );
 
 print "place: chicken mode = $chicken\n";
+print "place: final: $opt_final_svn_update\n";
 
-die "usage: $0 PKGNAME\n" unless @ARGV == 1;
+die "usage: $0 [OPT]... PKGNAME (ustl)\n" unless @ARGV == 1;
 $package = $ARGV[0];
 # $::opt_verbosity = 3;  # debug tlpdb reading
 
@@ -265,7 +268,7 @@ close (DIRLIST) || warn "close($DIRLIST) failed: $!";
 
 # Always run svn update, even without --place.  This can help a worker
 # detect that a package update has already been done by someone else.
-if ($opt_mode eq "svn") {
+if ($opt_mode eq "svn" && $opt_final_svn_update) {
   print ("\nsvn status of those directories:\n");
   system ("svn status `sort -u $dirlist_file`");
   print ("\nsvn update of those directories:\n");
