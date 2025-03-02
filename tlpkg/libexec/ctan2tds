@@ -6915,10 +6915,11 @@ sub POSTcmcyr {
 
 
 # ConTeXt is complicated. Procedure for updating:
-# 0. ctxversion=`sed -n 's/define *luametatex_version_string/p \
+# 0. ctxversion=`sed -n 's/^ *# *define *luametatex_version_string//p' \
 #                source/luametatex.h | sed 's/"//g'` # in unpacked tree
-# 1. c2l context     # change code here until good
-#                      (all files match, no mkii, etc.), then:
+# 0b. echo $ctxversion    # something like 2.11.07
+# 1. c2l context          # change code here until good
+#                           (all files match, no mkii, etc.), then:
 # 2. tl-update-lmtx-bin   # download luametatex binaries (check this first);
 #                         # possibly no_lmtx_platforms in
 #                         #   00texlive.autopatterns.tlpsrc
@@ -6932,7 +6933,8 @@ sub POSTcmcyr {
 # 8. If needed, other context-legacy updates by hand.
 # 9. svn revert tlpkg/texlive.tlpdb # revert interim texlive.tlpdb and let the
 #                                   # nightly build do the full update.
-# 
+# 10. tar cjf Master/source/luametatex-$ctxversion.tar.xz source
+#
 sub POSTcontext {
   print "POST$package - remove context-legacy etc. files, rearrange for TL\n";
   print "*** See POSTcontext in ctan2tds for ConTeXt update procedure.\n";
