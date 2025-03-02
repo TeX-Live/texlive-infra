@@ -4183,10 +4183,8 @@ $standardclean = '\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
 readconfig();
 
 # command line options
-$opt_debug = 1;  # verbosity is good
 exit 2 unless Getopt::Long::GetOptions (
   "ctan-dir=s",
-  "debug!",
   "help",
   "test|n!",
   "contrib",
@@ -4378,8 +4376,7 @@ sub SYSTEM {
  if ($opt_test) {
    print "\t SYSTEM $job # test\n";
  } else {
-   warn "PATH = $ENV{PATH}\n";
-   print "\t SYSTEM $job\n" if $opt_debug;
+   print "\t SYSTEM $job\n";
    system ($job);
  }
 }
@@ -8109,7 +8106,7 @@ sub POSTupmendex {
   print "POST$package - redistribute macro and doc files, rm source\n";
   &SYSTEM ("$RM -r source"); # in our sources
   #
-  my $mandir = "$DEST/man/man1";
+  my $mandir = "$DEST/doc/man/man1";
   &mv_with_mkdir ("man/*" => $mandir);
   #
   &SYSTEM ("$MV doc/* .");
