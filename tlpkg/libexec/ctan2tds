@@ -6915,7 +6915,7 @@ sub POSTcmcyr {
 
 
 # ConTeXt is complicated. Procedure for updating:
-# 0. ctxversion=`sed -n 's/^ *# *define *luametatex_version_string//p' \
+# 0. ctxversion=`sed -n 's/^ *# *define *luametatex_version_string *//p' \
 #                source/luametatex.h | sed 's/"//g'` # in unpacked tree
 # 0b. echo $ctxversion    # something like 2.11.07
 # 1. c2l context          # change code here until good
