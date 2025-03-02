@@ -3442,13 +3442,13 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'nwafuthesis'	=> 'xetex',
  'nwejm'	=> 'tex',
  'nomentbl'     => 'latex -translate-file=empty.tcx',   # no 8-bit
+ 'outoruby'	=> 'tex',
  'pbsheet'      => 'latex',  # requires interaction
  'pdflscape'	=> 'etex',
  'pdfrender'	=> 'etex',
  'penrose'	=> 'etex',
  'physics2'	=> 'etex-answer-y',
  'powerdot'	=> 'latex',
- 'thumb'        => 'latex -translate-file=empty.tcx',   # no 8-bit
  'pagegrid'	=> 'etex',
  'pagesel'	=> 'tex',
  'pageslts'     => 'tex -translate-file=empty.tcx',     # no 8-bit

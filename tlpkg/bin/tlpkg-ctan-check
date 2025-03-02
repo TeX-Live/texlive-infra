@@ -252,7 +252,8 @@ my @TLP_working = qw(
     custom-bib customdice customenvs cutwin cv cv4tw cvss cweb-latex
     cyber cybercic cyklop cyrillic cyrillic-modern cyrplain
   dad dancers dantelogo darkmode
-    dashbox dashrule dashrulex dashundergaps dataref datax datatool
+    dashbox dashrule dashrulex dashundergaps
+    dataref datatool datatool-regions datax 
     dateiliste datenumber datestamp
     datetime datetime2 datetime2-bahasai datetime2-basque
     datetime2-breton datetime2-bulgarian datetime2-catalan
@@ -650,7 +651,7 @@ my @TLP_working = qw(
     orcidlink ordinalpt orientation orkhun
     oscola oststud oswald ot-tableau othello othelloboard
     oubraces oup-authoring-template
-    outerhbox outilsgeomtikz outline outliner outlines outlining
+    outerhbox outilsgeomtikz outline outliner outlines outlining outoruby
     overarrows overlays overlock overpic
   pacioli packdoc padcount
     pagecolor pagecont pagegrid pagelayout
