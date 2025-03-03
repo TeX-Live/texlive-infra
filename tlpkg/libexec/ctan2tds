@@ -161,7 +161,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'autolatex',   "die 'skipping, not self-locating'",
  'autotab',     "die 'skipping, noinfo license, latex 2.09'",
  'avantgar',    "die 'skipping, part of urw-base35, frozen'",
- 'axodraw',	"die 'skipping, update for next TL release'",
+ 'axodraw',	"die 'skipping, nonfree'",
  'babel-frenchb',  "die 'skipping, use babel-french'",
  'babel-serbianc', "&MAKEflatten",
  'babel-slovene',  "die 'skipping, use babel-slovenian'",
@@ -1725,6 +1725,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'asapsym'		=> '&POSTasapsym',
  'attachfile2'		=> '&tl_man_to_pdf',
  'autosp'		=> '&POSTautosp',
+ 'axodraw2'		=> '&POSTaxodraw2',
  'barracuda'		=> '&POSTbarracuda',
  'beautybook'		=> '&POSTbeautybook',
  'bhcexam'		=> '&POST_rmsymlink',
@@ -3098,7 +3099,7 @@ $standardsource = '(\.(bat|c|drv|[dem]tx|fea|fdd|ins|mk|sfd)'
  'amsldoc-vn',          'NULL',
  'apl',                 ".",                    # everything, simplest
  'arabxetex',           'NULL',                 # dtx with others, why not
- 'axodraw2',		$standardsource . '|test', # in source/ too, but small
+ 'axodraw2',		$standardsource . '|test', # in source/ to remove
  'babelbib',            'NULL',                 # dtx with others, why not
  'bbold',               $standardsource . '|fonttabl.sty',
  'bib2gls',		'src/',
@@ -4077,7 +4078,7 @@ $standardclean = '\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
  'accfonts'     => $standardclean . '|dvips.enc',       # dup enc
  'acmconf'      => $standardclean . '|flushend.sty',    # dup with sttools
  'apalike'      => "apalike2.bst",                      # does not belong
- 'axodraw2'     => 'axohelp.exe',			# done with binaries
+ 'axodraw2'     => 'axohelp.exe',			# in regular build
  'bardiag'      => "example/.*(aux|log)",               # junk on CTAN
  'beebe'	=> '^([^bt].*|bibmods|bibunits)\.sty$|(gut.*|komoedie|litprog|sgml.*)\.bib$|\.ltx$',	# omit some bibs and support files
  'bibarts'      => 'bibsort.exe',			# not installed
@@ -6729,6 +6730,11 @@ sub POSTautosp {
   &SYSTEM ("$MV rebar.x1 rebar.1");
 }
 
+sub POSTaxodraw2 {
+  print "POST$package - remove sources since in Build\n";
+  &SYSTEM ("$RM -r $DEST/source/latex/$package");  
+}
+
 sub POSTbarracuda {
   print "POST$package - src dir to scripts\n";
   &mv_with_mkdir ("src/*", "$DEST/scripts/$package");
@@ -6933,7 +6939,7 @@ sub POSTcmcyr {
 # 8. If needed, other context-legacy updates by hand.
 # 9. svn revert tlpkg/texlive.tlpdb # revert interim texlive.tlpdb and let the
 #                                   # nightly build do the full update.
-# 10. tar cjf Master/source/luametatex-$ctxversion.tar.xz source
+# 10. tar cJf Master/source/luametatex-$ctxversion.tar.xz luametatex
 #
 sub POSTcontext {
   print "POST$package - remove context-legacy etc. files, rearrange for TL\n";
