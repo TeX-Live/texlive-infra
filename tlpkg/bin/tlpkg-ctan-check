@@ -253,7 +253,7 @@ my @TLP_working = qw(
     cyber cybercic cyklop cyrillic cyrillic-modern cyrplain
   dad dancers dantelogo darkmode
     dashbox dashrule dashrulex dashundergaps
-    dataref datatool datatool-regions datax 
+    dataref datatool datatool-english datatool-regions datax 
     dateiliste datenumber datestamp
     datetime datetime2 datetime2-bahasai datetime2-basque
     datetime2-breton datetime2-bulgarian datetime2-catalan
@@ -875,7 +875,7 @@ my @TLP_working = qw(
     tikz-osci tikz-page tikz-palattice tikz-planets tikz-qtree
     tikz-relay tikz-sfc tikz-swigs
     tikz-timing tikz-trackschematic tikz-triminos tikz-truchet
-    tikzbricks tikzcodeblocks tikzdotncross tikzducks
+    tikzbricks tikzcalendarnotes tikzcodeblocks tikzdotncross tikzducks
     tikzfill tikzinclude tikzlings
     tikzmark tikzmarmots tikzorbital
     tikzpackets tikzpagenodes tikzpeople tikzpfeile tikzpingus tikzposter

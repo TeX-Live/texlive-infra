@@ -1938,6 +1938,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'tikz-triminos'	=> '&POST_onelevel',
  'tikz2d-fr'		=> '&POST_onelevel',
  'tikz3d-fr'		=> '&POST_onelevel',
+ 'tikzcalendarnotes'	=> '&POST_onelevel',
  'tikzdotncross'	=> '&POST_onelevel',
  'tikzquads'		=> '&POST_onelevel',
  'tikzquests'		=> '&POST_onelevel',
