@@ -95,18 +95,22 @@ fontnamemapslave=texmf-dist/fonts/map/fontname
 #
 files=`cd $fontnamemaster && ls *.map`
 for basef in $files; do
-  test $basef = wolfram.map && continue   # obsolete for TL
   fontnamemapslavef=$fontnamemapslave/$basef
-  if $diff $fontnamemaster/$basef $fontnamemapslavef >$temp.$basef.diff; then
-    $verbose "   $fontnamemapslavef ok."
+  if test -e $fontnamemapslavef; then
+    if $diff $fontnamemaster/$basef $fontnamemapslavef >$temp.$basef.diff; then
+      $verbose "   $fontnamemapslavef ok."
+    else
+      $chicken $cp $fontnamemaster/$basef $fontnamemapslavef
+      update_list="$update_list $fontnamemapslavef"
+    fi
   else
-    $chicken $cp $fontnamemaster/$basef $fontnamemapslavef
-    update_list="$update_list $fontnamemapslavef"
+    $verbose "  $fontnamemapslavef skipped, not in Master."
   fi
 done
 
 fontnameencslave=texmf-dist/fonts/enc/dvips/base
 #
+# These .enc files are distributed in other packages.
 files=`cd $fontnamemaster && ls *.enc\
        | egrep -vw '(groff|t5|texnansi|xt2|xl2).enc'`
 for basef in $files; do
