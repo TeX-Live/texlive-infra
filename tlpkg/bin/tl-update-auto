@@ -78,7 +78,7 @@ if $config_scripts_only; then :; else
 fontnamemaster=/home/httpd/html/fontname
 fontnamedocslave=texmf-dist/doc/fonts/fontname
 #
-for basef in ChangeLog Makefile bitstrea.aka \
+for basef in ChangeLog HEADER.html Makefile \
              fontname.pdf fontname.html fontname.texi; do
   fontnameslavef=$fontnamedocslave/$basef
   if $diff $fontnamemaster/$basef $fontnameslavef >$temp.$basef.diff; then

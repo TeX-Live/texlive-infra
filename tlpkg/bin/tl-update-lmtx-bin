@@ -8,7 +8,12 @@ mydir=`cd \`dirname "$real0"\` && pwd`  # Master/tlpkg/bin
 Master=`cd $mydir/../.. && pwd`
 test -z "$Master" && exit 1
 
+# for universal-darwin, check ~koch and/or ask Dick.
+# netbsd and cygwin builders commit themselves.
+
+# for the rest, get from the CG farm:
 cg=https://build.contextgarden.net/dl/luametatex/work
+# (Other choice is main; indeterminate which to use. Check versions.)
 
 for cgplat in  \
   aarch64-linux \
@@ -42,4 +47,5 @@ for cgplat in  \
     exit 1
   fi
 done
+
 cd $Master/bin && svn status
