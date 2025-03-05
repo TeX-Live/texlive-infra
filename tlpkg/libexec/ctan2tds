@@ -2583,7 +2583,7 @@ $standardtex
  'systeme',     '^systeme\.tex$|' . $standardtex,
  'tabls',       '^[^m].*\.sty',         # not miscdoc.sty
  'tabto-generic','tabto.tex',
- 'tagpdf',      '\.(lua|csv)$|' . $standardtex,
+ 'tagpdf',      '\.(lua|csv|html)$|' . $standardtex,
  'tap',         ,'tap.tex',
  'tasks',	'\.(sty|cfg)$',		# not tasks-manual.cls
  'taylor',      'diagrams.tex',
