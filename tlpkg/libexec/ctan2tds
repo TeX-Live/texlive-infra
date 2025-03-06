@@ -4037,6 +4037,7 @@ $standardttf = '\.ttf|\.TTC';
  'ltximg'		=> '\.1$',
  'luafindfont'		=> '\.1$',
  'mathspic'             => 'mathspic.1',
+ 'minted'		=> 'latexminted.1',
  'mkjobtexmf'           => 'mkjobtexmf.man',
  'musixtnt'		=> '\.1$',
  'optex'		=> '\.1$',
