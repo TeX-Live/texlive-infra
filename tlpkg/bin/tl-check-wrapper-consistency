@@ -96,7 +96,8 @@ sub check_w32 {
     #
     # also skip these special cases:
     next if $k =~
-      /^(epspdftk|latexindent|mktex.*|texdoctk|tlcockpit|tlmgr|tlshell|xasy)$/;
+      /^(cluttex|epspdftk|extractbb|latexindent|mktex.*
+         |texdoctk|tlcockpit|tlmgr|tlshell|xasy)$/x;
     #
     # else do the diff with the canonical wrapper:
     $diff += system ("cmp $w32dir/$k.exe $w32canonical");
