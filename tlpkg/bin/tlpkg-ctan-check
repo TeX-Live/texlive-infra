@@ -661,7 +661,7 @@ my @TLP_working = qw(
     paresse parnotes parrun parsa parsimatn parsinevis parselines parskip
     pas-cours pas-crosswords pas-cv pas-tableur
     pascaltriangle passivetex passopt
-    patch patchcmd patgen2-tutorial path pauldoc pawpict pax
+    patch patchcmd patgen2-tutorial path pats-resume pauldoc pawpict pax
     pbalance pbibtex-base pbox pb-diagram pbibtex-manual pbsheet
     pdf14
     pdf-trans pdfannotations pdfarticle pdfbook2
@@ -676,7 +676,7 @@ my @TLP_working = qw(
     penlight penlightplus perception perfectcut perltex
     permute persian-bib
     petiteannonce petri-nets pfarrei pfdicons
-    pgf pgf-blur pgf-interference pgf-periodictable pgf-pie
+    pgf pgf-blur pgf-go pgf-interference pgf-periodictable pgf-pie
     pgf-soroban pgf-spectra pgf-umlcd pgf-umlsd
     pgfgantt pgfkeysearch pgfkeyx pgfmath-xfp pgfmolbio pgfmorepages
     pgfopts pgfornament pgfornament-han pgfplots pgfplotsthemebeamer

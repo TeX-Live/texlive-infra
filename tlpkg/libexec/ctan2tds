@@ -1872,6 +1872,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'pbibtex-base'		=> '&POSTpbibtex_base',
  'pdfextra'		=> '&POSTpdfextra',
  'pedigree-perl'	=> '&POSTpedigreeperl',
+ 'pgf-go'		=> '&POST_onelevel',
  'pgfkeysearch'		=> '&POST_onelevel',
  'pgfornament'		=> '&POSTpgfornament',
  'pgfplots'		=> '&POSTpgfplots',
