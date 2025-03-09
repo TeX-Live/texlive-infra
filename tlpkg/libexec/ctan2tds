@@ -1339,6 +1339,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'serbianc',    "die 'skipping, use babel-serbianc'",
  'serbianpart', "die 'skipping, await request'",
  'serial',      "die 'skipping, koma, 1999'",
+ 'serto',       "die 'use aramaic-serto'",
  'setouterbox', "die 'skipping, use oberdiek'",
  'sfarticle',   "die 'skipping, LaTeX 2.09'",
  'sfheaders',   "die 'skipping, noinfo license, no reply from author'",
@@ -2130,7 +2131,8 @@ $standardtex
  'apacite',     '\.apc|' . $standardtex,
  'apnum',	'apnum.tex',
  'arabtex',     '(arab|heb)tex\.tex|' . $standardtex,
- 'autoaligne',  '\.tex|' . $standardtex,
+ 'aramaic-serto',	'\.(fd|sty)',	# not .py
+ 'autoaligne',  	'\.tex|' . $standardtex,
  'autopuncitems',	'\.lua|' . $standardtex,
  'autotype',		'\.txt|' . $standardtex,
  'axessibility',	'\.lua|' . $standardtex,
@@ -3621,6 +3623,7 @@ $standardbib = 'NULL';  # almost all bib files are for the doc
 # packages which have Metafont sources to run.
 $standardmf='[0-9]\.mf';
 %specialmf= (
+ 'aramaic-serto','^[^t].*mf$', # not test.mf
  'asaetr',      'NULL', # cmcscsl10.mf conflict
  'astro',       'astrosym.mf',
  'backgammon',  'bg\.mf',
@@ -3684,6 +3687,7 @@ $standardfoundry='public';
 # additional mf files to be installed but not run.
 $standardmfinstall = '\.mf$';
 %specialmfinstall = (
+ 'aramaic-serto'=> '^[^t].*mf$', # not test.mf
  'asaetr'       => 'NULL',                              # cmcscsl10.mf conflict
  'astro'        => 'astrosym.(cal|cmn|mac|uni|xtr)',
  'ibygrk'       => 'ibycus4\.map',                      # tex|mf source
@@ -5069,6 +5073,7 @@ sub domf {
   # don't use $mfpatt since that's only the tfm-able mf files; just
   # install all the .mf files.
   my $mf_inst_patt = $specialmfinstall{$package} || $standardmfinstall;
+  print "\t DOMF for package $package ($mf_inst_patt)\n";
   &install ($mfdir, $mf_inst_patt);
 }
 
