@@ -904,7 +904,8 @@ my @TLP_working = qw(
     trigonometry trimspaces trivfloat trivialpursuit trsym truncate truthtable
     tsemlines tsvtemplate
     tucv tuda-ci tudscr tufte-latex tugboat tugboat-plain tuple
-    tui turabian turabian-formatting turkmen turnstile turnthepage tutodoc
+    tui turabian turabian-formatting turkmen
+    turnstile turnthepage tutodoc tuzuk
     twemoji-colr twemojis twoinone twoup twoxtwogame
     txfonts txfontsb txgreeks txuprcal
     type1cm typed-checklist typeface typehtml typeoutfileinfo typewriter
