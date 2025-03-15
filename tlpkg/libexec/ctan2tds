@@ -1767,6 +1767,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'customenvs'		=> '&POST_onelevel',
  'dehyph-exptl'		=> '&POSTdehyph_exptl',
  'digestif'		=> '&POSTdigestif',
+ 'dlrg-templates'	=> '&POST_onelevel',
  'doipubmed'		=> '&POSTlatex2html',
  'e-french'		=> '&POSTe_french',
  'easydtx'		=> '&POST_do_man',
@@ -3447,7 +3448,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'nwafuthesis'	=> 'xetex',
  'nwejm'	=> 'tex',
  'nomentbl'     => 'latex -translate-file=empty.tcx',   # no 8-bit
- 'outoruby'	=> 'tex',
+ 'outoruby'	=> 'etex-answer-y',
  'pbsheet'      => 'latex',  # requires interaction
  'pdflscape'	=> 'etex',
  'pdfrender'	=> 'etex',
@@ -8194,26 +8195,38 @@ sub POSTzhmetrics {
 # 
 sub POST_onelevel {
   print "POST_onelevel ($package) - handle doc/source/tex directories\n";
-  for my $dir (qw(code latex lualatex luatex metapost opentype
-                  scripts source tex)) {
-    next unless -d $dir;
+  
+  for my $dir (glob ("*")) {
+    next unless -d $dir; # leave files where they are
+    
     # theoretically we should use $whichformat, $sourceformat, etc.,
     # but in practice they are always the same.
     my $format = $whichdocformat;
+    #
     my $destdir = $dir;
-    if ($dir =~ /(lua)?(la)?tex|code/) { # tex/$format/$package
+    if ($dir =~ /^((lua)?(la)?tex|code)$/) { # tex/$format/$package
       $destdir = "tex";
-    } elsif ($dir =~ /metapost|scripts/) {  # {metapost,scripts}/$package
+    } elsif ($dir =~ /^(metapost|scripts)/) {  # {metapost,scripts}/$package
       $format = "";
-    } elsif ($dir =~ /opentype/) {  # fonts/opentype/$foundry/$package
+    } elsif ($dir =~ /^(opentype)/) {  # fonts/opentype/$foundry/$package
       $destdir = "fonts";
       my $foundry = $specialfoundry{$package} || $standardfoundry;
       $format = "$dir/$foundry";
     } else {
-      die "$0: quitting, don't know about one-level directory: $dir";
+      # not uncommon to have randomly-named subdirs, so stdout not stderr.
+      print "$0: skipping unknown one-level directory: $dir\n";
+      next;
     }
     &rename_with_mkdir ($dir, "$DEST/$destdir/$format/$package");
   }
+
+  # do data/ subdir (e.g., dlrg-templates) after main loop, since we
+  # want it in a subdir of the tex/ dir.
+  if (-d "data") {
+    my $dir = "data";
+    &rename_with_mkdir ($dir, "$DEST/tex/$whichformat/$package/$dir");
+  }
+
   # move files in doc[s]/ up to cwd. If there are clashes, will error out.
   &xsystem ("$MV doc/* .") if -d "doc";
   &xsystem ("$MV docs/* .") if -d "docs";

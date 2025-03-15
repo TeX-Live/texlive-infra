@@ -279,7 +279,7 @@ my @TLP_working = qw(
     dickimaw dictsym didactic didec diffcoeff digestif digiconfigs
     dijkstra dimnum din1505
     dinat dinbrief dingbat directory dirtree dirtytalk disser ditaa dithesis
-    dk-bib dlfltxb
+    dk-bib dlfltxb dlrg-templates
     dnaseq dnp doc-pictex docbytex doclicense
     docmfp docmute docshots docsurvey doctools documentation docutils
     doi doibanner doipubmed domaincoloring domitian
