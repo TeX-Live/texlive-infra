@@ -510,7 +510,7 @@ my @TLP_working = qw(
     latexmk latexmp latexpand
     latino-sine-flexione lato layaureo layouts lazylist
     lccaps lcd lcg lcyw leading leadsheets leaflet
-    lebhart lecturer lectures lectureslides
+    lebhart lecturenotes lecturer lectures lectureslides
     ledmac leftidx leftindex leipzig lengthconvert
     lete-sans-math letgut letltxmacro
     letterspacing letterswitharrows lettre lettrine
