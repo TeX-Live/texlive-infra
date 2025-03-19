@@ -1,6 +1,9 @@
 (This file public domain.  Originally written by Norbert Preining and
 Karl Berry, 2010.)
 
+<p><b>tlmgr 74695 (released 19mar25):</b>
+<li>in --usermode, do not warn about texlive-scripts being missing.
+
 <p>8mar25 TL'25 released.
 
 <p><b>tlmgr 74241 (released 24feb25):</b>

@@ -69,9 +69,11 @@ sub main {
 
   } elsif ($arg eq "norbert" || $arg eq "nor" || $arg eq "gh") {
     # see Build/source/.github/ for workflows and scripts.
-    for my $p (qw(amd64-freebsd
-                  i386-freebsd i386-linux i386-solaris
-                  x86_64-linux x86_64-linuxmusl x86_64-solaris)) {
+    # Do x86_64-linux first in case we want to test the binary asap.
+    for my $p (qw(x86_64-linux
+                  amd64-freebsd i386-freebsd
+                  i386-linux i386-solaris
+                  x86_64-linuxmusl x86_64-solaris)) {
       system ("$0 $p") && die "github/$p failed";
     }
     print "$0: gh (github/norbert) update done.\n";
