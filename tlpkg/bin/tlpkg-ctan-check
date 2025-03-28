@@ -671,7 +671,7 @@ my @TLP_working = qw(
     pdfmanagement-testphase pdfmarginpar pdfmsym pdfoverlay
     pdfpagediff pdfpages pdfpc pdfpc-movie pdfprivacy pdfrender pdfreview
     pdfscreen pdfslide pdfsync
-    pdftex-quiet pdftexcmds pdftricks pdftricks2 pdfx pdfxup
+    pdftex-quiet pdftexcmds pdftoolbox pdftricks pdftricks2 pdfx pdfxup
     pecha pedigree-perl pegmatch
     penlight penlightplus perception perfectcut perltex
     permute persian-bib

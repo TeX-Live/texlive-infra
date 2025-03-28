@@ -1873,6 +1873,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'pas-cv'		=> '&POSTpas_vc',
  'pbibtex-base'		=> '&POSTpbibtex_base',
  'pdfextra'		=> '&POSTpdfextra',
+ 'pdftoolbox'		=> '&POSTpdftoolbox',
  'pedigree-perl'	=> '&POSTpedigreeperl',
  'pgf-go'		=> '&POST_onelevel',
  'pgfkeysearch'		=> '&POST_onelevel',
@@ -7858,9 +7859,15 @@ sub POSTpbibtex_base {
 }
 
 sub POSTpdfextra {
-  print "POST$package - generic files in generic subdirectory\n";
+  print "POST$package - generic files in luatex subdirectory\n";
   &mv_with_mkdir ("$package.sty", "$package.tex",
                  "$DEST/tex/luatex/$package");
+}
+
+sub POSTpdftoolbox {
+  print "POST$package - preserve subpackage subdirs\n";
+  &mv_with_mkdir ("ptb-*", "pdf[D-T]*",
+                 "$DEST/tex/plain/$package");
 }
 
 sub POSTpedigreeperl {
