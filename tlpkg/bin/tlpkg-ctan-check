@@ -635,7 +635,7 @@ my @TLP_working = qw(
     nopageno norasi-c90 normalcolor
     nostarch notebeamer notes notes2bib notespages notestex
     notex-bst noto noto-emoji notoccite notomath
-    novel nowidow nox
+    novabeamer-theme novel nowidow nox
     nrc nstc-proposal ntgclass nth ntheorem ntheorem-vn nuc nucleardata
     numberedblock numberpt numbersets
     numerica numerica-plus numerica-tables numericplots
@@ -745,7 +745,8 @@ my @TLP_working = qw(
      qualitype quantikz quantumarticle quattrocento
      quickreaction quicktype quiver quiz2socrative quizztex
      quotchap quoting quotmark
-     quran quran-bn quran-de quran-en quran-es quran-id quran-ur qyxf-book
+     quran quran-bn quran-de quran-en quran-es quran-id quran-ur
+     qworld qyxf-book
   r_und_s ragged2e raleway ran_toks randbild randexam randintlist
     random randomlist randomwalk randtext
     rank-2-roots rbt-mathnotes rccol rcs rcs-multi rcsinfo

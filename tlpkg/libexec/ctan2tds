@@ -2119,6 +2119,7 @@ $standardtex
  'abbr',        '\.tex',
  'abstyles',    'apreambl.tex', # not a4c.sty
  'acro',	'definitions\.tex|' . $standardtex,
+ 'adfsymbols',	'adfsymbols-uni\.tex|' . $standardtex,
  'algxpar',	'\.kw\.tex|' . $standardtex,
  'aobs-tikz',   'tikz.*tex',
  'aomart',	'aom_orcid_logo|' . $standardtex,
@@ -2317,6 +2318,7 @@ $standardtex
  'ifmslide',    '[^n]\.(eps|pdf|jpg)|' . $standardtex,  # not ifmman.pdf
  'ijsra',	'ijsra_logo.*|' . $standardtex,
  'insbox',      'insbox.tex',
+ 'install-latex-guide-zh-cn','NULL',		# doc package
  'interactiveworkbook', 'NULL', # done in POSTinteractiveworkbook
  'interpreter', 'interpreter.(tex|lua)|' . $standardtex,
  'iodhbwm',	'logo\.png$|' . $standardtex,
@@ -4173,6 +4175,7 @@ $standardclean = '\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
  'pictex'	 => 'manual.pdf$',			# no source
  'piechartmp'    => 'piechartmp.pdf',                   # no source
  'ptptex'        => '(overcite|cite|wrapfig).sty',      # duplicated
+ 'qworld'    	 => 'qworld.pdf',                       # no source
  'scientific-thesis-cover' => 'demo.pdf',		# no source
  'sectionbox'    => 'example/lenna.*.jpg',              # nonfree
  'startex'	 => 'epsf.tex',				# stale copy
