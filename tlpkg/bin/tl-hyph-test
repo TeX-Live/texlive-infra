@@ -10,9 +10,9 @@
 # It's complicated.
 
 # Usage:
+tmpdir=/home/texlive/hyphtest # used in TLhyphtest.pro (used below).
+
 ## Initial setup for first time:
-##tmpdir=/home/texlive/hyphtest # used in TLhyphtest.pro (used below).
-##                              # but otherwise could be anything
 ##mkdir $tmpdir # e.g., , could be anywhere
 ##cd $tmpdir
 ## 
@@ -27,7 +27,7 @@ if false; then # better to run these one at a time
   cd $tmpdir
   rm -rf inst catdump.pl     # clean up from last time
   cd Master
-  ~karl/bin/svri
+  ~karl/bin/svri      # get rid of any local changes
   time svn update -q  # get updates made in the meantime (could take an hour)
   svn status          # make sure it's completely clean
   # 
@@ -60,17 +60,20 @@ if false; then # better to run these one at a time
   svn diff Master >/tmp/sdh # review changes, especially in tlpsrc files
   #
   # When ready, run this script:
-  #./Master/tlpkg/bin/tl-hyph-test >/tmp/tht.out
-  echo $?
+  ./Master/tlpkg/bin/tl-hyph-test >/tmp/tht.out 2>&1; echo $?
+  cat /tmp/tht.out
   # Make sure output is good, no errors building formats, etc.
   # 
   # If any files are "present but not covered" (in the "file
-  # consistency" check), look to see if they are in the original
-  # hypf-utf8.tds.zip; if so, then it's a bug in the tlpsrc generation,
-  # report. If not, then rm them from our working directory, and svn rm
-  # them from the TL dev directory where we'll eventually commit. (The
-  # usual method for determining when files have been removed won't work
-  # here because hyph-utf8 is split into numerous TL packages.)
+  # consistency" check), check if they are in the original
+  # $CTAN/install/language/hyph-utf8.tds.zip:
+  # - If so, then it's a bug in the tlpsrc generation; fix/report.
+  # - If not, then it's an intentional removal in the new release.
+  #   rm them from our working directory, and svn rm
+  #   them from the TL dev directory where we'll eventually commit.
+  #   (The usual method for determining when files have been removed
+  #   doesn't work here because hyph-utf8 is split into numerous TL
+  #   packages.)
   #
   # Once it all works, can install hyph-utf8 with ctan2tl [p] as usual;
   #   copy any changed .tlpsrc (or other) files to dev, and
@@ -79,11 +82,13 @@ if false; then # better to run these one at a time
   #   good chance of failure, despite all the testing:
   #force_rebuild=true cron.trunk # or cron.pretest, if during pretest
   # 
-  # To clean up here:
-  #rm -rf inst tmp catdump.pl
-  #svn revert --depth infinity Master >/tmp/svri
-  #rm `svn status Master | sed -n 's/\?//p'` # remove "?" files (new ones)
-  #svn status Master  # ensure clean
+  # To clean up in $tmpdir, after commit to regular tree:
+  cd $tmpdir
+  rm -rf inst tmp catdump.pl
+  svn update Master # to get changes just made
+  svn revert --depth infinity Master >/tmp/svri
+  rm `svn status Master | sed -n 's/\?//p'` # remove "?" files (new ones)
+  svn status Master  # ensure clean
 fi
 
 # 

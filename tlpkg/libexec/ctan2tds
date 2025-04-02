@@ -7495,7 +7495,8 @@ sub POSThyph_utf8 {
   print "*** After commit, manually rebuild:\n";
   print "*** env force_rebuild=true cron.trunk # or cron.pretest\n";
   print "*** \n";
-  print "*** All *hyph[en]-* files (etc.) will not be matched, in own pkgs.\n";
+  print "*** All *hyph[en]-* files (etc.) will not be matched,\n";
+  print "***  and cannot be added, since they are in their own packages.\n";
   my $tlpsrc_dir = "$TOPDEST/tlpkg/tlpsrc";
   &xmkdir ($tlpsrc_dir);
   &xchdir ($tlpsrc_dir);
