@@ -4175,7 +4175,6 @@ $standardclean = '\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
  'pictex'	 => 'manual.pdf$',			# no source
  'piechartmp'    => 'piechartmp.pdf',                   # no source
  'ptptex'        => '(overcite|cite|wrapfig).sty',      # duplicated
- 'qworld'    	 => 'qworld.pdf',                       # no source
  'scientific-thesis-cover' => 'demo.pdf',		# no source
  'sectionbox'    => 'example/lenna.*.jpg',              # nonfree
  'startex'	 => 'epsf.tex',				# stale copy
