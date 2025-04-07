@@ -1837,6 +1837,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'lua-check-hyphen'	=> '&POST_rmsymlink',
  'lua-physical'		=> '&POSTlua_physical',
  'lua-placeholders'	=> '&POST_onelevel',
+ 'lua-regression'	=> '&POST_onelevel',
  'luaotfload'		=> '&POST_do_man',
  'luatexja'		=> '&POSTluatexja',
  'm-tx'			=> '&POSTmtx',

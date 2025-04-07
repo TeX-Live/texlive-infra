@@ -543,7 +543,7 @@ my @TLP_working = qw(
     ltxcmds ltxdockit ltxfileinfo ltxguidex ltximg
     ltxkeys ltxmisc ltxnew ltxtools
     lua-alt-getopt lua-check-hyphen lua-physical lua-placeholders
-    lua-tinyyaml lua-typo lua-uca lua-ul
+    lua-regression lua-tinyyaml lua-typo lua-uca lua-ul
     lua-uni-algos lua-visual-debug lua-widow-control luaaddplot
     luabibentry luabidi luacas luacensor luacode luacolor luacomplex
     luafindfont luagcd luahttp luahyphenrules
