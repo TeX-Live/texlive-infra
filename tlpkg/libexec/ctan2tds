@@ -2652,6 +2652,7 @@ $standardtex
  'twemojis',	'all-twemojis\.pdf|' . $standardtex,
  'tuple',	'^tuple\.tex|' . $standardtex,
  'typstfun',	'NULL',			# doc pkg
+ 'uantwerpendocs',	'Images|Logos|\.data|' . $standardtex,
  'ucs',		'data|' . $standardtex,
  'uestcthesis', '\.png|' . $standardtex,
  'udesoftec',   'udesoftec-cover|\.cls|\.def',

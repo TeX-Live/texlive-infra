@@ -893,7 +893,7 @@ my @TLP_working = qw(
     topfloat topiclongtable topletter toptesi
     totalcount totcount totpages
     tpic2pdftex tpslifonts tqft
-    tracklang trajan tram tramlines
+    tracklang traffic-light-protocol trajan tram tramlines
     translation-array-fr
     translation-arsclassica-de translation-biblatex-de translation-chemsym-de
     translation-dcolumn-fr
