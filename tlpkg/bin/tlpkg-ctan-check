@@ -94,7 +94,8 @@ my @TLP_working = qw(
     baskervaldadf baskervaldx baskervillef
     basque-book basque-date bath-bst
     bbcard bbding bbm bbm-macros bbold bboldx bbold-type1 bchart bclogo
-    beamer beamer2thesis beamer-fuberlin beamer-rl beamer-tut-pt beamer-verona
+    beamer beamer2thesis beamer-fuberlin beamer-rl
+    beamer-theme-albi beamer-tut-pt beamer-verona
     beamerappendixnote beameraudience beamerauxtheme
     beamercolorthemeowl beamerdarkthemes beamerposter
     beamersubframe beamerswitch beamertheme-arguelles beamertheme-cuerna
@@ -650,7 +651,7 @@ my @TLP_working = qw(
     opteng optex optexcount optidef optional options
     orcidlink ordinalpt orientation orkhun
     oscola oststud oswald ot-tableau othello othelloboard
-    oubraces oup-authoring-template
+    ou-tma oubraces oup-authoring-template
     outerhbox outilsgeomtikz outline outliner outlines outlining outoruby
     overarrows overlays overlock overpic
   pacioli packdoc padcount
