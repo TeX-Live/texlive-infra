@@ -193,7 +193,7 @@ my @TLP_working = qw(
     chkfloat chklref chletter chngcntr chordbars chordbox chronology
     chronos chronosys chs-physics-report chscite churchslavonic chuushaku
     cidarticle cinzel circ circledsteps circledtext circuit-macros circuitikz
-    circularglyphs citation-style-language cite citeall citeref
+    circularglyphs cistercian citation-style-language cite citeall citeref
     cje cjhebrew cjk cjk-gs-integrate cjk-ko cjkpunct cjs-rcs-article
     clara classics classpack classicthesis
     cleanthesis clearsans clefval cleveref cleveref-forward cleveref-usedon
