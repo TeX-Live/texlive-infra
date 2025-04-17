@@ -98,7 +98,8 @@ my @TLP_working = qw(
     beamer-theme-albi beamer-tut-pt beamer-verona
     beamerappendixnote beameraudience beamerauxtheme
     beamercolorthemeowl beamerdarkthemes beamerposter
-    beamersubframe beamerswitch beamertheme-arguelles beamertheme-cuerna
+    beamersubframe beamerswitch beamertheme-arguelles
+    beamertheme-cleaneasy beamertheme-cuerna
     beamertheme-detlevcm beamertheme-epyt beamertheme-focus beamertheme-gotham
     beamertheme-light beamertheme-metropolis beamertheme-mirage
     beamertheme-npbt

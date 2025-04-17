@@ -1730,6 +1730,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'axodraw2'		=> '&POSTaxodraw2',
  'barracuda'		=> '&POSTbarracuda',
  'beautybook'		=> '&POSTbeautybook',
+ 'beamertheme-cleaneasy' => '&POST_onelevel', 
  'bhcexam'		=> '&POST_rmsymlink',
  'bib2gls'		=> '&POSTbib2gls',
  'biber'		=> '&POSTbiber',
@@ -8218,7 +8219,7 @@ sub POST_onelevel {
     my $format = $whichdocformat;
     #
     my $destdir = $dir;
-    if ($dir =~ /^((lua)?(la)?tex|code)$/) { # tex/$format/$package
+    if ($dir =~ /^((lua)?(la)?tex|code|theme)$/) { # tex/$format/$package
       $destdir = "tex";
     } elsif ($dir =~ /^(metapost|scripts)/) {  # {metapost,scripts}/$package
       $format = "";
@@ -8235,10 +8236,12 @@ sub POST_onelevel {
   }
 
   # do data/ subdir (e.g., dlrg-templates) after main loop, since we
-  # want it in a subdir of the tex/ dir.
-  if (-d "data") {
-    my $dir = "data";
-    &rename_with_mkdir ($dir, "$DEST/tex/$whichformat/$package/$dir");
+  #   want it in a subdir of the tex/ dir.
+  # Ditto logos/ (beamertheme-cleaneasy), which might be too aggressive
+  #   and we'll have to back off to a separate routine.
+  for my $subdir (("data", "logos")) {
+    next unless -d $subdir;
+    &rename_with_mkdir ($subdir, "$DEST/tex/$whichformat/$package/$subdir");
   }
 
   # move files in doc[s]/ up to cwd. If there are clashes, will error out.
