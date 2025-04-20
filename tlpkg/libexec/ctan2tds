@@ -1947,6 +1947,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'tikz3d-fr'		=> '&POST_onelevel',
  'tikzcalendarnotes'	=> '&POST_onelevel',
  'tikzdotncross'	=> '&POST_onelevel',
+ 'tikzfxgraph'		=> '&POST_onelevel', 
  'tikzquads'		=> '&POST_onelevel',
  'tikzquests'		=> '&POST_onelevel',
  'timeop'		=> '&POST_onelevel',

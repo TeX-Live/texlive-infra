@@ -648,7 +648,8 @@ my @TLP_working = qw(
     odesandpdes odsfile ofs
     ogham oinuit old-arrows oldlatin oldstandard
     oldstyle olsak-misc omgtudoc-asoiu
-    onedown onlyamsmath onrannual opbible opcit opencolor opensans oplotsymbl
+    onedown onlyamsmath onrannual opbible opcit
+    opencolor open-everyday-symbols opensans oplotsymbl
     opteng optex optexcount optidef optional options
     orcidlink ordinalpt orientation orkhun
     oscola oststud oswald ot-tableau othello othelloboard
@@ -879,7 +880,7 @@ my @TLP_working = qw(
     tikz-relay tikz-sfc tikz-swigs
     tikz-timing tikz-trackschematic tikz-triminos tikz-truchet
     tikzbricks tikzcalendarnotes tikzcodeblocks tikzdotncross tikzducks
-    tikzfill tikzinclude tikzlings
+    tikzfill tikzfxgraph tikzinclude tikzlings
     tikzmark tikzmarmots tikzorbital
     tikzpackets tikzpagenodes tikzpeople tikzpfeile tikzpingus tikzposter
     tikzquads tikzquests tikzscale tikzsymbols
