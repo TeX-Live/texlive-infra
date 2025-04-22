@@ -591,6 +591,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'font-change', "&MAKEflatten",
  'fontawesome', "&MAKEflatten",
  'fontawesome5', "&MAKEflatten",
+ 'fontawesome6', "&MAKEflatten",
  'fonteinf',	"die 'skipping, obsolete + nosource'",
  'fontinst',    "&MAKEfontinst",
  'fontloader-luaotfload', "die 'skipping, obsolete 29sep18'",
@@ -2172,7 +2173,8 @@ $standardtex
  'booktabs-de', 'NULL',                 # doc package
  'booktabs-fr', 'NULL',                 # doc package
  'bmstu',	'img|sty|logo.pdf|' . $standardtex,
- 'bussproofs-extra', 'bussproofs-extra.sty',		# not bpextra.sty
+ 'bussproofs-extra', 'bussproofs-extra.sty',	# not bpextra.sty
+ 'bracealign',  'bracealign.sty',		# not -doc.sty
  'breqn',       '\.sty|\.sym',
  'buctthesis',	'buct.*cls',
  'c-pascal',    '^[^d].*\.tex|' . $standardtex, # not demo*.tex
