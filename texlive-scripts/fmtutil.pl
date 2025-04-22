@@ -46,6 +46,8 @@ use TeXLive::TLUtils qw(wndws);
 
 require TeXLive::TLWinGoo if wndws();
 
+my $USE_FORKMANAGER = 0;
+
 # numerical constants
 my $FMT_NOTSELECTED = 0;
 my $FMT_DISABLED    = 1;
@@ -128,6 +130,7 @@ our @cmdline_options = (  # in same order as help message
   "no-engine-subdir",
   "no-error-if-no-engine=s",
   "no-error-if-no-format",
+  "no-fork",
   "nohash",
   "recorder",
   "refresh",
@@ -202,6 +205,18 @@ sub main {
     if (@ARGV) {
       die "$0: Unexpected non-option argument(s): @ARGV\n"
           . "Try \"$prg --help\" for more information.\n";
+    }
+    # for full fmtutil, let us try to use ForkManager if available
+    # do not try this on Windows
+    if (wndws() || $opts{"no-fork"}) {
+      $USE_FORKMANAGER = 0;
+    } else {
+      eval { require Parallel::ForkManager; };
+      if ($@) {
+        $USE_FORKMANAGER = 0;
+      } else {
+        $USE_FORKMANAGER = 1;
+      }
     }
   }
 
@@ -472,37 +487,70 @@ sub callback_build_formats {
   my $nobuild = 0;
   my $notavail = 0;
   my $total = 0;
+  my $finish_sub = sub {
+    my ($exit_code, $fmt, $eng) = @_;
+    if ($exit_code == $FMT_DISABLED)    {
+      log_to_status("DISABLED", $fmt, $eng, $what, $whatarg);
+      $disabled++;
+    } elsif ($exit_code == $FMT_NOTSELECTED) {
+      log_to_status("NOTSELECTED", $fmt, $eng, $what, $whatarg);
+      $nobuild++;
+    } elsif ($exit_code == $FMT_FAILURE)  {
+      log_to_status("FAILURE", $fmt, $eng, $what, $whatarg);
+      $err++;
+      push (@err, "$eng/$fmt");
+    } elsif ($exit_code == $FMT_SUCCESS)  {
+      log_to_status("SUCCESS", $fmt, $eng, $what, $whatarg);
+      $suc++;
+    } elsif ($exit_code == $FMT_NOTAVAIL) {
+      log_to_status("NOTAVAIL", $fmt, $eng, $what, $whatarg);
+      $notavail++;
+    }
+    else {
+      log_to_status("UNKNOWN", $fmt, $eng, $what, $whatarg);
+      print_error("callback_build_format: unknown return "
+        . "from select_and_rebuild.\n");
+    }
+  };
+  my $pm;
+  if ($USE_FORKMANAGER) {
+    # get number of cores/cpus according to https://stackoverflow.com/questions/45181115
+    # checked on Linux, MacOS
+    # We have forking disabled for Windows
+    my $nproc = `getconf _NPROCESSORS_ONLN 2>/dev/null || sysctl -n hw.ncpu`;
+    # if we get something not numerical here, reset it to 0
+    # which means don't do any forking
+    $nproc = 0 if ($nproc !~ m/[0-9]+/);
+    $pm = Parallel::ForkManager->new($nproc);
+    $pm->run_on_finish(sub {
+      my ($pid, $exit_code, $ident, $exit_signal, $core_dump, $data_structure_reference) = @_;
+      my ($fmt, $eng, $ref_deferred_stdout, $ref_deferred_stderr) = @{$data_structure_reference};
+      push @deferred_stdout, @$ref_deferred_stdout;
+      push @deferred_stderr, @$ref_deferred_stderr;
+      $finish_sub->($exit_code, $fmt, $eng);
+    });
+  }
   for my $swi (qw/format=engine format!=engine/) {
     for my $fmt (keys %{$alldata->{'merged'}}) {
       for my $eng (keys %{$alldata->{'merged'}{$fmt}}) {
         next if ($swi eq "format=engine" && $fmt ne $eng);
         next if ($swi eq "format!=engine" && $fmt eq $eng);
         $total++;
-        my $val = select_and_rebuild_format($fmt, $eng, $what, $whatarg);
-        if ($val == $FMT_DISABLED)    {
-          log_to_status("DISABLED", $fmt, $eng, $what, $whatarg);
-          $disabled++;
-        } elsif ($val == $FMT_NOTSELECTED) {
-          log_to_status("NOTSELECTED", $fmt, $eng, $what, $whatarg);
-          $nobuild++;
-        } elsif ($val == $FMT_FAILURE)  {
-          log_to_status("FAILURE", $fmt, $eng, $what, $whatarg);
-          $err++;
-          push (@err, "$eng/$fmt");
-        } elsif ($val == $FMT_SUCCESS)  {
-          log_to_status("SUCCESS", $fmt, $eng, $what, $whatarg);
-          $suc++;
-        } elsif ($val == $FMT_NOTAVAIL) {
-          log_to_status("NOTAVAIL", $fmt, $eng, $what, $whatarg);
-          $notavail++; 
+        if ($USE_FORKMANAGER) {
+          $pm->start("select_and_rebuild_format($fmt, $eng, $what, $whatarg)") and next;
         }
-        else {
-          log_to_status("UNKNOWN", $fmt, $eng, $what, $whatarg);
-          print_error("callback_build_format (round 1): unknown return "
-           . "from select_and_rebuild.\n");
+        my $val = select_and_rebuild_format($fmt, $eng, $what, $whatarg);
+        if ($USE_FORKMANAGER) {
+          my @array = ($fmt, $eng, \@deferred_stdout, \@deferred_stderr);
+          $pm->finish($val, \@array);
+        } else {
+          $finish_sub->($val, $fmt, $eng);
         }
       }
     }
+    # We need to wait for format=engine round to be finished before
+    # we can run the format!=engine round
+    $pm->wait_all_children if ($USE_FORKMANAGER);
   }
 
   # if the user asked to rebuild something, but we did nothing, report
@@ -807,13 +855,24 @@ sub rebuild_one_format {
     $ENV{'TEXPOOL'} = cwd() . $sep . ($texpool ? $texpool : "");
   }
 
-  # in mktexfmtMode we must redirect *all* output to stderr
-  $cmdline .= " >&2" if $mktexfmtMode;
   $cmdline .= " <$nul";
-  my $retval = system("$DRYRUN$cmdline");
+  
+  my ($out, $retval);
+
+  if ($mktexfmtMode) {
+    # in mktexfmtMode we must redirect *all* output to stderr
+    $out = "";
+    $retval = system("$DRYRUN$cmdline >&2");
+  } else {
+    # we want to catch stdout and stderr into $out
+    ($out, $retval) = TeXLive::TLUtils::run_cmd("$DRYRUN$cmdline 2>&1");
+    $out =~ s/\n+$//; # trailing newlines don't seem interesting
+  }
 
   # report error if it failed.
   if ($retval != 0) {
+    # print out all the output for debugging
+    print($out);
     $retval /= 256 if ($retval > 0);
     print_deferred_error("running \`$cmdline' return status: $retval\n");
   }
@@ -1475,6 +1534,7 @@ Options:
   --no-error-if-no-engine=ENGINE1,ENGINE2,...
                           exit successfully even if a required ENGINE
                            is missing, if it is included in the list.
+  --no-fork               do not try to use forking format creation
   --no-strict             exit successfully even if a format fails to build
   --nohash                don't update ls-R files
   --recorder              pass the -recorder option and save .fls files
