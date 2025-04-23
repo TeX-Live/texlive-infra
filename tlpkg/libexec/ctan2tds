@@ -591,7 +591,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'font-change', "&MAKEflatten",
  'fontawesome', "&MAKEflatten",
  'fontawesome5', "&MAKEflatten",
- 'fontawesome6', "&MAKEflatten",
+ 'fontawesome6', "die 'skipping, duplicate filenames with fa5'",
  'fonteinf',	"die 'skipping, obsolete + nosource'",
  'fontinst',    "&MAKEfontinst",
  'fontloader-luaotfload', "die 'skipping, obsolete 29sep18'",
