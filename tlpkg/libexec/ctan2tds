@@ -1718,6 +1718,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
 
 %posthook = (
  'acmart'		=> '&POSTacmart',
+ 'afperpack'		=> '&POST_onelevel', 
  'albatross'		=> '&POST_do_man',
  'amscls-doc'		=> '&POST_rmsymlink',
  'amsrefs'		=> '&POSTamsrefs',

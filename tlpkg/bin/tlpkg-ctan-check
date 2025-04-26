@@ -30,7 +30,7 @@ my @TLP_working = qw(
     adfathesis adforn adhocfilelist adigraph
     adjmulticol adfsymbols adjustbox adobemapping
     adrconv adtrees advdate advice
-    ae aeguill aesupp affilauthor afthesis
+    ae aeguill aesupp affilauthor afperpack afthesis
     aguplus aiaa aichej aiplans ajl akktex akletter akshar
     albatross alchemist alegreya alertmessage alfaslabone
     alg algobox algolrevived
