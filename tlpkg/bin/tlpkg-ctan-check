@@ -648,7 +648,7 @@ my @TLP_working = qw(
     odesandpdes odsfile ofs
     ogham oinuit old-arrows oldlatin oldstandard
     oldstyle olsak-misc omgtudoc-asoiu
-    onedown onlyamsmath onrannual opbible opcit
+    onedown onepgnote onlyamsmath onrannual opbible opcit
     opencolor open-everyday-symbols opensans oplotsymbl
     opteng optex optexcount optidef optional options
     orcidlink ordinalpt orientation orkhun
