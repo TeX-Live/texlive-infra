@@ -34,8 +34,9 @@ exit 2 unless Getopt::Long::GetOptions (
   "final-svn-update!" => \$opt_final_svn_update,
 );
 
-print "place: chicken mode = $chicken\n";
-print "place: final: $opt_final_svn_update\n";
+print "place: chicken: $chicken\n";
+print "place: mode: $opt_mode\n";
+print "place: final-update: $opt_final_svn_update\n" if $opt_mode eq "svn";
 
 die "usage: $0 [OPT]... PKGNAME (ustl)\n" unless @ARGV == 1;
 $package = $ARGV[0];
