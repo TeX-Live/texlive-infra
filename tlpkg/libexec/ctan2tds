@@ -3423,6 +3423,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'kvoptions'	=> 'etex',
  'kvsetkeys'	=> 'etex',
  'labelcas'     => 'latex',  # requires interaction
+ 'langsci-avm'	=> 'pdflatex-preserve-pdf --engine xelatex',
  'lastpage'     => 'tex',
  'latex-veryshortguide' => 'latex',  # requires interaction
  'lcd'          => 'latex -translate-file=empty.tcx',   # no 8-bit
