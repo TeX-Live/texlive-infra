@@ -822,6 +822,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'latexdb',     "die 'skipping, needs sql, etc.'",
  'latexmp',     "&MAKEflatten",
  'latexscreenshooter', "die 'skipping, java, no wrapper, no man page, ?no doc source'", 
+ 'latin',	"die 'skipping, obsolete on ctan 30apr25'", 
  'lato',        "&MAKEcopy",
  'lato-math',	"die 'skipping, as of 12may24 lete-sans-math'", 
  'layaureo',    "&MAKEflatten",
