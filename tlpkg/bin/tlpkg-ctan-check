@@ -362,7 +362,7 @@ my @TLP_working = qw(
     fn2end fnbreak fncychap fncylab fnpara fnpct fnspe fntproof fnumprint
     foekfont foilhtml foliono fonetika
     font-change font-change-xetex
-    fontawesome fontawesome5 fontaxes fontbook fontch fontinst
+    fontawesome fontawesome5 fontawesome6 fontaxes fontbook fontch fontinst
     fontinstallationguide fontmfizz fontools
     fonts-churchslavonic fonts-tlwg
     fontscale fontscripts fontsetup fontsize fontspec fonttable fontwrap
@@ -529,7 +529,8 @@ my @TLP_working = qw(
     listbib listing listings listings-ext listingsutf8 listlbls listliketab
     listofitems listofsymbols listparskip litetable
     lithuanian liturg lkproof llncs llncsconf lm lm-math lmake lni lobster2
-    locality localloc logbox logical-markup-utils logicproof logicpuzzle logix
+    locality localloc logbox
+    logical-markup-utils logicproof logicpuzzle logictools logix
     logoetalab logpap logreq lollipop
     longdivision longfbox longfigure longmath longnamefilelist loops
     lparse lpform lpic lplfitch lps
