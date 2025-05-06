@@ -2594,6 +2594,7 @@ $standardtex
  'spotcolor',   'spotcolor.*\.tex|' . $standardtex,
  'standalone',	'standalone\.tex|' . $standardtex,
  'startex',     '\.(tex|stx|lan)$',
+ 'stretchy',	'str.*\.tex',
  'stricttex',	'\.lua|' . $standardtex,
  'subfigure',   '\.sty|[^c]\.cfg',      # not ltxdoc.cfg, would be system-wide
  'syntax',      'syntax\.tex',

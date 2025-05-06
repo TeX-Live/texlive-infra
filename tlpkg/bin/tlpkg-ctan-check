@@ -825,7 +825,7 @@ my @TLP_working = qw(
     stdclsdv stdpage stealcaps steinmetz
     stellenbosch stellenbosch-2 step stepgreek stex
     stickstoo stix stix2-otf stix2-type1 stmaryrd stocksize storebox storecmd
-    strands stricttex string-diagrams stringenc stringstrings
+    strands stretchy stricttex string-diagrams stringenc stringstrings
     structmech struktex
     sttools stubs studenthandouts sty2dtx styledcmd suanpan suanpan-l3
     subdocs subdepth subeqn subeqnarray
