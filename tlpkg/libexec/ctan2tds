@@ -2429,6 +2429,7 @@ $standardtex
  'mathlig',	'\.tex',
  'mathsemantics','mathsemantics(?!-documentation-local).*\.sty',
  'mdframed',    '\.mdf|' . $standardtex,
+ 'measurebox',	'measurebox\.tex',
  'media4svg',	'\.lua|' . $standardtex,
  'metanorma',	'x?l$|' . $standardtex,
  'metatex',     'metatex.tex',

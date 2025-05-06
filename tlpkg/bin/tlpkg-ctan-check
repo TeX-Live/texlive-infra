@@ -577,7 +577,7 @@ my @TLP_working = qw(
     matrix-skeleton mattens maybemath maze
     mcaption mceinleger mcexam mcf2graph mcite mciteplus mcmthesis
     mdframed mdputu mdsymbol mdwtools
-    mecaso media4svg media9 medmath medstarbeamer
+    measurebox mecaso media4svg media9 medmath medstarbeamer
     meetingmins membranecomputing memdesign memexsupp
     memoir memoirchapterstyles memoize memory memorygraphs mendex-doc mentis
     mensa-tex menu menucard menukeys mercatormap merriweather
