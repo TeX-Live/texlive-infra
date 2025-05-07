@@ -2312,6 +2312,7 @@ $standardtex
  'hrefhide',    '\.sty|[^c]\.cfg',        # omit ltxdoc.cfg, would be system-wide
  'huawei',	'.*cover-picture\.pdf|' . $standardtex,
  'hustthesis',	'hust-title.pdf|' . $standardtex,
+ 'hustvisual',	'hustvisual\.sty|\.def',	# not -doc.sty
  'hvextern',	'hv(?!doctools).*\.sty|\.lua',  # negative lookahead fun
  'hvfloat',	'hvfloat.*\.inc|' . $standardtex,
  'hwemoji',	'hwemoji-assets.pdf|' . $standardtex,
