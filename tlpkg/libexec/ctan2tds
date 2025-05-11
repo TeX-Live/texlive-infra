@@ -2,11 +2,11 @@
 # $Id$
 # Public domain.
 # Originally written by Sebastian Rahtz.  Comments to tex-live@tug.org.
-# 
+#
 # A script to TL-install a package from CTAN.
 # For the higher-level invocation that is what should be used in practice,
 # see tlpkg/bin/ctan2tl.
-# 
+#
 # Its default actions, given a "raw" directory copied from CTAN (the
 # current directory on invocation), are, approximately,
 #  1. copy everything to texmf-dist/doc/<format>/<package>
@@ -14,7 +14,7 @@
 #  3. run any .mf files through mktextfm
 #  4. move .sty/.cls etc files to texmf-dist/tex/<format>/<package>
 #  5. move other files to appropriate places in the hierarchy.
-#  
+#
 # All the patterns for what to move or run can be overridden per-package.
 
 BEGIN {
@@ -472,7 +472,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'do-it-yourself-tex', "die 'skipping, huge documentation package'",
  'docassembly',	"die 'skipping, requires adobe (dps)'",
  'dogma',       "die 'skipping, requires nonfree font'",
- 'domaincoloring' => '&MAKEflatten', 
+ 'domaincoloring' => '&MAKEflatten',
  'dot2tex',     "die 'skipping, only useful with supporting python setup'",
  'domitian',	"&MAKEflatten",
  'dozenal',	"&MAKEflatten",
@@ -761,6 +761,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'joy-of-tex',	"die 'skipping, nonfree'",
  'jpgfdraw',    "die 'skipping, replaced by flowframtk'",
  'jpicedt',	"die 'skipping, ancient program'",
+ 'juliamono', "&MAKEflatten",
  'kalendar',    "die 'skipping, noinfo license'",
  'kbordermatrix',"die 'skipping, noinfo license'",
  'kd',          "die 'skipping, too old, too complicated, sorry'",
@@ -821,10 +822,10 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'latexalpha2',	"die 'skipping, only for mathematica'",
  'latexdb',     "die 'skipping, needs sql, etc.'",
  'latexmp',     "&MAKEflatten",
- 'latexscreenshooter', "die 'skipping, java, no wrapper, no man page, ?no doc source'", 
- 'latin',	"die 'skipping, obsolete on ctan 30apr25'", 
+ 'latexscreenshooter', "die 'skipping, java, no wrapper, no man page, ?no doc source'",
+ 'latin',	"die 'skipping, obsolete on ctan 30apr25'",
  'lato',        "&MAKEcopy",
- 'lato-math',	"die 'skipping, as of 12may24 lete-sans-math'", 
+ 'lato-math',	"die 'skipping, as of 12may24 lete-sans-math'",
  'layaureo',    "&MAKEflatten",
  'lcircuit',    "die 'skipping, license unknown, too old to investigate'",
  'leawood',     "&MAKEflatten",
@@ -1719,7 +1720,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
 
 %posthook = (
  'acmart'		=> '&POSTacmart',
- 'afperpack'		=> '&POST_onelevel', 
+ 'afperpack'		=> '&POST_onelevel',
  'albatross'		=> '&POST_do_man',
  'amscls-doc'		=> '&POST_rmsymlink',
  'amsrefs'		=> '&POSTamsrefs',
@@ -1733,7 +1734,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'axodraw2'		=> '&POSTaxodraw2',
  'barracuda'		=> '&POSTbarracuda',
  'beautybook'		=> '&POSTbeautybook',
- 'beamertheme-cleaneasy' => '&POST_onelevel', 
+ 'beamertheme-cleaneasy' => '&POST_onelevel',
  'bhcexam'		=> '&POST_rmsymlink',
  'bib2gls'		=> '&POSTbib2gls',
  'biber'		=> '&POSTbiber',
@@ -1928,7 +1929,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'splitindex'		=> '&POST_do_man',
  'sqltex',		=> '&POSTsqltex',
  'starray'		=> '&POST_onelevel',
- 'startex'		=> '&POST_otherformat', 
+ 'startex'		=> '&POST_otherformat',
  'stex',		=> '&POSTstex',
  'superiors'		=> '&POST_onelevel',
  'sympycalc'		=> '&POST_onelevel',
@@ -1950,7 +1951,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'tikz3d-fr'		=> '&POST_onelevel',
  'tikzcalendarnotes'	=> '&POST_onelevel',
  'tikzdotncross'	=> '&POST_onelevel',
- 'tikzfxgraph'		=> '&POST_onelevel', 
+ 'tikzfxgraph'		=> '&POST_onelevel',
  'tikzquads'		=> '&POST_onelevel',
  'tikzquests'		=> '&POST_onelevel',
  'timeop'		=> '&POST_onelevel',
@@ -2130,7 +2131,7 @@ $standardtex
  'algxpar',	'\.kw\.tex|' . $standardtex,
  'aobs-tikz',   'tikz.*tex',
  'aomart',	'aom_orcid_logo|' . $standardtex,
- 'ae',          '\.fd$|\.sty', 
+ 'ae',          '\.fd$|\.sty',
  'alchemist',	'alchemist.sty',	# not manual.sty
  'alertmessage','img|' . $standardtex,
  'amscls-doc',	'NULL',
@@ -2251,8 +2252,8 @@ $standardtex
  'expex',       '\.tex|' . $standardtex,
  'exsheets',    'dicts|' . $standardtex,
  'eijkhout',    '\.tex',
- 'einfuehrung', 'NULL',                 # doc package 
- 'einfuehrung2','NULL',                 # doc package 
+ 'einfuehrung', 'NULL',                 # doc package
+ 'einfuehrung2','NULL',                 # doc package
  'eltex',       'eltex.*tex',
  'elsarticle',  'elsarticle.cls',       # no rvdtx, pdfwidgets
  'endofproofwd','\.pdf_tex$|endofproofwd\.pdf|' . $standardtex,
@@ -2302,7 +2303,7 @@ $standardtex
  'gobble',	'gobble(-user)?\.tex|' . $standardtex,
  'graphics-pln','^[^e].*\.tex|.*\.sty',  # not exmpl*
  'greek-inputenc', '\.def|\.dfu$',
- 'hanoi',       'hanoi\.tex',           
+ 'hanoi',       'hanoi\.tex',
  'harvmac',     'mac\.tex',
  'hduthesis',   'hdu-.*\.pdf|' . $standardtex, # tex/ subdir, better not to flatten
  'hc',          '\.hld|' . $standardtex,
@@ -2410,8 +2411,8 @@ $standardtex
  'luapstricks',	'\.lua|' . $standardtex,
  'luatexko',    '\.lua|' . $standardtex,
  'luatikz',     '\.lua|' . $standardtex,
- 'luatodonotes','\.lua|' . $standardtex, 
- 'luavlna',	'luavlna.*\.lua|luavlna\.tex|' . $standardtex, 
+ 'luatodonotes','\.lua|' . $standardtex,
+ 'luavlna',	'luavlna.*\.lua|luavlna\.tex|' . $standardtex,
  'luaxml',      '\.lua|' . $standardtex,
  'lutabulartools', '\.lua|' . $standardtex,
  'lyluatex',	'\.sty',	# not *.cls
@@ -2905,7 +2906,7 @@ $standardtex
  'ocherokee',           'omega',
  'ofs',                 'generic',
  'oinuit',              'fonts',
- 'oldlatin',            'fonts', 
+ 'oldlatin',            'fonts',
  'orkhun',              'fonts',
  'ot2cyr',              'fonts',
  'pacioli',             'fonts',
@@ -3262,7 +3263,7 @@ $standardsource = '(\.(bat|c|drv|[dem]tx|fea|fdd|ins|mk|sfd)'
  'translation-filecontents-de', 'NULL', # doc
  'turnstile',   'turnstile-en.ins',     # skip pt since it changes the sty
  'undar-digitacion' => 'NULL',		# spurious .dtx
- 'xymtex',      'NULL',                 # already built, too complicated 
+ 'xymtex',      'NULL',                 # already built, too complicated
  'yathesis',	'yathesis.dtx',		# not templates
 );
 $standardins = '\.ins$';
@@ -3275,7 +3276,7 @@ $standardins = '\.ins$';
 #
 sub specialins {
   my ($package) = $_;
-  
+
   if (exists $specialins{$package}) {
     # sanity check
     warn "\t SPECIALINS called for $package, "
@@ -3285,19 +3286,19 @@ sub specialins {
 
   my $raw_dir = "$RAW_DIR/$packagedir";
   return if (-e "$RAW_DIR/$packagedir/TDS_READY");
-  
+
   my @ins = `find $raw_dir -regex ".*$standardins" -type f -print`;
   if (@ins) {
     print "\t SPECIALINS found normal ins: @ins";
     return "";
   }
-  
+
   my @dtx = `find $raw_dir -regex '.*\\.dtx\$' -type f -print`;
   if (@dtx) {
     print "\t SPECIALINS no .ins, but found .dtx: @dtx";
     return '\.dtx$';
   }
-  
+
   # No .dtx's, either.  Presumably this package has no .ins-like file.
   return "";
 }
@@ -3947,7 +3948,7 @@ $standardttf = '\.ttf|\.TTC';
  'pdfbook2'             => 'pdfbook2$',
  'pdfcrop'              => '\.pl$',             # doscripts() does r*
  'pdfjam'               => '^pdfjam$',
- 'pdflatexpicscale'	=> '\.pl$',	
+ 'pdflatexpicscale'	=> '\.pl$',
  'pdftex-quiet'		=> 'pdftex-quiet$',
  'pdfxup'               => 'pdfxup$',
  'pedigree-perl'        => '\.pl$',
@@ -4217,7 +4218,7 @@ exit 2 unless Getopt::Long::GetOptions (
   "version",
 );
 
-for (@ARGV) { 
+for (@ARGV) {
   $packagedir = $_;
   if (! -d $packagedir) {
     warn "$0: $packagedir not a directory, skipping.\n";
@@ -4250,7 +4251,7 @@ for (@ARGV) {
   $inspatt = $specialins{$package} || &specialins($package) || $standardins;
   $insrunner = $specialinsrunner{$package} || $standardinsrunner;
   $invoke_insrunner = "$insrunner"; # $insrunner_opt";
-  
+
   $Foundry = $specialfoundry{$package} || $standardfoundry;
 
   if (exists $special{$package}) {
@@ -4266,7 +4267,7 @@ for (@ARGV) {
     &donormal;
   }
   &sanitize_file_names ($COOKED_PKG);
-  
+
   &xchdir ($RAW_DIR);  # pop back to top-level raw dir for next package.
 }
 
@@ -4274,11 +4275,11 @@ for (@ARGV) {
 # We do not want to deal with anything but "normal" characters, a subset
 # of 7-bit ASCII.  The file names appear in too many contexts for
 # anything else to reliably work.
-# 
+#
 # Nothing in tlpdb itself restricts the characters used (except for
 # spaces and newlines), but we want to be cautious here. That
 # discrepancy seems ok?
-# 
+#
 sub sanitize_file_names {
   my ($dir) = @_;
   # -0 in case of spaces or other chars in filenames, which would be
@@ -4296,11 +4297,11 @@ sub sanitize_file_names {
 
 # Override our default guess of "latex" if we can intuit from the CTAN
 # path, which ctan2tl kindly passes us.
-# 
+#
 sub set_dir_defaults {
   my ($ctan_dir) = @_;
   my $guess = "";
-  
+
   if ($ctan_dir =~ m!/(CTAN|tex-archive)/biblio/bib!) {
     $standarddocfmt = $standardsourcefmt = "bibtex";
     $guess = "$standarddocfmt for docfmt/srcfmt";
@@ -4396,7 +4397,7 @@ sub rename_with_mkdir {
 
 # run a shell command, ignoring return status (historic,
 # calls should be changed).
-# 
+#
 sub SYSTEM {
  my ($job) = @_;
  if ($opt_test) {
@@ -4408,10 +4409,10 @@ sub SYSTEM {
 }
 
 # system but abort if the command fails.
-# 
+#
 sub xsystem {
   my ($cmd) = @_;
-  
+
   print "\t XSYSTEM $cmd\n";
 
   unless ($opt_test) {
@@ -4422,7 +4423,7 @@ sub xsystem {
 }
 
 # Return .exe or empty string, as required by PLATFORM.
-# 
+#
 sub exeext {
   my ($platform) = @_;
   my $ext = $platform =~ /^(windows.*|.*-cygwin)$/ ? ".exe" : "";
@@ -4431,10 +4432,10 @@ sub exeext {
 
 # copy man pages matching PKG from runtime to new stage directory,
 # so they won't appear to be deleted.
-# 
+#
 sub preserve_man_pages {
   my (@mans) = @_;
-  
+
   print " preserve_man_pages(@mans)\n";
   for my $man (@mans) {
     print " preserve_man_pages - doing $man\n";
@@ -4460,7 +4461,7 @@ sub run_prehook {
 
 
 # some packages (e.g., vntex) are tl-ready (or near enough).
-# 
+#
 sub MAKEcopy {
   my $dest = $_[0] || $DEST;
   my $pdir = $packagedir;
@@ -4479,7 +4480,7 @@ sub MAKEcopy {
   # Many of them would be better as posthooks anyway.
   &xchdir ($dest);
   &run_prehook ();
-  
+
   my $docdir = "$dest/doc/$whichdocformat/$package/";
   &xmkdir ($docdir);
 
@@ -4489,7 +4490,7 @@ sub MAKEcopy {
   # remove __MACOSX (and report to CTAN).
   &SYSTEM ("find $dest -name __MACOSX | xargs --no-run-if-empty rm -rf");
 
-  # ditto assorted other for lm (files are in doc subtree already).  
+  # ditto assorted other for lm (files are in doc subtree already).
   -r "$dest/MANIFEST.txt"
   && &SYSTEM ("cd $dest && $RM GUST*.txt MANIFEST.txt README.eng");
 
@@ -4498,7 +4499,7 @@ sub MAKEcopy {
   && &SYSTEM ("$MV $dest/README $docdir/");
 
   # move manifest.txt for droid.
-  -r "$dest/manifest.txt" 
+  -r "$dest/manifest.txt"
   && &SYSTEM ("$MV $dest/manifest.txt $docdir/");
 
   # move CHANGELOG for stellenbosch.
@@ -4506,7 +4507,7 @@ sub MAKEcopy {
   && &SYSTEM ("$MV $dest/CHANGELOG $docdir/");
 
   # move README.eulervm for eulervm.
-  -r "$dest/README.eulervm" 
+  -r "$dest/README.eulervm"
   && &SYSTEM ("$MV $dest/README.eulervm $docdir/");
 
   # for tex-gyre, rename context subdir.  (shouldn't be needed next time.)
@@ -4532,12 +4533,12 @@ sub MAKEcopy {
   &xchdir ($DEST);
   &killfiles ($specialclean{$package} || $standardclean);
   &killfiles ($moreclean{$package}, "more") if $moreclean{$package};
-  
+
   # horrible special case to avoid listing every context-* package again.
   if ($package =~ /^context-/ && ! $posthook{$package}) {
     $posthook{$package} = "POST_context_contrib";
   }
- 
+
   &do_posthook ();
 }
 
@@ -4554,7 +4555,7 @@ sub do_posthook {
 # 
 # For most packages, this is the first thing called.  It copies
 # everything from $packagedir to the doc directory of the package.
-# 
+#
 sub setup {
   my ($ctl) = @_;
 
@@ -4564,7 +4565,7 @@ sub setup {
   &SYSTEM ("mkdir -p $DOCDIR");
   &SYSTEM ("mkdir -p $DEST/tex/$whichformat/$package");
   &SYSTEM ("mkdir -p $DEST/source/$whichdocformat/$package");
-  
+
   # remove README symlinks.
   &SYSTEM ("test -h $packagedir/README && $RM $packagedir/README");
 
@@ -4589,7 +4590,7 @@ sub donormal {
      &SYSTEM ("mkdir -p $DEST");
      &xchdir ($DEST);
      &SYSTEM ("$CP -r $RAW_DIR/$packagedir/* .");
-     
+
      my $scriptdir = "$DEST/scripts/$package";
      if (-d $scriptdir) {
        &xchdir ($scriptdir);
@@ -4662,7 +4663,7 @@ sub runins {
     # do not infinite loop on docstrip "output directory", e.g., fltpoint.
     #&runjob ("yes | sed 1000q | $env_mktex $insrunner $_");
     &runjob ("$invoke_insrunner $_");
-    
+
     # bbold.dtx generates bbold.ins, and then does "low level hacks" to
     # run the .ins itself. mathfont.dtx and gridset.dtx generate
     # .ins files to no purpose (and they don't work). We don't want to
@@ -4709,7 +4710,7 @@ sub install {
 
 
 # build the documentation files (we don't any more).
-# 
+#
 sub dodvi {
   # packages which are doc themselves rarely rebuild cleanly,
   # and aren't worth it.
@@ -4813,7 +4814,7 @@ sub dotype1{
    &install("$DEST/dvips/$package", $propatt);
 
    my $foundry = $specialfoundry{$package} || $standardfoundry;
-   
+
    my $pfbpatt = $specialpfb{$package} || $standardpfb;
    &install("$DEST/fonts/type1/$foundry/$package", $pfbpatt);
 
@@ -4841,7 +4842,7 @@ sub dotype1{
 # maintained, and needs to be updated by hand when new user-visible scripts
 # are added.  We add/update the script itself under linked_scripts.
 # We also make the symlinks/w32-wrapper-copy in Master/bin.
-# 
+#
 sub doscripts {
   print "\t DOSCRIPTS\n";
   my $pwd = getcwd();
@@ -4869,7 +4870,7 @@ sub doscripts {
       &build_scripts_copy ("$scriptsdir/$s");
     }
   }
-  
+
   # then do the ones that go only under scripts/ and not in the bindirs.
   # (and hence also not in Build.)
   my $nobin_scriptpatt = $specialscripts_nobin{$package};
@@ -4885,7 +4886,7 @@ sub doscripts {
   return unless @scripts;
 
   # If not already present, create the platform-specific bindir entries.
-  # 
+  #
   my $build_tldir = "texk/texlive";
   chomp (my @platforms = `cd $Master/bin && ls | grep -vw man`);
   print  " linking in platforms: @platforms\n";
@@ -4893,14 +4894,14 @@ sub doscripts {
   for my $s (@scripts) {
     (my $linkname = $s) =~ s/\..*$//;
     print  " beginning linking script $s to $linkname\n";
-    
+
     if ($package =~ /^(memoize|listings-ext)$/) {
       # memoize requires preserving the .pl/.py extensions,
       # ditto listings-ext.sh.
       $linkname = $s;
       print "  package $package special case: linking to $linkname\n";
     }
-    
+
     for my $p (@platforms) {
       my $platdir = "$TOPDEST/bin/$p";
       &xmkdir ($platdir);
@@ -4996,7 +4997,7 @@ sub doscripts {
 # the info files for the programs, too.  Having an info dir in
 # texmf-dist also would imply lots of changes in the installer, and
 # there seems to be no gain.
-# 
+#
 sub doinfos {
    my $infopatt = $specialinfos{$package};
    return unless $infopatt;
@@ -5006,12 +5007,12 @@ sub doinfos {
 
 
 # generate info files from .texi.
-# 
+#
 sub dotexinfos {
   my $texipatt = $specialtexinfos{$package};
   return unless $texipatt;
   print "\t DOTEXINFOS $texipatt\n";
-  
+
   local *DOT;
   opendir (DOT, ".") || die "opendir(.) failed: $! in " . `pwd`;
   my @files = readdir (DOT);
@@ -5021,9 +5022,9 @@ sub dotexinfos {
 
   closedir (DOT) || die "closedir(.) failed: $! in " . `pwd`;
 
-  print "tl_texi_to_info for: @texi_files\n";  
+  print "tl_texi_to_info for: @texi_files\n";
   &SYSTEM ("$MAKEINFO --force --no-split @texi_files");
-  
+
   # install() needs the @filenames global set (ugh).
   local @filenames = <*.info>;
   &install ("$TOPDEST/texmf-dist/doc/info/", '.info');
@@ -5031,7 +5032,7 @@ sub dotexinfos {
 
 
 # man pages.  We put these in texmf-dist/doc/man/man1, a la info (see above).
-# 
+#
 sub domans {
   my $manpatt = $specialmans{$package};
   return unless $manpatt;
@@ -5044,12 +5045,12 @@ sub domans {
 # them that we distribute using our Makefile setup, so that they are
 # all consistent.  So we copy over our Makefiles, run make, and then
 # remove them. The .1 file has to be added to specialmans.
-# 
+#
 sub tl_man_to_pdf {
   my ($secnum) = @_;
   $secnum = 1 unless $secnum;
   my $manN = "man$secnum";
-  
+
   my $Master_man = "$Master/texmf-dist/doc/man";
   my $pkg_man = "$TOPDEST/texmf-dist/doc/man";
   print "tl_man_to_pdf for: " . join (" ", <$pkg_man/$manN/*>) . "\n";
@@ -5057,7 +5058,7 @@ sub tl_man_to_pdf {
   my $man_makefiles = "Makefile $manN/Makefile";
   &xmkdir ("$pkg_man/$manN");
   &SYSTEM ("cd $Master_man && $CP --parents $man_makefiles $pkg_man/");
-  
+
   # Extra complication: we don't want to rebuild everything, only those
   # that have changed.  Therefore, also copy in the pdfs for the package
   # being updated from the Master man dir.
@@ -5075,7 +5076,7 @@ sub tl_man_to_pdf {
       &SYSTEM ("$CP $Master_pdf_man $pkg_man/$manN/");  # copy existing
     }
   }
-  
+
   &SYSTEM ("cd $pkg_man && make DIR=$manN");               # build new pdfs
   &SYSTEM ("cd $pkg_man && $RM Makefile $manN/Makefile");  # rm Makefiles
 }
@@ -5099,7 +5100,7 @@ sub runmf {
   my ($mfpatt) = @_;
   print "\t RUNMF for package $package ($mfpatt)\n";
   print "\t   against filenames: @filenames\n";
-  for my $file (grep (/$mfpatt/, @filenames)) { 
+  for my $file (grep (/$mfpatt/, @filenames)) {
     ($FileBase,$Filepath,$Filesuffix) = fileparse ($file, "\.[A-z]*");
     if (! -e "$FileBase.tfm") {
       print "\t\t Make TFM from $file\n";
@@ -5112,16 +5113,16 @@ sub runmf {
 sub rundvi {
    local($thispatt) = @_;
    $TEX = $specialTEX{$package};
-   if ($TEX eq "") { 
+   if ($TEX eq "") {
        if ($whichformat eq 'latex') { $TEX="pdflatex"; }
        else { $TEX=$whichformat; }
    }
    if ($TEX eq "generic") { $TEX="pdflatex"; }
    print "\t MAKEDVI $thispatt using $TEX (@filenames)\n";
-   for (grep(/$thispatt/,@filenames)) { 
+   for (grep(/$thispatt/,@filenames)) {
      ($FileBase,$Filepath,$Filesuffix) = fileparse($_,"\.[A-z]*");
      print "found $FileBase\n";
-      if (-r "$FileBase.drv" && $Filesuffix eq ".dtx" ) 
+      if (-r "$FileBase.drv" && $Filesuffix eq ".dtx" )
           { $Filesuffix=".drv" ; }
       print "\t DOC: run $TEX on $FileBase$Filesuffix\n";
       open(TMP,">$FileBase.aux");
@@ -5146,7 +5147,7 @@ sub rundvi {
 sub runjob {
   my ($job) = @_;
   my $status = 0;
-  
+
   if ($opt_test) {
     print "WOULDRUNJOB $job\n";
   } else {
@@ -5169,7 +5170,7 @@ sub runjob {
     }
     close (TMP);
     system ("$RM -f /tmp/$Jobid.log; mv $Jobid.log /tmp"); # save last log
-    
+
     die "*** goodbye, exit status $status for $job\n"
       if $status != 0;
     die "*** goodbye, files could not be generated for $job\n"
@@ -5180,20 +5181,20 @@ sub runjob {
 
 # Remove all files matching something in $KILLPATT.
 # Also remove .ps files for which we have a .pdf.
-# 
+#
 # if MORE is true, remove additional files matching something in
 # $moreclean and create a README.TEXLIVE which lists the removed files.
 # As a kludge (once used for rangen and marvosym, now for sectionbox and
 # xymtex), if KILLPATT starts with a directory path (e.g., doc/), we cd
 # to that directory before globbing (and cd back at the end).
-# 
+#
 # The NOTCTAN argument is used for microtype, where we have to remove
 # derived files which don't exist on CTAN.
-# 
+#
 # (Switching all the kill patterns to globs, so we could just use the
 # glob function, seemed too ugly.  And removing the file in a posthook
 # would have meant a separate fn for README.TEXLIVE, also ugly.)
-# 
+#
 sub killfiles {
    my ($killpatt,$more,$notctan) = @_;
 
@@ -5207,12 +5208,12 @@ sub killfiles {
      &xchdir ($1);
      $killpatt =~ s,^$1,,;
    }
-   
+
    local *DOT;
    opendir (DOT, ".") || die "opendir(.) failed: $! in " . `pwd`;
 
    my @delfiles = ();
-   for (grep (/$killpatt/, readdir (DOT))) { 
+   for (grep (/$killpatt/, readdir (DOT))) {
      if (unlink ($_)) {
        print "\t Removing $_\n";
        push (@delfiles, $_);
@@ -5220,12 +5221,12 @@ sub killfiles {
        warn "unlink($_) failed: $!";
      }
    }
-   for (grep (/\.ps$/, @filenames)) { 
+   for (grep (/\.ps$/, @filenames)) {
      (my $pdf = $_) =~ s/ps$/pdf/;
      next unless grep (/$pdf/, @filenames);
      print "\t Removing ps $_ (since have $pdf)\n";
      unlink ($_) && push (@delfiles, $_);
-   }  
+   }
 
    if ($more && @delfiles) {
      # create/update README.TEXLIVE.
@@ -5258,7 +5259,7 @@ CTAN
      }
      close RTL;
    }
-   
+
    # if we cd'd, cd back.
    &xchdir ($origdir) if $origdir;
 
@@ -5275,21 +5276,21 @@ sub buildfilelist {
 
 sub runfonts {
    $Foundry = $specialfoundry{$package} || $standardfoundry;
-   for (grep(/\.vf$/, @filenames)) { 
+   for (grep(/\.vf$/, @filenames)) {
       $needdir=1;
       print "\t\t install VF $_\n";
 ($FileBase,$Filepath,$Filesuffix) = fileparse($_,"\.[A-z]*");
-      if ($needdir) { 
+      if ($needdir) {
          &SYSTEM("mkdir -p $DEST/fonts/vf/$Foundry/$package");
          $needdir=0;
          }
          &SYSTEM("$MV $FileBase.vf $DEST/fonts/vf/$Foundry/$package  ");
     }
-   for (grep(/\.tfm$/,@filenames)) { 
+   for (grep(/\.tfm$/,@filenames)) {
       $needdir=1;
       print "\t\t INSTALL tfm $_\n";
 ($FileBase,$Filepath,$Filesuffix) = fileparse($_,"\.[A-z]*");
-      if ($needdir) { 
+      if ($needdir) {
          &SYSTEM("mkdir -p $DEST/fonts/tfm/$Foundry/$package");
          $needdir=0;
          }
@@ -5300,21 +5301,21 @@ sub runfonts {
 
 sub MAKEflatten {
   # don't do this in a tds-ready tree...
-  -e "$RAW_DIR/$packagedir/TDS_READY" 
+  -e "$RAW_DIR/$packagedir/TDS_READY"
    && die "$0: using MAKEflatten with TDS_READY tree $RAW_DIR/$packagedir.\n";
 
   &setup;
   &xchdir ("$DEST/doc/$whichdocformat/$package");
 
   &flatten_dirtree ($package);
-  
+
   # do the usual.
   &buildfilelist;
   &donormal ("nosetup");
 }
 
 # Flatten the directory tree (for PACKAGE) under the cwd.
-# 
+#
 sub flatten_dirtree {
   my ($package) = @_;
 
@@ -5516,7 +5517,7 @@ sub MAKEgermbib {
   print "\t SPECIAL $package rename second apalike.sty\n";
   &SYSTEM ("$MV styles/apalike.sty styles/apalike.germbib_sty");
   #
-  &xchdir ("..");  
+  &xchdir ("..");
   &MAKEflatten ();
 }
 
@@ -5671,7 +5672,7 @@ sub MAKEdevanagr {
 }
 
 # We don't want to flatten the templates, only the source.
-# 
+#
 sub MAKEdisser
 {
   &setup;
@@ -5789,8 +5790,8 @@ chdir("$DEST/doc/$whichdocformat/$package");
 &buildfilelist;
    $inspatt = $specialins{$package};
    &buildfilelist;
-   if ($inspatt eq "") { 
-        $inspatt=$standardins; 
+   if ($inspatt eq "") {
+        $inspatt=$standardins;
         }
 &runins($inspatt);
  &SYSTEM("mpost expeg.mp");
@@ -5862,7 +5863,7 @@ sub MAKEelhyphen {
 
  print "\t SPECIAL $package: lowercase names\n";
  &SYSTEM('for f in GR*hyph*.tex; do mv $f `echo $f | tr A-Z a-z`; done');
- 
+
  print "\t SPECIAL $package: install gr*hyph.tex files\n";
  my $generichyphdir = "$TOPDEST/texmf-dist/tex/generic/hyphen";
  &SYSTEM("mkdir -p $generichyphdir");
@@ -5896,7 +5897,7 @@ sub MAKEltt {
  }
 
 # pstricks packages usually support both plain and latex.
-# 
+#
 sub MAKEpst {
   print "\t SPECIAL MAKEpst - starts for $package";
   # pst-laboObj.tex, pst-fp.sty, pst-vehicle need special cases:
@@ -5904,7 +5905,7 @@ sub MAKEpst {
   $whichformat='generic';
   $whichdocformat='generic';
   $specialsourcefmt{$package}='generic';
-  $specialsource{$package} = "Makefile|$standardsource";  
+  $specialsource{$package} = "Makefile|$standardsource";
   &setup;
   &xchdir("$DEST/doc/$whichdocformat/$package");
   &buildfilelist;
@@ -5914,7 +5915,7 @@ sub MAKEpst {
   &buildfilelist;
   &dosource;
   &dotex;
-  &dotype1;   
+  &dotype1;
   &killfiles ($standardclean);
   &killfiles ($moreclean{$package}, "more") if $moreclean{$package};
 
@@ -5933,7 +5934,7 @@ sub MAKEpst {
   &mv_with_mkdir (@sty, "$DEST/tex/latex/$package") if @sty;
 
   &SYSTEM("$MV doc/* .") if -d "doc";
-  
+
   my $postaction = $posthook{$package};
   eval ($postaction) if $postaction;
 }
@@ -5983,14 +5984,14 @@ sub MAKEwilson {
      unlink ("$docdir/$d");
      next;
    }
-   
+
    # phaistos and linearA are nothing to do with Wilson's archaic, but
    # are separate packages created by AS.
    if ($d =~ /^(phaistos|linearA)$/) {
      &SYSTEM ("rm -rf $d $docdir/$d");
      next;
    }
-   
+
    my $target = "$docdir/$d";
    next if ! -d $target;  # samples/readme files
    print "\t PROCESS Wilson subdir $d\n";
@@ -6009,7 +6010,7 @@ sub MAKEwilson {
    $inspatt = $specialins{$package} || $standardins;
    &runins($inspatt);
    unlink ("auncial.sty", "allauncl.sty");  # in auncial-new package
-   
+
    &dodvi;
    &domf;
    &dodvi;
@@ -6077,7 +6078,7 @@ sub MAKEwadalab {
   opendir (HERE, ".") || die "opendir(.) failed: $!";
   my @tarfiles = grep /\.tar\.gz$/, readdir HERE;
   closedir (HERE);
-  #  
+  #
   my $destfonts = "$DEST/fonts";
   &SYSTEM ("mkdir -p $destfonts");
   foreach my $tarfile (@tarfiles) {
@@ -6114,19 +6115,19 @@ sub MAKEjadetex
   # Unpack the tarball.
   &SYSTEM ("cd $packagedir && tar xf jadetex*.tar.gz && mv jadetex-*/* .");
   &SYSTEM ("cd $packagedir && (rm -rf jadetex-3* doc/.cvsignore)");
-  
+
   # Get rid of the useless doc/ dir.
   &MAKEflatten ();
-  
+
   # Rename resulting jadetex/jadetex dirs to jadetex/base.
   &xchdir ($DEST);
   for my $dir ("doc", "source", "tex") {
     &SYSTEM ("$MV $dir/jadetex/jadetex $dir/jadetex/base");
   }
-  
+
   # This didn't get flattened since there's a name clash.
   &SYSTEM ("$MV doc/jadetex/base/doc/Makefile doc/jadetex/base");
-  
+
   # Their pdfjadetex.ini predates pdftexconfig.tex.
   my $pdfini = "tex/jadetex/base/pdfjadetex.ini";
   &SYSTEM ("(echo '\\input pdftexconfig.tex'; cat $pdfini) >/tmp/pj$$;
@@ -6165,7 +6166,7 @@ sub MAKEliterat {
 
 sub MAKExmltex {
   &xchdir ($packagedir);
-  
+
   my $basedir = "$DEST/tex/xmltex/base";
   &xmkdir ($basedir);
   &runjob("$CP xmltex.tex *xmt xmltex.cfg $DEST/tex/xmltex/base");
@@ -6266,7 +6267,7 @@ sub MAKEpdf_forms_tutorial
   # called for both the en and de versions.  both are the same catalogue
   # entry, which is rather excruciating for us.
   &xchdir ($packagedir);
-  
+
   my $lang;
   my $ll = substr ($package, -2);  # en or de
   if ($ll eq "en") {
@@ -6276,7 +6277,7 @@ sub MAKEpdf_forms_tutorial
   } else {
    die "unexpected language code for $package: $ll";
   }
-  
+
   my $dest_lang = "$DEST/doc/$lang";
   my $dest_pkg = "$dest_lang/pdf-forms-tutorial-$ll";
   &SYSTEM ("mkdir -p $dest_lang");
@@ -6290,7 +6291,7 @@ sub MAKEbeamer {
  &SYSTEM ("mkdir -p $destdoc");
  &SYSTEM ("$CP -r * $destdoc");
  &xchdir ($destdoc);
- 
+
  my $desttex = "$DEST/tex/latex/beamer";
  &SYSTEM("mkdir -p $desttex");
  &SYSTEM("$MV base/* $desttex");
@@ -6307,7 +6308,7 @@ sub MAKEfontinst {
   &runjob("$CP -r source $DEST/source/fontinst/base");
   &runjob("$CP -r latex/* $DEST/tex/latex/fontinst");
   &runjob("$CP -r inputs/* $DEST/tex/fontinst");
-  print "\t YOU-MUST-DO $package copy fontinst.bat to bin/windows\n";  
+  print "\t YOU-MUST-DO $package copy fontinst.bat to bin/windows\n";
 }
 
 
@@ -6320,13 +6321,13 @@ sub I {
 
 sub MAKEcjk_common {
   print "\t SPECIAL $package wholesale rearranging for cjk\n";
-  
+
   &xchdir ($packagedir);
   # also need cjk doc tarball. would be nice if they were combined.
   my $cjkdoc = "cjk-?.?.?-doc.tar.gz";
   &SYSTEM ("tar -C cjk-?.?.? -xf $cjkdoc --strip-components=1");
-  
-  # remove the version number top-level directory.  
+
+  # remove the version number top-level directory.
   &SYSTEM ("$RM *.tar.gz && $MV cjk-?.?.?/* . && rmdir cjk-?.?.?");
 }
 
@@ -6395,7 +6396,7 @@ sub PREHOOK_cals {
 }
 
 sub PREHOOK_changes {
-  print "POST$package - regression/ subdir needed\n";  
+  print "POST$package - regression/ subdir needed\n";
   &xmkdir ("regression");
 }
 
@@ -6445,7 +6446,7 @@ sub PREHOOK_concrete {
   for my $mf (glob ("*.mf")) {
     &SYSTEM ("$CP $ctan_root/systems/knuth/local/cm/$mf ..");
   }
-  &xchdir ("..");  
+  &xchdir ("..");
   # symlinks will get removed afterward by MAKEflatten.
 }
 
@@ -6539,9 +6540,9 @@ sub PREHOOK_latex2e_help_texinfo_spanish {
 sub PREHOOK_latexdiff {
   print "PREHOOK_$package - rename $package-so to $package.pl, etc.\n";
   # Consistently use *.pl to avoid special case in w32 wrapper
-  &SYSTEM ("$MV latexdiff-so latexdiff.pl");  
-  &SYSTEM ("$MV latexrevise  latexrevise.pl");  
-  &SYSTEM ("$MV latexdiff-vc latexdiff-vc.pl");    
+  &SYSTEM ("$MV latexdiff-so latexdiff.pl");
+  &SYSTEM ("$MV latexrevise  latexrevise.pl");
+  &SYSTEM ("$MV latexdiff-vc latexdiff-vc.pl");
 }
 
 sub PREHOOK_latexindent {
@@ -6619,7 +6620,7 @@ sub PREHOOK_stix {
 
 sub PREHOOK_texdraw {
   print "PREHOOK_$package - mv manual/* files\n";
-  &SYSTEM ("$MV manual/* .");  
+  &SYSTEM ("$MV manual/* .");
 }
 
 sub PREHOOK_texlogfilter {
@@ -6666,8 +6667,8 @@ sub PREHOOK_wasy {
 
 sub PREHOOK_webquiz {
   print "PREHOOK_$package - mv dirs so specialscripts can work\n";
-  &mv_with_mkdir ("scripts/*" => "$DEST/scripts/$package");  
-  &mv_with_mkdir ("latex/*" => "$DEST/tex/latex/$package");  
+  &mv_with_mkdir ("scripts/*" => "$DEST/scripts/$package");
+  &mv_with_mkdir ("latex/*" => "$DEST/tex/latex/$package");
   &SYSTEM ("$MV doc/* .; rmdir latex scripts doc");
 }
 
@@ -6688,7 +6689,7 @@ sub PREHOOK_xsim {
 sub prehook_pod2man {
   my ($author,@scripts) = @_;
   for my $script (@scripts) {
-    my $pod2man = qq(pod2man --center="$author" --release="$package") 
+    my $pod2man = qq(pod2man --center="$author" --release="$package")
                   . ' --section=1';
     (my $base = $script) =~ s,\.pl$,,;
     &SYSTEM ("$pod2man $script - >$base.1");
@@ -6758,7 +6759,7 @@ sub POSTautosp {
 
 sub POSTaxodraw2 {
   print "POST$package - remove sources since in Build\n";
-  &SYSTEM ("$RM -r $DEST/source/latex/$package");  
+  &SYSTEM ("$RM -r $DEST/source/latex/$package");
 }
 
 sub POSTbarracuda {
@@ -6786,7 +6787,7 @@ sub POSTbiber {
   print "POST$package - unpack and install binaries\n";
   # we've started with everything under source/.
   &xchdir ("$DEST/source/bibtex/$package");
-  
+
   # move doc pdf.
   &mv_with_mkdir ("$package.pdf", $DOCDIR);
 
@@ -6858,11 +6859,11 @@ sub POSTbiber {
 # to specify the commands that will get from the archive file on CTAN to
 # a binary named "biber". Although this function is generic, and merely
 # returns the command based on the extension of ARCHIVE.
-# 
+#
 sub unarchiver {
   my ($archive) = @_;
   my $unarch;
-  
+
   if ($archive =~ /\.tar(\.|$)/) {
     $unarch = "tar xf";
   } elsif ($archive =~ /\.zip$/) {
@@ -6875,13 +6876,13 @@ sub unarchiver {
 
 sub POSTbiblatex {
   print "POST$package - move whole directories around, doc up a level\n";
-  
+
   my $dest_bib = "$DEST/bibtex/bib";
   my $dest_bst = "$DEST/bibtex/bst";
   my $dest_csf = "$DEST/bibtex/csf";
   my $dest_latex = "$DEST/tex/latex";
   &xmkdir ($dest_bib, $dest_bst, $dest_csf, $dest_latex);
-  
+
   &SYSTEM ("$MV bibtex/bib $dest_bib/$package");
   &SYSTEM ("$MV bibtex/bst $dest_bst/$package");
   &SYSTEM ("test -d bibtex/csf && $MV bibtex/csf $dest_csf/$package");
@@ -6916,7 +6917,7 @@ sub POSTbibtexperllibs {
 }
 
 sub POSTcfr_lm {
-  print "POST$package - move directories around\n";  
+  print "POST$package - move directories around\n";
   &rename_with_mkdir ("vf", "$DEST/fonts/vf/public/$package");
   &rename_with_mkdir ("tfm", "$DEST/fonts/tfm/public/$package");
   &rename_with_mkdir ("enc", "$DEST/fonts/enc/dvips/$package");
@@ -6930,14 +6931,14 @@ sub POSTcfr_lm {
 }
 
 sub POSTcjk_gs_integrate {
-  print "POST$package - move database/ -> fonts/misc/PKGNAME/\n";  
+  print "POST$package - move database/ -> fonts/misc/PKGNAME/\n";
   my $destdir = "$DEST/fonts/misc";
   &xmkdir ($destdir);
   &SYSTEM ("$MV database $destdir/$package"); # rename to pkgname
 }
 
 sub POSTcmcyr {
-  print "POST$package - exclude cmcsc{8,9,10}.mf from runtime\n";  
+  print "POST$package - exclude cmcsc{8,9,10}.mf from runtime\n";
   # because they are duplicates of the standard files
   # It is probably possible to achieve this with a
   # negative look-ahead assertion, but this seems more understandable.
@@ -6971,7 +6972,7 @@ sub POSTcontext {
   print "POST$package - remove context-legacy etc. files, rearrange for TL\n";
   print "*** See POSTcontext in ctan2tds for ConTeXt update procedure.\n";
   &xchdir ($DEST);
-  
+
   &context_common_removals ();
 
   print "still POST$package - make README.TEXLIVE\n";
@@ -7007,10 +7008,10 @@ END_RTL
   # don't want to list its files in README.TEXLIVE, for consistency with
   # how context-legacy is handled.
   &remove_files_of_pkg ("mptopdf");
-  
+
   # Remove two more mptopdf doc formats there's no need to distribute.
   &SYSTEM ("$RM -rf doc/context/scripts/mkii/");
-  
+
   # No more removals after this, just copying and moving around.
 
   # move some files to context subdirs for tl.
@@ -7023,7 +7024,7 @@ END_RTL
   my $grep = "grep -A 1 global_no_lmtx_platforms $ap";
   chomp (my $no_lmtx_platforms = `$grep | sed -e 1d -e 's/^ *//'`);
   die "could not find no_lmtx_platforms in $ap" if ! $no_lmtx_platforms;
-  my @no_lmtx_platforms = split (/,/, $no_lmtx_platforms); 
+  my @no_lmtx_platforms = split (/,/, $no_lmtx_platforms);
   print "\t no_lmtx_platforms = @no_lmtx_platforms\n";
   #
   my $w_bindir = "$TOPDEST/bin/windows";
@@ -7039,7 +7040,7 @@ END_RTL
     &SYSTEM ("$CP $luafile $w_bindir/");
     &bindirs_symlink ($luafile, $luafile, @no_lmtx_platforms);
   }
-   
+
   print "still POST$package - user-level executable man pages\n";
   &xchdir ("$DEST/doc/$package/scripts");
   my $mandest = "$TOPDEST/texmf-dist/doc/man/man1";
@@ -7055,7 +7056,7 @@ END_RTL
   &xchdir ("$DEST/doc/$package/scripts/mkiv");
   for my $mtxman (<mtx-*.man>) {
     (my $mtxmanbase = $mtxman) =~ s/\.man$//;
-    &SYSTEM ("$CP $mtxman $mandest/$mtxmanbase.1");    
+    &SYSTEM ("$CP $mtxman $mandest/$mtxmanbase.1");
   }
   &tl_man_to_pdf ();
 
@@ -7066,7 +7067,7 @@ END_RTL
 
 sub POSTcontext_legacy {
   print "POST$package - just keeping mkii\n";
-  
+
   &context_common_removals ();
 
   # mptopdf is its own package. (See more comments above.)
@@ -7082,7 +7083,7 @@ sub POSTcontext_legacy {
   &SYSTEM ("$RM -r colors/icc/context");
   &SYSTEM ("$RM context-readme.txt");
   &SYSTEM ("$RM doc/context/scripts/mkii/mptopdf.*");
-  
+
   print "still POST$package - user-level executable man pages\n";
   # we only keep mkii man pages here, mkiv in context.
   &xchdir ("$DEST/doc/context/scripts/mkii");
@@ -7093,7 +7094,7 @@ sub POSTcontext_legacy {
   }
   &tl_man_to_pdf ();
 }
-  
+
 # Some files we remove from both context and context-legacy.
 sub context_common_removals {
   print "\t context_common_removals\n";
@@ -7113,7 +7114,7 @@ sub context_common_removals {
   # ConTeXt, but for TL, let's avoid the complication of having an lm
   # directory outside the normal lm package.
   &SYSTEM ("$RM -rf fonts/truetype/hoekwater/lm/");# lmtypewriter10-regular.ttf
-  
+
   # Mojca, 12sep2012: I'm not exactly sure how Hans uses this font
   # [texmfhome.otf], but it has something to do with locating the tree
   # where ConTeXt resides. It's not a real font Hans will be reluctant
@@ -7135,7 +7136,7 @@ sub context_common_removals {
 
 # Remove all files from PKG (as reported by the tlpfiles script).
 # Used for ConTeXt.
-# 
+#
 sub remove_files_of_pkg {
   my ($pkg) = @_;
   print "\t RM files for package $pkg\n";
@@ -7143,7 +7144,7 @@ sub remove_files_of_pkg {
   # find files for PKG.
   chomp (my @files = `tlpfiles $pkg`);
   die "no files for package $pkg?" if (! @files);
-  
+
   # files are given relative to the root, so cd there.
   my $cwd = getcwd ();
   &xchdir ($TOPDEST);
@@ -7153,7 +7154,7 @@ sub remove_files_of_pkg {
     unlink ($f) || print "remove_files_of_pkg: unlink($f) failed: $!";
   }
   print "\n";
-  
+
   # remove any now-empty directories and cd back.
   &xsystem ($RMDIR_EMPTY);
   &xchdir ($cwd);
@@ -7163,10 +7164,10 @@ sub remove_files_of_pkg {
 # other things.  Make a symlink in each Unix bindir (Windows is not
 # handled here) to EXEC, assuming its location is relative to cwd.
 # Except also skip any platforms given as @OMIT_PLATFORMS.
-# 
+#
 # If LINKNAME is not given, the symlink is named as the basename of EXEC
-# with any extension removed. 
-# 
+# with any extension removed.
+#
 sub bindirs_symlink {
   my ($exec,$linkname,@omit_platforms) = @_;
 
@@ -7183,8 +7184,8 @@ sub bindirs_symlink {
     $linkname =~ s,\.[^./]+$,,;         # rm extension too
   }
   print ("\t bindirs_symlink: linkname = $linkname\n");
-  
-  chomp (my @platforms = `cd $Master/bin && ls`);  
+
+  chomp (my @platforms = `cd $Master/bin && ls`);
   print ("\t bindirs_symlink: platforms = @platforms\n");
   for my $p (@platforms) {
     print ("\t   bindirs_symlink: considering platform $p\n");
@@ -7203,7 +7204,7 @@ sub bindirs_symlink {
 # appended under linked_scripts/. In any case, just the basename of EXEC
 # is used in the destination, and the full EXEC, whatever it is, is used
 # for the source of the copy.
-# 
+#
 sub build_scripts_copy {
   my ($exec,$intermediate_dirs) = @_;
 
@@ -7273,7 +7274,7 @@ sub POSTcs {
   # tarballs in the cstex distribution area.
   # the Catalogue and tar file name is cspsfonts, but the directory
   # name inside is cs; we stay with cs since that has been the name in TL.
-  # 
+  #
   for my $tarbase ("csfonts-t1", "csfonts", "cspsfonts") {
     my $tarfile = "$tarbase.tar.gz";
     my $untar = "tar -C $DEST --strip-components=1 -x -f $tarfile";
@@ -7398,10 +7399,10 @@ sub POSTenigma {
 
 sub POSTeplain {
   print "POST$package - info, man\n";
-  
+
   my $infodir = "$TOPDEST/texmf-dist/doc/info/";
   &mv_with_mkdir ("doc/$package/$package.info", $infodir);
-  
+
   &POST_do_man ("doc/$package");
   &SYSTEM ("$RM doc/$package/$package.man1.pdf");
 }
@@ -7431,7 +7432,7 @@ sub POSTfont_change_xetex {
 }
 
 sub POSTformation_latex_ul {
-  print "POST$package - move source subdir, doc/* files\n";  
+  print "POST$package - move source subdir, doc/* files\n";
   &SYSTEM ("$MV source $DEST/source/latex/$package");
   &SYSTEM ("$MV doc/* .");
   &SYSTEM ("rmdir doc");
@@ -7445,7 +7446,7 @@ sub POSTfpl {
 }
 
 sub POSTgentium_tug {
-  print "POST$package - just move directories around\n";  
+  print "POST$package - just move directories around\n";
   &rename_with_mkdir ("afm", "$DEST/fonts/afm/public/$package");
   &rename_with_mkdir ("enc", "$DEST/fonts/enc/dvips/$package");
   &rename_with_mkdir ("latex", "$DEST/tex/latex/$package");
@@ -7680,12 +7681,12 @@ sub POSTlhcyr {
 }
 
 sub POSTlibertinus_type1 {
-  print "POST$package - clean spurious empty .sty\n";  
+  print "POST$package - clean spurious empty .sty\n";
   &SYSTEM ("$RM $DEST/tex/latex/libertinus-type1.sty");
 }
 
 sub POSTlilyglyphs {
-  print "POST$package - move directories around\n";  
+  print "POST$package - move directories around\n";
   &rename_with_mkdir ("fonts", "$DEST/fonts/opentype/public/$package");
   &rename_with_mkdir ("source", "$DEST/source/latex/$package");
   &rename_with_mkdir ("tex", "$DEST/tex/latex/$package");
@@ -7693,7 +7694,7 @@ sub POSTlilyglyphs {
 
 sub POSTlistbib {
   print "POST$package - move .doc to .bst\n";
-  my $dest = "$DEST/bibtex/bst/$package";  
+  my $dest = "$DEST/bibtex/bst/$package";
   &xmkdir ($dest);
   &SYSTEM ("$MV $package.doc $dest/$package.bst");
 }
@@ -7888,7 +7889,7 @@ sub POSTpdftoolbox {
 
 sub POSTpedigreeperl {
   print "POST$package - mv *.pm Pedigree/*.pm\n";
-  my $scriptdir = "$DEST/scripts/$package";  
+  my $scriptdir = "$DEST/scripts/$package";
   &xmkdir ("$scriptdir/Pedigree");
   &SYSTEM ("$MV *.pm $scriptdir/");
   &SYSTEM ("$MV Pedigree/*.pm $scriptdir/Pedigree/");
@@ -7914,7 +7915,7 @@ sub POSTpict2e {
 
 sub POSTpkfix_helper {
   print "POST$package - preserve/rename man page\n";
-  my $mandest = "$TOPDEST/texmf-dist/doc/man/man1";  
+  my $mandest = "$TOPDEST/texmf-dist/doc/man/man1";
   &xmkdir ($mandest);
   &SYSTEM ("$MV pkfix-helper.1 $mandest/pkfix-helper.1");
   &SYSTEM ("$MV pkfix-helper.pdf $mandest/pkfix-helper.man1.pdf");
@@ -8035,7 +8036,7 @@ sub POSTsqltex {
   # Move the doc files to the doc tree. Don't move Makefile.*.
   &xchdir ("$DEST/source/support/$package");
   my $docdest = "$DEST/doc/support/$package";
-  &mv_with_mkdir ("doc/S*", $docdest);  
+  &mv_with_mkdir ("doc/S*", $docdest);
   &domans ();
   #
   # The man page is in a different subdir.
@@ -8055,7 +8056,7 @@ sub POSTstex {
   # everything after building and not worry about individual junk files.
   # Although they should all get cleaned up by runins, let's not prove it.
   &xsystem ("$CP -r source $DEST/source/latex/$package");
-  
+
   # run the (thankfully) provided ins file.
   print "POST$package - run ins file(s) in source/ subdirs\n";
   &xchdir ("source");
@@ -8073,7 +8074,7 @@ sub POSTstex {
 
   print "POST$package - doc files up a level\n";
   &xsystem ("echo hithere; pwd; ls -lR");
-  &xsystem ("$MV Makefile Makefile.top");  
+  &xsystem ("$MV Makefile Makefile.top");
   &xsystem ("$MV doc/* .");
   &SYSTEM ($RMDIR_EMPTY);
 }
@@ -8109,7 +8110,7 @@ sub POSTtikz_ext {
   &SYSTEM ("$MV tex/latex   $DEST/tex/latex/$package");
   &SYSTEM ("$MV tex/plain   $DEST/tex/plain/$package");
   &SYSTEM ("$MV doc/* .");
-  #&SYSTEM ($RMDIR_EMPTY);  
+  #&SYSTEM ($RMDIR_EMPTY);
 }
 
 sub POSTtkz_berge {
@@ -8158,16 +8159,16 @@ sub POSTvelthuis {
   #
   &mv_with_mkdir ("$DEST/tex/latex/$package/hindi.sty",
                   "$DEST/tex/latex/$package/hindi.ldf",
-                  => "$DEST/tex/generic/$package");  
+                  => "$DEST/tex/generic/$package");
   #
-  &mv_with_mkdir ("dnmacs.tex" => "$DEST/tex/plain/$package");  
+  &mv_with_mkdir ("dnmacs.tex" => "$DEST/tex/plain/$package");
   #
   &mv_with_mkdir ("$DEST/tex/latex/$package/hindicaptions.sty",
-                  => "$DEST/tex/xelatex/$package");  
+                  => "$DEST/tex/xelatex/$package");
   #
   &mv_with_mkdir ("$DEST/doc/generic/$package/devnag.1",
                   "$DEST/doc/generic/$package/devnag.man1.pdf",
-                  => "$DEST/doc/man/man1");  
+                  => "$DEST/doc/man/man1");
 }
 
 sub POSTxetexpstricks {
@@ -8216,13 +8217,13 @@ sub POSTzhmetrics {
 
 # Many people upload to ctan with a single directory level for
 # doc/source/tex files. Handle those directories in themselves.
-# 
+#
 sub POST_onelevel {
   print "POST_onelevel ($package) - handle doc/source/tex directories\n";
-  
+
   for my $dir (glob ("*")) {
     next unless -d $dir; # leave files where they are
-    
+
     # theoretically we should use $whichformat, $sourceformat, etc.,
     # but in practice they are always the same.
     my $format = $whichdocformat;
@@ -8278,11 +8279,11 @@ sub POST_preserve_man {
 
 # Move .1 and .5 files from SRC_MANDIR to installed man dir (if needed),
 # and make our pdfs from them.
-# 
+#
 # Has to be post instead of specialman when we use the tds.zip.
 # Optional argument is directory where the man pages are as distributed
 # on CTAN, else doc/*/$package or similar.
-# 
+#
 sub POST_do_man {
   my ($src_mandir) = @_;
   print "POST_do_man - src_mandir = $src_mandir\n";
@@ -8308,7 +8309,7 @@ sub POST_do_man {
     unless $src_mandir eq $mandest;
   &tl_man_to_pdf ();
   &xchdir ($origdir);
-  
+
   # this is for luaotfload, which already has the .5 in the right place.
   # So we just have to rebuild.
   if (<$DEST/doc/man/man5/*.5>) {
@@ -8323,7 +8324,7 @@ sub POST_preserve_bin {
   # from Build, and normal scripts and support files. The latter can get
   # updated without needing to update the former, so we support it.
   # Which means preserving the binaries from the Build.
-  # 
+  #
   # The ctan2tds output will look weird since all the binaries will show
   # up as new files, since they are in <pkg>.<platform> subpackages. And
   # thus the svn run will get errors that they can't be added, also. But
@@ -8361,10 +8362,10 @@ sub POST_deref_symlink {
 
 # Allow overrides.  In particular, CTAN can change some hashes to make
 # packages with licenses that TL doesn't allow.
-# 
-# Put the config file "ctan2tds-config.pl" in the dir from which you 
+#
+# Put the config file "ctan2tds-config.pl" in the dir from which you
 # run this script, or better, set the environment variable "CTAN2TDS_CONFIG".
-# 
+#
 sub readconfig {
   my ($base,$dir,$ext) = fileparse ($0, '\.pl');
 
@@ -8375,9 +8376,9 @@ sub readconfig {
   if (-f $configFileName) {
     my $err = "Error: CTAN config file $configFileName";
     $result = eval `cat $configFileName`; # like require, but no look in INC
-    die "$err; evaluation in file failed: $@" 
+    die "$err; evaluation in file failed: $@"
         if $@;
-    die "$err; yielded result that is false" 
+    die "$err; yielded result that is false"
         unless $result;
   } else {
     $result=1;
@@ -8385,4 +8386,4 @@ sub readconfig {
   return $result;
 }
 
-# vim: set tabstop=8 shiftwidth=2 expandtab: 
+# vim: set tabstop=8 shiftwidth=2 expandtab:
