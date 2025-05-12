@@ -1393,6 +1393,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'sueterlin',   "die 'skipping, obsolete on CTAN'",
  'sueterlin',   "die 'skipping, use gothic'",
  'svg',		"&MAKEflatten",
+ 'switch',		"&MAKEflatten",
  'svjour',      "die 'skipping, license and packaging unclear'",
  'symbol',	"die 'skipping, part of urw-base35, frozen'",
  'symbolindex', "die 'skipping, requires binary'",
@@ -1691,6 +1692,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'pax'			=> '&PREHOOK_flatten1',
  'pmx'			=> '&PREHOOK_pmx',
  'prosper'              => '&PREHOOK_prosper',
+ 'proflycee'              => '&PREHOOK_proflycee',
  'skb'                  => '&PREHOOK_flatten1',
  'spectralsequences'	=> '&PREHOOK_spectralsequences',
  'suftesi'              => '&PREHOOK_suftesi',
@@ -6694,6 +6696,12 @@ sub prehook_pod2man {
     (my $base = $script) =~ s,\.pl$,,;
     &SYSTEM ("$pod2man $script - >$base.1");
   }
+}
+
+sub PREHOOK_proflycee {
+  print "PREHOOK_proflycee - $package\n";
+  &SYSTEM ("cd doc/ && unzip -q -o *.zip && $RM *.zip");
+  &SYSTEM ("chmod -R a-s,a=rX,u+w .");
 }
 
 

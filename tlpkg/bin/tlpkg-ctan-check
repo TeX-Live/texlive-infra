@@ -41,14 +41,14 @@ my @TLP_working = qw(
     alterqcm altfont altsubsup amiri amiweb2c-guide amnestyreport
     amsaddr amscdx amscls amscls-doc amsfonts amslatex-primer
     amsldoc-it amsldoc-vn
-    amsmath amsmath-it amsrefs amstex amsthdoc-it 
+    amsmath amsmath-it amsrefs amstex amsthdoc-it
     andika annee-scolaire anima animate annotate annotate-equations
     anonchap anonymous-acm anonymouspro answers
     antanilipsum antique-spanish-units antiqua antomega antt anufinalexam
     anyfontsize anysize
     aobs-tikz aomart apa apa6 apa6e apa7
     apacite apalike-ejor apalike-german apalike2 apnum
-    appendix appendixnumberbeamer 
+    appendix appendixnumberbeamer
     apprendre-a-programmer-en-tex apprends-latex
     apptools apxproof
     arabi arabic-book arabicfront arabi-add arabluatex arabtex arabxetex
@@ -165,7 +165,7 @@ my @TLP_working = qw(
     bxbase bxcalc bxcjkjatype bxcoloremoji bxdpx-beamer bxdvidriver bxghost
     bxjaholiday bxjaprnind bxjatoucs bxpapersize bxpdfver bxeepic bxenclose
     bxjalipsum bxjscls bxnewfont bxorigcapt bxtexlogo bxwareki
-    byo-twemojis byrne bytefield 
+    byo-twemojis byrne bytefield
   c90 c-pascal cabin cachepic cahierprof
     caladea calcage calcfrac calctab calculation calculator calculatoritems
     calligra calligra-type1 callouts callouts-box calrsfs cals calxxxx-yyyy
@@ -255,7 +255,7 @@ my @TLP_working = qw(
     cyber cybercic cyklop cyrillic cyrillic-modern cyrplain
   dad dancers dantelogo darkmode
     dashbox dashrule dashrulex dashundergaps
-    dataref datatool datatool-english datatool-regions datax 
+    dataref datatool datatool-english datatool-regions datax
     dateiliste datenumber datestamp
     datetime datetime2 datetime2-bahasai datetime2-basque
     datetime2-breton datetime2-bulgarian datetime2-catalan
@@ -834,7 +834,7 @@ my @TLP_working = qw(
     sudoku sudokubundle suftesi sugconf sunpath
     superiors supertabular suppose susy svg svg-inkscape svgcolor
     svn svn-multi svn-prov svninfo svrsymbols
-    swebib swfigure swimgraf swrule swungdash syllogism
+    swebib swfigure swimgraf swrule swungdash switch syllogism
     symbats3 symbol sympycalc sympytexpackage
     synproof syntax syntaxdi synthslant syntrace synttree
     systeme
@@ -864,7 +864,7 @@ my @TLP_working = qw(
     textcsc textualicomma texvc
     textcase textfit textglos textgreek textmerg textopo textpath textpos
     tfrupee thaienum thaispec thalie
-    theanodidot theanomodern theanooldstyle theatre	
+    theanodidot theanomodern theanooldstyle theatre
     thematicpuzzle theoremref thermodynamics
     thesis-ekf thesis-gwu thesis-qom thesis-titlepage-fhac
     thinsp thmbox thmtools
@@ -982,7 +982,7 @@ my @TLP_working = qw(
     ziffer zitie zlmtt zootaxa-bst zref zref-check zref-clever zref-vario
     zugferd zwgetfdate zwpagelayout
     zx-calculus zxjafbfont zxjafont zxjatype zztex
-); 
+);
 
 
 # these packages we do not expect to check.  Once this list is complete,
@@ -1126,19 +1126,19 @@ sub main {
     $OPT{"verbose"} = 1;
     shift @ARGV;
   }
-  
+
   $OPT{"all"} = 0;
   if ($ARGV[0] eq "--all") {
     $OPT{"all"} = 1;
     shift @ARGV;
   }
-  
+
   $OPT{"no-clean"} = 0;
   if ($ARGV[0] eq "--no-clean") {
     $OPT{"no-clean"} = 1;
     shift @ARGV;
   }
-  
+
   if ($ARGV[0] eq "--list-not-treated") {
     my @not_checked = ();
     for my $b (&normal_tlps ()) {
@@ -1168,7 +1168,7 @@ sub main {
 # gives a list with only the 'normal' packages,
 # that is, excluding meta-packages and binary packages
 # (and hyphen for the moment)
-# 
+#
 sub normal_tlps {
   my @normal;
   my $non_normal = `ls $Master/bin`;
@@ -1182,11 +1182,11 @@ sub normal_tlps {
 
 
 # Return 1 if package TLPN needs updating (or error), 0 if ok.
-# 
+#
 sub do_tlp {
   my ($tlpn) = @_;
   my $needed = 0;
-  
+
   my $tlp = $tlpdb->get_package($tlpn);
   if (!defined($tlp)) {
     warn "$0: no package $tlpn\n";
@@ -1209,7 +1209,7 @@ sub do_tlp {
       system ("tar -C $ctan_dir -xf $tgz");
     }
   }
-  
+
   # One more total kludge.  We should probably put this into tlpkginfo
   # and factor it out from here and ctan2tds.
   if ($tlpn eq "cs") {
@@ -1234,12 +1234,12 @@ sub do_tlp {
   if ($tlp->relocated) { for (@tl_files) { s:^$RelocPrefix/:$RelocTree/:; } }
   # we don't push bin files.
   my @tl_basefiles = ();  # compare with CTAN after the loop
-    
+
   my @ctan_files = ();
   my @compared = ();
   for my $file (@tl_files) {
     (my $basefile = $file) =~ s,^.*/,,;
-    
+
     # if file exists by multiple names in TL (e.g., README), only check
     # the first one we come across, since we'll only find the first one
     # on CTAN and we don't want to try to match subdir suffixes.
@@ -1251,24 +1251,24 @@ sub do_tlp {
     # However, for lshort translations and mathdesign, pdf can be
     # all we have to compare.
     next if $file =~ /\.pdf$/ && $file !~ /short|match_parens|mathdesign/;
-    
+
     # seems mathpazo files were updated in TL and not CTAN.
     # Too old to worry about.
     next if $basefile =~ m,(pazofnst.tex|Makefile)$, && $file =~ m,/mathpazo/,;
 
     # We install our own stub, not ConTeXt's.  I guess.
     next if $basefile eq "mptopdf.exe";
-    
+
     # btxmac.tex symlinked on CTAN, but we may as well keep the copy
     # actually used in lollipop in TL (doc tree).
     next if $basefile eq "btxmac.tex" && $file =~ m,/lollipop/,;
-    
+
     # Different cluttex.lua gets installed.
     next if $basefile eq "cluttex.lua";
-    
+
     # Compares director to binary.
     next if $basefile eq "optexcount";
-    
+
     # Files we have edited in TL, will probably never be updated
     # upstream (authors won't make new releases, though they've agreed
     # to the changes), and aren't worth bothering CTAN about.
@@ -1276,13 +1276,13 @@ sub do_tlp {
 
     # Wrong README gets compared.
     next if $basefile eq "README" && $file =~ m,/(pmx|cs)/,;
-    
+
     my $tl_file = "$Master/$file";
     if (! -e $tl_file) {
       warn "$tl_file: TL file missing\n";
       next;
     }
-    
+
     chomp (@ctan_files = `find $ctan_dir/ -name $basefile -type f`);
 #warn "  ctan find $basefile: @ctan_files\n";
     # the trailing / is so we dereference a symlink on CTAN.
@@ -1296,7 +1296,7 @@ sub do_tlp {
 #warn "ctan ifind $basefile: @ctan_files\n";
       next if @ctan_files > 1; # if more than one file by same name, skip
       $ctan_file = $ctan_files[0];
-      
+
       if (! -e $ctan_file) {
         # we generate lots of files, eg perlmacros.sty, so might skip.
         warn "$ctan_file: CTAN file missing\n"
@@ -1312,12 +1312,12 @@ sub do_tlp {
       last unless $OPT{"all"};
     }
   }
-  
+
   # unfortunately, we cannot do this.  There are many PDF's on CTAN
   # which have no sources or otherwise problematic for TL.  Perhaps one
   # day we could use the %moreclean hash from ctan2tds as an additional
   # filter, i.e., put all those ctan2tds tables in an external file.
-  # 
+  #
   # # check for PDF files on CTAN that we don't have.
   # my @ctan_pdf_needed = ();
   # chomp (my @ctan_files = `find $ctan_dir -name \*.pdf`);
@@ -1335,7 +1335,7 @@ sub do_tlp {
   #   }
   #   print "# new on ctan: @ctan_pdf_needed\n";
   # }
-  
+
   if (@compared == 0) {
     warn "\n$tlpn: no files to compare in $ctan_dir, fixme!\n";
     warn "  (tl_files = @tl_files)\n";
@@ -1356,7 +1356,7 @@ sub do_tlp {
 
 
 # 0 if files are the same, 1 if they are different.
-# 
+#
 sub files_differ {
   my ($tl_file,$ctan_file) = @_;
 #warn "comparing $ctan_file $tl_file\n";
