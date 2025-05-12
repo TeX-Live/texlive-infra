@@ -7139,6 +7139,7 @@ sub context_common_removals {
            . "-o -name \*lucida\* "
            . "-o -name \*minion\* "
            . "-o -name \*mscore\* "
+           . "-o -name \*osx\* "
            . "| xargs rm -rfv");
 }
 
