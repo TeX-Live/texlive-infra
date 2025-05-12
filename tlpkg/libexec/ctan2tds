@@ -7130,6 +7130,7 @@ sub context_common_removals {
            . "-o -name \*koeiel\* "
            . "-o -name \*lucida\* "
            . "-o -name \*minion\* "
+           . "-o -name \*mscore\* "
            . "| xargs rm -rfv");
 }
 
