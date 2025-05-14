@@ -1,6 +1,10 @@
 (This file public domain.  Originally written by Norbert Preining and
 Karl Berry, 2010.)
 
+<p><b>tlmgr 75204 (released 14may25):</b>
+<li>report more info when remote database is older than local installation.
+<li>update GPG key rings.
+
 <p><b>tlmgr 74695 (released 19mar25):</b>
 <li>in --usermode, do not warn about texlive-scripts being missing.
 

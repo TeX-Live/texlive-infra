@@ -109,7 +109,8 @@ sub run_c2l {
   my $tmpfile = "/tmp/$<.c2l$arg.out";
   
   # don't bother with svn update unless we are doing place.
-  if ($arg eq "p") {
+  # and the catalogue repo is only set up for karl.
+  if ($arg eq "p" && $ENV{"USER"} eq "karl") {
     delete $ENV{"TLPKGINFO_CATALOGUE_NO_UPDATE"};
   } else {
     $ENV{"TLPKGINFO_CATALOGUE_NO_UPDATE"} = 1;
