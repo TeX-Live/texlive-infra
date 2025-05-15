@@ -695,7 +695,7 @@ my @TLP_working = qw(
     pinlabel pinoutikz pitex piton pittetd pixelart pixelarttikz
     pkfix pkfix-helper pkgloader pkuthss
     pl placeat placeins placeins-plain
-    plain-doc plainpkg plainyr plari plantslabels plantuml plates
+    plain-doc plain-widow plainpkg plainyr plari plantslabels plantuml plates
     platex platex-tools platexcheat plautopatch
     play playcards playfair plex plex-otf plimsoll plipsum
     plnfss plstmary plweb pm-isomath
