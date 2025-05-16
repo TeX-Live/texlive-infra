@@ -105,7 +105,7 @@ my @TLP_working = qw(
     beamertheme-npbt
     beamertheme-phnompenh beamertheme-pure-minimalistic beamertheme-rainbow
     beamertheme-saintpetersburg beamertheme-simpledarkblue
-    beamertheme-simpleplus
+    beamertheme-simpleplus beamertheme-spectrum
     beamertheme-tcolorbox beamertheme-trigon beamertheme-upenn-bc
     beamerthemeamurmaple beamerthemecelestia beamerthemeconcrete
     beamerthemejltree beamerthemelalic
