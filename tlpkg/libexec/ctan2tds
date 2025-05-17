@@ -3631,7 +3631,6 @@ $standardbst='\.bst$';
 # packages which need special BibTeX data files (not) installed.
 $standardbib = 'NULL';  # almost all bib files are for the doc
 %specialbib= (
-# 'beebe'		=> '(texbook?|tugboat).bib',
  'ieeetran'             => '\.bib$',
  'amsrefs'              => 'ams.*bib', # not jr.bib
  'archaeologie'         => '\.bib$',
@@ -3639,6 +3638,7 @@ $standardbib = 'NULL';  # almost all bib files are for the doc
  'bibtex'               => 'xampl\.bib$',
  'cnltx'                => '\.bib$',
  'dtk-bibliography'	=> '\.bib$',
+ 'gloss'		=> 'glsbase.bib',
  'nostarch'		=> '\.bib$',
 );
 
