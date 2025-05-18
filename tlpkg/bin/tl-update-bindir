@@ -216,8 +216,9 @@ for tlplat in $tlplats; do
 
    x86_64-linux)
     # Visit https://github.com/TeX-Live/texlive-source/commits
-    #   to check for commits.
-    # Then https://github.com/TeX-Live/texlive-source/releases
+    #   to check for commits. The svn-to-git sync runs only every 15
+    #   minutes, so always check that the intended commits are there.
+    # Then https://github.com/TeX-Live/texlive-source/releases/new
     #   "Draft a new release".
     #   "Choose a tag -> "find or create a new tag" -> "svnNNNNN"
     #   "Target:trunk" should already be there
@@ -238,8 +239,9 @@ for tlplat in $tlplats; do
     #   but arm and aarch are slow and will take hours to finish.
     #   Should be able to update the finished ones as they happen.
     #     (For both: "c2l aargh".)
-    #   
-    # If try before ready, no harm, just get error message "missing url".
+    #   If try before ready, no harm, just get error message "missing url".
+    # 
+    # If a post-release fix, also update ~www/texlive/bugs.html.
     # 
     do_download `github_url $tlplat`;;
 

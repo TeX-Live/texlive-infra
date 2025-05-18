@@ -135,7 +135,7 @@ beebe_slave=texmf-dist/bibtex/bib/beebe
 # TL, not all from the master area. There are tons of bib files there,
 # some quite large, so await requests. When a new bib is to be added,
 # commit manually the first time.
-files=`cd $beebe_slave && ls *.bib`
+files=`cd $beebe_slave && ls *.bib tugboat.def`
 # 
 for basef in $files; do
   beebe_slavef=$beebe_slave/$basef
