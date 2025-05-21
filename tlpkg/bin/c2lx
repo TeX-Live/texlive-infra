@@ -25,7 +25,7 @@ if test "x$1" = xe || test "x$1" = x2e; then
 elif test "x$1" = xdev; then
   shift; label=ldev
   pkgs="latex-amsmath-dev latex-firstaid-dev latex-graphics-dev latex-lab-dev"
-  pkgs="$pkgs latex-tools-dev latex-base-dev l3kernel"
+  pkgs="$pkgs latex-tools-dev latex-base-dev l3kernel-dev"
 elif test "x$1" = x3; then
   shift; label=l3
   pkgs="l3experimental l3backend l3kernel"
