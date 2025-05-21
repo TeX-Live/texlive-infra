@@ -921,7 +921,7 @@ my @TLP_working = qw(
     ucthesis udepcolor udes-genie-these udesoftec udiss
     uebungsblatt uestcthesis ufrgscca
     uhhassignment uhrzeit uiucredborder uiucthesis
-    ukbill ukrhyph ulem ulqda ulthese
+    ukbill ukrhyph ulem ullrcorners ulqda ulthese
     umbclegislation umich-thesis uml umlaute umoline
     umthesis umtypewriter
     unam-thesis unamth-template unamthesis unbtex
