@@ -2475,6 +2475,7 @@ $standardtex
  'nodetree',	'nodetree.(tex|lua)|' . $standardtex,
  'noindentafter',       "noindentafter\.sty",
  'nomencl',	'\.sty',		# not .cfg
+ 'notebeamer',	'\.sty',		# not build.lua
  'notes',       '[^s]\.(eps|pdf|png)|' . $standardtex,  # not notes.pdf
  'nth',		'\.sty',
  'ntheorem',    '\.sty|\.std',
