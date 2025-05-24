@@ -1836,7 +1836,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'light-latex-make'	=> '&tl_man_to_pdf',
  'lilyglyphs'		=> '&POSTlilyglyphs',
  'listbib'		=> '&POSTlistbib',
- 'litetable'		=> '&POST_onelevel',
  'lithuanian'		=> '&POSTlithuanian',
  'lni'			=> '&POST_rmsymlink',
  'logoetalab'		=> '&POST_onelevel',
@@ -1868,7 +1867,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'niceframe'		=> '&POST_rmsymlink',
  'nodepthtext'		=> '&POST_onelevel',
  'non-decimal-units'	=> '&POST_onelevel',
- 'notebeamer'		=> '&POST_onelevel',
  'novel'		=> '&POST_onelevel',
  'numericplots'		=> '&POSTnumericplots',
  'nwejm'		=> '&POSTnwejm',
@@ -2389,6 +2387,7 @@ $standardtex
  'listings',     '\.prf|' . $standardtex,
  'listings-ext','\.sty',        # not .cfg
  'listofitems',	'listofitems(old)?.tex|' . $standardtex,
+ 'litetable',	'\.sty',	# not build.lua
  'logic',       'milstd\.tex|' . $standardtex,
  'lollipop',	'\.ini|lollipop\.tex|lollipop-.*tex|lollipop.tex',
  'longmath',	'longmath\.(lua|sty)',	# not -doc
