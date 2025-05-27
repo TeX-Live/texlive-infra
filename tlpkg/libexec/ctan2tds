@@ -2164,6 +2164,7 @@ $standardtex
  'beamer-rl',	'\.dict|' . $standardtex,
  'beamer2thesis','\.jpg|' . $standardtex,
  'beamertheme-npbt',	'images|' . $standardtex,
+ 'beamertheme-spectrum',    '\.jpg|' . $standardtex,
  'bezierplot',	'\.lua|' . $standardtex,
  'bghyphen',    '\.tex',
  'biblatex-ext','\.lua|' . $standardtex,
