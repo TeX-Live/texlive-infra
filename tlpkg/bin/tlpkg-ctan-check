@@ -745,7 +745,8 @@ my @TLP_working = qw(
     pxpgfmark pxpic pxrubrica pxtatescale pxtxalfa pxufont
     pygmentex pyluatex pynotebook
     python pythonhighlight pythonimmediate pythontex
-  q-and-a qcircuit qcm qobitree qrbill qrcode qsharp qstest qsymbols qtree
+  q-and-a qcircuit qcm qobitree qrbill qrcode qrcodetikz
+     qsharp qstest qsymbols qtree
      qualitype quantikz quantumarticle quattrocento
      quickreaction quicktype quiver quiz2socrative quizztex
      quotchap quoting quotmark
