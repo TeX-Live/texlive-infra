@@ -2270,6 +2270,7 @@ $standardtex
  'expltools',	'NULL',			# doc
  'fancyqr',	'\.code|' . $standardtex,
  'fancytooltips',       'fancytipmark[.1-4].*|' . $standardtex,
+ 'farbe',	'farbe\.tex|' . $standardtex,
  'fewerfloatpages',	'\.sty$',	# not l3doc-TUB.cls
  'figflow',     '\.tex',
  'fistrum',  	'\.ftd|' . $standardtex,

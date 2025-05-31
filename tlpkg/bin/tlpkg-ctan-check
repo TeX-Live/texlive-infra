@@ -340,7 +340,8 @@ my @TLP_working = qw(
     fail-fast faktor familytree
     fancybox fancyhandout fancyhdr fancyhdr-it fancylabel fancynum fancypar
     fancyqr fancyref fancyslides fancytabs fancytooltips fancyvrb fandol
-    faq-fr faq-fr-gutenberg fascicules fast-diagram fbb fbithesis fbox fbs
+    faq-fr faq-fr-gutenberg farbe fascicules fast-diagram
+    fbb fbithesis fbox fbs
     fc fcavtex fcltxdoc fcolumn fdsymbol fduthesis featpost fei
     fenetrecas fenixpar
     fetamont fetchcls
