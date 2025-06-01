@@ -21,7 +21,7 @@ c2loutfile=$placebase.c2lout
 
 if test "x$1" = xe || test "x$1" = x2e; then
   shift; label=l2e
-  pkgs="amsmath cyrillic graphics tools latex firstaid latex-lab l3build"
+  pkgs="amsmath cyrillic graphics tools latex firstaid latex-lab l3kernel"
 elif test "x$1" = xdev; then
   shift; label=ldev
   pkgs="latex-amsmath-dev latex-firstaid-dev latex-graphics-dev latex-lab-dev"
