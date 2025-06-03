@@ -220,7 +220,7 @@ my @TLP_working = qw(
     comprehensive computational-complexity
     concepts concmath concmath-fonts concmath-otf concprog concrete
     conditext confproc constants conteq
-    context-calendar-examples context-chat
+    context-animation context-calendar-examples context-chat
     context-collating-marks
     context-cyrillicnumbers
     context-filter
@@ -529,7 +529,8 @@ my @TLP_working = qw(
     lion-msc lipsum lisp-on-tex
     listbib listing listings listings-ext listingsutf8 listlbls listliketab
     listofitems listofsymbols listparskip litetable
-    lithuanian liturg lkproof llncs llncsconf lm lm-math lmake lni lobster2
+    lithuanian liturg liturgy-cw lkproof
+    llncs llncsconf lm lm-math lmake lni lobster2
     locality localloc logbox
     logical-markup-utils logicproof logicpuzzle logictools logix
     logoetalab logpap logreq lollipop
@@ -748,7 +749,7 @@ my @TLP_working = qw(
     python pythonhighlight pythonimmediate pythontex
   q-and-a qcircuit qcm qobitree qrbill qrcode qrcodetikz
      qsharp qstest qsymbols qtree
-     qualitype quantikz quantumarticle quattrocento
+     qualitype quantikz quantumarticle quantumcubemodel quattrocento
      quickreaction quicktype quiver quiz2socrative quizztex
      quotchap quoting quotmark
      quran quran-bn quran-de quran-en quran-es quran-id quran-ur

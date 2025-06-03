@@ -352,7 +352,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'conferences',         "die 'skipping, container directory'",
  'context-account',     "die 'skipping, obsolete on CTAN'",
  'context-algorithmic', "die 'skipping, obsolete on CTAN'",
- 'context-animation',   "die 'skipping, obsolete on CTAN'",
+ 'context-animation',   "&MAKEcopy",
  'context-annotation',  "die 'skipping, obsolete on CTAN'",
  'context-bnf',         "die 'skipping, obsolete on CTAN'",
  'context-calendar-examples',	"&MAKEcopy",
