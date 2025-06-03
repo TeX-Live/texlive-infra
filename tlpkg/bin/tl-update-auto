@@ -150,11 +150,11 @@ done
 # Nelson's tugboat.def goes into the tex/ subtree.
 beebe_def_master=$beebe_master/tugboat.def
 beebe_def_slave=texmf-dist/tex/generic/beebe/tugboat.def
-if $diff $beebe_def_master $beebe_def_slav >$temp.tugboat.def.diff; then
+if $diff $beebe_def_master $beebe_def_slave >$temp.tugboat.def.diff; then
   $verbose "   $beebe_def_slave ok."
 else
-  $chicken $cp $beebe_def_master $beebe_def_slavef
-  update_list="$update_list $beebe_def_slavef"
+  $chicken $cp $beebe_def_master $beebe_def_slave
+  update_list="$update_list $beebe_def_slave"
 fi
 fi # !config_scripts_only #(beebe)
 
