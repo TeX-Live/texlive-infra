@@ -3,9 +3,9 @@
 # Public domain.  Originally written 2005, Karl Berry.
 # 
 # Return information given a TL package name (i.e., a tlpsrc file name).
-# This requires local copies of CTAN and the TeX Catalogue. This program
-# needs to be refactored with ctan2tl and ctan2ds, as we currently
-# actually unpack .tds.zip files, etc., which does not seem right.
+# This requires local copies of CTAN and the TeX Catalogue. This script
+# needs to be refactored with ctan2tl and ctan2ds, as it currently
+# unpacks .tds.zip files, etc., which does not seem right.
 # 
 # With -rev (--revision) argument given, returns only the revision number
 # of a given package (see below for details).
@@ -148,7 +148,6 @@ sub find_ctan_dir {
       "macros/xetex/generic/$me",		# harvardkyoto
       "macros/plain/contrib/$me",		# timetable
       "macros/plain/$me",			# plnfss
-      "macros/pdftex/$me",			# mptopdf
       "macros/luatex/latex/$me",		# luabidi
       "macros/latex/required/$me",		# babel
       "macros/latex/exptl/$me",			# semioneside
@@ -241,11 +240,6 @@ sub find_ctan_dir {
     # not in Catalogue as yet, 27apr16.
     $ctan_dir = "macros/cstex/base";
     
-  } elsif ($pkgname eq "context-legacy") {
-    # We use the same mirrored .zip for context and context-legacy,
-    # so the value here is irrelevant. Just avoid the warning below.
-    $ctan_dir = "/nonesuch";
-
   } elsif ($pkgname eq "cs") {
     # For cs, we need to unpack from multiple tarballs,
     # so copy the entire cstex directory.
@@ -428,8 +422,10 @@ sub prepare {
   
 #warn "prepare: initial tds_path for $pkg = $tds_path\n";
   # various exceptions to tds.zip location ...
-  if ($pkg =~ /^context(-legacy)?$/) {
-    $tds_path = "/home/ftp/mirror/www.pragma-ade.nl/context/latest/cont-tmf.zip";
+  if ($pkg =~ /^(context(-legacy)?|mptopdf)$/) {
+    $tds_path = "$CTAN/macros/context/base/archives/$pkg.zip";
+    $tds_path = "/tmp/context/archives/$pkg.zip";
+    #$tds_path = "/home/ftp/mirror/www.pragma-ade.nl/context/latest/cont-tmf.zip";
 
   } elsif ($pkg eq "cmexb") {
     # as with enctex case
