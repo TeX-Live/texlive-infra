@@ -34,16 +34,16 @@ if false; then # better to run these one at a time
   # Unzip the new hyph-utf tree in our temp checkout.
   cd texmf-dist
   ls -l $CTAN/install/language/hyph-utf8.tds.zip # ensure new file on ctan
-  unzip !$                                       # overwrite All
-  # In that unzip command, overwrite All symlinks with the regular files.
-  # (Can't use -q since we have to do this overwrite.)
+  unzip -q -o !$                                 # overwrite All
+  # In that unzip command, -o overwrites All symlinks with the regular files.
   #   On tug.org, CTAN=/home/ftp/tex-archive.
   #   This unzip won't remove any no-longer-distributed files;
   #   deal with that below.
   # 
   # Unzip new tlpsrc files (without leading directory):
   cd ../tlpkg/tlpsrc
-  unzip -j ../../texmf-dist/source/generic/hyph-utf8/tlpsrc.zip # overwrite All
+  # Again, overwrite all:
+  unzip -q -o -j ../../texmf-dist/source/generic/hyph-utf8/tlpsrc.zip
   #
   # No tlpsrc should have any non-ASCII characters.
   # If so, fix them & report:

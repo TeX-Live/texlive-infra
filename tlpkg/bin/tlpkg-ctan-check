@@ -749,7 +749,8 @@ my @TLP_working = qw(
     python pythonhighlight pythonimmediate pythontex
   q-and-a qcircuit qcm qobitree qrbill qrcode qrcodetikz
      qsharp qstest qsymbols qtree
-     qualitype quantikz quantumarticle quantumcubemodel quattrocento
+     qualitype quantikz quantum-chemistry-bonn
+     quantumarticle quantumcubemodel quattrocento
      quickreaction quicktype quiver quiz2socrative quizztex
      quotchap quoting quotmark
      quran quran-bn quran-de quran-en quran-es quran-id quran-ur
