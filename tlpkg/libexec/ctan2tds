@@ -362,6 +362,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'context-cmttbf',	"die 'skipping, obsolete on CTAN'",
  'context-collating-marks',	"&MAKEcopy",
  'context-collatingmarks',	"die 'skipping, use context-collating-marks'",
+ 'context-companion-fonts',	"die 'skipping, now in context, q.v.'",
  'context-construction-plan',	"die 'skipping, obsolete on CTAN'",
  'context-cyrillicnumbers',	"&MAKEcopy",
  'context-degrade',     "die 'skipping, obsolete on CTAN'",
@@ -393,7 +394,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'context-squares',	"&MAKEcopy",
  'context-sudoku',	"&MAKEcopy",
  'context-taspresent',  "&MAKEcopy",
- 'context-texlive',     "die 'skipping, maintained in TL, see .tlpsrc'",
+ 'context-texlive',     "die 'skipping, merged into context-legacy, q.v.'",
  'context-title',	"die 'skipping, obsolete on CTAN'",
  'context-top-ten',     "die 'skipping, overhaul needed per author'",
  'context-transliterator',      "&MAKEcopy",
@@ -7178,9 +7179,6 @@ END_RTL
                       "luametatex",
                       ["amd64-netbsd"]);
   
-  # qqq remove context-texlive and context-companion-fonts packages.
-  # but not jmn.
-
   print "still POST$package - man to pdf\n";
   &tl_man_to_pdf ();
 }

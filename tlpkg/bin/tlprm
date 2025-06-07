@@ -78,7 +78,7 @@ sub main {
     `printf "$removals" >$commit_file`;
 
     print "if license in Catalogue is free, and package isn't, "
-          . "tell ctan\@dante.de\n";
+          . "tell ctan\@ctan.org\n";
 
     # Remove dependencies from tlpsrc; show with line numbers for next-error.
     # depend lines alone are not enough, as dependencies are also in
