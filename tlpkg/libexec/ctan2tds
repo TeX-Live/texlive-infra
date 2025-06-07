@@ -1011,7 +1011,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'mpcolornames',"&MAKEcopy",
  'mpfonts',	"&MAKEflatten",
  'mpdinbrief',  "die 'skipping, nosell license'",
- 'mptopdf',     "&MAKEcopy",
  'ms',		"die 'skipping, split into separate packages'",
  'msuthesis',   "die 'skipping, use msu-thesis'",
  'mtp2lite',    "die 'skipping, nonfree'",
@@ -4224,7 +4223,7 @@ exit 2 unless Getopt::Long::GetOptions (
   "version",
 );
 
-for (@ARGV) {
+for (@ARGV) { # we don't actually support multiple packages in one run
   $packagedir = $_;
   if (! -d $packagedir) {
     warn "$0: $packagedir not a directory, skipping.\n";
@@ -4252,7 +4251,10 @@ for (@ARGV) {
 
   $whichformat = $specialfmt{$package} || $standardfmt;
   $whichdocformat = $specialdocfmt{$package} || $standarddocfmt;
-  print "pkg=$package (fmt=$whichformat docfmt=$whichdocformat) -> $DEST\n";
+  print "pkg=$package (fmt=$whichformat docfmt=$whichdocformat)\n";
+  print "  DEST=$DEST (DEST_TREE=$DEST_TREE)\n";
+  print "  TOPDEST=$TOPDEST\n";
+  print "  BUILDDEST=$BUILDDEST\n";
 
   $inspatt = $specialins{$package} || &specialins($package) || $standardins;
   $insrunner = $specialinsrunner{$package} || $standardinsrunner;
@@ -4995,6 +4997,47 @@ sub doscripts {
         }
       }
     }
+  }
+}
+
+# Called from doscripts: Update copy of EXEC under
+# # Build/.../linked_scripts. If second arg INTERMEDIATE_DIRS is given
+# (used to be done by ConTeXt), that path is appended under
+# linked_scripts/. In any case, just the basename of EXEC is used in the
+# destination, and the full EXEC, whatever it is, is used for the source
+# of the copy.
+#
+sub build_scripts_copy {
+  my ($exec,$intermediate_dirs) = @_;
+
+  # prepend / to INTERMEDIATE_DIRS if given.
+  $intermediate_dirs = ($intermediate_dirs ? "/$intermediate_dirs" : "");
+
+  my $build_tldir = "texk/texlive";
+  my $build_scriptsdir = "$build_tldir/linked_scripts";
+  my $build_subdir = "$package$intermediate_dirs";
+  my $builddir = "$BUILDDEST/$build_scriptsdir/$build_subdir";
+  &xmkdir ($builddir);
+  #
+  &SYSTEM ("$CP $exec $builddir/");
+
+  # Warn if missing from the Makefile.am in the sources.
+  # (but not for mptopdf, since peb unified it.)
+  return if $exec =~ /mptopdf/;
+  (my $exec_basename = $exec) =~ s,^.*/,,;
+  my $pattern = "\\b$build_subdir/$exec_basename\\b";
+  #
+  my $scripts_Makefile = "$Build/$build_scriptsdir/Makefile.in";
+  system ("grep '$pattern' $scripts_Makefile >/dev/null");
+  if ($? != 0) {
+    print "*** $build_subdir/$exec_basename not in $scripts_Makefile\n";
+  }
+  # we should get rid of scripts.lst since it is nothing but
+  # redundancy; coordinate with debian, though.
+  my $scripts_lst = "$Build/$build_scriptsdir/scripts.lst";
+  system ("grep '$pattern' $scripts_lst >/dev/null");
+  if ($? != 0) {
+    print "*** $build_subdir/$exec_basename not in $scripts_lst\n";
   }
 }
 
@@ -6952,198 +6995,206 @@ sub POSTcmcyr {
   &SYSTEM ("$MV $DEST/fonts/source/public/cmcyr/cmcsc{8,9,10}.mf .");
 }
 
-
-# ConTeXt is complicated. Procedure for updating:
-# 0. ctxversion=`sed -n 's/^ *# *define *luametatex_version_string *//p' \
-#                source/luametatex.h | sed 's/"//g'` # in unpacked tree
-# 0b. echo $ctxversion    # something like 2.11.07
-# 1. c2l context          # change code here until good
-#                           (all files match, no mkii, etc.), then:
-# 2. tl-update-lmtx-bin   # download luametatex binaries (check this first);
-#                         # possibly no_lmtx_platforms in
-#                         #   00texlive.autopatterns.tlpsrc
-#                         # will need to be updated.
-# 3. c2l context p   # place new files in svn. Then we can commit:
-# 4. tlcom "context $ctxversion" $tlroot/Master/bin # commits runtime too
-# 5. tl-update-tlpdb -v --fix-reverse-revisions  # must clean new context for:
-# 6. c2l context-legacy  # until good, then:
-# 6b. c2l context-legacy p
-# 7. tlcom "context-legacy $ctxversion"
-# 8. If needed, other context-legacy updates by hand.
-# 9. svn revert tlpkg/texlive.tlpdb # revert interim texlive.tlpdb and let the
-#                                   # nightly build do the full update.
-# 10. tar cJf Master/source/luametatex-$ctxversion.tar.xz luametatex
+## ConTeXt is complicated. Procedure for updating:
+## 0. ctxversion=`sed -n 's/^ *# *define *luametatex_version_string *//p' \
+##                source/luametatex.h | sed 's/"//g'` # in unpacked tree
+## 0b. echo $ctxversion    # something like 2.11.07
+## 1. c2l context          # change code here until good
+##                           (all files match, no mkii, etc.), then:
+## 2. tl-update-lmtx-bin   # download luametatex binaries (check this first);
+##                         # possibly no_lmtx_platforms in
+##                         #   00texlive.autopatterns.tlpsrc
+##                         # will need to be updated.
+## 3. c2l context p   # place new files in svn. Then we can commit:
+## 4. tlcom "context $ctxversion" $tlroot/Master/bin # commits runtime too
+## 5. tl-update-tlpdb -v --fix-reverse-revisions  # must clean new context for:
+## 6. c2l context-legacy  # until good, then:
+## 6b. c2l context-legacy p
+## 7. tlcom "context-legacy $ctxversion"
+## 8. If needed, other context-legacy updates by hand.
+## 9. svn revert tlpkg/texlive.tlpdb # revert interim texlive.tlpdb and let the
+##                                   # nightly build do the full update.
+## 10. tar cJf Master/source/luametatex-$ctxversion.tar.xz luametatex
+##
+#sub POSTprevcontext {
+#  print "POST$package - remove context-legacy etc. files, rearrange for TL\n";
+#  print "*** See POSTcontext in ctan2tds for ConTeXt update procedure.\n";
+#  &xchdir ($DEST);
 #
+#  &context_common_removals ();
+#
+#  print "still POST$package - make README.TEXLIVE\n";
+#  my $RTL = "doc/context/README.TEXLIVE";
+#  open (RTL, ">$RTL") || die "open(>$RTL) failed: $!";
+#  print RTL <<END_RTL;
+#For TeX Live, some files are (re)moved from the ConTeXt distribution.
+#
+#Files relating to ConTeXt MkII are in the context-legacy package.
+#Files relating to mptopdf are in the mptopdf package.
+#LuaMetaTeX's compiled sources are in Master/source/luametatex-*.tar.xz.
+#
+#The list of removed files follows; most relate to nonfree fonts. Others
+#relate to the standalone ConTeXt distribution and would cause trouble
+#within TeX Live. For the code implementing all this and more details,
+#see the POSTcontext routine in the Master/tlpkg/libexec/ctan2tds script.
+#
+#END_RTL
+#  close (RTL) || die "close(>$RTL) failed: $!";
+#  #
+#  my $before_rm = "/tmp/$<.ctx.before.rm";
+#  my $after_rm = "/tmp/$<.ctx.after.rm";
+#  &SYSTEM ("cd $RAW_DIR/$packagedir && find . -type f | sort >$before_rm");
+#  &SYSTEM ("find . -type f | sort >$after_rm");
+#  &SYSTEM ("comm -23 $before_rm $after_rm >>$RTL");
+#
+#  # remove the mkii files we put into context-legacy; don't list these
+#  # in README.TEXLIVE. Hopefully there will be no new mkii files.
+#  &remove_files_of_pkg ("context-legacy");
+#  #
+#  # Ditto mptopdf. Although mptopdf is removed from both context and
+#  # context-legacy, we don't do it in context_common_removals because we
+#  # don't want to list its files in README.TEXLIVE, for consistency with
+#  # how context-legacy is handled.
+#  &remove_files_of_pkg ("mptopdf");
+#
+#  # Remove two more mptopdf doc formats there's no need to distribute.
+#  &SYSTEM ("$RM -rf doc/context/scripts/mkii/");
+#
+#  # No more removals after this, just copying and moving around.
+#
+#  # move some files to context subdirs for tl.
+#  &mv_with_mkdir ("colors/icc/context", "tex/context/colors/icc");
+#  &mv_with_mkdir ("context-readme.txt", "doc/context");
+#
+#  print "still POST$package - copy user-level .lua to platforms\n";
+#  # discern which platforms don't have a luametatex binary from the tlpsrc.
+#  my $ap = "$Master/tlpkg/tlpsrc/00texlive.autopatterns.tlpsrc";
+#  my $grep = "grep -A 1 global_no_lmtx_platforms $ap";
+#  chomp (my $no_lmtx_platforms = `$grep | sed -e 1d -e 's/^ *//'`);
+#  die "could not find no_lmtx_platforms in $ap" if ! $no_lmtx_platforms;
+#  my @no_lmtx_platforms = split (/,/, $no_lmtx_platforms);
+#  print "\t no_lmtx_platforms = @no_lmtx_platforms\n";
+#  #
+#  my $w_bindir = "$TOPDEST/bin/windows";
+#  &xmkdir ($w_bindir);
+#  #
+#  # because bindirs_symlink uses cwd to determine the link:
+#  &xchdir ("$DEST/scripts/$package/lua");
+#  my @exec = qw(context mtxrun);
+#  for my $exec (@exec) {
+#    my $luafile = "$exec.lua";
+#    # these should exist.
+#    die "POSTcontext: no context lua file $luafile" unless -s $luafile;
+#    &SYSTEM ("$CP $luafile $w_bindir/");
+#    &bindirs_symlink ($luafile, $luafile, @no_lmtx_platforms);
+#  }
+#
+#  print "still POST$package - user-level executable man pages\n";
+#  &xchdir ("$DEST/doc/$package/scripts");
+#  my $mandest = "$TOPDEST/texmf-dist/doc/man/man1";
+#  &xmkdir ($mandest);
+#  for my $exec (@exec) {
+#    # we only keep mkiv man pages here, mkii in context-legacy.
+#    my $mansrc = "mkiv/$exec.man";
+#    &SYSTEM ("$CP $mansrc $mandest/$exec.1");
+#  }
+#
+#  print "still POST$package - mtx-*.man pages\n";
+#  # In addition, there is mtx-*.man for subcommands in mkiv.
+#  &xchdir ("$DEST/doc/$package/scripts/mkiv");
+#  for my $mtxman (<mtx-*.man>) {
+#    (my $mtxmanbase = $mtxman) =~ s/\.man$//;
+#    &SYSTEM ("$CP $mtxman $mandest/$mtxmanbase.1");
+#  }
+#  &tl_man_to_pdf ();
+#
+#  # do last so man pages are there.
+#  print "still POST$package - preserving binaries\n";
+#  &POST_preserve_bin ("luametatex", "context", "mtxrun");
+#}
+
+
+# We use the repackaging of ConTeXt releases done for CTAN and TL
+# by Max Chernoff:
+#   https://github.com/gucci-on-fleek/context-packaging.
+# His process does all the work previously done here, such as removing
+# nonfree files. What's left for us is mainly to unpack the zip files
+# from CTAN (see tlpkginfo) and remake the pdfs for the man pages.
+# 
+# There are three packages on the TL side: context, context-legacy, mptopdf.
+# Each can be updated with c2a (-> c2l, etc.), in the usual way.
+# They should be updated together.
 sub POSTcontext {
-  print "POST$package - remove context-legacy etc. files, rearrange for TL\n";
-  print "*** See POSTcontext in ctan2tds for ConTeXt update procedure.\n";
+  print "POST$package - README.TEXLIVE, unpack archives/zips\n";
   &xchdir ($DEST);
 
-  &context_common_removals ();
+  # what we unpack.
+  my $ctan_ctx_archives = "$ctan_root/macros/context/base/archives";
+  print "\t ctan_root=$ctan_root\n";
+  print "\t ctan_ctx_archives=$ctan_ctx_archives\n";
+  print "\t ls -C $ctan_ctx_archives:\n";
+  print `ls -C $ctan_ctx_archives`;
 
-  print "still POST$package - make README.TEXLIVE\n";
+  print "still POST$package - construct README.TEXLIVE from nonfree.zip\n";
   my $RTL = "doc/context/README.TEXLIVE";
   open (RTL, ">$RTL") || die "open(>$RTL) failed: $!";
   print RTL <<END_RTL;
-For TeX Live, some files are (re)moved from the ConTeXt distribution.
+For the TeX Live packages, some files are (re)moved from the original
+ConTeXt distribution.
 
 Files relating to ConTeXt MkII are in the context-legacy package.
 Files relating to mptopdf are in the mptopdf package.
 LuaMetaTeX's compiled sources are in Master/source/luametatex-*.tar.xz.
 
-The list of removed files follows; most relate to nonfree fonts. Others
-relate to the standalone ConTeXt distribution and would cause trouble
-within TeX Live. For the code implementing all this and more details,
-see the POSTcontext routine in the Master/tlpkg/libexec/ctan2tds script.
+The list of removed files follows; most relate to nonfree fonts. It is
+the contents of the context-nonfree package, available from the
+tlcontrib repository, https://contrib.texlive.info/
+
+For the code implementing all this and more details, see
+https://github.com/gucci-on-fleek/context-packaging and the POSTcontext*
+routines in the Master/tlpkg/libexec/ctan2tds script.
 
 END_RTL
   close (RTL) || die "close(>$RTL) failed: $!";
   #
-  my $before_rm = "/tmp/$<.ctx.before.rm";
-  my $after_rm = "/tmp/$<.ctx.after.rm";
-  &SYSTEM ("cd $RAW_DIR/$packagedir && find . -type f | sort >$before_rm");
-  &SYSTEM ("find . -type f | sort >$after_rm");
-  &SYSTEM ("comm -23 $before_rm $after_rm >>$RTL");
+  my $ctx_nonfree_zip = "$ctan_ctx_archives/context-nonfree.zip";
+  &xsystem ("zipinfo -1 $ctx_nonfree_zip | sort >>$RTL");
 
-  # remove the mkii files we put into context-legacy; don't list these
-  # in README.TEXLIVE. Hopefully there will be no new mkii files.
-  &remove_files_of_pkg ("context-legacy");
+  print "still POST$package - unzip binaries\n";
+  my $ctx_bin_zip = "$ctan_ctx_archives/context.bin.zip";
+  my $bin_destdir = "$TOPDEST/bin"; # that is, Master in the tmp cooked dir
+  &xsystem ("unzip -q -o $ctx_bin_zip -d $bin_destdir"); # -o is for overwrite
   #
-  # Ditto mptopdf. Although mptopdf is removed from both context and
-  # context-legacy, we don't do it in context_common_removals because we
-  # don't want to list its files in README.TEXLIVE, for consistency with
-  # how context-legacy is handled.
-  &remove_files_of_pkg ("mptopdf");
-
-  # Remove two more mptopdf doc formats there's no need to distribute.
-  &SYSTEM ("$RM -rf doc/context/scripts/mkii/");
-
-  # No more removals after this, just copying and moving around.
-
-  # move some files to context subdirs for tl.
-  &mv_with_mkdir ("colors/icc/context", "tex/context/colors/icc");
-  &mv_with_mkdir ("context-readme.txt", "doc/context");
-
-  print "still POST$package - copy user-level .lua to platforms\n";
-  # discern which platforms don't have a luametatex binary from the tlpsrc.
-  my $ap = "$Master/tlpkg/tlpsrc/00texlive.autopatterns.tlpsrc";
-  my $grep = "grep -A 1 global_no_lmtx_platforms $ap";
-  chomp (my $no_lmtx_platforms = `$grep | sed -e 1d -e 's/^ *//'`);
-  die "could not find no_lmtx_platforms in $ap" if ! $no_lmtx_platforms;
-  my @no_lmtx_platforms = split (/,/, $no_lmtx_platforms);
-  print "\t no_lmtx_platforms = @no_lmtx_platforms\n";
+  # The bin.zip provides binaries for some platforms we don't have in TL.
+  # unzip makes it hard to exclude a directory; remove them afterward.
+  my $bin_excludes = "sparc-solaris amd64-openbsd*";
+  &xsystem ("cd $bin_destdir && rm -r $bin_excludes");
   #
-  my $w_bindir = "$TOPDEST/bin/windows";
-  &xmkdir ($w_bindir);
-  #
-  # because bindirs_symlink uses cwd to determine the link:
-  &xchdir ("$DEST/scripts/$package/lua");
-  my @exec = qw(context mtxrun);
-  for my $exec (@exec) {
-    my $luafile = "$exec.lua";
-    # these should exist.
-    die "POSTcontext: no context lua file $luafile" unless -s $luafile;
-    &SYSTEM ("$CP $luafile $w_bindir/");
-    &bindirs_symlink ($luafile, $luafile, @no_lmtx_platforms);
-  }
+  # amd64-netbsd and x86_64-cygwin binaries are not provided.
+  # For cygwin, Ken said we should just omit them going forward unless we
+  # receive user requests.
+  # For netbsd, Marc will rebuild, so preserve what's there.
+  &POST_preserve_bin ("context", "context.lua", "mtxrun", "mtxrun.lua",
+                      "luametatex",
+                      ["amd64-netbsd"]);
+  
+  # qqq remove context-texlive and context-companion-fonts packages.
+  # but not jmn.
 
-  print "still POST$package - user-level executable man pages\n";
-  &xchdir ("$DEST/doc/$package/scripts");
-  my $mandest = "$TOPDEST/texmf-dist/doc/man/man1";
-  &xmkdir ($mandest);
-  for my $exec (@exec) {
-    # we only keep mkiv man pages here, mkii in context-legacy.
-    my $mansrc = "mkiv/$exec.man";
-    &SYSTEM ("$CP $mansrc $mandest/$exec.1");
-  }
-
-  print "still POST$package - mtx-*.man pages\n";
-  # In addition, there is mtx-*.man for subcommands in mkiv.
-  &xchdir ("$DEST/doc/$package/scripts/mkiv");
-  for my $mtxman (<mtx-*.man>) {
-    (my $mtxmanbase = $mtxman) =~ s/\.man$//;
-    &SYSTEM ("$CP $mtxman $mandest/$mtxmanbase.1");
-  }
+  print "still POST$package - man to pdf\n";
   &tl_man_to_pdf ();
-
-  # do last so man pages are there.
-  print "still POST$package - preserving binaries\n";
-  &POST_preserve_bin ("luametatex", "context", "mtxrun");
 }
 
 sub POSTcontext_legacy {
-  print "POST$package - just keeping mkii\n";
+  print "POST$package - remake man\n";
 
-  &context_common_removals ();
-
-  # mptopdf is its own package. (See more comments above.)
-  &remove_files_of_pkg ("mptopdf");
-
-  # remove the mkiv and newer files we have in context.
-  # The context package should be committed first, and tlpdb updated,
-  # before committing context-legacy, so new files get removed here.
-  &remove_files_of_pkg ("context");
-
-  # files we move for context, hence must remove explicitly from
-  # original location in the zip.
-  &SYSTEM ("$RM -r colors/icc/context");
-  &SYSTEM ("$RM context-readme.txt");
-  &SYSTEM ("$RM doc/context/scripts/mkii/mptopdf.*");
-
-  print "still POST$package - user-level executable man pages\n";
-  # we only keep mkii man pages here, mkiv in context.
-  &xchdir ("$DEST/doc/context/scripts/mkii");
-  my $mandest = "$TOPDEST/texmf-dist/doc/man/man1";
-  &xmkdir ($mandest);
-  for my $exec ("texexec", "texmfstart") {
-    &SYSTEM ("$CP $exec.man $mandest/$exec.1");
-  }
+  print "still POST$package - man to pdf\n";
   &tl_man_to_pdf ();
-}
-
-# Some files we remove from both context and context-legacy.
-sub context_common_removals {
-  print "\t context_common_removals\n";
-
-  # remove files Hans wants in his distribution but are confusing or
-  # problematic in TeX Live.
-  &SYSTEM ("$RM -rf colors/icc/profiles");         # nonfree
-  &SYSTEM ("$RM -rf scripts/context/stubs/");      # install/setup
-  &SYSTEM ("$RM -rf source");			   # entire engine source
-  &SYSTEM ("$RM -rf web2c/");                   # context*cnf*, texlive*cnf.lua
-
-  # Taco, 14sep2012: IIRC, we decided to remove that file altogether.
-  # Its only reason for existence is that (at the time it was created)
-  # editors like SciTE did not handle .OTF files properly, so I created
-  # a truetype version with fontforge. That was five years ago or so,
-  # and it should no longer be needed. It's never been removed from
-  # ConTeXt, but for TL, let's avoid the complication of having an lm
-  # directory outside the normal lm package.
-  &SYSTEM ("$RM -rf fonts/truetype/hoekwater/lm/");# lmtypewriter10-regular.ttf
-
-  # Mojca, 12sep2012: I'm not exactly sure how Hans uses this font
-  # [texmfhome.otf], but it has something to do with locating the tree
-  # where ConTeXt resides. It's not a real font Hans will be reluctant
-  # to move the font from "data" to "fonts" and unless/until someone
-  # needs the font in TL, I would just remove it and maybe put a comment
-  # to your script that if need arises, the font can be included into TL later.
-  &SYSTEM ("$RM -rf fonts/data/");	           # texmfhome.otf
-
-  # unused per hans (jmn) and nonfree (all the rest) fonts.
-  &SYSTEM ("find -name jmn "
-           . "-o -name \*cambria\* "
-           . "-o -name \*cleartype\* "
-           . "-o -name \*koeiel\* "
-           . "-o -name \*lucida\* "
-           . "-o -name \*minion\* "
-           . "-o -name \*mscore\* "
-           . "-o -name \*osx\* "
-           . "| xargs rm -rfv");
 }
 
 
 # Remove all files from PKG (as reported by the tlpfiles script).
-# Used for ConTeXt.
+# Was used for ConTeXt, but not as of the 2025 switch to Max's repackaging.
 #
 sub remove_files_of_pkg {
   my ($pkg) = @_;
@@ -7168,10 +7219,11 @@ sub remove_files_of_pkg {
   &xchdir ($cwd);
 }
 
-# Called for the ConTeXt scripts, though conceivably could be used for
-# other things.  Make a symlink in each Unix bindir (Windows is not
-# handled here) to EXEC, assuming its location is relative to cwd.
-# Except also skip any platforms given as @OMIT_PLATFORMS.
+# Was used for ConTeXt, but not as of the 2025 switch to Max's repackaging.
+# Conceivably could be used for other things. Make a symlink in each
+# Unix bindir (Windows is not handled here) to EXEC, assuming its
+# location is relative to cwd. Except also skip any platforms given as
+# @OMIT_PLATFORMS.
 #
 # If LINKNAME is not given, the symlink is named as the basename of EXEC
 # with any extension removed.
@@ -7203,47 +7255,6 @@ sub bindirs_symlink {
     my $platdir = "$TOPDEST/bin/$p";
     &xmkdir ($platdir);
     &SYSTEM ("ln -s $linktarget $platdir/$linkname");
-  }
-}
-
-# Called both from doscripts and could be used for ConTeXt: Update copy
-# of EXEC under Build/.../linked_scripts. If second arg
-# INTERMEDIATE_DIRS is given (used to be done by ConTeXt), that path is
-# appended under linked_scripts/. In any case, just the basename of EXEC
-# is used in the destination, and the full EXEC, whatever it is, is used
-# for the source of the copy.
-#
-sub build_scripts_copy {
-  my ($exec,$intermediate_dirs) = @_;
-
-  # prepend / to INTERMEDIATE_DIRS if given.
-  $intermediate_dirs = ($intermediate_dirs ? "/$intermediate_dirs" : "");
-
-  my $build_tldir = "texk/texlive";
-  my $build_scriptsdir = "$build_tldir/linked_scripts";
-  my $build_subdir = "$package$intermediate_dirs";
-  my $builddir = "$BUILDDEST/$build_scriptsdir/$build_subdir";
-  &xmkdir ($builddir);
-  #
-  &SYSTEM ("$CP $exec $builddir/");
-
-  # Warn if missing from the Makefile.am in the sources.
-  # (but not for mptopdf, since peb unified it.)
-  return if $exec =~ /mptopdf/;
-  (my $exec_basename = $exec) =~ s,^.*/,,;
-  my $pattern = "\\b$build_subdir/$exec_basename\\b";
-  #
-  my $scripts_Makefile = "$Build/$build_scriptsdir/Makefile.in";
-  system ("grep '$pattern' $scripts_Makefile >/dev/null");
-  if ($? != 0) {
-    print "*** $build_subdir/$exec_basename not in $scripts_Makefile\n";
-  }
-  # we'd should get rid of scripts.lst since it is nothing but
-  # redundancy; coordinate with debian, though.
-  my $scripts_lst = "$Build/$build_scriptsdir/scripts.lst";
-  system ("grep '$pattern' $scripts_lst >/dev/null");
-  if ($? != 0) {
-    print "*** $build_subdir/$exec_basename not in $scripts_lst\n";
   }
 }
 
@@ -7808,19 +7819,19 @@ sub POSTmptopdf {
   # not sure if the copy under linked_scripts/context/ will get updated
   # (with a context update); doubt it.
   #&build_scripts_copy ($exec, $pkg_subdir);
-  #
+
   # but for windows, use our wrapper rather than ConTeXt's,
   # since the whole point is to have mptopdf available without ConTeXt.
-
+  print "still POST$package - windows wrapper from tl\n";
   my $build_tldir = "texk/texlive";
-  my $w32_wrapper = "$Build/$build_tldir/w32_wrapper/runscript.exe";
-  &SYSTEM ("$CP $w32_wrapper $w32_bindir/mptopdf.exe");
-  #
+  my $w32_wrapper = "$Build/$build_tldir/windows_wrapper/runscript.exe";
+  &xsystem ("$CP $w32_wrapper $w32_bindir/mptopdf.exe");
+
   print "still POST$package - man page\n";
   &xchdir ("$DEST/doc/context/scripts/mkii");
   my $mandest = "$TOPDEST/texmf-dist/doc/man/man1";
   &xmkdir ($mandest);
-  &SYSTEM ("$CP mptopdf.man $mandest/mptopdf.1");
+  &xsystem ("$CP mptopdf.man $mandest/mptopdf.1");
   &tl_man_to_pdf ();
 }
 
@@ -8328,18 +8339,31 @@ sub POST_do_man {
 
 sub POST_preserve_bin {
   print "POST_preserve_bin - binaries = @_\n";
-  # The ConTeXt and pmx packages, among others, includes binaries made
-  # from Build, and normal scripts and support files. The latter can get
-  # updated without needing to update the former, so we support it.
-  # Which means preserving the binaries from the Build.
+  # The pmx package and others include binaries made from Build, and
+  # normal scripts and support files. The latter can get updated without
+  # needing to update the former, so we support it. Which means
+  # preserving the binaries from Build. Hence this routine.
   #
   # The ctan2tds output will look weird since all the binaries will show
   # up as new files, since they are in <pkg>.<platform> subpackages. And
   # thus the svn run will get errors that they can't be added, also. But
   # since they don't actually need to be committed (that is the whole
   # point of preserving them), no harm done.
+  # 
+  # If the last argument is an array ref, we take it as the list of
+  # platforms to preserve (used for context); otherwise, do all platforms.
+  #
+  my @platforms;
+  my $lastarg = $_[$#_];
+  if (ref $lastarg && $lastarg =~ /.*ARRAY.*/) {
+    @platforms = @$lastarg;
+    print "\t got explicit platform list: @platforms\n";
+    pop (@_);
+  } else {
+    chomp (@platforms = `cd $Master/bin && ls | grep -vw man`);
+  }
+
   my (@binaries) = @_;
-  chomp (my @platforms = `cd $Master/bin && ls | grep -vw man`);
   for my $p (@platforms) {
     my $platdir = "$TOPDEST/bin/$p";
     &xmkdir ($platdir);
@@ -8354,6 +8378,7 @@ sub POST_preserve_bin {
   }
 
   # always going to need this anyway, may as well do it here.
+  print "still POST_preserve_bin - doing POST_do_man\n";
   &POST_do_man ();
 }
 

@@ -105,8 +105,14 @@ echo "$0: is $ctan_dir"
 test -r "$ctan_dir/TDS_READY" \
 && echo "... from `cat $ctan_dir/TDS_READY`"
 
-# help in keeping things in sync.
-if egrep " $pkg"'( |$)' $mydir/tlpkg-ctan-check >/dev/null; then :; else
+# help in keeping things in sync. The first regexp matches in the
+# @TLP_working list of packages that we check; the second, with
+# "quotes", matches in the @TLP_no_check. We want the latter since
+# occasionally there are packages we update in the normal way but cannot
+# check, such as context-legacy.
+if egrep " $pkg"'( |$)' $mydir/tlpkg-ctan-check >/dev/null \
+   || egrep '"'$pkg'",' $mydir/tlpkg-ctan-check >/dev/null \
+; then :; else
   echo
   echo "*** $0: $pkg not in $mydir/tlpkg-ctan-check, add?"
 fi
@@ -135,6 +141,7 @@ if test "$pkg" = genmisc; then  # remove files after copying in ctan2tds
 else
   # normal case (/. to deref symlinks, e.g., arabtex)
   cp -pr $ctan_dir/. $pkg || exit 1
+  
 fi
 
 # Sometimes files on CTAN have future dates. Silently change them
@@ -168,7 +175,11 @@ ctan2tds --ctan-dir=$ctan_dir $contrib_ctan2tds_arg $pkg || exit 1
 cd $cooked || exit 1
 printf "\n\f cooked\n"
 find $pkg -name TDS_READY -exec rm '{}' \;     # remove sentinel file
-find $pkg -depth -type d | xargs rmdir 2>/dev/null  # remove empty directories
+
+# let's assume GNU find for better recursive deletion:
+find "$@" -type d -empty -delete -print
+# generic method:
+#find $pkg -depth -type d | xargs rmdir 2>/dev/null
 
 spacenames="`find $pkg -name \*\ \*`"
 if test -n "$spacenames"; then
@@ -184,7 +195,7 @@ find $pkg \( -name .svn \) -prune -o -print | sort -f | uniq -i -d >&2
 # not group-writable; cron checks also.
 chmod -R u+w,go-w,a+rX-st $pkg
 
-# check for symlinks
+# check for symlinks outside of bin/.
 find $pkg -type l -ls | grep -v /Master/bin | sort >&2
 
 # show list of files (and tee to tmp).
