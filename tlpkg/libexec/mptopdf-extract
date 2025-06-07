@@ -1,6 +1,14 @@
 #!/bin/sh
 # $Id$
 # Public domain. Originally written by Karl Berry, 2013.
+#
+# As of June 2025, this is no longer used; instead mptopdf is installed
+# in the normal way from CTAN, originating with the ConTeXt repackaging
+# at https://github.com/gucci-on-fleek/context-packaging.
+# 
+echo "$0: replaced by repackaging, why is this being called?" >&2
+exit 1
+
 # Get the mptopdf files out of the context zip.  We distribute mptopdf
 # as a separate package, since it can be used with LaTeX.  See
 # description in mptopdf.tlpsrc for details.
