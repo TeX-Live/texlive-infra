@@ -1261,7 +1261,9 @@ sub do_tlp {
     # Too old to worry about.
     next if $basefile =~ m,(pazofnst.tex|Makefile)$, && $file =~ m,/mathpazo/,;
 
-    # We install our own stub, not ConTeXt's.  I guess.
+    # We install our own stub for mptopdf, not ConTeXt's,
+    # although this can't be checked any more anyway with the
+    # June 25 ConTeXt repackaging.
     next if $basefile eq "mptopdf.exe";
 
     # btxmac.tex symlinked on CTAN, but we may as well keep the copy
@@ -1281,6 +1283,9 @@ sub do_tlp {
 
     # Wrong README gets compared.
     next if $basefile eq "README" && $file =~ m,/(pmx|cs)/,;
+
+    # README.md not in sync with dtx.
+    next if $basefile eq "README.md" && $file =~ m,/uni-titlepage/,;
 
     my $tl_file = "$Master/$file";
     if (! -e $tl_file) {

@@ -7129,6 +7129,7 @@ sub POSTcontext {
   print "POST$package - README.TEXLIVE, unpack archives/zips\n";
   &xchdir ($DEST);
 
+print "*** qqq next time: preserve correct context.exe/mtxrun.exe on Windows\n";
   # what we unpack.
   my $ctan_ctx_archives = "$ctan_root/macros/context/base/archives";
   print "\t ctan_root=$ctan_root\n";
@@ -7802,10 +7803,11 @@ sub POSTmpfonts {
 }
 
 sub POSTmptopdf {
-  # mptopdf needs a cut-down version of the context post routine.
+  # mptopdf needs a cut-down version of the old context post routine.
   # But there are enough differences that trying to factor out the
   # commonalities doesn't make sense.  Sigh.
   print "POST$package - user-level executables\n";
+  print "*** qqq update /home/ftp/tex/mptopdf\n";
   my $w32_bindir = "$TOPDEST/bin/windows";
   &xmkdir ($w32_bindir);
   #
