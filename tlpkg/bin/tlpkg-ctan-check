@@ -800,7 +800,7 @@ my @TLP_working = qw(
     sf298 sfee sffms sfg
     sfmath sgame shade shadethm shadow shadowtext shapepar shapes
     shdoc shipunov shobhika short-math-guide shortmathj shorttoc
-    show2e showcharinbox showdim showexpl showhyphenation
+    show-pdf-tags show2e showcharinbox showdim showexpl showhyphenation
     showkerning showlabels showtags shtthesis
     shuffle
     sidecap sidenotes sidenotesplus sides signchart

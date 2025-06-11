@@ -177,7 +177,7 @@ printf "\n\f cooked\n"
 find $pkg -name TDS_READY -exec rm '{}' \;     # remove sentinel file
 
 # let's assume GNU find for better recursive deletion:
-find "$@" -type d -empty -delete -print
+find "$@" -type d -empty -delete #-print
 # generic method:
 #find $pkg -depth -type d | xargs rmdir 2>/dev/null
 
