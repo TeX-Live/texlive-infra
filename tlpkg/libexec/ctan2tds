@@ -7171,7 +7171,7 @@ END_RTL
   #
   # The bin.zip provides binaries for some platforms we don't have in TL.
   # unzip makes it hard to exclude a directory; remove them afterward.
-  my $bin_excludes = "sparc-solaris amd64-openbsd*";
+  my $bin_excludes = "amd64-openbsd*";
   &xsystem ("cd $bin_destdir && rm -r $bin_excludes");
   #
   # amd64-netbsd and x86_64-cygwin binaries are not provided.
