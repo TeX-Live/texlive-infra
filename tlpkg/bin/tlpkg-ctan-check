@@ -30,7 +30,7 @@ my @TLP_working = qw(
     adfathesis adforn adhocfilelist adigraph
     adjmulticol adfsymbols adjustbox adobemapping
     adrconv adtrees advdate advice
-    ae aeguill aesupp affilauthor afperpack afthesis
+    ae aeguill aeskwadraat aesupp affilauthor afperpack afthesis
     aguplus aiaa aichej aiplans ajl akktex akletter akshar
     albatross alchemist alegreya alertmessage alfaslabone
     alg algobox algolrevived
@@ -314,7 +314,7 @@ my @TLP_working = qw(
     enctex encxvlna endfloat endheads endiagram
     endnotes endnotes-hy endnotesj endofproofwd
     engpron engrec engtlc enigma enotez ensps-colorscheme
-    enumext enumitem enumitem-zref envbig enverb environ envlab eolang
+    enumext enumitem enumitem-zref envbig enverb environ envlab eolang eoldef
     epcqrcode epigrafica epigram epigraph epigraph-keys epiolmec eplain
     epsdice epsf epsf-dvipdfmx epsincl epslatex-fr
     epspdfconversion epstopdf epstopdf-pkg
