@@ -430,7 +430,7 @@ my @TLP_working = qw(
     hepparticles hepthesis hepunits here hereapplies heria heros-otf hershey-mp
     heuristica hexboard hexgame
     hf-tikz hfbright hfoldsty hfutexam hfutthesis
-    hhtensor hideanswer highlightlatex highlightx
+    hhtensor hideanswer hideproofs highlightlatex highlightx
     hindawi-latex-template hindmadurai
     histogr historische-zeitschrift hitec hitreport
     hitszthesis hitszbeamer hithesis
