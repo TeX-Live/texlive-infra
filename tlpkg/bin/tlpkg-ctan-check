@@ -952,7 +952,7 @@ my @TLP_working = qw(
     verbasef verbatimbox verbatimcopy verbdef
     verbments verifica verifiche verifycommand verse
     version versions versonotes vertbars vgrid
-    vhistory visualfaq visualfaq-fr visualpstricks visualtikz
+    vhistory visualfaq visualfaq-fr visualpstricks visualtikz visualtoks
     vmargin vntex vocaltract volumes
     voss-mathcol
     vpe vruler vtable vwcol
@@ -1097,6 +1097,7 @@ my @TLP_no_check = (
   "texconfig",		# we maintain
   "texdoctk",		# maintained here
   "texlive.infra",	# binary
+  "texgit",		# per author request (python script separate)
   "texsis",		# too old to worry about
   "texware",		# binary
   "texworks",		# binary

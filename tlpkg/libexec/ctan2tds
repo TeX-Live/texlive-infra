@@ -2702,6 +2702,7 @@ $standardtex
  'verifica',	'\.cls',		# not ver-doc.sty
  'vertex',      'vertex\.tex|' . $standardtex,
  'vhistory',    '\.sty',                # not hyperref.cfg
+ 'visualtoks',  'visualtoks\.tex',
  'voss-mathmode','NULL',                # doc
  'vrb',         'vrb\.tex',
  'vruler',      '^..[^s].*\.sty', # not miscdoc.sty
