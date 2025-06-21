@@ -4016,6 +4016,13 @@ $standardttf = '\.ttf|\.TTC';
 );
 
 
+# scripts that should use the UTF-8 codepage for all text I/O on Windows
+%specialscripts_utf8win = (
+    "extractbb" => true,
+    "show-pdf-tags" => true,
+);
+
+
 # packages which have info files to install.
 %specialinfos = (
  'latex2e-help-texinfo'         => '\.info',
@@ -4987,8 +4994,15 @@ sub doscripts {
         # next bit of ugliness: can be better to use the GUI wrapper
         # wrunscript.exe (which only exists in Master/bin/win32) instead
         # of the usual runscript.exe
-        my $w32_wrapper = "$Master/bin/windows/"
-                 . ($s eq "tlcockpit.sh" ? "wrunscript.exe" : "runscript.exe");
+        my $w32_wrapper_exe = $s eq "tlcockpit.sh" ?
+            "wrunscript.exe" : "runscript.exe";
+
+        # Handle the UTF-8 wrappers
+        if ($specialscripts_utf8win{$linkname}) {
+            $w32_wrapper_exe = "utf8runscript.exe";
+        }
+
+        my $w32_wrapper = "$Master/bin/windows/" . $w32_wrapper_exe;
         #
         # xx here too, should merge with bin_links in
         # Build/source/texk/texlive/linked_scripts/Makefile.am,
@@ -7127,7 +7141,7 @@ sub POSTcmcyr {
 # His process does all the work previously done here, such as removing
 # nonfree files. What's left for us is mainly to unpack the zip files
 # from CTAN (see tlpkginfo) and remake the pdfs for the man pages.
-# 
+#
 # There are three packages on the TL side: context, context-legacy, mptopdf.
 # Each can be updated with c2a (-> c2l, etc.), in the usual way.
 # They should be updated together.
@@ -7185,7 +7199,7 @@ END_RTL
   &POST_preserve_bin ("context", "context.lua", "mtxrun", "mtxrun.lua",
                       "luametatex",
                       ["amd64-netbsd"]);
-  
+
   print "still POST$package - man to pdf\n";
   &tl_man_to_pdf ();
 }
@@ -8355,7 +8369,7 @@ sub POST_preserve_bin {
   # thus the svn run will get errors that they can't be added, also. But
   # since they don't actually need to be committed (that is the whole
   # point of preserving them), no harm done.
-  # 
+  #
   # If the last argument is an array ref, we take it as the list of
   # platforms to preserve (used for context); otherwise, do all platforms.
   #
