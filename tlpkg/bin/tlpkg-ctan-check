@@ -613,7 +613,7 @@ my @TLP_working = qw(
     mucproc mugsthesis muling multenum
     multiaudience multibbl multibib multibibliography
     multicap multicolrule multidef multido multienv multiexpand
-    multifootnote multilang multiobjective multiple-choice
+    multifootnote multilang multinotes multiobjective multiple-choice
     multirow multitoc munich
     musical musicography musikui musixguit
     musixtex musixtex-fonts musixtnt musuos muthesis
@@ -875,7 +875,7 @@ my @TLP_working = qw(
     thinsp thmbox thmtools
     threadcol threeddice threeparttable threeparttablex
     thuaslogos thubeamer thucoursework thumb thumbpdf thumbs thumby thuthesis
-    ticket ticollege tidyres tiet-question-paper
+    ticket ticollege tictactoe tidyres tiet-question-paper
     tikz2d-fr tikz3d-fr tikz-3dplot
     tikz-among-us tikz-bagua tikz-bayesnet tikz-bbox tikz-bpmn
     tikz-cd tikz-decofonts tikz-dependency tikz-dimline tikz-ext
