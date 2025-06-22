@@ -4025,8 +4025,13 @@ $standardttf = '\.ttf|\.TTC';
 
 # scripts that should use the UTF-8 codepage for all text I/O on Windows
 %specialscripts_utf8win = (
+    "cllualatex" => true,
+    "cluttex" => true,
+    "clxelatex" => true,
     "extractbb" => true,
     "show-pdf-tags" => true,
+    "xelatex-unsafe" => true,
+    "xetex-unsafe" => true,
 );
 
 
