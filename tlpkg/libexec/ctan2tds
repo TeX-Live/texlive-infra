@@ -2124,7 +2124,7 @@ $standardtex_no_lua
    = '(\.(.bx|4ht|cls|clo|cmap|(code|lib)\.tex'
     . '|def|dfu|fd|fontspec|ldf|opm|py|sty|trsl)'
     . '|^lbx|.*[^c]\.cfg)$'; # not ltxdoc.cfg
-$standardtex = '($standardtex_no_lua|\.lua$)';
+$standardtex = "($standardtex_no_lua" . '|\.lua$)';
 #
 %specialtex = (
  '2up',         '2up\.tex|' . $standardtex,
@@ -2707,7 +2707,7 @@ $standardtex = '($standardtex_no_lua|\.lua$)';
  'verifica',	'\.cls',		# not ver-doc.sty
  'vertex',      'vertex\.tex|' . $standardtex,
  'vhistory',    '\.sty',                # not hyperref.cfg
- 'visualtoks',  'visualtoks\.tex',
+ 'visualtoks',  'visualtoks\.tex|' . $standardtex,
  'voss-mathmode','NULL',                # doc
  'vrb',         'vrb\.tex',
  'vruler',      '^..[^s].*\.sty', # not miscdoc.sty
