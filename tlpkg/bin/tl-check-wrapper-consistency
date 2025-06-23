@@ -83,8 +83,13 @@ sub unx_wrapper_entries {
 # cases) exists in W32DIR as a .exe, and furthermore is a copy of the
 # canonical w32 wrapper exe specified in W32CANONICAL.
 # 
+# For .bat and .cmd files, also check that the corresponding .exe
+# matches W32CANONICAL.
+# 
+# Return number of files that are different.
+# 
 # (2023: our windows binaries aren't 32-bit any more, but don't bother
-# renaming.)
+# renaming the variables.)
 # 
 sub check_w32 {
   my ($w32dir, $w32canonical, %uw) = @_;
@@ -93,14 +98,21 @@ sub check_w32 {
   my %is_shell_script = &list_shell_scripts ();
   for my $k (sort keys %uw) {
     next if $is_shell_script{$k};    # skip shell scripts
-    #
+
     # also skip these special cases:
     next if $k =~
       /^(cluttex|epspdftk|extractbb|latexindent|mktex.*
          |texdoctk|tlcockpit|tlmgr|tlshell|xasy)$/x;
     #
     # else do the diff with the canonical wrapper:
-    $diff += system ("cmp $w32dir/$k.exe $w32canonical");
+    my $cmp = "cmp -s $w32dir/$k.exe";
+    my $canonical_cmp = "$cmp $w32canonical";
+    my $utf8_cmp = "$cmp windows/utf8runscript.exe";
+    my $status += system ("$canonical_cmp || $utf8_cmp");
+    if ($status != 0) {
+      warn "$0: $k.exe does not match $w32canonical or utf8runscript.exe\n";
+      $diff++;
+    }
   }
 
   opendir (DIR, $w32dir) || die "opendir($DIR) failed: $!";
