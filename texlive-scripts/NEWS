@@ -1,6 +1,10 @@
 (This file public domain.  Originally written by Norbert Preining and
 Karl Berry, 2010.)
 
+<p><b>infra 75588 (released 24jun25):</b>
+<li>add utf8runscript.exe to texlive.infra, for better UTF-8 support on
+some Windows scripts.
+
 <p><b>tlmgr 75204 (released 14may25):</b>
 <li>report more info when remote database is older than local installation.
 <li>update GPG key rings.
