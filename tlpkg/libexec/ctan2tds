@@ -3472,7 +3472,6 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'mversion'     => 'latex',  # requires interaction
  'minitoc'      => 'latex',  # requires interaction and 1000q instead of 10q
  'mluexercise'	=> 'tex',
- 'multinotes'	=> 'etex-answer-y',# docstrip overwrite agony
  'mylatexformat'=> 'pdflatex',
  'nameauth'	=> 'pdflatex-preserve-pdf',
  'njuthesis'	=> 'etex',

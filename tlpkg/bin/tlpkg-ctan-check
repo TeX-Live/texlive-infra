@@ -613,7 +613,7 @@ my @TLP_working = qw(
     mucproc mugsthesis muling multenum
     multiaudience multibbl multibib multibibliography
     multicap multicolrule multidef multido multienv multiexpand
-    multifootnote multilang multinotes multiobjective multiple-choice
+    multifootnote multilang multiobjective multiple-choice
     multirow multitoc munich
     musical musicography musikui musixguit
     musixtex musixtex-fonts musixtnt musuos muthesis
