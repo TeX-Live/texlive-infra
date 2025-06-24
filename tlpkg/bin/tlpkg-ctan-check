@@ -898,7 +898,7 @@ my @TLP_working = qw(
     tkz-fct tkz-graph tkz-grapheur tkz-orm tkz-tab tkzexample
     tlc-article tlc2 tlc3-examples tlcockpit tlmgr-intro-zh-cn tlmgrbasics
     to-be-determined tocbibind tocdata tocloft tocvsec2 todo todonotes
-    tokcycle tokenizer tonevalue toolbox tools
+    tokcycle tokenizer tokmap tonevalue toolbox tools
     topfloat topiclongtable topletter toptesi
     totalcount totcount totpages
     tpic2pdftex tpslifonts tqft
