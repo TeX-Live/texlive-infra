@@ -1431,6 +1431,8 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'texdoc',	"&MAKEflatten",
  'texdoctk',    "die 'skipping, moribund, only in tl'",
  'texemplar',   "die 'skipping, await request, 199x'",
+ 'texgit',	"die 'skipping, per author request'",
+ 'texinfo',	"die 'skipping, see ~karl/bin/update-texinfo'",
  'texlab',	"die 'skipping, requires rust compilation'",
  'texlipse',    "die 'skipping, plugin for Eclipse'",
  'texlive-dummy',		"die 'skipping, suse placeholder'",
