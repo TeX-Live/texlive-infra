@@ -878,7 +878,8 @@ my @TLP_working = qw(
     ticket ticollege tictactoe tidyres tiet-question-paper
     tikz2d-fr tikz3d-fr tikz-3dplot
     tikz-among-us tikz-bagua tikz-bayesnet tikz-bbox tikz-bpmn
-    tikz-cd tikz-decofonts tikz-dependency tikz-dimline tikz-ext
+    tikz-cd tikz-cookingsymbols
+    tikz-decofonts tikz-dependency tikz-dimline tikz-ext
     tikz-feynhand tikz-feynman tikz-imagelabels tikz-inet
     tikz-kalender tikz-karnaugh tikz-ladder tikz-lake-fig tikz-layers
     tikz-mirror-lens tikz-nef tikz-network tikz-nfold tikz-opm tikz-optics
