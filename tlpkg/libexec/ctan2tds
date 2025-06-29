@@ -25,6 +25,7 @@ BEGIN {
 use Getopt::Long;
 use File::Basename;
 use Cwd;
+use warnings; # not ready for use strict
 use vars qw($opt_ctan_dir);
 
 # programs used; must all be on the path
@@ -4027,13 +4028,13 @@ $standardttf = '\.ttf|\.TTC';
 
 # scripts that should use the UTF-8 codepage for all text I/O on Windows
 %specialscripts_utf8win = (
-    "cllualatex" => true,
-    "cluttex" => true,
-    "clxelatex" => true,
-    "extractbb" => true,
-    "show-pdf-tags" => true,
-    "xelatex-unsafe" => true,
-    "xetex-unsafe" => true,
+  "cllualatex"     => 1,
+  "cluttex"        => 1,
+  "clxelatex"      => 1,
+  "extractbb"      => 1,
+  "show-pdf-tags"  => 1,
+  "xelatex-unsafe" => 1,
+  "xetex-unsafe"   => 1,
 );
 
 
@@ -4129,9 +4130,11 @@ $standardttf = '\.ttf|\.TTC';
 
 # which suffixes to remove after building.  Checked after runins and at
 # the end, in the doc directory.
-$standardclean = '\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
+$standardclean = '(\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
                 . '|\.bbl|\.blg|\.idx|\.ind|\.ilg|\.glo|\.gls|\.loa'
-                . '|\.bcf|\.ido|\.run\.xml|\.hd|\.slnc|\.listing$';
+                . '|\.bcf|\.ido|\.run\.xml|\.hd|\.slnc|\.listing'
+                . '|\.fdb_latexmk|\.fls'
+                . ')$';
 %specialclean  = (
  'a2ping'       => 'README',		# not worth whole separate doc subdir
  'accfonts'     => $standardclean . '|dvips.enc',       # dup enc

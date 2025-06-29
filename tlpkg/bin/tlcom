@@ -5,11 +5,19 @@
 # of importing from CTAN; c2l and ctan2tl are additional wrappers
 # (called by c2a).
 
-test $# -eq 0 && cd /
-/bin/pwd >/dev/null || exit 1
-
+if test $# -eq 0; then
+  echo "$0: missing message argument." >&2
+  exit 1
+fi
 msg=`echo "$1" | sed "s/^-m//"`
 shift
+
+# If no other args, cd / in case we're in a deleted directory.
+# If there are other args, they might include "." or such, so don't cd.
+test $# -eq 0 && cd /
+
+# The commit will fail if we're in a deleted directory.
+/bin/pwd >/dev/null || exit 1
 
 dirlist=${TMPDIR-/tmp}/`id -u`.tlplace.dirs
 tlroot=`tail -n 1 $dirlist | sed 's,/Master.*,,'`

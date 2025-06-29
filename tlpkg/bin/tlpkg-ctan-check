@@ -862,7 +862,7 @@ my @TLP_working = qw(
     tex-virtual-academy-pl tex-vpat
     tex4ebook texaccents texapi texblend texbytopic texcount
     texdate texdef texdiff texdimens texdirflatten texdoc texdraw
-    texfindpkg texfot texinfo texilikechaps texilikecover
+    texfindpkg texfot texilikechaps texilikecover
     texliveonfly texloganalyser texlogfilter texlogos texlogsieve
     texmate texments texnegar
     texonly texosquery texplate texpower texproposal texshade texsurgery
@@ -1099,6 +1099,7 @@ my @TLP_no_check = (
   "texdoctk",		# maintained here
   "texlive.infra",	# binary
   "texgit",		# per author request (python script separate)
+  "texinfo",		# copied manually from releases with update-texinfo
   "texsis",		# too old to worry about
   "texware",		# binary
   "texworks",		# binary
