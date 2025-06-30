@@ -25,7 +25,7 @@ BEGIN {
 use Getopt::Long;
 use File::Basename;
 use Cwd;
-use warnings; # not ready for use strict
+# not ready use warnings; # not ready for use strict either
 use vars qw($opt_ctan_dir);
 
 # programs used; must all be on the path
@@ -2220,7 +2220,7 @@ $standardtex = "($standardtex_no_lua" . '|\.lua$)';
  'compare',	'\.tex',
  'components',  'NULL',
  'concepts',    'concepts\.sty',
- 'contracard',  "$package\.(cls|sty)",
+ 'contracard',  "contracard\.(cls|sty)",
  'contour',     '\.cfg|\.sty|\.cnt',
  'cs-techrep',	'\.cls',		# not docstrip.cfg
  'csplain',     '\.tex',
@@ -4619,7 +4619,7 @@ sub setup {
 
 sub donormal {
    my ($ctrl) = @_;
-
+   
    print "doing donormal($ctrl) with DEST=$DEST\n";
 
    # Check for tds-ready packages
