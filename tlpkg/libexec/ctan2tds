@@ -7166,7 +7166,6 @@ sub POSTcontext {
   print "POST$package - README.TEXLIVE, unpack archives/zips\n";
   &xchdir ($DEST);
 
-print "*** qqq next time: preserve correct context.exe/mtxrun.exe on Windows\n";
   # what we unpack.
   my $ctan_ctx_archives = "$ctan_root/macros/context/base/archives";
   print "\t ctan_root=$ctan_root\n";
