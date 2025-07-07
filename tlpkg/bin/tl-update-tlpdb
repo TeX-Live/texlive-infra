@@ -591,19 +591,19 @@ sub tlpobj_catalogue_equal {
   
   # The shortdesc and longdesc usually come from the Catalogue,
   # but sometimes are in the tlpsrc.
-  if (! &suredef($tlpA->shortdesc) eq &suredef($tlpB->shortdesc)) {
+  if (&suredef($tlpA->shortdesc) ne &suredef($tlpB->shortdesc)) {
     # Maybe someday combine this silly code to avoid redundancy,
     # and show strings (hashes) for all.
     debug("$pkg:  shortdesc now: ", &suredef($tlpA->shortdesc), "\n",
           " " x length($pkg),
             "    vs. compare db: ", &suredef($tlpB->shortdesc), "\n");
     
-  } elsif (! &suredef($tlpA->longdesc) eq &suredef($tlpB->longdesc)) {
+  } elsif (&suredef($tlpA->longdesc) ne &suredef($tlpB->longdesc)) {
     debug("$pkg:  longdesc now: ", &suredef($tlpA->longdesc), "\n",
           " " x length($pkg),
             "   vs. compare db: ", &suredef($tlpB->longdesc), "\n");
 
-  } elsif (! &suredef($tlpA->catalogue) eq &suredef($tlpB->catalogue)) {
+  } elsif (&suredef($tlpA->catalogue) ne &suredef($tlpB->catalogue)) {
     debug("$pkg: catalogue value changed (", &suredef($tlpA->catalogue),
           " -> ", &suredef($tlpB->catalogue), ")\n");
 
