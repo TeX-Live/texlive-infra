@@ -2278,6 +2278,7 @@ $standardtex = "($standardtex_no_lua" . '|\.lua$)';
  'europecv',    'EuropeFlag|europasslogo|\.cls|\.def',
  'exam-n',	'\.cls',		# not .clo example file
  'expltools',	'NULL',			# doc
+ 'fancymag',	'img|' . $standardtex,
  'fancyqr',	'\.code|' . $standardtex,
  'fancytooltips',       'fancytipmark[.1-4].*|' . $standardtex,
  'farbe',	'farbe\.tex|' . $standardtex,

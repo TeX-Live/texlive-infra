@@ -339,7 +339,8 @@ my @TLP_working = qw(
     extpfeil extract extractbb extsizes ezedits
   facsimile factura facture facture-belge-simple-sans-tva fadingimage
     fail-fast faktor familytree
-    fancybox fancyhandout fancyhdr fancyhdr-it fancylabel fancynum fancypar
+    fancybox fancyhandout fancyhdr fancyhdr-it fancylabel
+    fancymag fancynum fancypar
     fancyqr fancyref fancyslides fancytabs fancytooltips fancyvrb fandol
     faq-fr faq-fr-gutenberg farbe fascicules fast-diagram
     fbb fbithesis fbox fbs
