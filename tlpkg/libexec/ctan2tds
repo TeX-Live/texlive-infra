@@ -1780,6 +1780,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'digestif'		=> '&POSTdigestif',
  'dlrg-templates'	=> '&POST_onelevel',
  'doipubmed'		=> '&POSTlatex2html',
+ 'dozenal'		=> '&POSTdozenal',
  'e-french'		=> '&POSTe_french',
  'easydtx'		=> '&POST_do_man',
  'embedfile'		=> '&POSTembedfile',
@@ -7405,7 +7406,12 @@ sub POSTdigestif {
   print "POST$package - make zip files per their INSTALL.md\n";
   &xsystem ("zip -j $package.zip *.lua *.tags");
   &xsystem ("$RM *.lua *.tags");
-  &mv_with_mkdir ("$package.zip", "$DEST/scripts/$package/");
+}
+
+sub POSTdozenal {
+  print "POST$package - gray.tfm should never be in runtime\n";
+  &mv_with_mkdir ("$DEST/fonts/tfm/public/$package/gray.tfm",
+                  "$DEST/source/$package/");
 }
 
 sub POSTe_french {
