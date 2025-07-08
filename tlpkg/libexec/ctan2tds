@@ -3176,6 +3176,7 @@ $standardsource = '(\.(bat|c|drv|[dem]tx|fea|fdd|ins|mk|sfd)'
  'eurosym',             'NULL',                 # leave makefiles, etc.
  'export',              '\.l$|' . $standardsource,
  'expose-expl3-dunkerque-2019',	'NULL',
+ 'fancymag',		'fonts',
  'feynmf',              'feynmf\.pl|' . $standardsource,
  'findhyph',            'NULL',                 # leave makefile
  'fmtcount',            'fmtcount.perl|' . $standardsource,
