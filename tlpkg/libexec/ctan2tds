@@ -1938,6 +1938,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'stex',		=> '&POSTstex',
  'superiors'		=> '&POST_onelevel',
  'sympycalc'		=> '&POST_onelevel',
+ 'tablericons'		=> '&POST_onelevel',
  'tango'		=> '&POST_onelevel',
  'tangramtikz'		=> '&POST_onelevel',
  'tap'			=> '&POSTtap',
@@ -7851,7 +7852,7 @@ sub POSTmptopdf {
   # But there are enough differences that trying to factor out the
   # commonalities doesn't make sense.  Sigh.
   print "POST$package - user-level executables\n";
-  print "*** qqq update /home/ftp/tex/mptopdf\n";
+  print "*** also do on tug.org: cd /home/ftp/tex/mptopdf && rm -rf * && unzip -q $ctan_root/macros/context/base/archives/mptopdf.zip \n";
   my $w32_bindir = "$TOPDEST/bin/windows";
   &xmkdir ($w32_bindir);
   #

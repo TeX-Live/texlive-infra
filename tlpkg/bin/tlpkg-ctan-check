@@ -845,7 +845,7 @@ my @TLP_working = qw(
     synproof syntax syntaxdi synthslant syntrace synttree
     systeme sysuthesis
   t-angles t2
-    tabbing tabfigures table-fct tableaux tablefootnote tableof
+    tabbing tabfigures table-fct tableaux tablefootnote tableof tablericons
     tablists tablor tabls tablvar
     tabriz-thesis tabstackengine tabto-generic tabto-ltx
     tabu tabularborder tabularray tabularcalc tabularew tabularray-abnt
