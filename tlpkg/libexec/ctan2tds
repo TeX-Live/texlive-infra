@@ -3058,6 +3058,7 @@ $standarddocfmt='latex';
  'archaic',     'fonts',
  'arev',        'fonts',
  'arrayjob',    'generic',
+ 'bibtexperllibs','support',
  'blacklettert1','fonts',
  'blockdraw_mp','metapost',
  'burmese',     'fonts',
