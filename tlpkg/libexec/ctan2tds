@@ -1875,6 +1875,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'numericplots'		=> '&POSTnumericplots',
  'nwejm'		=> '&POSTnwejm',
  'opbible'		=> '&POSTopbible',
+ 'openmoji'		=> '&POST_onelevel',
  'optex'		=> '&POSToptex',
  'outilsgeomtikz'	=> '&POST_onelevel',
  'pagelayout'		=> '&POSTpagelayout',
