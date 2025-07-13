@@ -4530,10 +4530,10 @@ sub MAKEcopy {
   &xmkdir ($docdir);
 
   # for arev et al., remove symlinks.
-  &SYSTEM ("find $dest -type l | xargs --no-run-if-empty rm");
+  &SYSTEM ("find $dest -type l | xargs --no-run-if-empty $RM");
 
   # remove __MACOSX (and report to CTAN).
-  &SYSTEM ("find $dest -name __MACOSX | xargs --no-run-if-empty rm -rf");
+  &SYSTEM ("find $dest -name __MACOSX | xargs --no-run-if-empty $RM -r");
 
   # ditto assorted other for lm (files are in doc subtree already).
   -r "$dest/MANIFEST.txt"
@@ -4688,15 +4688,18 @@ sub donormal {
      &dotexinfos;
      &doinfos;
      &domans;
-
-     # remove empty directories that we never used.
-     &SYSTEM ("rmdir $DEST/*/$whichformat/$package 2>/dev/null");
-
      &killfiles ($specialclean{$package} || $standardclean);
    }
 
    # do the postaction in any case (we need to adapt some tds zips).
    &do_posthook ();
+
+   # remove ._ files left in tarballs by careless authors.
+   &SYSTEM ("find $DEST -name '._*' | xargs --no-run-if-empty $RM");
+
+   # Delete empty directories; assume GNU find, to make it easy.
+   print "\t DONORMAL removing empty directories from dest: $DEST\n";
+   &SYSTEM ("find $DEST -type d -empty -delete -print");
 }
 
 sub runins {
@@ -5456,7 +5459,7 @@ sub MAKEnosymlinks {
   &xchdir ("$DEST/doc/$whichdocformat/$package");
 
   print "\t SPECIAL nosymlinks $package\n";
-  &SYSTEM ("find . -type l | xargs --no-run-if-empty rm");
+  &SYSTEM ("find . -type l | xargs --no-run-if-empty $RM");
 
   &buildfilelist;
   &donormal ("nosetup");
@@ -8264,7 +8267,7 @@ sub POSTxsim {
 sub POSTxymtex {
   print "POST$package - rm .BAK old-doc, move subdirectories\n";
   &SYSTEM ("rm -rf old-doc");
-  &SYSTEM ("find . -name '*.BAK' | xargs rm");
+  &SYSTEM ("find . -name '*.BAK' | xargs $RM");
   my $rundir = "$DEST/tex/latex/$package";
   my $srcdir = "$DEST/source/latex/$package";
   for my $dir (qw(base chemist xymtxpdf xymtxps)) {
