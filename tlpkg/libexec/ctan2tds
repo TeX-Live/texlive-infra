@@ -1801,6 +1801,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'fpl'			=> '&POSTfpl',
  'frenchle'		=> '&POST_rmsymlink',
  'genealogy-profiles'	=> '&POST_onelevel',
+ 'gentium-sil'		=> '&POSTgentium_sil',
  'gentium-tug'		=> '&POSTgentium_tug',
  'ghsystem'		=> '&POSTghsystem',
  'gitinfo-lua'		=> '&POST_onelevel',
@@ -4590,9 +4591,10 @@ sub MAKEcopy {
 sub do_posthook {
   my $posthook = $posthook{$package};
   if ($posthook) {
-    print "\t POSTHOOK: running $posthook\n";
+    print "\t POSTHOOK running $posthook\n";
     eval ($posthook);
     die "$package failed in $posthook: $@" if $@;
+    print "\t POSTHOOK done with $posthook\n";
   }
 }
 
@@ -7511,6 +7513,16 @@ sub POSTfpl {
   print "POST$package - rename *.source\n";
   &SYSTEM ("$MV README.source $DEST/source/fonts/fpl/README");
   &SYSTEM ("cd $DEST/source/fonts/fpl/&& $MV Makefile.source Makefile");
+}
+
+sub POSTgentium_sil {
+  print "POST$package - move fonts into runtime\n";
+  # we want to keep the Gentium and GentiumBook subdirs for the doc files.
+  my $DEST_TTF = "$DEST/fonts/truetype/$Foundry/$package/";
+  &mv_with_mkdir ("*/*.ttf", $DEST_TTF);
+  #
+  my $DEST_OTF = "$DEST/fonts/opentype/$Foundry/$package/";
+  &mv_with_mkdir ("*/web/*.woff*", $DEST_OTF);
 }
 
 sub POSTgentium_tug {
