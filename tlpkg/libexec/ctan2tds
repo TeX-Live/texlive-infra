@@ -2260,7 +2260,7 @@ $standardtex = "($standardtex_no_lua" . '|\.lua$)';
  'enctex',	'(1250-|852-|csfmacro|enc-u|encmacro|il2-|kam-'
                   . '|mixcodes|noprefnt|plain-|polyset|t1macro|utf8).*\.tex',
  'endfloat',	'\.sty',		# not *.cfg
- 'eoldef',	'\.tex$',
+ 'eoldef',	'eoldef\.(tex|sty)$',
  'epsf-dvipdfmx', 'epsf-dvipdfmx\.tex',
  'esami',       '\.sty|\.lng',          # no example .cfg
  'euflag',	'euflag.sty',		# not classpack.sty
