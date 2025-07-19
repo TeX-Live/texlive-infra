@@ -810,6 +810,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'latex-fonts',         "&MAKEflatten",
  'latex-graphics',	"die 'skipping, use graphics'",
  'latex-help-texinfo',  "die 'skipping, use latex2e-help-texinfo'",
+ 'latex-indexer',  	"die 'skipping, Java, no wrapper'",
  'latex-pro-pragmatiky',    "die 'skipping, no source'",
  'latex-referenz',	    "die 'skipping, author request'",
  'latex-sciences-humaines', "die 'skipping, no source'",
@@ -1696,6 +1697,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'pax'			=> '&PREHOOK_flatten1',
  'pmx'			=> '&PREHOOK_pmx',
  'prosper'              => '&PREHOOK_prosper',
+ 'runtexfile'		=> '&PREHOOK_flatten1',
  'skb'                  => '&PREHOOK_flatten1',
  'spectralsequences'	=> '&PREHOOK_spectralsequences',
  'suftesi'              => '&PREHOOK_suftesi',
@@ -3993,6 +3995,7 @@ $standardttf = '\.ttf|\.TTC';
  'pygmentex',		=> 'pygmentex\.py$',
  'pythontex'            => '(de)?pythontex\.py$',
  'rubik'                => '\.pl$',
+ 'runtexfile'		=> '\.lua$',
  'runtexshebang'	=> '\.lua$',
  'show-pdf-tags'	=> 'show-pdf-tags\.lua',
  'spix'			=> '\.py$',
@@ -4114,6 +4117,7 @@ $standardttf = '\.ttf|\.TTC';
  'ppmcheckpdf'          => '\.1$',
  'purifyeps'            => 'purifyeps.1',
  'rubik'		=> '\.1$',
+ 'runtexfile'		=> '\.1$',
  'spix'			=> '\.1$',
  'show-pdf-tags'	=> '\.1$',
  'splitindex'           => '\.1$',
@@ -5081,12 +5085,17 @@ sub build_scripts_copy {
   if ($? != 0) {
     print "*** $build_subdir/$exec_basename not in $scripts_Makefile\n";
   }
-  # we should get rid of scripts.lst since it is nothing but
-  # redundancy; coordinate with debian, though.
-  my $scripts_lst = "$Build/$build_scriptsdir/scripts.lst";
-  system ("grep '$pattern' $scripts_lst >/dev/null");
-  if ($? != 0) {
-    print "*** $build_subdir/$exec_basename not in $scripts_lst\n";
+  # scripts.lst is superseded with scripts-targets.lst,
+  # but keep them both for build procedures. Unfortunately,
+  # scripts-targets.lst has to be updated after "place",
+  # by running make -C .../Work/texk/texlive/linked_scripts install,
+  # before committing.
+  for my $scripts_lst ("$Build/$build_scriptsdir/scripts-targets.lst",
+                       "$Build/$build_scriptsdir/scripts.lst") {
+    system ("grep '$pattern' $scripts_lst >/dev/null");
+    if ($? != 0) {
+      print "*** $build_subdir/$exec_basename not in $scripts_lst\n";
+    }
   }
 }
 

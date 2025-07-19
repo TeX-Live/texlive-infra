@@ -778,7 +778,7 @@ my @TLP_working = qw(
     rpgicons rrgtrees rsc rsfs rsfso
     rterface rtkinenc rtklage
     rub-kunstgeschichte rubik ruhyphen ruler rulerbox rulercompass
-    runcode runtexshebang ruscap russ rutitlepage
+    runcode runtexfile runtexshebang ruscap russ rutitlepage
     rviewport rvwrite ryersonsgsthesis ryethesis
   sa-tikz sacsymb sageep sanitize-umlaut sankey
     sanskrit sanskrit-t1 sansmath sansmathaccent sansmathfonts
