@@ -159,7 +159,7 @@ my @TLP_working = qw(
     boxedminipage boxhandler bpchem bpolynomial
     br-lex bracealign bracketkey braids braille braket
     brandeis-dissertation brandeis-problemset brandeis-thesis
-    breakcites breakurl bredzenie breqn bropd brushscr
+    breakcites breakurl bredzenie breqn bropd broydensolve brushscr
     bubblesort buctthesis bullcntr bundledoc burmese
     businesscard-qrcode bussproofs bussproofs-extra
     bxbase bxcalc bxcjkjatype bxcoloremoji bxdpx-beamer bxdvidriver bxghost
