@@ -536,7 +536,8 @@ my @TLP_working = qw(
     locality localloc logbox
     logical-markup-utils logicproof logicpuzzle logictools logix
     logoetalab logpap logreq lollipop
-    longdivision longfbox longfigure longmath longnamefilelist loops
+    longdivision longfbox longfigure longmath longnamefilelist
+    longtwocolumn loops
     lparse lpform lpic lplfitch lps
     lroundrect lsc lscapeenhanced
     lshort-bulgarian lshort-chinese lshort-czech lshort-dutch lshort-english
