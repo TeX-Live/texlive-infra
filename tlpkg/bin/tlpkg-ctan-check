@@ -527,7 +527,7 @@ my @TLP_working = qw(
     libris lie-hasse liederbuch liftarm
     light-latex-make ligtype lilyglyphs limap limecv
     lineara linearregression linebreaker linegoal
-    lineno ling-macros linguex linguisticspro linguistix linop
+    lineno ling-macros linguex linguisticspro linguistix linkedthm linop
     lion-msc lipsum lisp-on-tex
     listbib listing listings listings-ext listingsutf8 listlbls listliketab
     listofitems listofsymbols listparskip litetable
