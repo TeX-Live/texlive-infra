@@ -213,8 +213,9 @@ perl $tlnet_install_cmd >$tlnet_install_log 2>&1 \
 # the following long grep command should filter away all *normal*
 # installation messages.
 # if there are any other messages they will end up on stdout and 
-# thus be noticed.
+# thus be noticed. The first sed removes prepended timestamps.
 unexpected_output=`cat $tlnet_install_log \
+  | sed 's/^\[[0-9][0-9]:[0-9][0-9]:[0-9][0-9]\] *//' \
   | sed '/The following environment variables/,/^ ------/d' \
   | grep -Ev '^ ------' \
   | grep -Ev '^$' \
