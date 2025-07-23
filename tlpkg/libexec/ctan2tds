@@ -659,7 +659,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'gfsporson',   "&MAKEflatten",
  'gfssolomos',  "&MAKEflatten",
  'ghostgum',    "die 'skipping, nonfree'",
- 'git-latexdiff',"&MAKEflatten",
  'gladtex',	"die 'skipping, requires python setup.py?'",
  'glhyph',      "die 'skipping, merged into hyph-utf8'",
  'glossary',    "die 'skipping, replaced by glossaries'",
@@ -7187,8 +7186,11 @@ sub POSTcontext {
   print "POST$package - README.TEXLIVE, unpack archives/zips\n";
   &xchdir ($DEST);
 
+  my $ctan_base = "$ctan_root/macros/context/base";
+  print "*** " . `cat $ctan_base/VERSION`;
+
   # what we unpack.
-  my $ctan_ctx_archives = "$ctan_root/macros/context/base/archives";
+  my $ctan_ctx_archives = "$ctan_base/archives";
   print "\t ctan_root=$ctan_root\n";
   print "\t ctan_ctx_archives=$ctan_ctx_archives\n";
   print "\t ls -C $ctan_ctx_archives:\n";
