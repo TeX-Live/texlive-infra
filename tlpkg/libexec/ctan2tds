@@ -2598,8 +2598,7 @@ $standardtex = "($standardtex_no_lua" . '|\.lua$)';
  'scrlttr2copy','\.lco',
  'sdaps',	'\.dict$|code128|' . $standardtex,
  'sduthesis',	'figures|' . $standardtex,
- 'selnolig',    '\.lua|' . $standardtex,
- 'semantex',	'\.lua|' . $standardtex,
+ 'seatingchart','\.sc|' . $standardtex,
  'seminar',     '\.bug|\.bg?|\.cls|\.sty|2up.tex',
  'shade',       'shade\.tex',  # not description.tex
  'shortmathj',	'shortmathj\.sty',

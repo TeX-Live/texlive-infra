@@ -793,7 +793,8 @@ my @TLP_working = qw(
     scrabble scrambledenvs scratch scratch3 scratchx screenplay screenplay-pkg
     scrhack scripture scrjrnl scrlayer-fancyhdr scrlttr2copy scrwfile scsnowman
     sdaps sdrt sduthesis
-    se2thesis secdot secnum section sectionbox sectionbreak sectsty seealso
+    se2thesis seatingchart
+    secdot secnum section sectionbox sectionbreak sectsty seealso
     selectp selinput selnolig semantex semantic semantic-markup semaphor
     semesterplanner semesterplannerlua seminar semioneside semproc semtex
     sepfootnotes sepnum seqsplit
