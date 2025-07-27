@@ -460,7 +460,7 @@ my @TLP_working = qw(
     inputenx inputnormalization inputtrc
     inriafonts insbox install-latex-guide-zh-cn installfont
     intcalc inter interactiveworkbook
-    interchar interfaces interlinear interpreter interval intopdf
+    interchar interfaces interlinear interpreter interval intexgral intopdf
     intro-scientific
     inversepath invoice invoice-class invoice2
     iodhbwm ionumbers iopart-num ipaex ipaex-type1 ipsum iran-bibtex
@@ -759,7 +759,8 @@ my @TLP_working = qw(
      quotchap quoting quotmark
      quran quran-bn quran-de quran-en quran-es quran-id quran-ur
      qworld qyxf-book
-  r_und_s ragged2e rainbowbrackets raleway ran_toks randbild randexam randintlist
+  r_und_s ragged2e rainbowbrackets raleway ran_toks
+    randbild randexam randintlist
     random randomlist randomwalk randtext
     rank-2-roots rbt-mathnotes rccol rcs rcs-multi rcsinfo
     readablecv readarray realboxes realhats realscripts realtranspose
