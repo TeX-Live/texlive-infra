@@ -183,7 +183,7 @@ my @TLP_working = qw(
     centeredline centerlastline cesenaexam
     cfr-initials cfr-lm
     changebar changelayout changelog changepage changes
-    chappg chapterfolder charissil charter
+    chappg chapterfolder char2path charissil charter
     chbibref cheatsheet checkcites checkend checklistings chem-journal
     chemarrow chembst chemcompounds chemcono chemexec
     chemfig chemformula chemformula-ru chemgreek chemmacros

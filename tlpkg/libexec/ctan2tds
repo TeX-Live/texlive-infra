@@ -2202,7 +2202,7 @@ $standardtex = "($standardtex_no_lua" . '|\.lua$)';
  'captcont',    '\.sty|[^c]\.cfg',      # omit ltxdoc.cfg, would be system-wide
  'captdef',     '^..[^s].*\.sty',       # not miscdoc.sty
  'carlisle',    '\.sty|\.ltx',
- 'cartonaugh',	'\.lua|' . $standardtex,
+ 'char2path',	'\.sty',		# not build.lua
  'checkcites',	'NULL',  # all in scripts
  'chemfig',     '(t-)?chemfig(-lewis)?.tex|' . $standardtex,
  'chemformula', '\.sty$',		# not chemformula-manual.cls
