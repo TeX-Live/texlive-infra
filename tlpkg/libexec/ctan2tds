@@ -7186,7 +7186,7 @@ sub POSTcontext {
   &xchdir ($DEST);
 
   my $ctan_base = "$ctan_root/macros/context/base";
-  print "*** " . `cat $ctan_base/VERSION`;
+  print "*** version " . `cat $ctan_base/VERSION`;
 
   # what we unpack.
   my $ctan_ctx_archives = "$ctan_base/archives";
