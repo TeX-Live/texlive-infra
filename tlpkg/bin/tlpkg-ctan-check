@@ -657,7 +657,7 @@ my @TLP_working = qw(
     oldstyle olsak-misc omgtudoc-asoiu
     onedown onepgnote onlyamsmath onrannual opbible opcit
     opencolor openmoji open-everyday-symbols opensans oplotsymbl
-    opteng optex optexcount optidef optional options
+    opteng optex optexcount optidef optikz optional options
     orcidlink ordinalpt orientation orkhun
     oscola oststud oswald ot-tableau othello othelloboard
     ou-tma oubraces oup-authoring-template
