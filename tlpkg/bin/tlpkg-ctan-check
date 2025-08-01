@@ -613,7 +613,7 @@ my @TLP_working = qw(
     mparhack mparrows mpattern mpchess mpcolornames
     mpfonts mpgraphics mpkiviat
     mpman-ru mpostinl mptrees msc msg mslapa msu-thesis mtgreek
-    mucproc mugsthesis muling multenum
+    mucproc mugsthesis muling multenum multi-sudoku
     multiaudience multibbl multibib multibibliography
     multicap multicolrule multidef multido multienv multiexpand
     multifootnote multilang multinotes multiobjective multiple-choice
