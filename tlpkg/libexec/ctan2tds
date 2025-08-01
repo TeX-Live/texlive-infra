@@ -595,6 +595,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'fontawesome', "&MAKEflatten",
  'fontawesome5',"&MAKEflatten",
  'fontawesome6',"&MAKEflatten",
+ 'fontawesome7',"&MAKEflatten",
  'fonteinf',	"die 'skipping, obsolete + nosource'",
  'fontinst',    "&MAKEfontinst",
  'fontloader-luaotfload', "die 'skipping, obsolete 29sep18'",
@@ -4086,6 +4087,7 @@ $standardttf = '\.ttf|\.TTC';
  'ctanify'              => '\.1$',
  'dosepsbin'            => 'dosepsbin.man',
  'dviasm'		=> '\.1$',
+ 'dtxgen'		=> '\.1$',
  'easydtx'		=> '\.1$',
  'eolang'		=> '\.1$',
  'epstopdf'             => 'r?epstopdf.1|epstopdf.man1.pdf', # don't keep pdf

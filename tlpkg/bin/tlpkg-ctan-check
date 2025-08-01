@@ -365,7 +365,8 @@ my @TLP_working = qw(
     fn2end fnbreak fncychap fncylab fnpara fnpct fnspe fntproof fnumprint
     foekfont foilhtml foliono fonetika
     font-change font-change-xetex
-    fontawesome fontawesome5 fontawesome6 fontaxes fontbook fontch fontinst
+    fontawesome fontawesome5 fontawesome6 fontawesome7
+    fontaxes fontbook fontch fontinst
     fontinstallationguide fontmfizz fontools
     fonts-churchslavonic fonts-tlwg
     fontscale fontscripts fontsetup fontsize fontspec fonttable fontwrap
