@@ -2590,7 +2590,7 @@ $standardtex = "($standardtex_no_lua" . '|\.lua$)';
  'rsfs',        'scrload\.tex|' . $standardtex,
  'ruhyphen',    '\.tex',
  'ruler',	'\.tex',
-# 'rutitlepage',	'rutitlepage-logo.*|' . $standardtex, # .tds.zip
+ 'runtexfile',	'NULL',			# not example .sty
  'sa-tikz',     'tikzlib.*tex|' . $standardtex,
  'sansmath',    '^..[^s].*\.sty',	# not miscdoc.sty
  'sapthesis',	'sapienzalogo.pdf|' . $standardtex,
