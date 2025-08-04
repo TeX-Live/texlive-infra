@@ -1541,6 +1541,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'upmethodology',"&MAKEflatten",
  'uppunctlm',	"&MAKEflatten",
  'urcls',	"&MAKEflatten",
+ 'urw',		"die 'skipping, use specific font names'",
  'urwchancal',  "&MAKEcopy",
  'uspatent',    "&MAKEflatten",
  'utfsym',      "&MAKEflatten",

@@ -314,7 +314,8 @@ my @TLP_working = qw(
     enctex encxvlna endfloat endheads endiagram
     endnotes endnotes-hy endnotesj endofproofwd
     engpron engrec engtlc enigma enotez ensps-colorscheme
-    enumext enumitem enumitem-zref envbig enverb environ envlab eolang eoldef
+    enumext enumitem enumitem-zref enumsub
+    envbig enverb environ envlab eolang eoldef
     epcqrcode epigrafica epigram epigraph epigraph-keys epiolmec eplain
     epsdice epsf epsf-dvipdfmx epsincl epslatex-fr
     epspdfconversion epstopdf epstopdf-pkg
@@ -348,7 +349,7 @@ my @TLP_working = qw(
     fenetrecas fenixpar
     fetamont fetchcls
     feupphdteses fewerfloatpages feyn feynmf feynmp-auto
-    ffcode ffslides fge fgruler
+    ffcode ffslides fge fgruler fhj-script
     fifinddo-info fifo-stack
     fig4latex figbas figbib figchild figflow figput figsize figureversions
     filecontents filecontentsdef filedate filehook fileinfo filemod
