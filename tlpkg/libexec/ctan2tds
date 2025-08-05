@@ -1443,6 +1443,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'texlog_extract',      "die 'skipping, Ruby, not self-locating'",
  'texmacs',             "die 'skipping, binary'",
  'texpower',    "&MAKEnosymlinks",
+ 'texsis',      "die 'skipping, its own distribution'",
  'texsis',      "die 'skipping, needs its own format-level directory, sorry'", #"&MAKEtexsis",
  'texshop',	"die 'skipping, only placeholder on ctan'",
  'texsort',     "die 'skipping, use sttools'",
