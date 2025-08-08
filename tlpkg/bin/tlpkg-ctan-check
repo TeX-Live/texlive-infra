@@ -861,7 +861,8 @@ my @TLP_working = qw(
     technics technion-thesis-template ted telprint
     templates-fenn templates-sommer templatetools tempora temporal-logic
     tengwarscript
-    tensind tensor termcal termcal-de termes-otf termlist termmenu termsim
+    tensind tensor tensormatrix
+    termcal termcal-de termes-otf termlist termmenu termsim
     testhyphens testidx
     tetragonos teubner
     tex-ewd tex-font-errors-cheatsheet tex-gyre tex-gyre-math tex-ini-files

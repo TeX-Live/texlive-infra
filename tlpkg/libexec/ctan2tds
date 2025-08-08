@@ -7345,7 +7345,7 @@ sub POSTcoordsys {
 
 sub POSTcrossrefenum {
   print "POST$package - move tex/ subdir\n";
-  &SYSTEM ("$MV tex $DEST/tex/generic/$package");
+  &SYSTEM ("$MV tex/* $DEST/tex/generic/$package/");
 }
 
 sub POSTcs {
