@@ -2293,6 +2293,7 @@ $standardtex = "($standardtex_no_lua" . '|\.lua$)';
  'fancytooltips',       'fancytipmark[.1-4].*|' . $standardtex,
  'farbe',	'farbe\.tex|' . $standardtex,
  'fewerfloatpages',	'\.sty$',	# not l3doc-TUB.cls
+ 'fhj-script',	'fhj.*\.img\.pdf|' . $standardtex,
  'figflow',     '\.tex',
  'fistrum',  	'\.ftd|' . $standardtex,
  'fjodor',      'fjodor\.sty',          # not srbook-mem.sty
