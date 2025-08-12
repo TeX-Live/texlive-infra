@@ -518,7 +518,7 @@ my @TLP_working = qw(
     latino-sine-flexione lato layaureo layouts lazylist
     lccaps lcd lcg lcyw leading leadsheets leaflet
     lebhart lecturenotes lecturer lectures lectureslides
-    ledmac leftidx leftindex leipzig lengthconvert
+    ledmac leftidx leftindex leipzig lengthconvert leporello
     lete-sans-math letgut letltxmacro
     letterspacing letterswitharrows lettre lettrine
     levy lewis lexend lexikon lexref
