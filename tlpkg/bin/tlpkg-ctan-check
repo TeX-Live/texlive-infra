@@ -894,7 +894,8 @@ my @TLP_working = qw(
     tikz-osci tikz-page tikz-palattice tikz-planets tikz-qtree
     tikz-relay tikz-sfc tikz-shields tikz-swigs
     tikz-timing tikz-trackschematic tikz-triminos tikz-truchet
-    tikzbricks tikzcalendarnotes tikzcodeblocks tikzdotncross tikzducks
+    tikzbrickfigurines tikzbricks tikzcalendarnotes tikzcodeblocks
+    tikzdotncross tikzducks
     tikzfill tikzfxgraph tikzinclude tikzlings
     tikzmark tikzmarmots tikzorbital
     tikzpackets tikzpagenodes tikzpeople tikzpfeile tikzpingus tikzposter
