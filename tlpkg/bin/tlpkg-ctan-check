@@ -316,7 +316,7 @@ my @TLP_working = qw(
     engpron engrec engtlc enigma enotez ensps-colorscheme
     entropy-coupled-operator-dynamic
     enumext enumitem enumitem-zref enumsub
-    envbig enverb environ envlab eolang eoldef
+    envbig envelope-letter enverb environ envlab eolang eoldef
     epcqrcode epigrafica epigram epigraph epigraph-keys epiolmec eplain
     epsdice epsf epsf-dvipdfmx epsincl epslatex-fr
     epspdfconversion epstopdf epstopdf-pkg
