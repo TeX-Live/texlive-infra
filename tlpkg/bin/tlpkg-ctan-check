@@ -468,7 +468,7 @@ my @TLP_working = qw(
     inversepath invoice invoice-class invoice2
     iodhbwm ionumbers iopart-num ipaex ipaex-type1 ipsum iran-bibtex
     is-bst iscram iso
-    iso10303 isodate isodoc isomath isonums isopt isorot isosafety isotope
+    iso10303 isodate isodoc isomath isonums isopt isorot isosigns isotope
     isphysicalmath issuulinks istgame itnumpar
     iwona iwonamath
   jablantile jacow jamtimes japanese-mathformulas japanese-otf
