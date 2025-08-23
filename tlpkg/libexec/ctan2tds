@@ -530,6 +530,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'emerald',     "die 'skipping, nonfree fonts'",
  'empheq',      "die 'skipping, use mh'",
  'enpassant',   "die 'skipping, license unknown'",
+ 'entropy-coupled-operator-dynamic', "&MAKEflatten",
  'epic',        "die 'skipping, license unknown and replaced by eepic'",
  'epigrafica',  "&MAKEflatten",
  'epiolmec',    "&MAKEflatten",
@@ -1792,7 +1793,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'encxvlna'		=> '&POSTencxvlna',
  'endofproofwd'		=> '&POSTendofproofwd',
  'enigma'		=> '&POSTenigma',
- 'entropy-coupled-operator-dynamic' => '&POST_onelevel',
  'eplain'		=> '&POSTeplain',
  'epspdf'		=> '&POSTepspdf',
  'euromoney'		=> '&POST_onelevel',
@@ -4219,6 +4219,7 @@ $standardclean = '(\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
  'eczar'	 => 'ttf',				# dup with otf
  'edmaths'       => 'edmaths-docs.pdf',                 # no source
  'ednotes'       => 'perpage.sty',                      # copy from bigfoot
+ 'entropy-coupled-operator-dynamic' => '.pdf',		# no source
  'epslatex-fr'   => 'R?Danger.eps',                     # unneeded, name clash
  'exceltex'      => 'manpage.pdf',                      # no source
  'facture'	 => 'issue7.pdf',                       # no source
