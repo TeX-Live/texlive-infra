@@ -314,7 +314,6 @@ my @TLP_working = qw(
     enctex encxvlna endfloat endheads endiagram
     endnotes endnotes-hy endnotesj endofproofwd
     engpron engrec engtlc enigma enotez ensps-colorscheme
-    entropy-coupled-operator-dynamic
     enumext enumitem enumitem-zref enumsub
     envbig envelope-letter enverb environ envlab eolang eoldef
     epcqrcode epigrafica epigram epigraph epigraph-keys epiolmec eplain
