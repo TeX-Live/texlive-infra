@@ -21,7 +21,7 @@ our %OPT;
 my @TLP_working = qw(
   12many 2up
   a0poster a2ping a4wide a5comb
-    aaai-named aalok aastex abbr abc abnt abntex2 abntexto
+    aaai-named aalok aastex abbr abc abnt abntex2 abntexto abntexto-uece
     aboensis abraces abspos abstract abstyles
     academicons accanthis accents accessibility accfonts accsupp achemso
     acmart acmconf acro acronym acroterm
