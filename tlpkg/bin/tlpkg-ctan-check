@@ -323,7 +323,7 @@ my @TLP_working = qw(
     eqnalign eqname eqnarray eqnlines eqnnumwarn eqparbox
     erdc erewhon erewhon-math errata erw-l3
     esami es-tex-faq esdiff esieecv esindex esint esint-type1 esk eskd eskdx
-    eso-pic esrelation esstix estcpmm esvect
+    eso-pic esrelation essaykit esstix estcpmm esvect
     etaremune etbb etdipa etex-pkg etexcmds etextools ethiop ethiop-t1 etl
     etoc etoolbox etoolbox-de etoolbox-generic etsvthor
     euclidean-lattice euclideangeometry euenc euflag eukdate
