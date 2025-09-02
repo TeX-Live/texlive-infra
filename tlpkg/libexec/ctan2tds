@@ -1757,6 +1757,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'bibtexperllibs'	=> '&POSTbibtexperllibs',
  'blopentype'		=> '&POST_onelevel',
  'bonum-otf'		=> '&POST_onelevel',
+ 'bootstrapicons'	=> '&POST_onelevel',
  'calculatoritems'	=> '&POST_onelevel',
  'cascadiamono-otf'	=> '&POST_onelevel',
  'circularglyphs'	=> '&POST_onelevel',

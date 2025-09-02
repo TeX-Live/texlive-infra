@@ -154,7 +154,8 @@ my @TLP_working = qw(
     bmstu bmstu-iu8 bnumexpr bodegraph bodeplot bohr boisik bold-extra
     boites boldtensors bondgraph bondgraphs bonum-otf book-of-common-prayer
     bookcover bookdb bookest bookhands booklet bookman bookmark
-    bookshelf booktabs booktabs-de booktabs-fr boolexpr boondox bophook
+    bookshelf booktabs booktabs-de booktabs-fr
+    boolexpr boondox bootstrapicons bophook
     borceux bosisio
     boxedminipage boxhandler bpchem bpolynomial
     br-lex bracealign bracketkey braids braille braket
