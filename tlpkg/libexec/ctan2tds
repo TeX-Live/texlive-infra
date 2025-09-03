@@ -1406,6 +1406,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  't2',          "&MAKEt2",
  'tablestyles', "die 'skipping, obsolete on CTAN'",
  'tabto',       "die 'skipping, use tabto-generic or tabto-ltx'",
+ 'tabular2',	"die 'skipping, dtx aborts with * prompt'",
  'tabulars-e',  "die 'skipping, author request'",
  'tabvar',	"&MAKEflatten",
  'tamethebeast',"&MAKEtamethebeast",
@@ -3544,7 +3545,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'svg'		=> 'etex',
  'svn-multi'    => 'latex',  # interaction for .pl
  'swfigure'	=> 'etex',
- 'tabular2'	=> 'xelatex-dev', #fails && pdflatex-preserve-pdf --engine xelatex',
+ 'tabular2'	=> 'xelatex', #fails && pdflatex-preserve-pdf --engine xelatex',
  'teubner'      => 'latex',  # interaction
  'telprint'	=> 'tex',
  'termlist'     => 'tex',    # interaction for .pl
