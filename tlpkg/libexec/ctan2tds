@@ -1406,7 +1406,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  't2',          "&MAKEt2",
  'tablestyles', "die 'skipping, obsolete on CTAN'",
  'tabto',       "die 'skipping, use tabto-generic or tabto-ltx'",
- 'tabular2',	"die 'skipping, dtx aborts with * prompt'",
  'tabulars-e',  "die 'skipping, author request'",
  'tabvar',	"&MAKEflatten",
  'tamethebeast',"&MAKEtamethebeast",
@@ -3295,6 +3294,7 @@ $standardsource = '(\.(bat|c|drv|[dem]tx|fea|fdd|ins|mk|sfd|dbj|mbs)'
  'seuthesis',   'NULL',                 # don't want to run iconv, etc.
  'stix2-type1',	'\.ins|\.fdd',
  'tabu',	'NULL',                 # .dtx is not real
+ 'tabular2',	'tabular2.dtx',                 # .dtx is not real
  'thesis',      'install.01|install.ndx',
  'translation-filecontents-de', 'NULL', # doc
  'turnstile',   'turnstile-en.ins',     # skip pt since it changes the sty
@@ -3308,7 +3308,7 @@ $standardins = '\.ins$';
 # that extension; else return the empty string.  This is only called if
 # there was no $specialins for the package.  We do this because more and
 # more packages omit the .ins and just put everything in the .dtx, so
-# it's nice to recognize that case automatically.
+# we need to recognize that case automatically.
 #
 sub specialins {
   my ($package) = $_;
@@ -3486,6 +3486,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'luamathalign'	=> 'etex-answer-y',
  'luatexja'     => 'lualatex',
  'magicwatermark' => 'etex',
+ 'maine-thesis'	=> 'etex',
  'makelabels'	=> 'tex --8bit',
  'mandi'	=> 'pdflatex-preserve-pdf',
  'marathi' 	=> 'tex -8bit',
@@ -3546,7 +3547,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'svg'		=> 'etex',
  'svn-multi'    => 'latex',  # interaction for .pl
  'swfigure'	=> 'etex',
- 'tabular2'	=> 'xelatex', #fails && pdflatex-preserve-pdf --engine xelatex',
+ 'tabular2'	=> 'pdflatex-preserve-pdf --engine xelatex',
  'teubner'      => 'latex',  # interaction
  'telprint'	=> 'tex',
  'termlist'     => 'tex',    # interaction for .pl
@@ -4679,7 +4680,7 @@ sub donormal {
 
      # run the .ins files (if any) supplied
      &runins($inspatt);
-
+     
      &killfiles ($moreclean{$package}, "more") if $moreclean{$package};
 
      # rebuild the list of files in the directory
@@ -4735,7 +4736,7 @@ sub runins {
     # run the .ins itself. mathfont.dtx and gridset.dtx generate
     # .ins files to no purpose (and they don't work). We don't want to
     # do anything in these cases.
-    next if $package =~ /^(bbold|mathfont|gridset)$/;
+    next if $package =~ /^(bbold|mathfont|gridset|tabular2)$/;
 
     # in the case of fullblck (et al.), the .dtx creates the .ins (so the
     # .ins is not in @filenames), and the .ins creates the .sty.
