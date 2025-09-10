@@ -507,7 +507,7 @@ my @TLP_working = qw(
     latex-lab latex-lab-dev
     latex-make latex-mr latex-notes-zh-cn
     latex-papersize latex-refsheet
-    latex-tools-dev latex-uni8
+    latex-tagging-status latex-tools-dev latex-uni8
     latex-veryshortguide latex-via-exemplos latex-web-companion
     latex2e-help-texinfo latex2e-help-texinfo-fr
     latex2e-help-texinfo-spanish latex2man latex2nemeth latex2pydata

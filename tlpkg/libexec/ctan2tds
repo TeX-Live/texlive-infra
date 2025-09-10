@@ -2395,6 +2395,7 @@ $standardtex = "($standardtex_no_lua" . '|\.lua$)';
  'latex-doc-ptr',	'NULL', # keep doc together
  'latex-for-undergraduates', 'NULL', # keep doc together
  'latex-referenz',	'NULL', # keep doc together
+ 'latex-tagging-status','\.ltx',
  'latex-veryshortguide','NULL', # keep doc together
  'latex4wp',    	'NULL', # keep doc together
  'latex4wp-it', 	'NULL', # keep doc together
