@@ -95,7 +95,7 @@ my @TLP_working = qw(
     basque-book basque-date bath-bst
     bbcard bbding bbm bbm-macros bbold bboldx bbold-type1 bchart bclogo
     beamer beamer2thesis beamer-fuberlin beamer-rl
-    beamer-theme-albi beamer-tut-pt beamer-verona
+    beamer-theme-albi beamer-tut-pt beamer-varbox beamer-verona
     beamerappendixnote beameraudience beamerauxtheme
     beamercolorthemeowl beamerdarkthemes beamerposter
     beamersubframe beamerswitch beamertheme-arguelles
@@ -775,7 +775,8 @@ my @TLP_working = qw(
     reledmac relenc relsize reotex repeatindex repere repltext reptheorem
     rerunfilecheck rescansync resmes resolsysteme
     resphilosophica responsive rest-api
-    resumecls resumemac returntogrid reverxii revquantum revtex revtex4-1
+    resumecls resumemac retosmatematicos returntogrid
+    reverxii revquantum revtex revtex4-1
     rgltxdoc ribbonproofs rigidnotation rit-fonts
     rjlparshap rlepsf rmathbr rmpage
     robotarm roboto robust-externalize robustcommand robustindex rojud
