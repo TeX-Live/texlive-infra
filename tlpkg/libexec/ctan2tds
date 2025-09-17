@@ -4422,7 +4422,7 @@ sub set_dir_defaults {
     $guess = "$standarddocfmt for fmt/docfmt/srcfmt (babel)";
   }
 
-  print "\t guessing $guess (based on $ctan_dir)\n" if $guess;
+  print "\t guessing $guess (based on CTAN: $ctan_dir)\n" if $guess;
 }
 
 
@@ -8336,25 +8336,30 @@ sub POST_onelevel {
   for my $dir (glob ("*")) {
     next unless -d $dir; # leave files where they are
 
-    # theoretically we should use $whichformat, $sourceformat, etc.,
-    # but in practice they are always the same.
-    my $format = $whichdocformat;
+    # usually all the formats are the same, but not always,
+    # e.g., $whichdocfmt might be "fonts" while $whichformat = "latex",
+    # e.g., bonum-otf.
+    my $thisformat;
     #
     my $destdir = $dir;
-    if ($dir =~ /^((lua)?(la)?tex|code|src|theme)$/) { # tex/$format/$package
+    if ($dir =~ /^((lua)?(la)?tex|code|src|theme)$/) { # tex/format/$package
+      $thisformat = $whichformat;
       $destdir = "tex";
+
     } elsif ($dir =~ /^(metapost|scripts)/) {  # {metapost,scripts}/$package
-      $format = "";
+      $thisformat = "";
+
     } elsif ($dir =~ /^(opentype)/) {  # fonts/opentype/$foundry/$package
       $destdir = "fonts";
       my $foundry = $specialfoundry{$package} || $standardfoundry;
-      $format = "$dir/$foundry";
+      $thisformat = "$dir/$foundry";
+
     } else {
       # not uncommon to have randomly-named subdirs, so stdout not stderr.
       print "$0: skipping unknown one-level directory: $dir\n";
       next;
     }
-    &rename_with_mkdir ($dir, "$DEST/$destdir/$format/$package");
+    &rename_with_mkdir ($dir, "$DEST/$destdir/$thisformat/$package");
   }
 
   # do data/ subdir (e.g., dlrg-templates) after main loop, since we
