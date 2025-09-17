@@ -82,6 +82,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  '2up',		"&MAKEflatten",
  'a4',          "die 'skipping, just a pointer to ntgclass'",
  'aastex',      "&MAKEflatten",
+ 'academicons', "&MAKEflatten",
  'accenti',     "die 'skipping, use bosisio'",
  'acmtrans',    "die 'skipping, nonfree (nosell) license'",
  'acroflex',    "die 'skipping, per author (dps) request'",
@@ -1997,6 +1998,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'xetex-pstricks'	=> '&POSTxetexpstricks',
  'xindex'		=> '&POSTxindex',
  'xint-regression'	=> '&POST_onelevel',
+ 'xpeekahead'		=> '&POST_onelevel',
  'xsim'			=> '&POSTxsim',
  'xymtex'		=> '&POSTxymtex',
  'zhmetrics'		=> '&POSTzhmetrics',
@@ -2011,6 +2013,7 @@ $standarddest = "texmf-dist";
 %specialfmt = (
  'abbr',        'generic',
  'abstyles',    'generic',
+ 'academicons',	'generic',
  'amstex',      'amstex',
  'antomega',    'omega',
  'arabxetex',   'xelatex',
@@ -2148,6 +2151,7 @@ $standardtex = "($standardtex_no_lua" . '|\.lua$)';
  'FAQ-en',      'NULL',
  'abbr',        '\.tex',
  'abstyles',    'apreambl.tex', # not a4c.sty
+ 'academicons',	'academicons-.*.tex|' . $standardtex,
  'acro',	'definitions\.tex|' . $standardtex,
  'adfsymbols',	'adfsymbols-uni\.tex|' . $standardtex,
  'aeskwadraat',	'logos|' . $standardtex,
