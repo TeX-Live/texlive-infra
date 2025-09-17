@@ -989,7 +989,8 @@ my @TLP_working = qw(
     xindex xindy-persian xint xint-regression xintsession xistercian xits
     xkcdcolors xkeymask xkeyval xlop xltabular xltxtra
     xml2pmx xmltex xmpincl xmuthesis xnewcommand
-    xoptarg xpatch xpeek xpiano xpicture xpinyin xprintlen xpunctuate
+    xoptarg xpatch xpeek xpeekahead xpiano xpicture xpinyin
+    xprintlen xpunctuate
     xq xreview xsavebox xsim xsipa xskak xstring xtab xtuthesis xunicode xurl
     xwatermark xyling xymtex xypic xypic-tut-pt xytree
   yafoot yagusylo yaletter yamlvars yannisgr yathesis yax yazd-thesis
