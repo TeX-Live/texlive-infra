@@ -89,7 +89,7 @@ my @TLP_working = qw(
     babel-spanish babel-swedish babel-thai babel-turkish babel-ukrainian
     babel-vietnamese babel-welsh
     babelbib background backnaur baekmuk
-    bagpipe bangla bangorcsthesis bangorexam bangtex bankstatement
+    bagpipe bahaistar bangla bangorcsthesis bangorexam bangtex bankstatement
     barcodes bardiag barr barracuda bartel-chess-fonts bashful basicarith
     baskervaldadf baskervaldx baskervillef
     basque-book basque-date bath-bst

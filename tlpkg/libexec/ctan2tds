@@ -4169,6 +4169,7 @@ $standardclean = '(\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
  'accfonts'     => $standardclean . '|dvips.enc',       # dup enc
  'acmconf'      => $standardclean . '|flushend.sty',    # dup with sttools
  'apalike'      => "apalike2.bst",                      # does not belong
+ 'bahaistar'	=> '.*pk$',				# bitmap font
  'axodraw2'     => 'axohelp.exe',			# in regular build
  'bardiag'      => "example/.*(aux|log)",               # junk on CTAN
  'beebe'	=> '^([^bt].*|bibmods|bibunits)\.sty$|(gut.*|komoedie|litprog|sgml.*)\.bib$|\.ltx$',	# omit some bibs and support files
