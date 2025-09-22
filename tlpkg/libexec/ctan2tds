@@ -1865,6 +1865,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'maritime'		=> '&POST_onelevel',
  'markdown'		=> '&POST_do_man',
  'match_parens'		=> '&POST_do_man',
+ 'mathador'		=> '&POST_onelevel',
  'mathdesign'		=> '&POSTmathdesign',
  'memoize'		=> '&POST_do_man',
  'mflogo'		=> '&POST_rmsymlink',

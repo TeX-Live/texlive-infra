@@ -579,7 +579,8 @@ my @TLP_working = qw(
     marathi marcellus margbib marginalia
     marginfit marginfix marginnote maritime markdown marvosym
     matapli matc3 matc3mem match_parens
-    math-into-latex-4 math-operator mathabx mathabx-type1 mathalpha mathastext
+    math-into-latex-4 math-operator
+    mathabx mathabx-type1 mathador mathalpha mathastext
     mathcommand mathcomp mathdesign mathdots mathexam
     mathfam256 mathfixs mathfont mathgreeks
     mathlig mathpartir mathpazo mathpunctspace
