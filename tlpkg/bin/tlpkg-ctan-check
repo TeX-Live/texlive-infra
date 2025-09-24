@@ -698,7 +698,7 @@ my @TLP_working = qw(
     phaistos phfcc phfextendedabstract phffullpagefigure
     phfnote phfparen phfqit phfquotetext
     phfsvnwatermark phfthm
-    philex philokalia philosophersimprint
+    philex philokalia philosophersimprint phimisci
     phonenumbers phonetic phonrule photo photobook
     physconst physics physics2 physics-patch physunits
     piano picinpar pict2e
