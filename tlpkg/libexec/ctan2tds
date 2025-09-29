@@ -3397,7 +3397,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'curve2e'      => 'pdflatex',   # 8bit
  'dateiliste'   => 'latex',  # requires interaction
  'dccpaper'	=> 'etex',   # 8bit
- 'defoldfonts'	=> 'etex',
+ 'defoldfonts'	=> 'etex-answer-y',
  'denisbdoc' 	=> 'tex -8bit',
  'dotseqn'      => 'latex',  # requires interaction
  'delimtxt'     => 'latex -translate-file=empty.tcx',   # no 8-bit
@@ -3547,7 +3547,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'sillypage'	=> 'etex',
  'skdoc'        => 'tex',
  'spath3'	=> 'etex',
- 'standardsectioning' => 'etex',
+ 'standardsectioning' => 'etex-answer-y',# docstrip overwrite agony
  'stix2-type1'	=> 'tex',
  'struktex'	=> 'etex',
  'svg'		=> 'etex',
