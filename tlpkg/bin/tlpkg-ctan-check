@@ -490,7 +490,7 @@ my @TLP_working = qw(
     koma-moderncvclassic koma-script koma-script-examples koma-script-sfs
     komacv komacv-rg korigamik kotex-oblivoir kotex-plain kotex-utf kotex-utils
     kpfonts kpfonts-otf ksfh_nat ksp-thesis
-    ktv-texdata ku-template kurdishlipsum kurier
+    ktbox ktv-texdata ku-template kurdishlipsum kurier
     kvdefinekeys kvmap kvoptions kvsetkeys
   l2picfaq l2tabu l2tabu-english l2tabu-french l2tabu-italian l2tabu-spanish
     l3backend l3backend-dev l3build l3experimental
