@@ -4248,6 +4248,7 @@ $standardclean = '(\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
  'kinematikz'	 => '.pdf',				# no source
  'maker'	 => 'maker_manual.pdf',			# no source
  'math-into-latex-4' => 'video.*zip|S.*\.pdf',          # nonfree
+ 'mwcls'	 => 'mwclsdoc.pdf',			# no source
  'mgltex'	 => '\.(pdf|eps)$|sample.tex',		# cc nc
  'numericplots'  => '.*\.m',                            # matlab
  'oinuit'        => 'cmssbxo10.tfm',                    # should not be here
