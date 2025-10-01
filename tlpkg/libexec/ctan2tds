@@ -2001,6 +2001,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'xint-regression'	=> '&POST_onelevel',
  'xpeekahead'		=> '&POST_onelevel',
  'xsim'			=> '&POSTxsim',
+ 'xtufte'		=> '&POST_onelevel',
  'xymtex'		=> '&POSTxymtex',
  'zhmetrics'		=> '&POSTzhmetrics',
 );
@@ -4236,6 +4237,7 @@ $standardclean = '(\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
  'exceltex'      => 'manpage.pdf',                      # no source
  'facture'	 => 'issue7.pdf',                       # no source
  'flacards'      => 'flacards.pdf',                     # no source
+ 'futharksymb'	 => 'futharksymb-doc.pdf',		# no source
  'gfsartemisia'  => 'A*Specimen.pdf',                   # no source
  'gfsbaskerville'=> 'B*Specimen.pdf',                   # no source
  'gfsbodoni'     => 'B*Specimen.pdf',                   # no source

@@ -385,7 +385,8 @@ my @TLP_working = qw(
     froufrou frpseudocode
     ftc-notebook ftcap ftnxtra
     fullblck fullminipage fullwidth
-    functan functional fundus-calligra fundus-cyr fundus-sueterlin fvextra fwlw
+    functan functional fundus-calligra fundus-cyr fundus-sueterlin
+    futharksymb fvextra fwlw
   g-brief gaceta galois gamebook gamebooklib gammas
     garamond-libre garamond-math garuda-c90
     garrigues gastex gates gatherenum gauss
@@ -992,7 +993,8 @@ my @TLP_working = qw(
     xml2pmx xmltex xmpincl xmuthesis xnewcommand
     xoptarg xpatch xpeek xpeekahead xpiano xpicture xpinyin
     xprintlen xpunctuate
-    xq xreview xsavebox xsim xsipa xskak xstring xtab xtuthesis xunicode xurl
+    xq xreview xsavebox xsim xsipa xskak xstring
+    xtab xtufte xtuthesis xunicode xurl
     xwatermark xyling xymtex xypic xypic-tut-pt xytree
   yafoot yagusylo yaletter yamlvars yannisgr yathesis yax yazd-thesis
     yb-book ycbook ydoc yet-another-guide-latex2e
