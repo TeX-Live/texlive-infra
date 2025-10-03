@@ -486,7 +486,7 @@ my @TLP_working = qw(
     kblocks kdgdocs kdpcover keisennote kerkis kerntest ketcindy
     keycommand keyfloat keyindex keyparse keyreader keystroke keytheorems
     keyval2e keyvaltable kfupm-math-exam khatalmaqala kinematikz kix kixfont
-    knitting knittingpattern knowledge
+    kksymbols knitting knittingpattern knowledge
     knuth-errata knuth-hint knuth-lib knuth-local knuth-pdf
     koma-moderncvclassic koma-script koma-script-examples koma-script-sfs
     komacv komacv-rg korigamik kotex-oblivoir kotex-plain kotex-utf kotex-utils
