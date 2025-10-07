@@ -2764,6 +2764,7 @@ $standardtex = "($standardtex_no_lua" . '|\.lua$)';
  'yax',         '(t-)?yax\.(sty|tex)|' . $standardtex,
  'yquant',	'\.sty|yquant-.*[^c]\.tex', # not yquant-doc.{tex,pdf}
  'zefonts',     '\.sty|\.fd',
+ 'zeckendorf',	'\.sty|zeckendorf(core)?\.tex',
  'zztex',	'\.tex',
 );
 
