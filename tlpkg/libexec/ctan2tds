@@ -1870,6 +1870,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'mathdesign'		=> '&POSTmathdesign',
  'memoize'		=> '&POST_do_man',
  'mflogo'		=> '&POST_rmsymlink',
+ 'minted-code'		=> '&POST_onelevel',
  'mitthesis'		=> '&POSTmitthesis',
  'moderncv'		=> '&POST_deref_symlink',
  'montex'		=> '&POSTmontex',

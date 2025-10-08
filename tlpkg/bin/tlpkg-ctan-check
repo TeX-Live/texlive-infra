@@ -605,7 +605,7 @@ my @TLP_working = qw(
     minim minim-hatching minim-math minim-mp minim-pdf minim-xmp
     minimalist minipage-marginpar
     miniplot minitoc minorrevision
-    minted mintspirit minutes mismath missaali mitthesis
+    minted minted-code mintspirit minutes mismath missaali mitthesis
     mkgrkindex mkjobtexmf mkpattern mkpic
     mla-paper mlacls mlawriter mleftright mlist mlmodern mluexercise
     mmap mnhyphn mnotes mnras mnsymbol modeles-factures-belges-assocs
@@ -672,7 +672,8 @@ my @TLP_working = qw(
   pacioli packdoc padcount
     pagecolor pagecont pagegrid pagelayout
     pagella-otf pagenote pagerange pagesel pageslts
-    palatino palette pangram panneauxroute paper papercdcase papermas papertex
+    palatino palette panda pangram panneauxroute
+    paper papercdcase papermas papertex
     papiergurvan paracol parades paralist parallel paratype
     paresse parnotes parrun parsa parsimatn parsinevis parselines parskip
     pas-cours pas-crosswords pas-cv pas-tableur
