@@ -55,7 +55,7 @@ my @TLP_working = qw(
     aramaic-serto arara archaeologie archaic archivo arcs arev argumentation
     arimo armtex
     around-the-bend arphic arphic-ttf arraycols arrayjobx arraysort
-    arsclassica arsenal
+    arsclassica arsenal arsenal-math
     arvo arydshln articleingud
     asaetr asana-math asapsym ascelike ascii-chart ascii-font asciilist ascmac
     askinclude askmaps asmeconf asmejour aspectratio

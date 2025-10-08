@@ -1740,6 +1740,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'aomart'		=> '&POST_do_man',
  'apalike'		=> '&POSTapalike',
  'arara'		=> '&POST_do_man',
+ 'arsenal-math'		=> '&POSTarsenal_math',
  'asapsym'		=> '&POSTasapsym',
  'attachfile2'		=> '&tl_man_to_pdf',
  'autosp'		=> '&POSTautosp',
@@ -6868,6 +6869,23 @@ sub POSTapalike {
   my $dstdir = "$DEST/tex/plain/$package";
   &xmkdir ($dstdir);
   &SYSTEM ("$MV $src $dstdir/");
+}
+
+sub POSTarsenal_math {
+  print "POST$package - move font files to specific subdirs\n";
+  #
+  my $otfdest = "$DEST/fonts/opentype/public/$package/";
+  &xmkdir ($otfdest);
+  &xsystem ("$MV otf/* $otfdest");
+  &xsystem ("$MV woff2/* $otfdest");
+  #
+  my $srcdest = "$DEST/fonts/source/public/$package";
+  &rename_with_mkdir ("source", $srcdest);  
+  #
+  my $ltxdest = "$DEST/tex/latex/$package";
+  &rename_with_mkdir ("latex", $ltxdest);  
+  #
+  &xsystem ("$MV doc/* .");
 }
 
 sub POSTasapsym {
