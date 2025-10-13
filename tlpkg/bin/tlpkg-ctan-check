@@ -912,7 +912,7 @@ my @TLP_working = qw(
     tinos tipa tipa-de tipauni tipfr
     tiscreen titlecaps titlefoot titlepages titlepic titleref titlesec titling
     tkz-base tkz-berge tkz-bernoulli tkz-doc tkz-elements tkz-euclide
-    tkz-fct tkz-graph tkz-grapheur tkz-orm tkz-tab tkzexample
+    tkz-fct tkz-graph tkz-grapheur tkz-interval tkz-orm tkz-tab tkzexample
     tlc-article tlc2 tlc3-examples tlcockpit tlmgr-intro-zh-cn tlmgrbasics
     to-be-determined tocbibind tocdata tocloft tocvsec2 todo todonotes
     tokcycle tokenizer tokmap tonevalue toolbox tools

@@ -1982,6 +1982,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'tkz-berge'		=> '&POSTtkz_berge',
  'tkz-bernoulli'        => '&POST_onelevel',
  'tkz-grapheur'		=> '&POST_onelevel',
+ 'tkz-interval'		=> '&POST_onelevel',
  'tlc3-examples'	=> '&POSTtlc3_examples',
  'tlcockpit'		=> '&POST_do_man',
  'trivialpursuit'	=> '&POST_onelevel',
