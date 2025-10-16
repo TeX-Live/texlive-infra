@@ -164,8 +164,8 @@ else
       # grep for the font in $PSMAPFILE.  These are base font names, such as
       # rpplr (the original) or pplr0 (an interim step) or pplr8r (current).
       : ${PSMAPFILE=`kpsewhich --format=map psfonts.map ps2pk.map`}
-      pattern="^$NAME"'([ 	]|$)' 
-      psline=`egrep "$pattern" $PSMAPFILE | tail -1`
+      pattern="^$NAME"'\([ 	]|$\)' 
+      psline=`grep "$pattern" $PSMAPFILE | tail -1`
       if test -n "$psline"; then
         set x `echo "$psline" | sed 's%[<["]%%g'`
         shift; shift; shift;
