@@ -1147,6 +1147,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'pinlabel',    "&MAKEnosymlinks",
  'pitthesis',   "die 'skipping, noinfo license'",
  'pkgcheck',	"die 'skipping, rust compilation'",
+ 'pkginfograb', "&MAKEflatten",
  'pl',		"&MAKEflatten",
  'pl-mf',	"die 'skipping, use pl'",
  'pl-qx',       "&MAKEplqx",

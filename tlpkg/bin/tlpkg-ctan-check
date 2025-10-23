@@ -706,7 +706,7 @@ my @TLP_working = qw(
     piano picinpar pict2e
     pictex pictex2 pictexsum pictochrono picture piechartmp piff pigpen
     pinlabel pinoutikz pitex piton pittetd pixelart pixelarttikz
-    pkfix pkfix-helper pkgloader pkuthss
+    pkfix pkfix-helper pkgloader pkginfograb pkuthss
     pl placeat placeins placeins-plain
     plain-doc plain-widow plainpkg plainyr plari plantslabels plantuml plates
     platex platex-tools platexcheat plautopatch
