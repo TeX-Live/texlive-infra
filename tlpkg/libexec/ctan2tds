@@ -7931,7 +7931,7 @@ sub POSTmptopdf {
   # But there are enough differences that trying to factor out the
   # commonalities doesn't make sense.  Sigh.
   print "POST$package - user-level executables\n";
-  print "*** also do on tug.org: cd /home/ftp/tex/mptopdf && rm -rf doc scripts tex && unzip -q $ctan_root/macros/context/base/archives/mptopdf.zip \n";
+  print "*** also do on tug.org: (cd /home/ftp/tex/mptopdf && rm -rf doc scripts tex && unzip -q $ctan_root/macros/context/base/archives/mptopdf.zip)\n";
   my $w32_bindir = "$TOPDEST/bin/windows";
   &xmkdir ($w32_bindir);
   #
