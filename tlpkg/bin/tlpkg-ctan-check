@@ -870,7 +870,7 @@ my @TLP_working = qw(
     templates-fenn templates-sommer templatetools tempora temporal-logic
     tengwarscript
     tensind tensor tensormatrix
-    termcal termcal-de termes-otf termlist termmenu termsim
+    termcal termcal-de termes-otf terminalcode termlist termmenu termsim
     testhyphens testidx
     tetragonos teubner
     tex-ewd tex-font-errors-cheatsheet tex-gyre tex-gyre-math tex-ini-files

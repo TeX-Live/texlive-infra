@@ -4277,6 +4277,7 @@ $standardclean = '(\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
  'swimgraf'      => 'swimgraf.pdf',                     # no source
  'sympytexpackage' => '.*\.pdf$',		        # cc-nc
  'table-fct'	 => '.*\.pdf$',			        # no source
+ 'terminalcode'	 => '.*\.pdf$',			        # no source
  'tikz-layers'	 => '.*\.pdf$',			        # no source
  'tree-dvips'    => 'avm.*',                            # author no response
  'ucs'		 => 'languages.ps.gz',			# no source
