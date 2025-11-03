@@ -927,6 +927,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'luwiantype',	"&MAKEflatten",
  'lxfonts',     "&MAKEflatten",
  'ly1',         "&MAKEcopy",
+ 'lydtype',     "&MAKEflatten",
  'lyx',         "die 'skipping, container directory'",
  'mab2bib',     "die 'skipping, python'",
  'mactex',	"die 'skipping, whole distribution'",
