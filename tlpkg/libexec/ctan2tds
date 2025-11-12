@@ -1380,6 +1380,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'spanish',     "die 'skipping, complicated collection'",
  'spanish-mx',	"die 'skipping, obsolete on CTAN'",
  'spark-otf',	"&MAKEflatten",
+ 'splentinex',	"&MAKEflatten",
  'splint',      "die 'skipping, binary'",
  'springer',    "die 'skipping, licenses not checked'",
  'sprite',      "die 'skipping, noinfo license'",

@@ -834,7 +834,7 @@ my @TLP_working = qw(
     sourceserifpro
     spacekern spacingtricks spalign spark-otf sparklines spath3 spbmark
     spectral spectralsequences spelatex spelling spie spix
-    sphack sphdthesis splines splitbib splitindex
+    sphack sphdthesis splentinex splines splitbib splitindex
     spot spotcolor spreadtab spverbatim sqltex
     sr-vorl srbook-mem srbtiks srcltx srdp-mathematik srcredact
     sseq sshrc-insight sslides
