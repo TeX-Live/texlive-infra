@@ -3445,6 +3445,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'floatbytocbasic' => 'etex',
  'floatrowbytocbasic' => 'etex',
  'fontsize'	=> 'latex',
+ 'footnotehyper'=> 'etex',
  'g-brief'      => 'latex',  # requires interaction
  'gbt7714'	=> 'xelatex',
  'geometry'     => 'tex',
