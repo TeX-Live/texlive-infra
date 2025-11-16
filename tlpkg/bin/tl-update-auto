@@ -178,7 +178,7 @@ for gnuconf in ar-lib compile config.guess config.sub depcomp \
     $verbose "  $gnuconf ok."
     rm -f $temp.$gnuconf.diff
   else
-    # updated needed. find all copies in source.
+    # Update needed, so find all copies in source.
     # Build/source/utils/asymptote/gc* is not checked in (since it's not
     # unpacked in the original release), therefore we cannot commit to it.
     alldev="`find ../Build/source -name $gnuconf | grep -v asymptote/gc`"
