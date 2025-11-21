@@ -826,7 +826,7 @@ my @TLP_working = qw(
     sistyle sitem siunits siunitx sjtutex
     skak skaknew skb skdoc skeldoc skeycommand skeyval
     skills skmath skrapport skull
-    slantsc slideshow
+    slantsc slideshow slixte
     smalltableof smart-eqn smartdiagram smartref smartunits smflatex
     snapshot snaptodo snotez
     songbook songproj songs sort-by-letters soton soul soulpos
