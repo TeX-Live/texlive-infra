@@ -380,7 +380,7 @@ my @TLP_working = qw(
     fp fpl
     fragmaster fragments fragoli frame framed framedsyntax
     francais-bst frankenstein frcursive
-    frederika2016 freealign frege frenchmath fretplot
+    frederika2016 freealign freemath frege frenchmath fretplot
     frimurer frletter frontespizio
     froufrou frpseudocode
     ftc-notebook ftcap ftnxtra
