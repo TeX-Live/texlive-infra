@@ -973,7 +973,7 @@ my @TLP_working = qw(
     vhistory visualfaq visualfaq-fr visualpstricks visualtikz visualtoks
     vmargin vntex vocaltract volumes
     voss-mathcol
-    vpe vruler vtable vwcol
+    vpe vruler vscodeicons vtable vwcol
   wadalab wallcalendar wallpaper wargame warning warpcol
     was wasy wasy-type1 wasysym webguide webquiz weiqi whatsnote wheelchart
     widetable widows-and-orphans williams willowtreebook

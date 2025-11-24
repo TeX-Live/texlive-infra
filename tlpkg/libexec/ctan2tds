@@ -1999,6 +1999,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'upmendex'		=> '&POSTupmendex',
  'vectorlogos'		=> '&POST_onelevel',
  'velthuis'		=> '&POSTvelthuis',
+ 'vscodeicons'		=> '&POST_onelevel',
  'webquiz'		=> '&POST_deref_symlink',
  'whatsnote'		=> '&POST_onelevel',
  'wordle'		=> '&POST_onelevel',
