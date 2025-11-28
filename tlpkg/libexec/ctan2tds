@@ -2201,6 +2201,7 @@ $standardtex = "($standardtex_no_lua" . '|\.lua$)';
  'bclogo',      'bc[^l].*\.(tex|pdf|eps|mps)|bclogo\.sty',
  'beamer-rl',	'\.dict|' . $standardtex,
  'beamer2thesis','\.jpg|' . $standardtex,
+ 'beamertheme-csh',	'.*logo.*pdf|' . $standardtex,
  'beamertheme-bilkent-econ',	'.*logo.*png|' . $standardtex,
  'beamertheme-npbt',		'images|' . $standardtex,
  'beamertheme-spectrum',	'\.jpg|' . $standardtex,
