@@ -15,12 +15,32 @@
 
 my $svnid = '$Id$';
 
+use strict; use warnings;
+
 my $TEXMFROOT;
 BEGIN {
   $^W = 1;
+  # make subprograms (including kpsewhich) have the right path:
+  my $bindir;
+  my $Master = __FILE__;
+  if ($^O =~ /^MSWin/i) {
+    # on w32 $0 and __FILE__ point directly to tlmgr.pl; they can be relative
+    $Master =~ s!\\!/!g;
+    $Master =~ s![^/]*$!../../..!
+      unless ($Master =~ s!/texmf-dist/scripts/texlive/tlmgr\.pl$!!i);
+    $bindir = "$Master/bin/windows";
+    # path already set by wrapper batchfile
+  } else {
+    $Master =~ s,/*[^/]*$,,;
+    $bindir = $Master;
+    $Master = "$Master/../..";
+    $ENV{"PATH"} = "$bindir:$ENV{PATH}";
+  }
   $TEXMFROOT = `kpsewhich -var-value=TEXMFROOT`;
-  if ($?) {
-    die "$0: kpsewhich -var-value=TEXMFROOT failed, aborting early.\n";
+  if ($? || ! $TEXMFROOT) {
+    warn "$0: kpsewhich -var-value=TEXMFROOT failed, aborting early.\n";
+    warn "$0:   got TEXMFROOT value: $TEXMFROOT" if $TEXMFROOT;
+    die  "$0:   had PATH: $ENV{PATH}\n";
   }
   chomp($TEXMFROOT);
   unshift(@INC, "$TEXMFROOT/tlpkg");
@@ -2531,6 +2551,7 @@ For step-by-step instructions on making new fonts known to TeX, read
 https://tug.org/fonts/fontinstall.html.  For even more terse
 instructions, read the beginning of the main updmap.cfg file.
 
+Executable location: $0
 Report bugs to: tex-live\@tug.org
 TeX Live home page: <https://tug.org/texlive/>
 EOF

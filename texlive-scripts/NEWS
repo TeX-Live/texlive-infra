@@ -1,6 +1,10 @@
 (This file public domain.  Originally written by Norbert Preining and
 Karl Berry, 2010.)
 
+
+<li>tlmgr: more debugging output if Master directory not found.
+<li>fmtutil, updmap: make self-locating as with tlmgr.
+
 <p><b>tlmgr 76773 (released 6nov25):</b>
 <li>check for backup container creation failure.
 
