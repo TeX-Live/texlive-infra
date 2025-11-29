@@ -2462,6 +2462,7 @@ $standardtex = "($standardtex_no_lua" . '|\.lua$)';
  'luavlna',	'luavlna.*\.lua|luavlna\.tex|' . $standardtex,
  'luaxml',      '\.lua|' . $standardtex,
  'lutabulartools', '\.lua|' . $standardtex,
+ 'lxgw-fonts',	'NULL',		# not build.lua
  'lyluatex',	'\.sty',	# not *.cls
  'magyar',      'NULL',  # do not install in runtime, conflicts with babel
  'mahjong',	'tiles|' . $standardtex,
