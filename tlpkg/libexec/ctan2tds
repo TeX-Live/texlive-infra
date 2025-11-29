@@ -1170,7 +1170,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'presentations-en',  "die 'skipping, author request'",
  'preview-latex',     "die 'skipping, use preview'",
  'procIAGssymp',"die 'skipping, use prociagssymp'",
- 'profcollege', "&MAKEflatten",
  'proflabo',    "&MAKEflatten",
  'progkeys',    "die 'skipping, noinfo license, author unfindable'",
  'proofs',      "die 'skipping, nosell license'",
@@ -1918,6 +1917,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'pmhanguljamo'		=> '&POST_onelevel',
  'pmx'			=> '&POSTpmx',
  'pmxchords'		=> '&POST_do_man',
+ 'profcollege'		=> '&POST_onelevel',
  'postit'		=> '&POST_onelevel',
  'prerex'		=> '&POSTprerex',
  'proflycee'		=> '&POST_onelevel',
@@ -2553,7 +2553,6 @@ $standardtex = "($standardtex_no_lua" . '|\.lua$)';
  'pdfxup',	'(template\.tex|\.xup)$',
  'penlight',	'\.lua$|' . $standardtex,
  'petri-nets',  'pnets\.tex|pntext\.tex|\.sty|pndraw\.tex|pnversion\.tex|\.sty|pndraw\.tex',
- 'profcollege',	'PfC.*\.tex|' . $standardtex,
  'pfarrei',	'a5toa4\.tex|' . $standardtex,
  'pgf-blur',    'tikzlibraryshadows.blur.code.tex',
  'pgf-periodictable', 'pgfPT\.[bdflnp].*\.tex|pgfPT.*library.*\.tex|pgfPT.coordinates.tex|pgfPT_radio_symbol.pdf|flags|lattice|spectra|translations|' . $standardtex, # not colorSchemes.tex or radio_symbol.tex
@@ -3653,7 +3652,6 @@ $standardmp = '\.mp$';
  'mpman-ru',    'NULL',         # doc package
  'pdfslide',    'NULL',         # not meta.mp
  'polski',      'NULL',         # not sample-*.mp
- 'profcollege',	'\.dat|' . $standardmp,
  'semioneside', 'NULL',         # not figure*.mp
  'synthslant',	'NULL',         # doc figures
  'textpath',    'textpath.mp',  # not textpathfigs.mp
