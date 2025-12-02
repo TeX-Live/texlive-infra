@@ -1010,6 +1010,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'mnsymbol',    "&MAKEflatten",
  'modular',     "&MAKEflatten",
  'mol2chemfig', "die 'skipping, python setup.py'",
+ 'monaspace-otf',"&MAKEflatten",
  'montex',      "&MAKEflatten",
  'morehelp',    "die 'skipping, nonfree license'",
  'morisawa',	"&MAKEflatten",
@@ -2501,12 +2502,13 @@ $standardtex = "($standardtex_no_lua" . '|\.lua$)';
  'mlawriter',	'mlawriter.tex',
  'mnhyphn',	'mnhyphn.tex',
  'moderncv',	'moderncv.*\.tex|' . $standardtex,
+ 'monaspace-otf','\.(fontspec|sty)$',	# not .py
  'montex',      '(mlsgalig|mlstrans|mnhyphex)\.tex|' . $standardtex,
- 'mpman-ru',    'NULL',         # doc package
+ 'mpman-ru',    'NULL',         	# doc package
  'msg',         '-msg\.tex|' . $standardtex,
  'msu-thesis',  'gb4e-compat\.tex|' . $standardtex,
- 'multirow',    '^..[^s].*\.sty', # not miscdoc.sty
- 'musixtex',    'NULL',           # not musixdoc.sty
+ 'multirow',    '^..[^s].*\.sty', 	# not miscdoc.sty
+ 'musixtex',    'NULL',           	# not musixdoc.sty
  'musixtnt',    'musixtnt.tex',
  'mycv',        'mycv.*\.tex|' . $standardtex,
  'mylatex',     	'.*\.ltx',
