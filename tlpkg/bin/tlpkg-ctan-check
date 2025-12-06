@@ -691,7 +691,7 @@ my @TLP_working = qw(
     pdfscreen pdfslide pdfsync
     pdftex-quiet pdftexcmds pdftoolbox pdftricks pdftricks2 pdfx pdfxup
     pecha pedigree-perl pegmatch
-    penlight penlightplus perception perfectcut perltex
+    penlight penlightplus pennstander-otf perception perfectcut perltex
     permute persian-bib
     petiteannonce petri-nets pfarrei pfdicons
     pgf pgf-blur pgf-go pgf-interference pgf-periodictable pgf-pie
