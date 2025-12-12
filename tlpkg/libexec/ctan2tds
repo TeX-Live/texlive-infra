@@ -2445,6 +2445,7 @@ $standardtex = "($standardtex_no_lua" . '|\.lua$)';
  'lua-uni-algos',    '\.lua|' . $standardtex,
  'lua-check-hyphen', '\.lua|' . $standardtex,
  'lua-ul',	'\.lua|' . $standardtex,
+ 'lua-unicode-math', '^[lt].*(sty|lua|fd)$',	# not generate*.lua
  'lua-visual-debug', '\.lua|' . $standardtex,
  'lua2dox',     'NULL',         # .def is lua code
  'luaaddplot',	'luaaddplot.tex|' . $standardtex,
@@ -3243,6 +3244,7 @@ $standardsource = '(\.(bat|c|drv|[dem]tx|fea|fdd|ins|mk|sfd|dbj|mbs)'
  'lettre',              'NULL',
  'lhcyr',               'README',               # historical
  'lua-alt-getopt',      'NULL',
+ 'lua-unicode-math',	'generate-.*.lua|' . $standardsource,
  'lua2dox',             'NULL',                 # process lua2dox_filter.bat
  'mdframed',            'Makefile|' . $standardsource,
  'metatype1',		'.',			# everything
@@ -3503,6 +3505,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'ltxcmds'	=> 'etex',
  'lua-typo'	=> 'etex',
  'lua-ul'	=> 'etex-answer-y',	# https://github.com/latex3/latex2e/issues/558
+ 'lua-unicode-math' => 'luatex',
  'luacolor'	=> 'etex',
  'luaindex'     => 'lualatex --shell-escape',
  'luamml'	=> 'etex-answer-y',

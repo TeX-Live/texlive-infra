@@ -557,7 +557,8 @@ my @TLP_working = qw(
     ltxkeys ltxmisc ltxnew ltxtools
     lua-alt-getopt lua-check-hyphen lua-physical lua-placeholders
     lua-regression lua-tikz3dtools lua-tinyyaml lua-typo lua-uca lua-ul
-    lua-uni-algos lua-visual-debug lua-widow-control luaaddplot
+    lua-uni-algos lua-unicode-math lua-visual-debug lua-widow-control
+    luaaddplot
     luabibentry luabidi luacas luacensor luacode luacolor luacomplex
     luafindfont luagcd luahttp luahyphenrules
     luaimageembed luaindex luainputenc luakeys luakeyval
