@@ -677,7 +677,8 @@ my @TLP_working = qw(
     palatino palette panda pangram panneauxroute
     paper papercdcase papermas papertex
     papiergurvan paracol parades paralist parallel paratype
-    paresse parnotes parrun parsa parsimatn parsinevis parselines parskip
+    paresse parnotes parrun parsa parsimatn parsinevis parselines
+    parskip parstat
     pas-cours pas-crosswords pas-cv pas-tableur
     pascaltriangle passivetex passopt
     patch patchcmd patgen2-tutorial path pats-resume pauldoc pawpict pax
