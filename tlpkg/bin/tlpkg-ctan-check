@@ -739,7 +739,8 @@ my @TLP_working = qw(
     pst-dart pst-dbicons pst-diffraction
     pst-electricfield pst-eps pst-eucl pst-eucl-translation-bg pst-exa
     pst-feyn pst-fill pst-fit pst-flags pst-fr3d pst-fractal pst-fun pst-func
-    pst-gantt pst-geo pst-geometrictools pst-gr3d pst-grad pst-graphicx pst-hsb
+    pst-gantt pst-gears pst-geo pst-geometrictools
+    pst-gr3d pst-grad pst-graphicx pst-hsb
     pst-infixplot pst-intersect pst-jtree pst-knot pst-labo pst-layout
     pst-lens pst-light3d pst-lsystem
     pst-magneticfield pst-marble pst-math pst-mirror pst-moire pst-node

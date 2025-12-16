@@ -1219,6 +1219,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'pst-func',    "&MAKEpst",
  'pst-gantt',   "&MAKEpst",
  'pst-geo',     "&MAKEpst",
+ 'pst-gears',     "&MAKEpst",
  'pst-geo-compress',    "die 'skipping, in pst-geo, check with hvoss'",
  'pst-geometrictools',	"&MAKEpst",
  'pst-ghsb',    "die 'skipping, in pst-grad'",
