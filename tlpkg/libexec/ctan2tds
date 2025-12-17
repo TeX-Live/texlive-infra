@@ -1219,7 +1219,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'pst-func',    "&MAKEpst",
  'pst-gantt',   "&MAKEpst",
  'pst-geo',     "&MAKEpst",
- 'pst-gears',     "&MAKEpst",
+ 'pst-gears',   "&MAKEpst",
  'pst-geo-compress',    "die 'skipping, in pst-geo, check with hvoss'",
  'pst-geometrictools',	"&MAKEpst",
  'pst-ghsb',    "die 'skipping, in pst-grad'",
@@ -2964,6 +2964,7 @@ $standardtex = "($standardtex_no_lua" . '|\.lua$)';
  'ofs',                 'generic',
  'oinuit',              'fonts',
  'oldlatin',            'fonts',
+ 'opbible',		'optex',
  'orkhun',              'fonts',
  'ot2cyr',              'fonts',
  'pacioli',             'fonts',
@@ -4412,6 +4413,10 @@ sub set_dir_defaults {
 
   } elsif ($ctan_dir =~ m!/(CTAN|tex-archive)/macros/context/!) {
     $standarddocfmt = $standardsourcefmt = $standardfmt = "context";
+    $guess = "$standarddocfmt for fmt/docfmt/srcfmt";
+
+  } elsif ($ctan_dir =~ m!/(CTAN|tex-archive)/macros/luatex/optex/!) {
+    $standarddocfmt = $standardsourcefmt = $standardfmt = "optex";
     $guess = "$standarddocfmt for fmt/docfmt/srcfmt";
 
   } elsif ($ctan_dir =~ m!/(CTAN|tex-archive)/macros/(jptex/)?generic/!) {
@@ -8002,6 +8007,7 @@ sub POSTnwejm {
 
 sub POSTopbible {
   print "POST$package - mv doc macros subdirs\n";
+  rmdir ("$DEST/tex/$whichformat/$package");
   &xsystem ("$MV macros $DEST/tex/$whichformat/$package"); # optex
   &xsystem ("$MV doc/* .");
 }
