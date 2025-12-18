@@ -995,7 +995,7 @@ my @TLP_working = qw(
     xifthen xii xii-lat ximera
     xindex xindy-persian xint xint-regression xintsession xistercian xits
     xkcdcolors xkeymask xkeyval xlop xltabular xltxtra
-    xml2pmx xmltex xmpincl xmuthesis xnewcommand
+    xmeaning xml2pmx xmltex xmpincl xmuthesis xnewcommand
     xoptarg xpatch xpeek xpeekahead xpiano xpicture xpinyin
     xprintlen xpunctuate
     xq xreview xsavebox xsim xsipa xskak xstring
