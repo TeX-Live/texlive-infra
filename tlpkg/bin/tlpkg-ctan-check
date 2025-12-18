@@ -743,7 +743,8 @@ my @TLP_working = qw(
     pst-gr3d pst-grad pst-graphicx pst-hsb
     pst-infixplot pst-intersect pst-jtree pst-knot pst-labo pst-layout
     pst-lens pst-light3d pst-lsystem
-    pst-magneticfield pst-marble pst-math pst-mirror pst-moire pst-node
+    pst-magneticfield pst-marble pst-massspring pst-math
+    pst-mirror pst-moire pst-node
     pst-ob3d pst-ode pst-optexp pst-optic
     pst-osci pst-ovl
     pst-pad pst-pdgr pst-perspective

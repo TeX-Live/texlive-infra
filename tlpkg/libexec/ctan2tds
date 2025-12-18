@@ -1238,6 +1238,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'pst-lsystem', "&MAKEpst",
  'pst-magneticfield',   "&MAKEpst",
  'pst-marble',	"&MAKEpst",
+ 'pst-massspring',	"&MAKEpst",
  'pst-math',    "&MAKEpst",
  'pst-mirror',  "&MAKEpst",
  'pst-moire',   "&MAKEpst",
