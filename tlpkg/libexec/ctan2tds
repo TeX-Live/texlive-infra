@@ -1213,6 +1213,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'pst-feyn',	"&MAKEpst",
  'pst-fill',    "&MAKEpst",
  'pst-fit',     "&MAKEpst",
+ 'pst-fourbarlinkage',    "&MAKEpst",
  'pst-fr3d',    "&MAKEpst",
  'pst-fractal', "&MAKEpst",
  'pst-fun',     "&MAKEpst",
