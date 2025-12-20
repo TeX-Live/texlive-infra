@@ -745,7 +745,7 @@ my @TLP_working = qw(
     pst-infixplot pst-intersect pst-jtree pst-knot pst-labo pst-layout
     pst-lens pst-light3d pst-lsystem
     pst-magneticfield pst-marble pst-massspring pst-math
-    pst-mirror pst-moire pst-node
+    pst-mirror pst-moire pst-node pst-nutation
     pst-ob3d pst-ode pst-optexp pst-optic
     pst-osci pst-ovl
     pst-pad pst-pdgr pst-perspective
@@ -795,7 +795,7 @@ my @TLP_working = qw(
     rterface rtkinenc rtklage
     rub-kunstgeschichte rubik ruhyphen ruler rulerbox rulercompass
     runcode runtexfile runtexshebang ruscap russ rutitlepage
-    rviewport rvwrite ryersonsgsthesis ryethesis
+    rviewport rvwrite rwth-ci ryersonsgsthesis ryethesis
   sa-tikz sacsymb sageep sanitize-umlaut sankey
     sanskrit sanskrit-t1 sansmath sansmathaccent sansmathfonts
     sapthesis sasnrdisplay sauerj
