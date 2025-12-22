@@ -409,6 +409,7 @@ my @TLP_working = qw(
     glossaries-norsk glossaries-nynorsk gloss-occitan
     glossaries-polish glossaries-portuges
     glossaries-serbian glossaries-slovene glossaries-spanish
+    glossaries-ukrainian
     gmdoc gmdoc-enhance
     gmiflink gmp gmutils gmverb gmverse gnuplottex
     go gobble gofonts gost gothic gotoh
