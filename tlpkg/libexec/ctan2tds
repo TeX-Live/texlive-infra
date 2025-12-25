@@ -1267,6 +1267,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'pst-solides3d',       "&MAKEpst",
  'pst-soroban', "&MAKEpst",
  'pst-spectra', "&MAKEpst",
+ 'pst-sphericaltrochoid',	"&MAKEpst",
  'pst-spinner',	"&MAKEpst",
  'pst-spirograph',	"die 'skipping, removed from CTAN 17mar20'",#"&MAKEpst",
  'pst-stru',    "&MAKEpst",

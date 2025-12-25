@@ -753,7 +753,7 @@ my @TLP_working = qw(
     pst-platon pst-plot pst-poker pst-poly pst-pdf pst-pulley
     pst-qtree pst-rputover pst-rubans
     pst-shell pst-sigsys pst-slpe pst-solarsystem pst-solides3d pst-soroban
-    pst-spectra pst-spinner
+    pst-spectra pst-sphericaltrochoid pst-spinner
     pst-stru pst-support
     pst-text pst-thick pst-tools pst-tree pst-turtle pst-tvz pst-uml
     pst-vectorian pst-vehicle pst-venn pst-vowel
