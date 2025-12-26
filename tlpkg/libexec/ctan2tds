@@ -3428,6 +3428,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'delimtxt'     => 'latex -translate-file=empty.tcx',   # no 8-bit
  'doibanner'	=> 'etex',
  'dramatist'	=> 'latex',  # requires interaction
+ 'drawmgr'      => 'xelatex',# requires interaction
  'drm'          => 'latex',  # requires interaction
  'duckuments'	=> 'tex',
  'easybook'	=> 'etex',
