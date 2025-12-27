@@ -3313,7 +3313,6 @@ $standardsource = '(\.(bat|c|drv|[dem]tx|fea|fdd|ins|mk|sfd|dbj|mbs)'
  'cbfonts-fd',  '\.fdd',
  'cmbright',    'NULL',
  'dtxgallery',	'NULL',
-# 'gbt7714',	'NULL',			# dtx doesn't work
  'geometry-de', 'NULL',                 # doc, no need to build
  'gloss-occitan','NULL',		# polyglossia installs .ldf now
  'lettre',      'NULL',
@@ -4765,13 +4764,15 @@ sub donormal {
    &SYSTEM ("find $DEST -type d -empty -delete -print");
 }
 
+# Look in global @filenames for THISPATT to run .ins files.
+# 
 sub runins {
   my ($thispatt) = @_;
   print "\t RUNINS $thispatt\n";
-  # @filenames is just in the current directory, not recursive.
+  # @filenames must be only in the current directory, not subdirs.
   for (grep (/$thispatt/, @filenames)) {
-    my $env_mktex = "env MKTEXTFM=0 MKTEXMF=0 MKTEXPK=0";
     # do not infinite loop on docstrip "output directory", e.g., fltpoint.
+    #my $env_mktex = "env MKTEXTFM=0 MKTEXMF=0 MKTEXPK=0";
     #&runjob ("yes | sed 1000q | $env_mktex $insrunner $_");
     &runjob ("$invoke_insrunner $_");
 
@@ -4796,7 +4797,25 @@ sub runins {
     }
   }
 
+  # may as well remove any new .log, etc.
   &killfiles ($specialclean{$package} || $standardclean);
+}
+
+# Sometimes we want to runins in a subdir, which means cd SUBDIR,	
+# dynamically redefining @filenames, doing the call, doing the
+# installation of any newly-generated files, and cd ..; fun.
+sub runins_subdir {
+  my ($subdir) = @_;
+  print "\t RUNINS_SUBDIR $subdir\n";
+  &xchdir ($subdir);
+  {
+    local @filenames = glob ("*");  # dynamic redef for runins call.
+    &runins ($inspatt);
+    &dotex ();
+  } # end block to restore @filenames
+  warn "qfilenames = @filenames\n";
+  &xchdir ("..");
+  print "\t RUNINS_SUBDIR done (in $subdir)\n";
 }
 
 # Install files into DESTDIR matching THISPATT.
@@ -8383,11 +8402,11 @@ sub POSTzhmetrics {
 
 # Generic post hook actions follow, with an underscore following POST.
 
-# Many people upload to ctan with a single directory level for
-# doc/source/tex files. Handle those directories in themselves.
+# Many people upload to ctan with a single directory level,
+# as explained on https://ctan.org/upload. Handle those directories.
 #
 sub POST_onelevel {
-  print "POST_onelevel ($package) - handle doc/source/tex directories\n";
+  print "POST_onelevel ($package) - handle known subdirectories\n";
 
   for my $dir (glob ("*")) {
     next unless -d $dir; # leave files where they are
@@ -8398,14 +8417,18 @@ sub POST_onelevel {
     my $thisformat;
     #
     my $destdir = $dir;
-    if ($dir =~ /^((lua)?(la)?tex|code|src|theme)$/) { # tex/format/$package
-      $thisformat = $whichformat;
+    if ($dir =~ /^((lua)?(la)?tex|code|src|theme)$/) { # tex/$format/$package
       $destdir = "tex";
+      $thisformat = $whichformat;
+
+    } elsif ($dir =~ /^(source)$/) { # source/$format/$package
+      $destdir = "source";
+      $thisformat = $whichformat;
 
     } elsif ($dir =~ /^(metapost|scripts)/) {  # {metapost,scripts}/$package
       $thisformat = "";
 
-    } elsif ($dir =~ /^(opentype)/) {  # fonts/opentype/$foundry/$package
+    } elsif ($dir =~ /^(opentype)/) {  # fonts/$dir/$foundry/$package
       $destdir = "fonts";
       my $foundry = $specialfoundry{$package} || $standardfoundry;
       $thisformat = "$dir/$foundry";
@@ -8415,7 +8438,9 @@ sub POST_onelevel {
       print "$0: skipping unknown one-level directory: $dir\n";
       next;
     }
-    &rename_with_mkdir ($dir, "$DEST/$destdir/$thisformat/$package");
+    my $dest = "$DEST/$destdir/$thisformat/$package";
+    print "\t onelevel: renaming $dir to $dest\n";
+    &rename_with_mkdir ($dir, $dest);
   }
 
   # do data/ subdir (e.g., dlrg-templates) after main loop, since we
@@ -8424,12 +8449,24 @@ sub POST_onelevel {
   #   and we'll have to back off to a separate routine.
   for my $subdir (("data", "logos")) {
     next unless -d $subdir;
-    &rename_with_mkdir ($subdir, "$DEST/tex/$whichformat/$package/$subdir");
+    my $dest = "$DEST/tex/$whichformat/$package/$subdir";
+    print "\t onelevel: renaming special subdir $dir to $dest\n";
+    &rename_with_mkdir ($subdir, $dest);
   }
 
   # move files in doc[s]/ up to cwd. If there are clashes, will error out.
+  print "\t onelevel: moving doc[s]/ up a level\n";
   &xsystem ("$MV doc/* .") if -d "doc";
   &xsystem ("$MV docs/* .") if -d "docs";
+
+  # If moved a source/ subdir with dtx|ins, do runins; e.g., rwth-ci.
+  # We do this here since the normal runins in donormal doesn't see
+  # anything in subdirs.
+  my $srcdest = "$DEST/source/$whichformat/$package";
+  if (glob ("$srcdest/*.ins") || glob ("$srcdest/*.dtx")) {
+    print "\t onelevel: doing runins in installed $srcdest\n";
+    &runins_subdir ($srcdest);
+  }
 }
 
 sub POST_otherformat {
