@@ -4813,7 +4813,6 @@ sub runins_subdir {
     &runins ($inspatt);
     &dotex ();
   } # end block to restore @filenames
-  warn "qfilenames = @filenames\n";
   &xchdir ("..");
   print "\t RUNINS_SUBDIR done (in $subdir)\n";
 }
