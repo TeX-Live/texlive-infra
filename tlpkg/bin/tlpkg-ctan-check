@@ -94,7 +94,7 @@ my @TLP_working = qw(
     baskervaldadf baskervaldx baskervillef
     basque-book basque-date bath-bst
     bbcard bbding bbm bbm-macros bbold bboldx bbold-type1 bchart bclogo
-    beamer beamer2thesis beamer-fuberlin beamer-rl
+    beamer beamer2thesis beamer-fuberlin beamer-reveal beamer-rl
     beamer-theme-albi beamer-tut-pt beamer-varbox beamer-verona
     beamerappendixnote beameraudience beamerauxtheme
     beamercolorthemeowl beamerdarkthemes beamerposter
