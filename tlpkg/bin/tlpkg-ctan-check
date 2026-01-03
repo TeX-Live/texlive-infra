@@ -811,7 +811,7 @@ my @TLP_working = qw(
     scrhack scripture scrjrnl scrlayer-fancyhdr scrlttr2copy scrwfile scsnowman
     sdaps sdrt sduthesis
     se2thesis seatingchart
-    secdot secnum section sectionbox sectionbreak sectsty seealso
+    secdot secnum secretx section sectionbox sectionbreak sectsty seealso
     selectp selinput selnolig semantex semantic semantic-markup semaphor
     semesterplanner semesterplannerlua seminar semioneside semproc semtex
     sepfootnotes sepnum seqsplit
