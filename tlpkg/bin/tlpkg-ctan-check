@@ -1002,7 +1002,7 @@ my @TLP_working = qw(
     xmeaning xml2pmx xmltex xmpincl xmuthesis xnewcommand
     xoptarg xpatch xpeek xpeekahead xpiano xpicture xpinyin
     xprintlen xpunctuate
-    xq xreview xsavebox xsim xsipa xskak xstring
+    xq xreview xsavebox xsim xsipa xskak xstacks xstring
     xtab xtufte xtuthesis xunicode xurl
     xwatermark xyling xymtex xypic xypic-tut-pt xytree
   yafoot yagusylo yaletter yamlvars yannisgr yathesis yax yazd-thesis
