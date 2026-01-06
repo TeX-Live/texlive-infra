@@ -6808,6 +6808,12 @@ sub PREHOOK_texdraw {
   &SYSTEM ("$MV manual/* .");
 }
 
+sub PREHOOK_texfot {
+  print "PREHOOK_$package - make .1 with pod2man\n";
+  &prehook_pod2man ("Karl Berry", "$package.pl");
+  &SYSTEM ("$RM $package.pdf");
+}
+
 sub PREHOOK_texlogfilter {
   print "PREHOOK_$package - make .1 with pod2man\n";
   &prehook_pod2man ("Julien Labbe", "texlogfilter");
