@@ -612,7 +612,8 @@ my @TLP_working = qw(
     mkgrkindex mkjobtexmf mkpattern mkpic
     mla-paper mlacls mlawriter mleftright mlist mlmodern mluexercise
     mmap mnhyphn mnotes mnras mnsymbol modeles-factures-belges-assocs
-    moderncv modernposter modernruler moderntimeline modes modiagram
+    moderncv modernnewspaper modernposter modernruler moderntimeline
+    modes modiagram
     modref modroman modular modulus
     mohe-book moloch monaspace-otf mongolian-babel montserrat
     monofill montex moodle
