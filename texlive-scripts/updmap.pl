@@ -24,18 +24,17 @@ BEGIN {
   my $bindir;
   my $Master = __FILE__;
   if ($^O =~ /^MSWin/i) {
-    # on w32 $0 and __FILE__ point directly to tlmgr.pl; they can be relative
+    # on w32 $0 and __FILE__ point directly to this script; they can be relative
     $Master =~ s!\\!/!g;
     $Master =~ s![^/]*$!../../..!
       unless ($Master =~ s!/texmf-dist/scripts/texlive/tlmgr\.pl$!!i);
     $bindir = "$Master/bin/windows";
-    # path already set by wrapper batchfile
   } else {
     $Master =~ s,/*[^/]*$,,;
     $bindir = $Master;
     $Master = "$Master/../..";
-    $ENV{"PATH"} = "$bindir:$ENV{PATH}";
   }
+  $ENV{"PATH"} = "$bindir:$ENV{PATH}";
   $TEXMFROOT = `kpsewhich -var-value=TEXMFROOT`;
   if ($? || ! $TEXMFROOT) {
     warn "$0: kpsewhich -var-value=TEXMFROOT failed, aborting early.\n";
