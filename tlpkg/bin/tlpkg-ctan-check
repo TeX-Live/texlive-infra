@@ -374,7 +374,7 @@ my @TLP_working = qw(
     fontscale fontscripts fontsetup fontsize fontspec fonttable fontwrap
     footbib footmisc footmisx footnotebackref footnotehyper
     footnoterange footnpag
-    forarray foreign forest forest-quickstart forloop
+    forarray foreign forest forest-ext forest-quickstart forloop
     formal-grammar formlett formation-latex-ul forms16be formular forum
     fouridx fourier fouriernc
     fp fpl
