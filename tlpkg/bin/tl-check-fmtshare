@@ -1,11 +1,10 @@
 #!/bin/sh
 # Public domain. Originally written by Karl Berry, 2021.
-# Test that a .fmt file built on one system can be used on another.
+# Test that a .fmt file built on one system can be used on another,
+# and that the current binaries can build .fmts on the local system.
 # 
-# Invoked from karl's cron.weekly:
-#   tl-check-fmtshare m68:tl/Work/texk/web2c
-# where m68 is a host alias for one of Nelson's machines,
-# a 32-bit BigEndian m68k architecture.
+# Invoked from karl's cron.remote, which syncs the sources and builds
+# the engines first; see invocation there.
 
 version='$Id$'
 renice 20 $$ >/dev/null 2>&1
@@ -26,21 +25,24 @@ Master=`cd "$bindir"/../.. && pwd`
 enginedir=`cd "$mydir"/../../../Build/source/Work/texk/web2c 2>/dev/null&& pwd`
 outdir=/tmp/fmtshare.`id -u`
 default_fmts="tex.fmt pdftex.fmt pdflatex.fmt xetex.fmt xelatex.fmt
-		     luatex.fmt euptex.fmt" # not lualatex or optex, see below
+	      luatex.fmt euptex.fmt"  # not lualatex or optex, see below
 fmts=
-remote=
+rhost=    # m68.freefriends.org   (see cron.remote) == texlive.info
+rchroot=  # /srv/chroot/qemu-m68k (on that machine, set up by Norbert)
+rwweb2c=  # home/karl/tl/Work/texk/web2c (inside that chroot)
 
-usage="Usage: $0 [OPTION]... RHOST:RDIR
-Build TeX .fmt files locally, then copy them to RHOST:RDIR and try to
-load them with the TeX engines there. That is, RDIR should be a web2c
-build directory with binaries; in TeX Live,
-/something/like/Build/source/Work/texk/web2c.
+usage="Usage: $0 [OPTION]... --rhost RHOST --rchroot RCHROOT --rwweb2c RWWEB2C
+Build TeX .fmt files locally, then copy them to RHOST and try to load
+them with the TeX engines already built there, spawning a chroot to
+RCHROOT and then cd RWWEB2C. All three of those options are required.
+See cron.remote on tug.org for invocation, plus syncing the sources and
+building the engines beforehand.
 
 The idea is to support testing for .fmts being sharable among different
 system architectures, as intended; for instance, 4-byte long vs. 8-byte
 long and BigEndian vs. LittleEndian.
 
-The further idea is to be able to test new binaries in the Build
+The further idea is to be able to test new binaries locally in the Build
 directory (since that's where the compiled sources change), while using
 support files from a Master directory (since that's where they are
 updated).
@@ -48,8 +50,7 @@ updated).
 fmtutil-sys is run locally (found using PATH) to discern the engine and
 full command line used for building the given .fmts.
 
-The remote execution is done with \"ssh -n RHOST && cd RDIR && ...\",
-so ssh has to be working.
+The remote execution is done with \"ssh -n RHOST\" so ssh has to be working.
 
 The default for the Build directory is to be relative to where this
 script is executed. The default for the Master directory is to be
@@ -59,14 +60,9 @@ the same.
 The output directory is not cleaned before starting, in case older logs
 are helpful in debugging new failures.
 
-Special case #1: unfortunately, lualatex.fmt cannot be easily tested,
-and it is omitted by default. Loading the fmt requires finding many Lua
-files, which are unlikely to be available on the remote machine. The
-script does not try to handle this.
-
-Special case #2: optex.fmt includes precompiled Lua code, which is not
-sharable across architectures. Therefore the .fmt isn't either. If
-users need this at some future time, the optex maintainer will consider.
+Special cases: lualatex.fmt and optex.fmt (and context) include
+precompiled Lua code, which is not sharable across architectures.
+So those .fmts aren't either: https://tug.org/texlive/bugs.html#permanent.
 
 Options (must use --, must use space to separate option from value, sorry):
 --Master MDIR     use MDIR for local support files
@@ -76,11 +72,14 @@ Options (must use --, must use space to separate option from value, sorry):
 --outdir ODIR     build locally in ODIR [$outdir]
 --fmt FMT         build FMT; can be given more than once
                     [$default_fmts]
+--rhost RHOST     ssh to RHOST
+--rchroot RCHROOT on RHOST, systemd-nspawn -D RCHROOT
+--rwweb2c RWWEB2C inside RCHROOT, cd RWWEB2C (to get to Work/texk/web2c)
 
 --help            display this help and exit
 --version         display version information and exit
 
-Doc: https://tug.org/texinfohtml/web2c.html#Hardware-and-memory-dumps
+Background: https://tug.org/texinfohtml/web2c.html#Hardware-and-memory-dumps
 Bug reports, discussion: tex-live@tug.org
 Version: $version"
 
@@ -90,43 +89,38 @@ while test $# -gt 0; do
   --enginedir) shift; enginedir=$1;;
   --fmt)       shift; fmts="$fmts $1";;
   --outdir)    shift; outdir=$1;;
+  --rhost)     shift; rhost=$1;;
+  --rchroot)   shift; rchroot=$1;;
+  --rwweb2c)   shift; rwweb2c=$1;;
   #
   --help)      echo "$usage"; exit 0;;
   --version)   echo "$version"; exit 0;;
   -*)          echo "$0: goodbye, unrecognized option: $1" >&2; exit 1;;
   #
-  *)           if test -n "$remote"; then
-                 echo "$0: remote argument already seen: $remote" >&2
-                 echo "$0:   now have second: $1" >&2
-                 exit 1
-               fi
-               remote=$1;;
+  *)           echo "$0: goodbye, non-option argument unrecognized: $1" >&2
  esac
  shift
 done
 
-if test -z "$remote"; then
-  echo "$0: no remote argument given, goodbye." >&2
+if test -z "$rhost"; then
+  echo "$0: no --rhost option given, goodbye (see --help)." >&2
   exit 1
-elif echo "$remote" | grep -v : >/dev/null; then
-  echo "$0: remote argument must have form HOST:DIR, not like: $remote" >&2
+elif test -z "$rchroot"; then
+  echo "$0: no --rchroot option given, goodbye (see --help)." >&2
   exit 1
-elif test `echo "$remote" | tr -cd : | wc -c` != 1 >/dev/null; then
-  # not worth the fancier parsing until we need it.
-  echo "$0: remote argument must have only one colon: $remote" >&2
+elif test -z "$rwweb2c"; then
+  echo "$0: no --rwweb2c option given, goodbye (see --help)." >&2
   exit 1
 fi
-remotesys=`echo "$remote" | sed 's/:.*//'`
-remotedir=`echo "$remote" | sed 's/.*://'`
 #
 if test ! -d "$Master/texmf-dist/web2c"; then
-  echo "$0: no texmf-dist/web2c subdir of Master: $Master" >&2
+  echo "$0: no texmf-dist/web2c subdir of local Master: $Master" >&2
   ls "$Master" >&2
   exit 1
 fi
 #
 if test ! -d "$enginedir"; then
-  echo "$0: enginedir not a directory: $enginedir" >&2
+  echo "$0: local enginedir not a directory: $enginedir" >&2
   ls "$enginedir" >&2
   exit 1
 fi
@@ -143,14 +137,15 @@ echo "$prg: support files directory: $Master"
 echo "$prg:  local engine directory: $enginedir"
 echo "$prg:  local output directory: $outdir"
 echo "$prg:        formats to build:"$fmts
-echo "$prg:                  remote: $remotesys:$remotedir"
+echo "$prg:             remote host: $rhost"
+echo "$prg:           remote chroot: $rchroot"
+echo "$prg:           remote wweb2c: $rwweb2c"
 
 # 
 # Our function to create a format locally:
 #   mkfmt FMT ENGINEDIR MASTERDIR OUTDIR
 # Generates FMT using the binary from ENGINEDIR,
 # support files from MASTERDIR, and leaving FMT in OUTDIR.
-# 
 # Leaves current directory as OUTDIR.
 #
 # On success, returns zero and outputs two lines to stdout:
@@ -173,7 +168,7 @@ mkfmt ()
   # binary, we want to easily test whether the new binary is ok.
   #
   # First, we run fmtutil-sys (assumed to be in PATH) without generating
-  # anything (--dry-run), to garner the command line needed to build # FMT.
+  # anything (--dry-run), to garner the command line needed to build FMT.
   # 
   fcmd="fmtutil-sys --dry-run --no-engine-subdir --fmtdir $outdir --byfmt $fmt"
   ffot=$outdir/`basename $fmt .fmt`-fmtutil.fot
@@ -236,7 +231,7 @@ for fmt in $fmts; do
     exit 1
   fi
   
-  # first build fmt on local machine.
+  # first build fmt on local machine, garnering results from stdout.
   set - `mkfmt "$fmt" "$enginedir" "$Master" "$outdir"`
   fmtfile=$1
   engine=$2
@@ -258,7 +253,9 @@ for fmt in $fmts; do
   echo "$0: built fmtfile: `ls -l $fmtfile` (on `hostname`)"
   engineversion=`$enginedir/$engine --version | sed 1q`
   echo "$0:   with engine: $enginedir/$engine ($engineversion)"
-  echo "$0:  full command: $ecmd"
+  # duplicated from above:
+  efot=$outdir/`basename $fmt .fmt`-engine.fot
+  echo "$0:      log file: $efot"
 
   # The TeX \command to exit a job immediately. Assume a LaTeX fmt
   # if "latex" is in the name, else plain (enough).
@@ -268,13 +265,14 @@ for fmt in $fmts; do
     endcmd='\end'
   fi
 
-  # copy to remote machine.
-  #echo "$0: copying $fmtfile to $remotesys:$remotedir..."
-  scp -pq "$fmtfile" "$remotesys:$remotedir" || exit 1
+  # copy to remote machine. Full path is the choot and the local path.
+  remotedir=$rchroot/$rwweb2c
+  echo "$0: copying $fmtfile to $rhost:$remotedir..."
+  scp -pq "$fmtfile" "$rhost:$remotedir" || exit 1
   ls -l "$fmtfile"; shasum "$fmtfile"
 
   # load on remote machine.
-  echo "$0: running ./$engine in $remotesys:$remotedir..."
+  echo "$0: running ./$engine in $rhost:$remotedir..."
   #
   # On the remote side, we need to find a texmf.cnf or pdftex gets the
   # mysterious "Must increase the hyph_size"; assume the
@@ -283,18 +281,20 @@ for fmt in $fmts; do
   # Do not try to dynamically create the .fmt.
   # 
   remoteenv="env MKTEXFMT=0 TEXMFCNF=../../../texk/kpathsea"
-  remotecmd="cd $remotedir && $remoteenv ./$engine -fmt=./$fmt '$endcmd'"
+  vmcmd="cd $rwweb2c && $remoteenv ./$engine -fmt=./$fmt '$endcmd'"
+  rsudo="sudo systemd-nspawn --quiet -D $rchroot"
+  remotecmd="$rsudo sh -c \"$vmcmd\""
   #
-  rfot=$outdir/`basename $fmt .fmt`-$remotesys.fot
-  echo "$0: running on $remotesys: $remotecmd" >$rfot
-  ssh -n $remotesys "$remotecmd" </dev/null >>$rfot 2>&1
+  rfot=$outdir/`basename $fmt .fmt`-$rhost.fot
+  echo "$0: running on $rhost: $remotecmd" >$rfot
+  ssh -n $rhost "$remotecmd" </dev/null >>$rfot 2>&1
   if test $? -ne 0; then
-    echo "$0: *** fmt load failed on $remotesys: $fmt" >&2
+    echo "$0: *** fmt load failed on $rhost: $fmt" >&2
     echo "$0: *** transcript in: $rfot" >&2
     cat $rfot >&2
     exit 1
   else
-    echo "$0: fmt load ok on $remotesys: $fmt"
+    echo "$0: fmt load ok on $rhost: $fmt (transcript: $rfot)"
     echo
   fi
 done

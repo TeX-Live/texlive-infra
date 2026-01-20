@@ -1,0 +1,32 @@
+#!/bin/sh
+# $Id$
+# Public domain. Originally written 2026, Karl Berry.
+# Compare the lines beginning with - in two text files, e.g.,
+# two help messages for variants of the same program, e.g.,
+# pdftex vs. tex.
+
+if test $# -ne 2; then
+  echo "Usage: $0 FILE1 FILE2" >&2
+  exit 1
+fi
+
+file1=$1
+if test ! -r "$file1"; then
+  echo "$0: first file not readable: $file1" >&2
+  exit 1
+fi
+
+file2=$2
+if test ! -r "$file2"; then
+  echo "$0: second file not readable: $file2" >&2
+  exit 1
+fi
+
+: ${TMPDIR=/tmp}
+temp1=$TMPDIR/optdiff$$.1
+temp2=$TMPDIR/optdiff$$.2
+
+sed -n 's/^ *-//p' "$file1" | sort >$temp1
+sed -n 's/^ *-//p' "$file2" | sort >$temp2
+
+comm -3 $temp1 $temp2

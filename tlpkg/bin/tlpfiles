@@ -1,11 +1,11 @@
 #!/usr/bin/env perl
 # $Id$
-# Copyright 2007-2020 Karl Berry.
+# Copyright 2007-2026 Karl Berry.
 # This file is licensed under the GNU General Public License version 2
 # or any later version.
 # 
-# Return all files for a given TeX Live package, or package name(s) for
-# a given set of files.
+# Return all files for the given TeX Live package(s),
+# or package name(s) for the given set of files.
 
 our $mydir;
 
@@ -45,26 +45,23 @@ sub main {
 
   if (@opt_pkgof) {
     return &do_pkgof ($tlpdb_path, @opt_pkgof);
-    
-  } elsif (@ARGV != 1) {
-    die "$0: expected exactly one package name; try --help if you need it.\n";
   }
-
-  # report files in given package.
-  my $pkg = $ARGV[0];
 
   my $tlpdb = TeXLive::TLPDB->new (root => $Master);
   if (! defined $tlpdb) {
     die "$0: no texlive.tlpdb under $Master, goodbye";
   }
 
-  my $obj = $tlpdb->get_package ($pkg);
-  die "$0: no TeX Live package named $pkg in $Master.\n" if ! $obj;
-  
-  my @files = $obj->all_files;
-  if ($obj->relocated) { for (@files) { s:^$RelocPrefix/:$RelocTree/:; } }
-  print "$_\n" foreach @files;
-  
+  # report files in given package(s).
+  for my $pkg (@ARGV) {
+    my $obj = $tlpdb->get_package ($pkg);
+    die "$0: no TeX Live package named $pkg in $Master.\n" if ! $obj;
+
+    my @files = $obj->all_files;
+    if ($obj->relocated) { for (@files) { s:^$RelocPrefix/:$RelocTree/:; } }
+    print "$_\n" foreach @files;
+  }  
+
   return 0;
 }
 
