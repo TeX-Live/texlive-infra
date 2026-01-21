@@ -1872,6 +1872,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'lua-regression'	=> '&POST_onelevel',
  'lua-tikz3dtools'	=> '&POST_onelevel',
  'luaotfload'		=> '&POST_do_man',
+ 'luatex-cn'		=> '&POSTluatex_cn',
  'luatexja'		=> '&POSTluatexja',
  'lucide-icons'		=> '&POST_onelevel',
  'm-tx'			=> '&POSTmtx',
@@ -4339,7 +4340,7 @@ for (@ARGV) { # we don't actually support multiple packages in one run
     $BUILDDEST = "$COOKED_PKG/Build/source";
     $TOPDEST = "$COOKED_PKG/Master";
   } else {
-    $BUILDDEST = "oops-no-builddest-should-be-needed?!";
+    $BUILDDEST = "no-builddest-should-be-needed";
     $TOPDEST = $COOKED_PKG;         # that is, Master
   }
 
@@ -7902,6 +7903,13 @@ sub POSTlithuanian {
 sub POSTlua_physical {
   print "POST$package - src/ dir to runtime\n";
   &mv_with_mkdir ("src/*", "$DEST/scripts/$package");
+}
+
+sub POSTluatex_cn {
+  print "POST$package - move src directory\n";
+  my $destrun = "$DEST/tex/lualatex";
+  &xmkdir ($destrun);
+  &xsystem ("$MV src $destrun/$package");
 }
 
 sub POSTluatexja {

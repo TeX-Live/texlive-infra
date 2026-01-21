@@ -571,7 +571,7 @@ my @TLP_working = qw(
     luaquotes luarandom
     luaset luasseq
     luatbls luatex85 luatexbase luatexja luatexko luatextra
-    luatex-type-definitions luatikz
+    luatex-cn luatex-type-definitions luatikz
     luatodonotes luatruthtable luavlna luaxml
     lucide-icons luciole lutabulartools
     luwa-ul luwiantype lwarp lxfonts lxgw-fonts ly1 lydtype lyluatex
