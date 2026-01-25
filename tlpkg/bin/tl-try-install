@@ -20,6 +20,7 @@ instdir=/tmp/ki
 profile=$profiledir/TLinfra.pro
 quiet=false
 repo=$Master
+output_sizes=false
 verbose=
 
 while test $# -gt 0; do
@@ -28,6 +29,7 @@ while test $# -gt 0; do
   -p|--profile) shift; profile=$1;;
   -q|--quiet)   quiet=true;;
   -r|--repo)    shift; repo=$1;;
+  -sz|--sizes)  output_sizes=true;;
   -v|-vv)       verbose=$1;;
   --help)       echo "ustl. sorry."; exit 0;;
   --version)    echo "$vc_id"; exit 0;;
@@ -77,22 +79,34 @@ fi
 
 pro=--profile=$profile
 set -x
-exec time $repo/install-tl $verbose $pro --repo $repo
+time $repo/install-tl $verbose $pro --repo $repo
+status=$?
 
-cust= #--custom-bin=$wb
-exec time $lp/install-tl $pro
-exec time $Master/install-tl $cust $pro
-exec time $lp/install-tl $pro --repo ftp://ftp.cstug.cz/pub/tex/local/tlpretest
-exec time $ln/install-tl $pro --repo ctan #--in-place
+if test $status -eq 0 && $output_sizes; then
+  du -s $instdir
+  printf '\n\f\n'
+  sed -n s/^Installing//p $instdir/install-tl.log \
+  | sed -n -e 's/k\]$//' -e 's/\[//gp' \
+  | awk '{print $NF, $(NF - 1)}' \
+  | sort -nr
+fi
 
-thisrel=/usr/local/texlive/`date +%Y` # not necessarily, but whatever
-prevrel=/usr/local/texlive/`expr "$(date +%Y)" - 1`
-exec time $thisrel/install-tl $pro
-exec time $prevrel/install-tl $pro
-exit $?
+exit $status
 
-# above are just assorted invocations that have been useful from time to
+# Below are some invocations that have been useful from time to
 # time, nothing magic. do what's needed.
 # 
 # $lp = pretest, /home/ftp/texlive/tlpretest on tug.org.
 # $ln = tlnet,   /home/ftp/texlive/tlnet     on tug.org.
+#
+#cust= #--custom-bin=$wb
+#exec time $lp/install-tl $pro
+#exec time $Master/install-tl $cust $pro
+#exec time $lp/install-tl $pro --repo ftp://ftp.cstug.cz/pub/tex/local/tlpretest
+#exec time $ln/install-tl $pro --repo ctan #--in-place
+#
+#thisrel=/usr/local/texlive/`date +%Y` # not necessarily, but whatever
+#prevrel=/usr/local/texlive/`expr "$(date +%Y)" - 1`
+#exec time $thisrel/install-tl $pro
+#exec time $prevrel/install-tl $pro
+#exit $?
