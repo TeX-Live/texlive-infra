@@ -162,7 +162,7 @@ my @TLP_working = qw(
     brandeis-dissertation brandeis-problemset brandeis-thesis
     breakcites breakurl bredzenie breqn bropd broydensolve brushscr
     bubblesort buctthesis bullcntr bundledoc burmese
-    businesscard-qrcode bussproofs bussproofs-extra
+    businesscard-qrcode bussproofs bussproofs-colorful bussproofs-extra
     bxbase bxcalc bxcjkjatype bxcoloremoji bxdpx-beamer bxdvidriver bxghost
     bxjaholiday bxjaprnind bxjatoucs bxpapersize bxpdfver bxeepic bxenclose
     bxjalipsum bxjscls bxnewfont bxorigcapt bxtexlogo bxwareki
@@ -708,7 +708,7 @@ my @TLP_working = qw(
     phfsvnwatermark phfthm
     philex philokalia philosophersimprint phimisci
     phonenumbers phonetic phonrule photo photobook
-    physconst physics physics2 physics-patch physunits
+    physconst physics physics2 physics3 physics-patch physunits
     piano picinpar pict2e
     pictex pictex2 pictexsum pictochrono picture piechartmp piff pigpen
     pinlabel pinoutikz pitex piton pittetd pixelart pixelarttikz

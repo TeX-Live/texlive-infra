@@ -2166,7 +2166,7 @@ $standardtex_no_lua
    = '(\.(.bx|4ht|cls|clo|cmap|(code|lib)\.tex'
     . '|def|dfu|fd|fontspec|ldf|opm|py|sty|trsl)'
     . '|^lbx|.*[^c]\.cfg)$'; # not ltxdoc.cfg
-$standardtex = "($standardtex_no_lua" . '|\.lua$)';
+$standardtex = "($standardtex_no_lua" . '|^(?!build)\.lua$)'; # not build.lua
 #
 %specialtex = (
  '2up',         '2up\.tex|' . $standardtex,
