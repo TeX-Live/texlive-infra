@@ -679,7 +679,7 @@ my @TLP_working = qw(
     pagella-otf pagenote pagerange pagesel pageslts
     palatino palette panda pangram panneauxroute
     paper papercdcase papermas papertex
-    papiergurvan paracol parades paralist parallel paratype
+    papiergurvan paracol parades paralist parallel paramcalc paratype
     paresse parnotes parrun parsa parsimatn parsinevis parselines
     parskip parstat
     pas-cours pas-crosswords pas-cv pas-tableur

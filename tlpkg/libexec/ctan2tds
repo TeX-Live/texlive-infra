@@ -483,6 +483,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'dozenal',	"&MAKEflatten",
  'dps',         "die 'skipping, requires acrotex'",
  'draftmark',   "die 'skipping, nosell license'",
+ 'drawmgr',     "die 'skipping, dtx fails'",
  'drm',		"&MAKEflatten",
  'droid',       "&MAKEcopy",
  'dropping',    "die 'skipping, nosell license'",
@@ -1644,7 +1645,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'zapfchan',	"die 'skipping, part of urw-base35, frozen'",
  'zapfding',	"die 'skipping, part of urw-base35, frozen'",
  'zblbuild',	"die 'skipping, await request, zenity?'",
- 'zefonts',     "die 'skipping, noinfo license'", #&MAKEflatten",
+ 'zefonts',     "die 'skipping, noinfo license'", #&MAKEflatten"
  'zhmakeindex',	"die 'skipping, go seems too much to ask'",
  'zhmcjk',      "die 'skipping, sorry, 8000 tfm files, (7feb12)'",
  'zhmetrics',   "&MAKEcopy",
@@ -1700,6 +1701,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'movie15'              => '&PREHOOK_flatten1',
  'musixtex-fonts'       => '&PREHOOK_unzip',
  'mp3d'                 => '&PREHOOK_mp3d',
+ 'mynsfc'		=> '&PREHOOK_mynsfc',
  'numericplots'		=> '&PREHOOK_flatten1',
  'nwejm'		=> '&PREHOOK_flatten1',
  'optex'		=> '&PREHOOK_optex',
@@ -4356,7 +4358,7 @@ for (@ARGV) { # we don't actually support multiple packages in one run
 
   $inspatt = $specialins{$package} || &specialins($package) || $standardins;
   $insrunner = $specialinsrunner{$package} || $standardinsrunner;
-  $invoke_insrunner = "$insrunner"; # $insrunner_opt";
+  $invoke_insrunner = "$insrunner"; # $insrunner_opt
 
   $Foundry = $specialfoundry{$package} || $standardfoundry;
 
@@ -6751,6 +6753,11 @@ sub PREHOOK_mathspic {
 sub PREHOOK_mp3d {
   print "PREHOOK_$package - rm 1.0\n";
   &SYSTEM ("$RM -rf v1.0");
+}
+
+sub PREHOOK_mynsfc {
+  print "PREHOOK_$package - subdirectories needed for dtx\n";
+  &SYSTEM ("mkdir examples");
 }
 
 sub PREHOOK_optex { # must do early to be found by the normal install
