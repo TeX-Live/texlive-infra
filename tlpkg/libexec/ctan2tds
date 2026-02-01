@@ -1959,6 +1959,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'schule'		=> '&POSTschule',
  'scontents'		=> '&POSTscontents',
  'scrabble'		=> '&POST_onelevel',
+ 'seqcalc'		=> '&POSTseqcalc', 
  'shipunov'		=> '&POSTshipunov',
  'sim-os-menus'		=> '&POST_onelevel',
  'simple-resume-cv'	=> '&POST_simple_rmFonts',
@@ -8201,6 +8202,13 @@ sub POSTscontents {
   &mv_with_mkdir ("t-scontents.mk*", "$DEST/tex/context/third/$package");
   &mv_with_mkdir ("scontents.tex", "scontents-code.tex",
                   "$DEST/tex/generic/$package");
+}
+
+sub POSTseqcalc {
+  print "POST$package - move source dir\n";
+  # if they had named their directory tex/, we could have used onelevel.
+  &mv_with_mkdir ("source/*", "$DEST/tex/latex/$package");
+  &SYSTEM ("$MV doc/* . && rmdir doc");
 }
 
 sub POSTshipunov {
