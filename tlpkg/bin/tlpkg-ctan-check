@@ -579,7 +579,7 @@ my @TLP_working = qw(
     mahjong mailing mailmerge maine-thesis
     make4ht makebarcode makebase makebox
     makecell makecirc makecmds makecookbook
-    makedtx makeglos makelabels makeplot maker makerobust
+    makedtx makeglos makegobbler makelabels makeplot maker makerobust
     makeshape mandi manfnt manfnt-font manuscript manyind
     marathi marcellus margbib marginalia
     marginfit marginfix marginnote maritime markdown marvosym

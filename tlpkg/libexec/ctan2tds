@@ -1696,6 +1696,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'latex2e-help-texinfo-spanish' => '&PREHOOK_latex2e_help_texinfo_spanish',
  'lilyglyphs'           => '&PREHOOK_lilyglyphs',
  'lollipop'             => '&PREHOOK_flatten1',
+ 'makegobbler'          => '&PREHOOK_makegobbler',
  'matapli'              => '&PREHOOK_flatten1',
  'mathspic'             => '&PREHOOK_mathspic',
  'movie15'              => '&PREHOOK_flatten1',
@@ -3527,6 +3528,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'luatexja'     => 'lualatex',
  'magicwatermark' => 'etex',
  'maine-thesis'	=> 'etex',
+ 'makegobbler'	=> 'etex',
  'makelabels'	=> 'tex --8bit',
  'mandi'	=> 'pdflatex-preserve-pdf',
  'marathi' 	=> 'tex -8bit',
@@ -6745,6 +6747,11 @@ sub PREHOOK_lilyglyphs {
   &SYSTEM ("find -name \*~ | xargs $RM");
 }
 
+sub PREHOOK_makegobbler {
+  print "PREHOOK_$package - mv source dir first\n";
+  &mv_with_mkdir ("source/*", "$DEST/source/latex/$package/");
+}
+
 sub PREHOOK_mathspic {
   print "PREHOOK_$package - eliminate version from mathspicNNN.pl\n";
   # the w32 wrapper can only find foo.pl from foo, not fooNNN.pl.
@@ -6867,8 +6874,8 @@ sub PREHOOK_wasy {
 
 sub PREHOOK_webquiz {
   print "PREHOOK_$package - mv dirs so specialscripts can work\n";
-  &mv_with_mkdir ("scripts/*" => "$DEST/scripts/$package");
-  &mv_with_mkdir ("latex/*" => "$DEST/tex/latex/$package");
+  &mv_with_mkdir ("scripts/*", "$DEST/scripts/$package");
+  &mv_with_mkdir ("latex/*", "$DEST/tex/latex/$package");
   &SYSTEM ("$MV doc/* .; rmdir latex scripts doc");
 }
 
