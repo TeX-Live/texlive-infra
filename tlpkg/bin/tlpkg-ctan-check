@@ -198,6 +198,7 @@ my @TLP_working = qw(
     circularglyphs cistercian citation-style-language
     cite citeall citeref citeright
     cje cjhebrew cjk cjk-gs-integrate cjk-ko cjkpunct cjs-rcs-article
+    cqjtuthesis
     clara classics classpack classicthesis
     cleanthesis clearsans clefval cleveref cleveref-forward cleveref-usedon
     clicks clipboard clistmap

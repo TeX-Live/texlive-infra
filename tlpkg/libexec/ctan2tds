@@ -1780,6 +1780,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'circularglyphs'	=> '&POST_onelevel',
  'citation-style-language' => '&POST_do_man',
  'cjk-gs-integrate'	=> '&POSTcjk_gs_integrate',
+ 'cqjtuthesis'		=> '&POST_onelevel',
  'cmcyr'		=> '&POSTcmcyr',
  'codedescribe'		=> '&POST_onelevel',
  'coloredbelts'		=> '&POST_onelevel',
