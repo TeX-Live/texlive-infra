@@ -59,6 +59,7 @@ elif test "x$1" = x--build; then
   test -s $rhtoolset && . $rhtoolset
   
   set -e
+  date
   cd /home/texlive/karl/Build/source/utils/asymptote
   $svn update
   $svn revert asy-keywords.el
@@ -72,13 +73,14 @@ elif test "x$1" = x--build; then
   rm -rf /tmp/ainst autom4te.cache
   ./configure --prefix=/tmp/ainst --enable-static \
     --with-latex=/tmp/ainst/latex --with-context=/tmp/ainst/context \
-    --disable-fftw --disable-gl --disable-gsl --disable-lsp \
+    --disable-fftw --disable-gl --disable-gsl \
     --enable-texlive-build \
     CFLAGS=-g \
     LDFLAGS="-static-libgcc -static-libstdc++"
   make -j`nproc` SILENT_MAKE=
   make check
   make install-prebuilt
+  date
   exit 0
 
 # 
@@ -124,10 +126,12 @@ elif false && $update_runtime_from_ainst; then
 
   cd /tmp/ainst
   xmf=/home/texlive/karl/Master/texmf-dist
-  diff -qr share/asymptote/ $xmf/asymptote/ | fgrep -v .svn
+  diff -qr share/asymptote/ $xmf/asymptote/ \
+  | sed -n -e 's,^Only in ,,p' -e 's,: ,/,'
   #svn rm ...
 
-  diff -qr share/doc/asymptote/ $xmf/doc/asymptote/ | fgrep -v .svn
+  diff -qr share/doc/asymptote/ $xmf/doc/asymptote/ \
+  | sed -n -e 's,^Only in ,,p' -e 's,: ,/,'
   #svn rm ...
 
   svn status $ci  # just to see
