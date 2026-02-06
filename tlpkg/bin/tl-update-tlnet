@@ -294,6 +294,7 @@ if test $failure = false; then
     basecmd=`basename $cmdname`
     echo "$prg: `date`"
     echo "$prg: Running $basecmd ($cmd)"
+    echo "$prg:   (in `pwd`)"
     outfile=/tmp/$USER-tl-update-tlnet/$tlnet_target.$basecmd
     if $cmd >$outfile 2>&1; then
       echo "$prg:   $basecmd ok."
