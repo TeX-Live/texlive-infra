@@ -2,7 +2,7 @@
 # $Id$
 # Create the .iso image(s) for TeX Live.
 # 
-# Copyright 2007-2025 Karl Berry.
+# Copyright 2007-2026 Karl Berry.
 # Copyright 2003, 2004, 2005 Sebastian Rahtz.
 #
 # This file is licensed under the GNU General Public License version 2
@@ -18,7 +18,7 @@ unset CDPATH  # avoid output from cd
 umask 022
 
 NAME=texlive
-V=2025
+V=2026
 D=`date +%Y%m%d`
 target=/home/ftp/texlive/Images/test
 

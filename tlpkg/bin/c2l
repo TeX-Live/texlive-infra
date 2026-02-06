@@ -81,6 +81,7 @@ sub main {
   
   } elsif ($arg eq "aarmgh") {
     # usually we get these from cg, but sometimes mojca doesn't build.
+    # Slow (by hours) on github.
     for my $p (qw(aarch64-linux-gh armhf-linux-gh)) {
       system ("$0 $p") && die "aarm/$p failed";
     }

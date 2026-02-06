@@ -23,7 +23,7 @@ cat install-tl >>$tmpfile
 xgettext -o tlpkg/translations/messages.pot	\
 	--copyright-holder="TeX Live Team"	\
 	--msgid-bugs-address=tex-live@tug.org	\
-	--package-version=2025			\
+	--package-version=2026			\
 	--package-name="TeX Live"		\
         -k__ -k\$__ -k%__ -k__x -k__n:1,2 -k__nx:1,2 -k__xn:1,2 -kN__ -k  \
        texmf-dist/scripts/texlive/tlmgrgui.pl \

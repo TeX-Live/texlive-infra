@@ -1,5 +1,5 @@
 #!/bin/sh -e
-# Copyright 2008-2025 Norbert Preining
+# Copyright 2008-2026 Norbert Preining
 # This file is licensed under the GNU General Public License version 2
 # or any later version.
 # 
@@ -13,7 +13,7 @@ renice 20 $$ >/dev/null 2>&1
 unset CDPATH
 unset LS_COLORS
 
-yyyy=2025
+yyyy=2026
 
 adjust_repo=1
 check_consistency=true

@@ -218,9 +218,9 @@ for tlplat in $tlplats; do
     # Visit https://github.com/TeX-Live/texlive-source/commits
     #   to check for commits. The svn-to-git sync runs only every 15
     #   minutes, so always check that the intended commits are there.
+    # To force update by hand, see norbert crontab on texlive.info.
     # Then https://github.com/TeX-Live/texlive-source/releases/new
-    #   "Draft a new release".
-    #   "Choose a tag -> "find or create a new tag" -> "svnNNNNN"
+    #   "Select tag -> "find or create a new tag" -> "svnNNNNN"
     #   "Target:trunk" should already be there
     #     (or set Target to, e.g., "branch2024", if building from branch),
     #   "rNNNNN and perhaps brief msg from commits in "title",
