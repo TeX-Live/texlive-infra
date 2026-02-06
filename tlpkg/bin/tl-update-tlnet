@@ -17,6 +17,7 @@ yyyy=2026
 
 adjust_repo=1
 check_consistency=true
+check_tlmgr_update=true
 chicken=false
 cow_shell=/bin/sh
 critical=
@@ -41,6 +42,7 @@ while test $# -gt 0; do
   --no-consistency)    check_consistency=false;; # takes a long time.
   --no-install-pkg)    update_install_pkg=false;;# trunk update after freeze
   --no-testinstall|-N) testinstall=false;;       # and no updates; quit early.
+  --no-tlmgr-check)    check_tlmgr_update=false;; # fails at pretest setup.
   --recreate)          recreate=--recreate;;
   --scheme)            shift; scheme=$1;;        # scheme for test install.
   --testlocation)      shift; tltrybase=$1;;
@@ -205,7 +207,7 @@ tlnet_install_log=`pwd`/update-tlnet-install.log
 tlnet_install_cmd="install-tl -location $tltry -profile texlive.profile"
 echo "$prg: `date`"
 echo "$prg: Running test install (log: $tlnet_install_log)..."
-echo "$prg:   (in `pwd`)"
+echo "$prg: (in `pwd`)"
 echo "$prg:   $tlnet_install_cmd"
 perl $tlnet_install_cmd >$tlnet_install_log 2>&1 \
 || true # install-tl can fail, but we test the output, so don't abort.
@@ -291,10 +293,15 @@ if test $failure = false; then
       # since it takes quite a while.
       $check_consistency || continue
     fi
+    if echo "$cmdname" | grep 'tlmgr.*update' >/dev/null; then
+      # skip tlmgr update if requested, since it fails when setting up
+      # the pretest, due to the year mismatch.
+      $check_tlmgr_update || continue
+    fi
     basecmd=`basename $cmdname`
     echo "$prg: `date`"
     echo "$prg: Running $basecmd ($cmd)"
-    echo "$prg:   (in `pwd`)"
+    echo "$prg: (in `pwd`)"
     outfile=/tmp/$USER-tl-update-tlnet/$tlnet_target.$basecmd
     if $cmd >$outfile 2>&1; then
       echo "$prg:   $basecmd ok."
