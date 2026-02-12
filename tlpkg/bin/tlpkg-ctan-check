@@ -995,7 +995,7 @@ my @TLP_working = qw(
     writeongrid wsemclassic wsuipa wtref
   xargs xassoccnt xbmks xcharter xcharter-math xcite xcjk2uni xcntperchap
     xcolor xcolor-material xcolor-solarized
-    xcomment xcookybooky xcpdftips xdoc xduthesis xduts
+    xcomment xcookybooky xcpdftips xdoc xduthesis xdvipsk-support xduts
     xebaposter xechangebar xecjk xecolor xecyr xecyrmongolian xeindex xellipsis
     xepersian xepersian-hm xesearch xespotcolor
     xetex-devanagari xetex-itrans xetex-pstricks xetex-tibetan
@@ -1147,6 +1147,7 @@ my @TLP_no_check = (
   "vlna",		# binary
   "web",		# binary
   "xdvi",		# binary
+  "xdvipsk",		# binary
   "xelatex-dev",	# binary
   "xetex",		# binary
   "xetexconfig",	# we maintain
