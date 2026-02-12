@@ -567,7 +567,8 @@ my @TLP_working = qw(
     luafindfont luagcd luahttp luahyphenrules
     luaimageembed luaindex luainputenc luakeys luakeyval
     lualatex-doc-de
-    lualatex-math lualatex-truncate lualibs lualinalg luamathalign luamaths
+    lualatex-math lualatex-truncate lualibs lualinalg lualineno
+    luamathalign luamaths
     luamesh luamml luamodulartables luamplib luanumint luaoptions luaotfload
     luapackageloader luaplot luaprogtable luapstricks
     luaquotes luarandom
