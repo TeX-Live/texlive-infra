@@ -453,7 +453,7 @@ my @TLP_working = qw(
     hyper hyperbar hypernat hyperref hyperxmp
     hyph-utf8 hyphen-base
     hyphenat hyphenex hyplain
-  iaria iaria-lite ibarra ibrackets ibycus-babel ibygrk icite icsv
+  iacrj iaria iaria-lite ibarra ibrackets ibycus-babel ibygrk icite icsv
     ideavault identkey idxcmds idxlayout
     ieeeconf ieejtran ieeepes ieeetran ietfbibs iexec
     ifallfalse iffont ifis-macros ifmslide ifmtarg ifnextok ifoddpage
@@ -600,7 +600,7 @@ my @TLP_working = qw(
     meetingmins membranecomputing memdesign memexsupp
     memoir memoirchapterstyles memoize memory memorygraphs mendex-doc mentis
     mensa-tex menu menucard menukeys mercatormap merriweather
-    messagepassing
+    messagepassing metacapture
     metafont-beginners metago metalogo metalogox metanorma metaobj metaplot
     metapost-colorbrewer metapost-examples metastr metatex metatype1 metauml
     method metre metrix metsymb
