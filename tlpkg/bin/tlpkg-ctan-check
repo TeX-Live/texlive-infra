@@ -280,7 +280,8 @@ my @TLP_working = qw(
     de-macro debate decimal decimalcomma decision-table decorule
     defoldfonts dehyph dehyph-exptl
     dejavu dejavu-otf
-    delim delimseasy delimset delimtxt democodetools denisbdoc derivative dhua
+    delim delimseasy delimset delimtxt democodetools denisbdoc
+    deutschesmuseum derivative dhua
     diabetes-logbook diadia diagbox diagmac2 dialogl diagnose dice dichokey
     dickimaw dictsym didactic didec diffcoeff digestif digiconfigs
     dijkstra dimnum din1505
@@ -485,6 +486,7 @@ my @TLP_working = qw(
     jslectureplanner jsonparse jsonresume
     juliamono jumplines junicode junicodevf jupynotex
     jura juraabbrev jurabib juramisc jurarsp js-misc jvlisting jwjournal
+    jyu-chem-thesis
   kalendarium kanaparser kanbun kantlipsum karnaugh karnaugh-map karnaughmap
     kastrup kaytannollista-latexia
     kblocks kdgdocs kdpcover keisennote kerkis kerntest ketcindy

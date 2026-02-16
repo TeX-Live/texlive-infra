@@ -2619,6 +2619,7 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'punk',        'NULL', # have separate punk-latex
  'pwebmac',	'pwebmac.tex',
  'pyluatex',	'\.(lua|py)$|' . $standardtex,
+ 'pythontex',	'\.sty$',		# not syncpdb.py
  'qobitree',    'qobitree.tex',
  'r_und_s',     '\.tex|\.sty',
  'randomlist',	'randomlist\.tex|' . $standardtex,
