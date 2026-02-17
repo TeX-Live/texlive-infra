@@ -157,12 +157,12 @@ for tlplat in $tlplats; do
   grab="$download -O $download_loc"
   #
   case $tlplat in 
-   aarch64-linux)
-    # cg build is much much faster than gh, so use it while it works.
+   aarch64-linux-cg)
+    # cg build is much much faster than gh, but it's no longer operating.
     do_download ${cgurl}/${cgbranch}$tlplat.tar.xz;;
 
-   aarch64-linux-gh)
-    # but sometimes we end up with the gh build.
+   aarch64-linux)
+    # so we have to use the gh build, which takes about four hours.
     tlplat=`echo $tlplat | sed s/-gh//`
     do_download `github_url $tlplat`;;
 
