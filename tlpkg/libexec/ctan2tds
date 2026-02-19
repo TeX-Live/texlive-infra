@@ -453,7 +453,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'dejavu-otf',  "&MAKEflatten",
  'deleq',       "die 'skipping, nosell license'",
  'democodetools',    "&MAKEflatten",
- 'denisbdoc',   "&MAKEflatten",
  'deproc',      "die 'skipping, for latex 2.09'",
  'designcon',   "die 'skipping, requires nonfree fonts'",
  'detlev-cm',	"die 'skipping, use beamertheme-detlev-cm'",
