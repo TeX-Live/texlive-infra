@@ -161,7 +161,7 @@ for tlplat in $tlplats; do
     # cg build is much much faster than gh, but it's no longer operating.
     do_download ${cgurl}/${cgbranch}$tlplat.tar.xz;;
 
-   aarch64-linux)
+   aarch64-linux|aarch64-linux-gh)
     # so we have to use the gh build, which takes about four hours.
     tlplat=`echo $tlplat | sed s/-gh//`
     do_download `github_url $tlplat`;;
@@ -174,11 +174,11 @@ for tlplat in $tlplats; do
     default_bin_loc=$download_loc
     do_download http://www.babafou.eu.org/texlive-netbsd/x86_64-netbsd.tar.xz;;
 
-   armhf-linux)
+   armhf-linux-cg)
     # as with aarch.
     do_download ${cgurl}/${cgbranch}$tlplat.tar.xz;;
 
-   armhf-linux-gh)
+   armhf-linux|armhf-linux-gh)
     # as with aarch.
     tlplat=`echo $tlplat | sed s/-gh//`
     do_download `github_url $tlplat`;;

@@ -73,7 +73,9 @@ sub main {
     for my $p (qw(x86_64-linux
                   amd64-freebsd i386-freebsd
                   i386-linux i386-solaris
-                  x86_64-linuxmusl x86_64-solaris)) {
+                  x86_64-linuxmusl x86_64-solaris
+                  aarch64-linux-gh armhf-linux-gh
+              )) {
       system ("$0 $p") && die "github/$p failed";
     }
     print "$0: gh (github/norbert) update done.\n";
@@ -81,19 +83,20 @@ sub main {
   
   } elsif ($arg eq "aarmgh") {
     # usually we get these from cg, but sometimes mojca doesn't build.
-    # Slow (by hours) on github.
+    # Slow (by hours) on github -- but as of 19feb26, native
+    # runners, normal times, so included above.
     for my $p (qw(aarch64-linux-gh armhf-linux-gh)) {
       system ("$0 $p") && die "aarm/$p failed";
     }
     print "$0: gh (aarm/norbert) update done.\n";
     exit 0;
   
-  } elsif ($arg eq "cg" || $arg eq "moj" || $arg eq "mojca") {
-    for my $p (qw(aarch64-linux armhf-linux x86_64-darwinlegacy
+  } elsif ($arg eq "allmac") {
+    for my $p (qw(universal-darwin x86_64-darwinlegacy
                  )) {
       system ("$0 $p") && die "cg/$p failed";
     }
-    print "$0: cg (contextgarden/mojca) updates done.\n";
+    print "$0: allmac updates done.\n";
     exit 0;
 
   } elsif ($arg eq "all") {
