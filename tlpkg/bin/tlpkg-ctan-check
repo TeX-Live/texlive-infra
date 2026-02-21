@@ -347,7 +347,7 @@ my @TLP_working = qw(
     fancybox fancyhandout fancyhdr fancyhdr-it fancylabel
     fancymag fancynum fancypar
     fancyqr fancyref fancyslides fancytabs fancytooltips fancyvrb fandol
-    faq-fr faq-fr-gutenberg farbe fascicules fast-diagram
+    faq-fr faq-fr-gutenberg farbe fariscovernew fascicules fast-diagram
     fbb fbithesis fbox fbs
     fc fcavtex fcltxdoc fcolumn fdsymbol fduthesis featpost fei
     fenetrecas fenixpar
@@ -600,7 +600,8 @@ my @TLP_working = qw(
     mdframed mdputu mdsymbol mdwtools
     measurebox mecaso media4svg media9 medmath medstarbeamer
     meetingmins membranecomputing memdesign memexsupp
-    memoir memoirchapterstyles memoize memory memorygraphs mendex-doc mentis
+    memoir memoirchapterstyles memoize memoize-ext
+    memory memorygraphs mendex-doc mentis
     mensa-tex menu menucard menukeys mercatormap merriweather
     messagepassing metacapture
     metafont-beginners metago metalogo metalogox metanorma metaobj metaplot
