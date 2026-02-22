@@ -56,16 +56,17 @@ if false; then # better to run these one at a time
   rm Master/texmf-dist/source/generic/hyph-utf8/tlpsrc.zip
   #
   # See what we've got.
-  svn status Master # if new package/file has been added, set newpkg/file below
+  # If a new package/file has been added, set newpkg/file below.
+  svn status Master >/tmp/sat
   svn diff Master >/tmp/sdh # review changes, especially in tlpsrc files
   #
   # When ready, run this script:
-  ./Master/tlpkg/bin/tl-hyph-test >/tmp/tht.out 2>&1; echo $?
+  ./Master/tlpkg/bin/tl-hyph-test >/tmp/tht.out 2>&1; echo status=$?
   cat /tmp/tht.out
   # Make sure output is good, no errors building formats, etc.
   # 
-  # If any files are "present but not covered" (in the "file
-  # consistency" check), check if they are in the original
+  # If any files are "present but not covered" (in the "file consistency"
+  # check), look to see if they are in the original
   # $CTAN/install/language/hyph-utf8.tds.zip:
   # - If so, then it's a bug in the tlpsrc generation; fix/report.
   # - If not, then it's an intentional removal in the new release.
@@ -76,6 +77,7 @@ if false; then # better to run these one at a time
   #   packages.)
   #
   # Once it all works, can install hyph-utf8 with ctan2tl [p] as usual;
+  #   if new languages, added to the appropriate collection-lang*.tlpsrc;
   #   copy any changed .tlpsrc (or other) files to dev, and
   #   don't commit in hyphtest, so additions and removals will be correct.
   # Also, good to run a test build right after committing since there is a
@@ -97,8 +99,8 @@ fi
 : ${do_lang_files=true}
 : ${do_install=true}
 : ${do_pkgs=true}
-: ${newfile=hyph-he.tex}  # some new file in the new release
-: ${newpkg=hyphen-hebrew} # and the package it's in
+: ${newfile=hyph-kk.tex}  # some new file in the new release
+: ${newpkg=hyphen-kazakh} # and the package it's in
 
 real0=`realpath $0`
 mydir=`cd \`dirname "$real0"\` && pwd`  # tlpkg/bin
