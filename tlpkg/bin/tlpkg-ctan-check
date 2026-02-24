@@ -361,7 +361,7 @@ my @TLP_working = qw(
     findhyph fink finstrut fira firamath firamath-otf
     first-latex-doc firstaid fistrum fitbox fitch fithesis
     fix2col fixcmex fixdif fixfoot fixjfm fixlatvian
-    fixltxhyph fixmath fixme fixmetodonotes fixpdfmag fiziko
+    fixltxhyph fixmath fixme fixmetodonotes fixpdfmag fixtounicode fiziko
     fjodor
     flabels flacards flagderiv flashcards flashmovie flexipage flipbook flippdf
     float floatbytocbasic floatflt floatrow floatrowbytocbasic
