@@ -929,6 +929,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'ly1',         "&MAKEcopy",
  'lydtype',     "&MAKEflatten",
  'lyx',         "die 'skipping, container directory'",
+ 'm-tx',	"&MAKEflatten",
  'mab2bib',     "die 'skipping, python'",
  'mactex',	"die 'skipping, whole distribution'",
  'magra',	"&MAKEflatten",
@@ -2038,7 +2039,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
 $standarddest = "texmf-dist";
 
 
-%specialfmt = (
+%specialfmt = ( # that is, texfmt
  'abbr',        'generic',
  'abstyles',    'generic',
  'academicons',	'generic',
@@ -2482,6 +2483,7 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'lutabulartools', '\.lua|' . $standardtex,
  'lxgw-fonts',	'ctex.*lxgw\.(def|spa|tex)$',	# not build.lua
  'lyluatex',	'\.sty',	# not *.cls
+ 'm-tx',	'mtxlatex\.sty', # handle others in post
  'magyar',      'NULL',  # do not install in runtime, conflicts with babel
  'mahjong',	'tiles|' . $standardtex,
  'make4ht',	'NULL',  # all in scripts
@@ -2955,6 +2957,7 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'luapstricks',		'lualatex',
  'luatexja',            'luatex',
  'luaxml',              'luatex',
+ 'm-tx',		'generic',
  'marvosym',            'fonts',
  'mathabx',             'fonts',
  'mathdots',            'generic',
@@ -3263,6 +3266,7 @@ $standardsource = '(\.(bat|c|drv|[dem]tx|fea|fdd|ins|mk|sfd|dbj|mbs)'
  'lua-alt-getopt',      'NULL',
  'lua-unicode-math',	'generate-.*.lua|' . $standardsource,
  'lua2dox',             'NULL',                 # process lua2dox_filter.bat
+ 'm-tx',                'NULL',
  'mdframed',            'Makefile|' . $standardsource,
  'metatype1',		'.',			# everything
  'mff',                 '\.mfj|\.bat|\.diz',
@@ -4013,7 +4017,6 @@ $standardttf = '\.ttf|\.TTC';
  'luafindfont'		=> 'luafindfont\.lua$',
  'luaotfload'           => 'luaotfload-tool',
  'lwarp'		=> 'lwarpmk.lua',
- 'm-tx'			=> 'm-tx.lua',
  'make4ht'		=> 'make4ht$',
  'makedtx'		=> '^makedtx\.pl$',
  'markdown'		=> '^markdown2tex\.lua$',
@@ -8037,10 +8040,24 @@ sub POSTmptopdf {
 }
 
 sub POSTmtx {
-  print "POST$package - man pages, preserve prepmx binary\n";
-  &SYSTEM ("$RM $DEST/doc/generic/$package/musixtex.log");
+  print "POST$package - man pages, rm premade prepmx binaries\n";
+  #
+  # keep historical separate runtime location, not that it matters:
+  &mv_with_mkdir ("mtx.tex", "$DEST/tex/generic/$package/");
+  #
+  # remove premade prepmx binaries included on CTAN:
+  &xsystem ("$RM -r Windows*/ prepmx.exe prepmx"); # result of flatten
+  #
+  # remove their source tarball, included in our general sources.
+  &xsystem ("$RM mtx-*.tar.gz");
+  # 
+  # handle the prepmx man page.
   &POST_do_man ();
-  &POST_preserve_bin ("prepmx");
+  #
+  # although the prepmx compiled binary is part of m-tx, it's
+  # only in the arch-specific subpackages, and ctan2tds only updates the
+  # generic package, so we don't need to do anything.
+  #&POST_preserve_bin ("prepmx");
 }
 
 sub POSTmusixtex {
