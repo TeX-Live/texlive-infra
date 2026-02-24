@@ -3,7 +3,7 @@
 # updmap - maintain map files for outline fonts.
 # (Maintained in TeX Live:Master/texmf-dist/scripts/texlive.)
 # 
-# Copyright 2011-2024 Norbert Preining
+# Copyright 2011-2026 Norbert Preining
 # This file is licensed under the GNU General Public License version 2
 # or any later version.
 #
@@ -84,6 +84,9 @@ if (wndws()) {
 
 my $texmfconfig = $TEXMFCONFIG;
 my $texmfvar    = $TEXMFVAR;
+
+# warn about warnings.
+my $printed_warning = 0;
 
 # copy by default for portability.
 my %opts = ( quiet => 0, nohash => 0, nomkmap => 0, copy => 1 );
@@ -503,6 +506,10 @@ sub main {
     my $not = $opts{"dry-run"} ? " not (-n)" : "";
     print "$prg:$not updating ls-R files.\n" if !$opts{'quiet'};
     $updLSR->{exec}() unless $opts{"dry-run"};
+  }
+
+  if ($printed_warning) {
+    print STDERR "$prg [WARNING]: please check warnings above.\n";
   }
 
   return 0;
@@ -1361,6 +1368,11 @@ sub mkMaps {
 
   # all kinds of warning messages
   if ($first_time_creation_in_usermode) {
+    # Well, not technically a warning, but we want people to see it and
+    # there was a complaint that the messages are too long.
+    # https://tug.org/pipermail/tex-live/2026-February/052200.html
+    $printed_warning = 1;
+    #
     print_and_log("
 *************************************************************
 *                                                           *
@@ -1386,8 +1398,9 @@ If you want to undo this, remove the files mentioned above.
 (Run $prg --help for full documentation of updmap.)
 ");
   }
-
+  
   if (keys %mismatch) {
+    $printed_warning = 1;
     print_and_log("
 WARNING: $prg has found mismatched files!
 
@@ -2263,7 +2276,10 @@ sub reset_root_home {
 }
 
 sub print_warning {
-  print STDERR "$prg [WARNING]: ", @_ if (!$opts{'quiet'}) 
+  if (!$opts{'quiet'}) {
+    print STDERR "$prg [WARNING]: ", @_;
+    $printed_warning = 1;
+  }
 }
 sub print_error {
   print STDERR "$prg [ERROR]: ", @_;
