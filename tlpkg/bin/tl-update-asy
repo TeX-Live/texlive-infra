@@ -31,7 +31,7 @@ if false && $update_sources_from_ctan; then
   edit ../README for $ver
 
   # show list of new files to add:
-  svn status | sed -n 's/^\?//p'
+  svn status | sed -n 's/^?//p'
   svn add `!!`
   
   # show list of files to remove:
@@ -41,7 +41,7 @@ if false && $update_sources_from_ctan; then
   svn rm `!!`
 
   # final check and commit:
-  svn status | fgrep \? #  # don't worry about binaries.
+  svn status | \grep '[?!]'
   svn commit -m"asy $ver sources" . ../README
 
 # 
@@ -121,7 +121,7 @@ elif false && $update_runtime_from_ainst; then
     $xist/doc/info/  $xist/doc/man $xist/doc/asymptote \
     $xist/asymptote/ $xist/tex/*/asymptote"
 
-  svn status $ci | sed -n 's/^\?//p'
+  svn status $ci | sed -n 's/^?//p'
   svn add `!!`
 
   cd /tmp/ainst
@@ -134,7 +134,8 @@ elif false && $update_runtime_from_ainst; then
   | sed -n -e 's,^Only in ,,p' -e 's,: ,/,'
   #svn rm ...
 
-  svn status $ci  # just to see
+  svn status $ci | \grep '[?!]'  # should all be clean
+  svn status $ci	     # double check by hand
   scom -m"asymptote $ver support files + windows binary" $ci
 
 # 
