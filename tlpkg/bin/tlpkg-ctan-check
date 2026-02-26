@@ -610,7 +610,8 @@ my @TLP_working = qw(
     mf2pt1 mfb-oldstyle mfirstuc mflogo mflogo-font mfnfss mfpic mfpic4ode mftinc
     mgltex mhchem
     mhequ miama mi-solns
-    microtype microtype-de midnight midpage miller milog milsymb
+    microtype microtype-de midnight midpage
+    milestonetimeline miller milog milsymb
     mindflow minibox minidocument minifp
     minim minim-hatching minim-math minim-mp minim-pdf minim-xmp
     minimalist minipage-marginpar
