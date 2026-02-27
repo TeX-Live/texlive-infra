@@ -309,8 +309,9 @@ my @TLP_working = qw(
     eemeir eepic efbox egameps
     egpeirce egplot ehhline eiad eiad-ltx eigo eijkhout einfart
     ejpecp ekaia ekdosis ektype-tanka
-    elbioimp electrumadf eledform eledmac elements
-    ellipse ellipsis
+    elbioimp electrumadf eledform eledmac
+    elegantbook elegantnote elegantpaper
+    elements ellipse ellipsis
     elmath elocalloc elpres els-cas-templates elsarticle
     elteiktdk elteikthesis eltex elvish elzcards
     emarks embedall embedfile embrac emf emisa
