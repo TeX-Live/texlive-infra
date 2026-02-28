@@ -4314,6 +4314,7 @@ $standardclean = '(\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
  'ucs'		 => 'languages.ps.gz',			# no source
  'unifith'	 => 'unifilogo\.pdf$',			# nonfree
  'xymtex'        => 'doc/.*\.pdf$',                     # no source
+ 'xstix2'        => '.*\.pdf$',				# no source
  'yannisgr'      => '^(digits|gen_acc)\.mf'             # levy dup
 );
 
