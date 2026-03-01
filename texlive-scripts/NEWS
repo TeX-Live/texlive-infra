@@ -1,6 +1,8 @@
 (This file public domain.  Originally written by Norbert Preining and
 Karl Berry, 2010.)
 
+<p>2mar26 TL'26 released.
+
 <p><b>tlmgr 77655 (released 7feb26):</b>
 <li>tlmgr doc update.
 <li>tlmgr: more debugging output if Master directory not found.

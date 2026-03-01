@@ -303,7 +303,7 @@ MAKETAR ()
   # compilable sources.
   if $tar_source_only || $tar_all; then
     cd $master/../Build/source || exit 1
-    do_tar $NAME-$D-source *
+    do_tar $NAME-$D-source * .github
     $tar_source_only && return
   fi
   
