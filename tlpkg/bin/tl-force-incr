@@ -1,0 +1,10 @@
+#!/bin/sh
+# $Id$
+# Change a property to force svn to generate new revisions.
+#
+# We do this in tl-update-tlpdb (not using this script, but the svn
+# command directly; same property, though) and perhaps by hand during
+# updates, or at release (see tlpkg/doc/releng.txt).
+
+date=`date +%s`
+exec svn propset texlive:force_incr_after_delete $date "$@"
