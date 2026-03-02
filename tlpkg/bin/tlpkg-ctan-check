@@ -381,7 +381,7 @@ my @TLP_working = qw(
     footnoterange footnpag
     forarray foreign forest forest-ext forest-quickstart forloop
     formal-grammar formlett formation-latex-ul forms16be formular forum
-    fouridx fourier fouriernc
+    fouridx fourier fouriernc fox-listings
     fp fpl
     fragmaster fragments fragoli frame framed framedsyntax
     francais-bst frankenstein frcursive
