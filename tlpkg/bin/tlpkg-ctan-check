@@ -108,6 +108,7 @@ my @TLP_working = qw(
     beamertheme-saintpetersburg beamertheme-simpledarkblue
     beamertheme-simpleplus beamertheme-spectrum
     beamertheme-tcolorbox beamertheme-trigon beamertheme-upenn-bc
+    beamertheme-westlake
     beamerthemeamurmaple beamerthemecelestia beamerthemeconcrete
     beamerthemejltree beamerthemelalic
     beamerthemenirma beamerthemenord beamertools
@@ -847,8 +848,7 @@ my @TLP_working = qw(
     smalltableof smart-eqn smartdiagram smartref smartunits smflatex
     snapshot snaptodo snotez
     songbook songproj songs sort-by-letters soton soul soulpos
-    soup sourcecodepro sourcesanspro
-    sourceserifpro
+    soup sourcecodepro sourcesans sourceserif
     spacekern spacingtricks spalign spark-otf sparklines spath3 spbmark
     spectral spectralsequences spelatex spelling spie spix
     sphack sphdthesis splentinex splines splitbib splitindex
