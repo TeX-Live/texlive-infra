@@ -839,7 +839,7 @@ my @TLP_working = qw(
     silence sillypage sim-os-menus
     simple-resume-cv simple-thesis-dissertation simplebnf simplecd simplecv
     simpleicons simpleinvoice simplekv simplenodes
-    simpleoptics simpler-wick simples-matrices simplewick
+    simpleoptics simpler-wick simples-matrices simplewick simplex
     simplified-latex simplivre simurgh
     sistyle sitem siunits siunitx sjtutex
     skak skaknew skb skdoc skeldoc skeycommand skeyval
