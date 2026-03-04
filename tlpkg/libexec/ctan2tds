@@ -2378,7 +2378,7 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'hvextern',	'hv(?!doctools).*\.sty|\.lua',  # negative lookahead fun
  'hvfloat',	'hvfloat.*\.inc|' . $standardtex,
  'hwemoji',	'hwemoji-assets.pdf|' . $standardtex,
- 'hyper',       '^[^d].*\.sty|\.hyp',     # not defpattern.sty
+ 'hyper',       '^[^d].*\.sty|\.hyp',   # not defpattern.sty
  'hyphenex',    'ushyphex\.tex',
  'hyplain',     '(hyrules|hy.*plain|hylang)\..*',
  'iaria',	'\.cls',		# not docstrip.cfg
@@ -2388,8 +2388,9 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'ifis-macros',	'ifis[^-].*.tex',	# not ifis-macros-doc
  'ifmslide',    '[^n]\.(eps|pdf|jpg)|' . $standardtex,  # not ifmman.pdf
  'ijsra',	'ijsra_logo.*|' . $standardtex,
+ 'incgraph',    'incgraph.sty',		# not .doc.sty
  'insbox',      'insbox.tex',
- 'install-latex-guide-zh-cn','NULL',		# doc package
+ 'install-latex-guide-zh-cn','NULL',	# doc package
  'interactiveworkbook', 'NULL', # done in POSTinteractiveworkbook
  'interpreter', 'interpreter.(tex|lua)|' . $standardtex,
  'iodhbwm',	'logo\.png$|' . $standardtex,
