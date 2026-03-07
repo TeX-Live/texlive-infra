@@ -35,7 +35,7 @@ my @TLP_working = qw(
     albatross alchemist alegreya alertmessage alfaslabone
     alg algobox algolrevived
     algorithm2e algorithmicx algorithms algpseudocodex algxpar
-    aligned-overset
+    aliascnt aligned-overset
     alkalami allrunes almendra almfixed alnumsec
     alpha-persian alphalph
     alterqcm altfont altsubsup amiri amiweb2c-guide amnestyreport

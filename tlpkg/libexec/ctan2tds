@@ -3392,6 +3392,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
 %specialinsrunner = (
  'abspos'	=> 'etex',
  'actuarialsymbol' => 'pdflatex-preserve-pdf',# requires interaction
+ 'aliascnt'	=> 'etex',
  'aligned-overset' => 'tex',
  'antomega'     => 'latex',  # requires interaction
  'apa6e'        => 'latex',  # requires interaction
