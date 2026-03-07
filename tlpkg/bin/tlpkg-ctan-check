@@ -830,7 +830,7 @@ my @TLP_working = qw(
     sesamanuel sesstime setdeck setspace setspaceenhanced
     seu-ml-assign seuthesis seuthesix sexam
     sf298 sfee sffms sfg
-    sfmath sgame shade shadethm shadow shadowtext shapepar shapes
+    sfmath sgame shade shadethm shadow shadowtext shapepar shapes sharedline
     shdoc shipunov shobhika short-math-guide shortmathj shorttoc
     show-pdf-tags show2e showcharinbox showdim showexpl showhyphenation
     showkerning showlabels showtags shtthesis
