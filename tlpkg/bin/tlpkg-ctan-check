@@ -483,7 +483,7 @@ my @TLP_working = qw(
     jbact jetbrainsmono-otf jeuxcartes jfmutil jieeetran jigsaw
     jknapltx jkmath jlabels jlreq jlreq-deluxe
     jmb jmlr jmsdelim jneurosci jnuexam
-    jobname-suffix joinbox josefin jourcl jourrr
+    jobname-suffix joinbox josefin jourcl jourrr jouthesis
     jpneduenumerate jpnedumathsymbols jpsj jsclasses
     jslectureplanner jsonparse jsonresume
     juliamono jumplines junicode junicodevf jupynotex
@@ -775,7 +775,7 @@ my @TLP_working = qw(
     punk punk-latex punknova purifyeps puyotikz pwebmac pxbase
     pxchfon pxcjkcat pxfonts pxgreeks pxjahyper pxjodel
     pxpgfmark pxpic pxrubrica pxtatescale pxtxalfa pxufont
-    pygmentex pyluatex pynotebook
+    pygmentex pyjupyter pyluatex pynotebook
     python pythonhighlight pythonimmediate pythontex
   q-and-a qcircuit qcm qobitree qrbill qrcode qrcodetikz
      qsharp qstest qsymbols qtree

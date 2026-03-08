@@ -1847,6 +1847,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'ipsum'		=> '&POST_onelevel',
  'isodoc'		=> '&POSTisodoc',
  'isosigns'		=> '&POST_onelevel',
+ 'jouthesis'		=> '&POST_onelevel',
  'keytheorems'		=> '&POST_onelevel',
  'knitting'		=> '&POSTknitting',
  'knuth-lib'		=> '&POSTknuth_lib',
