@@ -852,7 +852,7 @@ my @TLP_working = qw(
     spacekern spacingtricks spalign spark-otf sparklines spath3 spbmark
     spectral spectralsequences spelatex spelling spie spix
     sphack sphdthesis splentinex splines splitbib splitindex
-    spot spotcolor spreadtab spverbatim sqltex
+    spot spotcolor spotxcolor spreadtab spverbatim sqltex
     sr-vorl srbook-mem srbtiks srcltx srdp-mathematik srcredact
     sseq sshrc-insight sslides
     stack stackengine stage standalone standardsectioning stanli
