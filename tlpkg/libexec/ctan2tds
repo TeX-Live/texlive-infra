@@ -300,6 +300,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'chapterbib',  "die 'skipping, update cite instead'",
  'charter',	"die 'skipping, frozen'",
  'check-parens',"die 'skipping, C++'",
+ 'chempid',  	"die 'skipping, generic filenames, asked 12mar26'",
  'chklref',	"&MAKEflatten",
  'chemarrow',   "&MAKEflatten", # check about Arrow.vfb
  'chemstruct',  "die 'skipping, old latex 2.09, never in tl'",

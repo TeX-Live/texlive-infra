@@ -190,7 +190,8 @@ my @TLP_working = qw(
     chbibref cheatsheet checkcites checkend checklistings chem-journal
     chemarrow chembst chemcompounds chemcono chemexec
     chemfig chemformula chemformula-ru chemgreek chemmacros
-    chemnum chemobabel chemplants chemschemex chemsec chemstyle cherokee
+    chemnum chemobabel chempid chemplants
+    chemschemex chemsec chemstyle cherokee
     chess chess-problem-diagrams chessboard chessfss chet chextras
     chhaya chicago chicagoa chicagolinks chicago-annote chickenize
     chifoot childdoc chinese-jfm chinesechess chivo
