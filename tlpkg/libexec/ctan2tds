@@ -603,7 +603,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'fontname',    "die 'skipping, done through tl-update-auto'",
  'fontsetup-nonfree',	"die 'skipping, support for nonfree fonts'",
  'fontools',    	"&MAKEflatten",
- 'fonts-arundina',	"die 'skipping, depends on uninstalled thailatex'",
+ 'fonts-arundina',	"die 'skipping, no runtime files'",
  'fonts-churchslavonic',"&MAKEflatten",
  'footnpag',    "&MAKEfootnpag",
  'formula',     "die 'skipping, requires scripts, very old'",
@@ -1876,6 +1876,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'lua-tikz3dtools'	=> '&POST_onelevel',
  'luaotfload'		=> '&POST_do_man',
  'luatex-cn'		=> '&POST_onelevel',
+ 'luahyperbolic'	=> '&POSTluahyperbolic',
  'luatexja'		=> '&POSTluatexja',
  'lucide-icons'		=> '&POST_onelevel',
  'm-tx'			=> '&POSTmtx',
@@ -2622,6 +2623,7 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'ptex-manual', 'NULL', # keep ptex-manual.sty in doc
  'punk',        'NULL', # have separate punk-latex
  'pwebmac',	'pwebmac.tex',
+ 'pyjupyter',	'\.sty',
  'pyluatex',	'\.(lua|py)$|' . $standardtex,
  'pythontex',	'\.sty$',		# not syncpdb.py
  'qobitree',    'qobitree.tex',
@@ -7928,11 +7930,11 @@ sub POSTlua_physical {
   &mv_with_mkdir ("src/*", "$DEST/scripts/$package");
 }
 
-sub POSTluatex_cn {
-  print "POST$package - move src directory\n";
-  my $destrun = "$DEST/tex/lualatex";
-  &xmkdir ($destrun);
-  &xsystem ("$MV src $destrun/$package");
+sub POSTluahyperbolic {
+  print "POST$package - move luahyperbolic*.lua files\n";
+  my $destdir = "$DEST/tex/lualatex/$package";
+  &xmkdir ($destdir);
+  &xsystem ("$MV lua/luahyperbolic*.lua $destdir");
 }
 
 sub POSTluatexja {

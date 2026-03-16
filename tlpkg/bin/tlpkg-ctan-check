@@ -569,7 +569,7 @@ my @TLP_working = qw(
     lua-uni-algos lua-unicode-math lua-visual-debug lua-widow-control
     luaaddplot
     luabibentry luabidi luacas luacensor luacode luacolor luacomplex
-    luafindfont luagcd luahttp luahyphenrules
+    luafindfont luagcd luahttp luahyperbolic luahyphenrules
     luaimageembed luaindex luainputenc luakeys luakeyval
     lualatex-doc-de
     lualatex-math lualatex-truncate lualibs lualinalg lualineno
