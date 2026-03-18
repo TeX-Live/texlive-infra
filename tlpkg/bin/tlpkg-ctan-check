@@ -376,7 +376,7 @@ my @TLP_working = qw(
     fontawesome fontawesome5 fontawesome6 fontawesome7 fontawesomescaled
     fontaxes fontbook fontch fontinst
     fontinstallationguide fontmfizz fontools
-    fonts-churchslavonic fonts-tlwg
+    fonts-arundina fonts-churchslavonic fonts-tlwg
     fontscale fontscripts fontsetup fontsize fontspec fonttable fontwrap
     footbib footmisc footmisx footnotebackref footnotehyper
     footnoterange footnpag

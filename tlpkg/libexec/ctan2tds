@@ -603,7 +603,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'fontname',    "die 'skipping, done through tl-update-auto'",
  'fontsetup-nonfree',	"die 'skipping, support for nonfree fonts'",
  'fontools',    	"&MAKEflatten",
- 'fonts-arundina',	"die 'skipping, no runtime files'",
  'fonts-churchslavonic',"&MAKEflatten",
  'footnpag',    "&MAKEfootnpag",
  'formula',     "die 'skipping, requires scripts, very old'",
@@ -1464,7 +1463,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'tfrupee',     "&MAKEflatten",
  'tgothic',     "die 'skipping, use bookhands'",
  'thaifonts-arundina',   "die 'skipping, fontforge format only'",
- 'thaifonts-scalable',   "die 'skipping, fontforge format only'",
  'thailatex',   "die 'skipping, use babel-thai'",
  'thesis',      "die 'skipping, contradictory licenses'", # texdev.net/2016/12/18/tex-on-windows-tex-live-versus-miktex-revisited/
  'thesis-qom',  "&MAKEflatten",
