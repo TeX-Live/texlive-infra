@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 # $Id$
-# Copyright 2007-2025 Norbert Preining
+# Copyright 2007-2026 Norbert Preining
 # This file is licensed under the GNU General Public License version 2
 # or any later version.
 # 
@@ -43,6 +43,8 @@ my $opt_save_anyway = 0;
 my $opt_tlpsrc_from_cmdline = 0;
 my $opt_w32warning;
 my $help = 0;
+my $longdesc_line_len = 63; # must match $multilineformat in TLPOBJ.pm;
+                    # see equal_longdesc below
 
 TeXLive::TLUtils::process_logging_options();
 GetOptions(
@@ -557,6 +559,7 @@ sub tlpdb_catalogue_compare {
   my $cmp_tlpdb = TeXLive::TLPDB->new("root" => $cmp_tlpdb_str);
   die "$prg: could not get comparison tlpdb from: $cmp_tlpdb_str\n"
     if ! defined $cmp_tlpdb;  
+  debug ("$prg: got comparison tlpdb from: $cmp_tlpdb_str\n");
 
   for my $p ($master_tlpdb->list_packages()) {
     my $tlpA = $master_tlpdb->get_package($p);
@@ -569,7 +572,7 @@ sub tlpdb_catalogue_compare {
     $tlpB->replace_reloc_prefix();
     
     if (! &tlpobj_catalogue_equal($tlpA, $tlpB)) {
-      debug("$prg: Catalogue changes in package: $p\n");
+      debug("$prg: had Catalogue changes in package: $p\n");
       $ret{$p} = 1;
     }
   }
@@ -598,10 +601,9 @@ sub tlpobj_catalogue_equal {
           " " x length($pkg),
             "    vs. compare db: ", &suredef($tlpB->shortdesc), "\n");
     
-  } elsif (&suredef($tlpA->longdesc) ne &suredef($tlpB->longdesc)) {
-    debug("$pkg:  longdesc now: ", &suredef($tlpA->longdesc), "\n",
-          " " x length($pkg),
-            "   vs. compare db: ", &suredef($tlpB->longdesc), "\n");
+  } elsif (! &equal_longdesc (&suredef($tlpA->longdesc),
+                              &suredef($tlpB->longdesc), $pkg)) {
+    debug ("$pkg: longdesc changed\n");
 
   } elsif (&suredef($tlpA->catalogue) ne &suredef($tlpB->catalogue)) {
     debug("$pkg: catalogue value changed (", &suredef($tlpA->catalogue),
@@ -694,13 +696,61 @@ sub equal_hashes {
   return $ret;
 }
 
-# Return true if arg H is a reference to a hash.
+# Return true if arg H is a reference to a hash.  Used to double-check
+# that arguments are as expected.
 # 
 sub is_hash_ref {
   my ($h) = @_;
   return defined $h && ref $h && $h =~ /HASH/;
 }
 
+# Comparing the longdesc field requires a special case for long words:
+# inserting a space at the same point at which TLPOBJ::writeout does,
+# via its $multilineformat.
+# 
+# That is, DESC1 comes from TeXCatalogue.pm and will not have long words
+# broken. DESC2 comes from a tlpdb and so long words will be broken.
+# So if we don't insert the space, they won't (ever) be equal. Some
+# example packages: biblatex-swiss-legal, tuple, ut-thesis, plenty more.
+# The svn logs show that this bug went unfixed for a long time, and
+# these packages were updated every time we did the catalogue comparison.
+# A sad story.
+# 
+# In short: if any words in DESC1 are >$longdesc_line_len, add a space at that
+# point. Return DESC1 eq DESC2. The PKG argument is just to include in
+# debugging output.
+# 
+# $longdesc_line_len is defined at the top as a global; it has to match the
+# $multilineformat defined in TLPOBJ.pm.
+# 
+sub equal_longdesc {
+  my ($desc1,$desc2,$pkg) = @_;
+  my $d1 = "";
+  for my $word (split (" ", $desc1)) {
+    if (length ($word) > 2 * $longdesc_line_len) {
+      warn "$pkg: do not how to handle such a longdesc word: $word";
+      # well, we could handle it, but let's not bother until it comes up.
+    }
+    if (length ($word) > $longdesc_line_len) {
+      $d1 .= substr ($word, 0, $longdesc_line_len) . " ";
+      $d1 .= substr ($word, $longdesc_line_len);
+    } else {
+      $d1 .= $word;
+    }
+    $d1 .= " ";
+  }
+  chop ($d1); # remove the final space we just added
+  my $ret = $d1 eq $desc2;
+
+  if (! $ret) {
+    &debug("$pkg: longdesc now: $d1\n");
+    &debug(" " x length($pkg),
+                " from original: $desc1\n") if ($d1 ne $desc1);
+    &debug(" " x length($pkg),
+                " != compare db: $desc2\n");
+  }
+  return $ret;
+}
 
 sub finish {
   my ($tlpdb,$pkgcount) = @_;
