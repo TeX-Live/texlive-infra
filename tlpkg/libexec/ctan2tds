@@ -2037,7 +2037,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
 $standarddest = "texmf-dist";
 
 
-%specialfmt = ( # that is, specialtexfmt
+%specialfmt = ( # for the tex subdir
  'abbr',        'generic',
  'abstyles',    'generic',
  'academicons',	'generic',
@@ -2484,6 +2484,7 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'lxgw-fonts',	'ctex.*lxgw\.(def|spa|tex)$',	# not build.lua
  'lyluatex',	'\.sty',	# not *.cls
  'm-tx',	'mtxlatex\.sty', # handle others in post
+ 'magicthegathering', 'sets|symbols|\.sty$',
  'magyar',      'NULL',  # do not install in runtime, conflicts with babel
  'mahjong',	'tiles|' . $standardtex,
  'make4ht',	'NULL',  # all in scripts
