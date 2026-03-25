@@ -1024,7 +1024,7 @@ my @TLP_working = qw(
     yfonts yfonts-otf yfonts-t1 yhmath
     yinit-otf york-thesis youngtab yplan yquant ysabeau ytableau
   zapfchan zapfding zbmath-review-template
-    zebra-goodies zeckendorf zed-csp zennote
+    zebra zeckendorf zed-csp zennote
     zhlineskip zhlipsum zhnumber zhmetrics zhmetrics-uptex zhspacing
     ziffer zitie zlmtt zootaxa-bst zref zref-check zref-clever zref-vario
     zugferd zwgetfdate zwpagelayout

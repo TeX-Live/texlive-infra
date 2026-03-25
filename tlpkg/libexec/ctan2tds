@@ -1641,6 +1641,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'zapfchan',	"die 'skipping, part of urw-base35, frozen'",
  'zapfding',	"die 'skipping, part of urw-base35, frozen'",
  'zblbuild',	"die 'skipping, await request, zenity?'",
+ 'zebra-goodies', "die 'skipping, now zebra'",
  'zefonts',     "die 'skipping, noinfo license'", #&MAKEflatten"
  'zhmakeindex',	"die 'skipping, go seems too much to ask'",
  'zhmcjk',      "die 'skipping, sorry, 8000 tfm files, (7feb12)'",
