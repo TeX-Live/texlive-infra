@@ -1965,6 +1965,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'sim-os-menus'		=> '&POST_onelevel',
  'simple-resume-cv'	=> '&POST_simple_rmFonts',
  'simple-thesis-dissertation' => '&POST_simple_rmFonts',
+ 'simplesystemtex'	=> '&POSTsimplesystemtex',
  'splitindex'		=> '&POST_do_man',
  'sqltex',		=> '&POSTsqltex',
  'starray'		=> '&POST_onelevel',
@@ -8268,6 +8269,16 @@ sub POSTshipunov {
 sub POST_simple_rmFonts {
   print "POST$package - rm Fonts dir\n";
   &SYSTEM ("$RM -r Fonts");
+}
+
+# might be usable as a general l3build routine; we'll see if we get a
+# second one.
+sub POSTsimplesystemtex {
+  print "POST$package - l3build unpack and move\n";
+  my $texdest = "$DEST/tex/$whichformat/$package";
+  &xsystem ("l3build unpack");
+  &xsystem ("$MV build/unpacked/$package.sty $texdest/");
+  &SYSTEM ("$RM -rf build");
 }
 
 sub POSTsqltex {
