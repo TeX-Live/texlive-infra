@@ -608,7 +608,8 @@ my @TLP_working = qw(
     memory memorygraphs mendex-doc mentis
     mensa-tex menu menucard menukeys mercatormap merriweather
     messagepassing metacapture
-    metafont-beginners metago metalogo metalogox metanorma metaobj metaplot
+    metafont-beginners metago metalogo metalogox metanorma
+    metaobj metaphor metaplot
     metapost-colorbrewer metapost-examples metastr metatex metatype1 metauml
     method metre metrix metsymb
     mf2pt1 mfb-oldstyle mfirstuc mflogo mflogo-font mfnfss mfpic mfpic4ode mftinc
@@ -783,7 +784,7 @@ my @TLP_working = qw(
      qsharp qstest qsymbols qtree
      qualitype quantikz quantum-chemistry-bonn
      quantumarticle quantumcubemodel quattrocento
-     quickreaction quicktype quiver quiz2socrative quizztex
+     quickderivs quickreaction quicktype quiver quiz2socrative quizztex
      quotchap quoting quotmark
      quran quran-bn quran-de quran-en quran-es quran-id quran-ur
      qworld qyxf-book
