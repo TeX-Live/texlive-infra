@@ -300,7 +300,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'chapterbib',  "die 'skipping, update cite instead'",
  'charter',	"die 'skipping, frozen'",
  'check-parens',"die 'skipping, C++'",
- 'chempid',  	"die 'skipping, generic filenames, asked 12mar26'",
  'chklref',	"&MAKEflatten",
  'chemarrow',   "&MAKEflatten", # check about Arrow.vfb
  'chemstruct',  "die 'skipping, old latex 2.09, never in tl'",
@@ -1777,6 +1776,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'circularglyphs'	=> '&POST_onelevel',
  'citation-style-language' => '&POST_do_man',
  'cjk-gs-integrate'	=> '&POSTcjk_gs_integrate',
+ 'corasdiagram'		=> '&POST_onelevel',
  'cqjtuthesis'		=> '&POST_onelevel',
  'cmcyr'		=> '&POSTcmcyr',
  'codedescribe'		=> '&POST_onelevel',
@@ -2251,6 +2251,7 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'checkcites',	'NULL',  # all in scripts
  'chemfig',     '(t-)?chemfig(-lewis)?.tex|' . $standardtex,
  'chemformula', '\.sty$',		# not chemformula-manual.cls
+ 'chempid',	'assets|' . $standardtex,
  'chemstyle',   '\.jdf|' . $standardtex,
  'chhaya',	'sankshep.tex|' . $standardtex,
  'chickenize',  'chickenize\.tex|\.lua|' . $standardtex,
