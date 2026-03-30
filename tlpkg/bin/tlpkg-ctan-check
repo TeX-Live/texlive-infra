@@ -156,7 +156,7 @@ my @TLP_working = qw(
     bmstu bmstu-iu8 bnumexpr bodegraph bodeplot bohr boisik bold-extra
     boites boldtensors bondgraph bondgraphs bonum-otf book-of-common-prayer
     bookcover bookdb bookest bookhands booklet bookman bookmark
-    bookshelf booktabs booktabs-de booktabs-fr
+    bookshelf booktabs booktabs-de booktabs-fr booktabstabular
     boolexpr boondox bootstrapicons bophook
     borceux bosisio
     boxedminipage boxhandler bpchem bpolynomial
@@ -282,7 +282,7 @@ my @TLP_working = qw(
     de-macro debate decimal decimalcomma decision-table decorule
     defoldfonts dehyph dehyph-exptl
     dejavu dejavu-otf
-    delim delimseasy delimset delimtxt democodetools denisbdoc
+    delim delimseasy delimset delimtxt delvierre democodetools denisbdoc
     deutschesmuseum derivative dhua
     diabetes-logbook diadia diagbox diagmac2 dialogl diagnose dice dichokey
     dickimaw dictsym didactic didec diffcoeff digestif digiconfigs
@@ -938,7 +938,7 @@ my @TLP_working = qw(
     tkz-fct tkz-graph tkz-grapheur tkz-interval tkz-orm tkz-tab tkzexample
     tlc-article tlc2 tlc3-examples tlcockpit tlmgr-intro-zh-cn tlmgrbasics
     to-be-determined tocbibind tocdata tocloft tocvsec2 todo todonotes
-    tokcycle tokenizer tokglobalstack tokgroupmark tokmap
+    tokcycle tokenizer tokglobalstack tokgroupmark tokmap tokstools
     tonevalue toolbox tools
     topfloat topiclongtable topletter toptesi
     totalcount totcount totpages

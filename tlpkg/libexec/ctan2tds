@@ -2725,6 +2725,7 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'tlmgr-intro-zh-cn', 'NULL',
  'tokcycle',	'tokcycle\.tex|' . $standardtex,
  'tokmap',	'tokmap\.tex|' . $standardtex,
+ 'tokstools',	'tokstools\.tex|' . $standardtex,
  'tools',       '\.cfg|\.sty|\.clo|\.cls|\.def|\.fd$|.?\.tex|^\.tex$',
  'toptesi',	'toptesi\.cfg|\.sty|\.cls',
  'translator',  '\.dict|translator-language-mappings.tex|' . $standardtex,
