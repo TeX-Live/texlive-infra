@@ -404,7 +404,7 @@ my @TLP_working = qw(
     gfsartemisia gfsbaskerville gfsbodoni gfscomplutum gfsdidot gfsdidotclassic
     gfdl gfsneohellenic gfsneohellenicmath
     gfsporson gfssolomos
-    ghab ghsystem gillcm gillius gincltex gindex ginpenc
+    ghab ghsystem gi-handout gillcm gillius gincltex gindex ginpenc
     git-latexdiff gitfile-info gitinfo gitinfo-lua gitinfo2
     gitlog gitstatus gitver
     globalvals glosmathtools gloss glossaries
