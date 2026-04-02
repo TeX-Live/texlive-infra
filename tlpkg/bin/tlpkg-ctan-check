@@ -203,7 +203,8 @@ my @TLP_working = qw(
     cje cjhebrew cjk cjk-gs-integrate cjk-ko cjkpunct cjs-rcs-article
     cqjtuthesis
     clara classics classpack classicthesis
-    cleanthesis clearsans clefval cleveref cleveref-forward cleveref-usedon
+    cleanthesis clearsans clefval cleveref
+    cleveref-forward cleveref-icelandic cleveref-usedon
     clicks clipboard clistmap
     clock clojure-pamphlet cloze clrdblpg clrscode clrscode3e clrstrip cluttex
     cm cm-lgc cm-mf-extra-bold cm-super cm-unicode
@@ -861,7 +862,7 @@ my @TLP_working = qw(
     sseq sshrc-insight sslides
     stack stackengine stage standalone standardsectioning stanli
     starfont startex
-    statex statex2 statistics statistik statmath staves starray
+    statementsp statex statex2 statistics statistik statmath staves starray
     stdclsdv stdpage stealcaps steinmetz
     stellenbosch stellenbosch-2 step stepgreek stex
     stickstoo stix stix2-otf stix2-type1 stmaryrd stocksize storebox storecmd
