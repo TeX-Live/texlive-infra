@@ -512,7 +512,7 @@ sub callback_build_formats {
         } elsif ($val == $FMT_FAILURE)  {
           log_to_status("FAILURE", $fmt, $eng, $what, $whatarg);
           $err++;
-          push (@err, "$eng/$fmt");
+          push (@err, "$fmt/$eng");
         } elsif ($val == $FMT_SUCCESS)  {
           log_to_status("SUCCESS", $fmt, $eng, $what, $whatarg);
           $suc++;
