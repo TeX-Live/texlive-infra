@@ -143,7 +143,7 @@ my @TLP_working = qw(
     biblatex-vancouver
     biblatex2bibitem
     bibleref bibleref-french bibleref-german bibleref-lds bibleref-mouth
-    bibleref-parse bibletext
+    bibleref-parse bibleref-sbl bibletext
     biblist bibtex bibtexperllibs bibtools bibtopic
     bibtopicprefix bibexport bibunits
     bidi bidi-atbegshi bidicontour bidihl
@@ -244,7 +244,7 @@ my @TLP_working = qw(
     coordsys copyedit copyrightbox
     cora-macs corasdiagram cormorantgaramond correctmathalign coseoul
     couleurs-fr
-    count1to counterz countriesofeurope counttexruns
+    count1to counterz countriesofeurope counttexruns countwords
     courier courier-scaled courierten
     courseoutline coursepaper
     coverpage covington
@@ -408,7 +408,7 @@ my @TLP_working = qw(
     ghab ghsystem gi-handout gillcm gillius gincltex gindex ginpenc
     git-latexdiff gitfile-info gitinfo gitinfo-lua gitinfo2
     gitlog gitstatus gitver
-    globalvals glosmathtools gloss glossaries
+    glmatrix globalvals glosmathtools gloss glossaries
     glossaries-danish glossaries-dutch
     glossaries-english glossaries-estonian glossaries-extra
     glossaries-finnish glossaries-french
@@ -629,7 +629,7 @@ my @TLP_working = qw(
     moderncv modernnewspaper modernposter modernruler moderntimeline
     modes modiagram
     modref modroman modular modulus
-    mohe-book moloch monaspace-otf mongolian-babel montserrat
+    mohe-book mohelper moloch monaspace-otf mongolian-babel montserrat
     monofill montex moodle
     moreenum morefloats morehype moremath moresize
     moreverb morewrites morisawa movement-arrows movie15
@@ -645,7 +645,7 @@ my @TLP_working = qw(
     musical musicography musikui musixguit
     musixtex musixtex-fonts musixtnt musuos muthesis
     mversion mwcls mwe mweights mxedruli
-    mycv mylatex mylatexformat mynsfc
+    mycv mylatex mylatexformat mynsfc mystyletau
   na-box na-position nag naive-ebnf nameauth namedef namedtensor namespc
     nanicolle nanumtype1 nar
     natbib natded nath nature
@@ -817,6 +817,7 @@ my @TLP_working = qw(
     sanskrit sanskrit-t1 sansmath sansmathaccent sansmathfonts
     sapthesis sasnrdisplay sauerj
     sauter sauterfonts saveenv savefnmark savesym savetrees
+    sblarticle sblbook sblfonts sblidx sblreport
     scale scalebar scalerel scaletextbullet scanpages
     schedule schemabloc schemata schola-otf scholax schooldocs
     schulmathematik sclang-prettifier
