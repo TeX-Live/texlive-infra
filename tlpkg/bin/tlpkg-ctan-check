@@ -851,8 +851,8 @@ my @TLP_working = qw(
     skak skaknew skb skdoc skeldoc skeycommand skeyval
     skills skmath skrapport skull
     slantsc slideshow slixte
-    smalltableof smart-eqn smartdiagram smartref smartunits smflatex
-    snapshot snaptodo snotez
+    smalltableof smart-eqn smartnotes smartdiagram smartref smartunits smflatex
+    snapshot snaptodo sneaker snotez
     songbook songproj songs sort-by-letters soton soul soulpos
     soup sourcecodepro sourcesans sourceserif
     spacekern spacingtricks spalign spark-otf sparklines spath3 spbmark
