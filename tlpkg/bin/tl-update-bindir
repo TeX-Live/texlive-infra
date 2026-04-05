@@ -243,6 +243,9 @@ for tlplat in $tlplats; do
     # 
     # If a post-release fix, also update ~www/texlive/bugs.html.
     # 
+    # By the way, Norbert also syncs github repos for the installer,
+    # which runs an install test.
+    # https://github.com/TeX-Live/installer
     do_download `github_url $tlplat`;;
 
    x86_64-linuxmusl)

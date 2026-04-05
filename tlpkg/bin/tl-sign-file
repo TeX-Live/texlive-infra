@@ -9,6 +9,12 @@
 if test $# -ne 1; then
   echo "$0: Exactly one argument must be given, the file to sign." >&2
   exit 1
+elif test ! -e "$1"; then
+  echo "$0: Given file does not exist, goodbye: $1" >&2
+  exit 1
+elif test ! -s "$1"; then
+  echo "$0: Given file is empty, goodbye: $1" >&2
+  exit 1
 fi
 
 mydir=`cd \`dirname $0\` && pwd`

@@ -53,7 +53,11 @@ elif test "x$1" = x--build; then
   PATH=$PATH:/usr/local/gnu/bin	       # libtool required
   PATH=$lb:$PATH		       # get our kpsewhich
   PYTHON=python3.9; export PYTHON      # 3.6 is too old
-  svn=/usr/local/bin/svn               # so we need our svn explicitly
+  if test -x /usr/local/bin/svn; then      # we need our svn explicitly
+    svn=/usr/local/bin/svn
+  else
+    svn=svn
+  fi
   set -x
   rhtoolset=/opt/rh/gcc-toolset-13/enable
   test -s $rhtoolset && . $rhtoolset
@@ -73,7 +77,6 @@ elif test "x$1" = x--build; then
   rm -rf /tmp/ainst autom4te.cache
   ./configure --prefix=/tmp/ainst --enable-static \
     --with-latex=/tmp/ainst/latex --with-context=/tmp/ainst/context \
-    --disable-fftw --disable-gl --disable-gsl \
     --enable-texlive-build \
     CFLAGS=-g \
     LDFLAGS="-static-libgcc -static-libstdc++"

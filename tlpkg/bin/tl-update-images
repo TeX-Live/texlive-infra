@@ -279,7 +279,8 @@ do_tar ()
 
 MAKETAR ()
 {
-  echo; echo "-- `date` writing tars to $target" # ~2 hours
+  echo; printf "-- `date` writing tars to $target:" # ~2 hours
+  # printf because do_tar starts with a blank line
 
   # remove old tarballs and checksums.
   rm -f $target/$NAME-*.tar.*

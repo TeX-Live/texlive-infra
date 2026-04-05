@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 # $Id$
-# Copyright Manuel P\'egouri\'e-Gonnard, 2010-2016. WTFPL v2.
+# Copyright Manuel P\'egouri\'e-Gonnard, 2010-2026. WTFPL v2.
 # Check that files in various formats are somewhat valid.
 #
 # This used to be run from cron, but no longer is, because it takes many
@@ -18,6 +18,25 @@
 #
 # Formats that might be added:
 # - afm with (afm2pl?)
+#   
+# Also, ttf/otf with ots-validator-checker (small static binary)
+#   (from https://github.com/khaledhosny/ots)
+#    $ find -name '*.ttf' -o -name '*.otf' | xargs -P8 -I@ sh -c \
+#        'ots-validator-checker "@" 2>&1 | grep "FreeType2 didn\'t crash" > /dev/null || echo @'
+#
+# or with ttx (slow)
+#    $ find -name '*.ttf' -o -name '*.otf' | xargs -P8 -I@ sh -c \
+#        'timeout 30 ttx -i -q -o /dev/null "@" 2>/dev/null || echo @'
+#
+# or with fontforge:
+#   (find -name '*.ttf' -o -name '*.otf' | xargs -P8 -I@ sh -c 'fontforge -lang=ff -c \'Open($1);\' "@" 2>&1 | grep -Pi \'bad (?!glyph|(device|lookup|coverage) table)\' > /dev/null && echo @'
+#
+# But this would all be better done by CTAN, and potential false
+# positives are a problem. Let's wait until the next time there is a
+# broken font before bringing it up with them.
+# 
+# All this from Max, mail to ctan of 25mar2026 after the report:
+# https://tug.org/pipermail/tex-live/2026-March/052329.html
 
 BEGIN {
 #  $^W = 1;
