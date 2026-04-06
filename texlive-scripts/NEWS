@@ -1,6 +1,8 @@
 (This file public domain.  Originally written by Norbert Preining and
 Karl Berry, 2010.)
 
+<li>tlmgr check executes: recognize xetex.
+
 <p><b>tlmgr 78301 (released 7mar26):</b>
 <li>tlmgr info longdesc warning/bug fixed.
 
