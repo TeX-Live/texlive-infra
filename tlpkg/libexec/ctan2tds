@@ -2536,7 +2536,6 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'mycv',        'mycv.*\.tex|' . $standardtex,
  'mylatex',     	'.*\.ltx',
  'mylatexformat',       '.*\.ltx',
- 'mystyletau',	'mytau.*pdf|' . $standardtex,
  'nag',         '\.nag|' . $standardtex,
  'navigator',   '(t-)?navigator.tex|' . $standardtex,
  'nchairx',	'.*(logo|header)\.pdf|' . $standardtex,
