@@ -363,7 +363,7 @@ my @TLP_working = qw(
     filecontents filecontentsdef filedate filehook fileinfo filemod
     fillpages fillwith
     findhyph fink finstrut fira firamath firamath-otf
-    first-latex-doc firstaid fistrum fitbox fitch fithesis
+    first-latex-doc firstaid fistrum fitbox fitch fithesis fits-astro
     fix2col fixcmex fixdif fixfoot fixjfm fixlatvian
     fixltxhyph fixmath fixme fixmetodonotes fixpdfmag fixtounicode fiziko
     fjodor
