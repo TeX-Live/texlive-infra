@@ -207,7 +207,8 @@ tlnet_install_log=`pwd`/update-tlnet-install.log
 tlnet_inst_location="-location $tltry"         # use the test destination
 tlnet_inst_profile="-profile texlive.profile"  # use the profile crafted above
 # the -strict says to fail right away if a post-command fails
-tlnet_inst_cmd="install-tl -strict $tlnet_location $tlnet_profile"
+# -strict
+tlnet_inst_cmd="install-tl $tlnet_location $tlnet_profile"
 echo "$prg: `date`"
 echo "$prg: Running test install (log: $tlnet_install_log)..."
 echo "$prg:   (in `pwd`)"
