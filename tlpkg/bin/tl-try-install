@@ -17,10 +17,11 @@ Master=`cd $mydir/../.. && pwd`
 profiledir=$Master/tlpkg/dev/profiles
 
 instdir=/tmp/ki
+output_sizes=false
 profile=$profiledir/TLinfra.pro
 quiet=false
 repo=$Master
-output_sizes=false
+strict=
 verbose=
 
 while test $# -gt 0; do
@@ -29,6 +30,7 @@ while test $# -gt 0; do
   -p|--profile) shift; profile=$1;;
   -q|--quiet)   quiet=true;;
   -r|--repo)    shift; repo=$1;;
+  -strict|--strict) strict=-strict;;
   -sz|--sizes)  output_sizes=true;;
   -v|-vv)       verbose=$1;;
   --help)       echo "ustl. sorry."; exit 0;;
