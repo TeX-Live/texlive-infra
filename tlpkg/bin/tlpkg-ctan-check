@@ -562,7 +562,7 @@ my @TLP_working = qw(
     lshort-slovenian lshort-spanish lshort-thai lshort-turkish lshort-ukr
     lshort-vietnamese
     lstaddons lstbayes lstfiracode lt3graph lt3luabridge lt3rawobjects
-    ltablex ltabptch ltb2bib
+    ltablex ltabptch ltb2bib ltmermaid
     ltx-talk ltxcmds ltxdockit ltxfileinfo ltxguidex ltximg
     ltxkeys ltxmisc ltxnew ltxtools
     lua-alt-getopt lua-check-hyphen lua-list-hyphen
