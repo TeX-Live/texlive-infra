@@ -705,7 +705,7 @@ my @TLP_working = qw(
     pdfcol pdfcolfoot pdfcolmk pdfcomment pdfcprot pdfcrop
     pdfescape pdfextra pdfjam
     pdflatexpicscale pdflscape
-    pdfmanagement-testphase pdfmarginpar pdfmsym pdfoverlay
+    pdfmanagement pdfmarginpar pdfmsym pdfoverlay
     pdfpagediff pdfpages pdfpc pdfpc-movie pdfprivacy pdfrender pdfreview
     pdfscreen pdfslide pdfsync
     pdftex-quiet pdftexcmds pdftoolbox pdftricks pdftricks2 pdfx pdfxup

@@ -2570,7 +2570,7 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'pdf-trans',   'pdf-trans.tex',
  'pdfcprot',    '\.cpa|\.sty',
  'pdfextra',    '\.opm',	# not .sty, done in posthook
- 'pdfmanagement-testphase', '\.(lua|ltx)$|' . $standardtex,
+ 'pdfmanagement', '\.(lua|ltx)$|' . $standardtex,
  'pdftexcmds',	'\.lua$|' . $standardtex,
  'pdfscreen',   'overlay.*pdf|but.*pdf|left.*pdf|right\.pdf|pdfscreen.sty',
  'pdfmsym',	'pdfmsym\.tex$',
