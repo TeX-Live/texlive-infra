@@ -3432,6 +3432,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'bosisio'      => 'latex -translate-file=empty.tcx',   # ^^, no 8-bit
  'bullcntr'     => 'latex',  # requires interaction
  'canoniclayout'=> 'tex',
+ 'cardgame'	=> 'tex',
  'cdpbundl'     => 'latex',  # requires interaction
  'chickenize'   => 'luatex',
  'classpack'    => 'latex',  # requires interaction

@@ -175,7 +175,7 @@ my @TLP_working = qw(
     cancel
     canoniclayout cantarell
     capt-of captcont captdef caption
-    carbohydrates carlisle carlito carolmin-ps cartonaugh
+    carbohydrates cardgame carlisle carlito carolmin-ps cartonaugh
     cascade cascadia-code cascadiamono-otf cascadilla cases casyl
     catchfile catchfilebetweentags catcodes catechis
     catoptions catppuccinpalette causets
@@ -202,7 +202,7 @@ my @TLP_working = qw(
     cite citeall citeref citeright
     cje cjhebrew cjk cjk-gs-integrate cjk-ko cjkpunct cjs-rcs-article
     cqjtuthesis
-    clara classics classpack classicthesis
+    clara classics classpack classicthesis clawxiv
     cleanthesis clearsans clefval cleveref
     cleveref-forward cleveref-icelandic cleveref-usedon
     clicks clipboard clistmap
