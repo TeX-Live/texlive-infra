@@ -1727,6 +1727,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'tui'                  => '&PREHOOK_tui',
  'typog'                => '&PREHOOK_typog',
  'univie-ling'		=> '&PREHOOK_flatten1',
+ 'utbmciad-report'	=> '&PREHOOK_utbmciad_report',
  'utf8mex'              => '&PREHOOK_flatten1',
  'vhistory'             => '&PREHOOK_vhistory',
  'wasy'                 => '&PREHOOK_wasy',
@@ -2764,6 +2765,7 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'upca',        '^upca\.tex',
  'uptex-base',	'\.(ini|src|tex)$',
  'url',         '^[^m].*\.sty',         # not miscdoc.sty
+ 'utbmciad-report',	'nologo|frontbackgr|' . $standardtex, 
  'utf8mex',     '^utf8.*\.(ini|tex)',
  'utfsym',	'\.tikz$|' . $standardtex,
  'variations',  '^variations\.tex|' . $standardtex,  # not docvariations.tex
@@ -5420,6 +5422,7 @@ sub killfiles {
 
    my @delfiles = ();
    for (grep (/$killpatt/, readdir (DOT))) {
+     next if /^\.\.?$/; # don't bother trying to unlink . or ..
      if (unlink ($_)) {
        print "\t Removing $_\n";
        push (@delfiles, $_);
@@ -6857,7 +6860,7 @@ sub PREHOOK_tlcockpit {
 }
 
 sub PREHOOK_tudscr {
-  print "PREHOOK_$package - cd\n";
+  print "PREHOOK_$package - cd source\n";
   &xchdir ("source");
 }
 
@@ -6870,6 +6873,12 @@ sub PREHOOK_typog {
   print "PREHOOK_$package - make script and man page\n";
   # clever build-time substitutions
   &SYSTEM ("make typog-grep.pl typog-grep.1");
+}
+
+sub PREHOOK_utbmciad_report {
+  print "PREHOOK_$package - rm logos, cd src\n";
+  &killfiles ("logos/.*", "more");
+  &xchdir ("src");
 }
 
 sub PREHOOK_unzip {

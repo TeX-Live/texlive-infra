@@ -988,7 +988,8 @@ my @TLP_working = qw(
     upca updatemarks uplatex upmethodology uppunctlm upquote
     uptex-base uptex-fonts upzhkinsoku
     uri url urlbst urcls urwchancal usebib useclass ushort uspace uspatent
-    ut-thesis utexasthesis utf8add utf8mex utfsym uvaletter uvlhighlight
+    ut-thesis utbmciad-report utexasthesis
+    utf8add utf8mex utfsym uvaletter uvlhighlight
     uwa-colours uwa-letterhead uwa-pcf uwa-pif uwmslide uwthesis
   vak vancouver variablelm variations varindex varisize
     varsfromjobname varwidth vaucanson-g vcell vdmlisting
