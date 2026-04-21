@@ -117,7 +117,8 @@ my @TLP_working = qw(
     bera berenisadf besjournals bestpapers betababel beton beuron
     bewerbung bez123 bezierplot bfh-ci bgteubner bguq bhcexam
     bib-fr bib2gls bib2qr bibarts bibbreeze bibcop biber biber-ms bibhtml
-    biblatex biblatex-abnt biblatex-accursius biblatex-ajc2020unofficial
+    biblatex biblatex-abnt biblatex-abs-annote
+    biblatex-accursius biblatex-ajc2020unofficial
     biblatex-anonymous biblatex-apa biblatex-apa6
     biblatex-archaeology biblatex-arthistory-bonn
     biblatex-bath biblatex-bookinarticle biblatex-bookinother biblatex-bwl
@@ -785,7 +786,7 @@ my @TLP_working = qw(
   q-and-a qcircuit qcm qobitree qrbill qrcode qrcodetikz
      qsharp qstest qsymbols qtree
      qualitype quantikz quantum-chemistry-bonn
-     quantumarticle quantumcubemodel quattrocento
+     quantumarticle quantumcubemodel quattrocento query-astro
      quickderivs quickreaction quicktype quiver quiz2socrative quizztex
      quotchap quoting quotmark
      quran quran-bn quran-de quran-en quran-es quran-id quran-ur
@@ -798,7 +799,7 @@ my @TLP_working = qw(
     rebuttal rec-thy
     recipe recipebook recipecard recorder-fingering recycle rectopma
     refcheck refcount refenums reflectgraphics refman refstyle
-    regcount regexpatch register regstats regulatory
+    regcount regexpatch register register-transfer-level regstats regulatory
     reledmac relenc relsize reotex repeatindex repere repltext reptheorem
     rerunfilecheck rescansync resmes resolsysteme
     resphilosophica responsive rest-api
