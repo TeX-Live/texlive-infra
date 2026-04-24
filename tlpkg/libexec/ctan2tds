@@ -231,6 +231,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'bibextract',  "die 'skipping, hardwires nawk cmd name'",
  'bibfilex',	"die 'skipping, compiled'",
  'biblatex-abnt',       "&MAKEflatten",
+ 'biblatex-ams',	"&MAKEflatten",
  'biblatex-chicago',    "&MAKEflatten",
  'biblatex-contrib',    "die 'skipping, use subdir'",
  'biblatex-cv',		"&MAKEflatten",

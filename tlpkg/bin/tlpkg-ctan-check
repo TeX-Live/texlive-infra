@@ -119,7 +119,7 @@ my @TLP_working = qw(
     bib-fr bib2gls bib2qr bibarts bibbreeze bibcop biber biber-ms bibhtml
     biblatex biblatex-abnt biblatex-abs-annote
     biblatex-accursius biblatex-ajc2020unofficial
-    biblatex-anonymous biblatex-apa biblatex-apa6
+    biblatex-ams biblatex-anonymous biblatex-apa biblatex-apa6
     biblatex-archaeology biblatex-arthistory-bonn
     biblatex-bath biblatex-bookinarticle biblatex-bookinother biblatex-bwl
     biblatex-caspervector biblatex-cheatsheet biblatex-chem
@@ -988,7 +988,8 @@ my @TLP_working = qw(
     uol-physics-report uothesis uowthesis uowthesistitlepage
     upca updatemarks uplatex upmethodology uppunctlm upquote
     uptex-base uptex-fonts upzhkinsoku
-    uri url urlbst urcls urwchancal usebib useclass ushort uspace uspatent
+    uri url urlbst urcls urwchancal
+    usebib useclass user-persona ushort uspace uspatent
     ut-thesis utbmciad-report utexasthesis
     utf8add utf8mex utfsym uvaletter uvlhighlight
     uwa-colours uwa-letterhead uwa-pcf uwa-pif uwmslide uwthesis
