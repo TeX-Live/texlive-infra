@@ -289,7 +289,8 @@ my @TLP_working = qw(
     diabetes-logbook diadia diagbox diagmac2 dialogl diagnose dice dichokey
     dickimaw dictsym didactic didec diffcoeff digestif digiconfigs
     dijkstra dimnum din1505
-    dinat dinbrief dingbat directory dirtree dirtytalk disser ditaa dithesis
+    dinat dinbrief dingbat directory dirtree dirtreex dirtytalk
+    disser ditaa dithesis
     dk-bib dlfltxb dlrg-templates
     dnaseq dnp dnsrecord doc-pictex docbytex doclicense
     docmfp docmute docshots docsurvey doctools documentation docutils
@@ -337,7 +338,7 @@ my @TLP_working = qw(
     etoc etoolbox etoolbox-de etoolbox-generic etsvthor
     euclidean-lattice euclideangeometry euenc euflag eukdate
     euler euler-math eulerpx eulervm
-    euro euro-ce euromoney europasscv europecv eurosym
+    eurion euro euro-ce euromoney europasscv europecv eurosym
     evangelion-jfm everyhook everypage everysel everyshi
     exam exam-lite exam-n exam-randomizechoices exam-zh
     examdesign example examplep examz
