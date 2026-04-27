@@ -308,7 +308,7 @@ my @TLP_working = qw(
   e-french ean ean13isbn easing easy easy-todo
     easybook easydtx easyfig easyfloats easyformat easylist easyreview
     ebezier ebgaramond ebgaramond-maths ebong ebook ebproof ebsthesis
-    ec ecc ecclesiastic ecnuthesis ecltree eco ecobiblatex
+    ec ecc ecclesiastic ecltree eco ecobiblatex
     econ-bst econlipsum econometrics economic ecothesis
     ecv eczar ed edfnotes edichokey edmac edmargin edmaths
     eemeir eepic efbox egameps
