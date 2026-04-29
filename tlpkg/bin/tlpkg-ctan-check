@@ -585,7 +585,7 @@ my @TLP_working = qw(
     luatbls luatex85 luatexbase luatexja luatexko luatextra
     luatex-cn luatex-type-definitions luatikz
     luatodonotes luatruthtable luavlna luaxml
-    lucide-icons luciole lutabulartools
+    lucide-admonitions lucide-icons luciole lutabulartools
     luwa-ul luwiantype lwarp lxfonts lxgw-fonts ly1 lydtype lyluatex
   macrolist macros2e macroswap mafr
     magaz magicnum magicthegathering magicwatermark magra
