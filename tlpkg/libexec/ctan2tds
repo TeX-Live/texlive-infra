@@ -1893,6 +1893,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'mitthesis'		=> '&POSTmitthesis',
  'moderncv'		=> '&POST_deref_symlink',
  'montex'		=> '&POSTmontex',
+ 'mp-gears'		=> '&POST_onelevel',
  'mp-geom2d'		=> '&POST_onelevel',
  'mp-neuralnetwork'	=> '&POST_onelevel',
  'mpfonts'		=> '&POSTmpfonts',

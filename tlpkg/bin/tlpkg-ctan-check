@@ -636,7 +636,7 @@ my @TLP_working = qw(
     monofill montex moodle
     moreenum morefloats morehype moremath moresize
     moreverb morewrites morisawa movement-arrows movie15
-    mp-geom2d mp-neuralnetwork mp3d
+    mp-gears mp-geom2d mp-neuralnetwork mp3d
     mparhack mparrows mpattern mpchess mpcolornames
     mpfonts mpgraphics mpkiviat
     mpman-ru mpostinl mptrees msc msg mslapa msu-thesis mtgreek
@@ -896,7 +896,7 @@ my @TLP_working = qw(
     technics technion-thesis-template ted telprint
     templates-fenn templates-sommer templatetools tempora temporal-logic
     tengwarscript
-    tensind tensor tensormatrix
+    tensind tensor tensormatrix tensorstyles
     termcal termcal-de termes-otf terminalcode termlist termmenu termsim
     testhyphens testidx
     tetragonos teubner
