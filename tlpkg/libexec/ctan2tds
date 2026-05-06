@@ -1727,7 +1727,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'tudscr'		=> '&PREHOOK_tudscr',
  'tui'                  => '&PREHOOK_tui',
  'typog'                => '&PREHOOK_typog',
- 'unbtex'		=> '&PREHOOK_flatten1',
  'univie-ling'		=> '&PREHOOK_flatten1',
  'utbmciad-report'	=> '&PREHOOK_utbmciad_report',
  'utf8mex'              => '&PREHOOK_flatten1',
@@ -8414,9 +8413,10 @@ sub POSTtudscr {
 }
 
 sub POSTunbtex {
-  print "POST$package - bibtex subdirs\n";
-  &mv_with_mkdir ("bib/*", "$DEST/bibtex/bib/$package/");
-  &mv_with_mkdir ("bst/*", "$DEST/bibtex/bst/$package/");
+  print "POST$package - onelevel + bibtex subdirs\n";
+  &POST_onelevel ();
+  &mv_with_mkdir ("bibtex/bib/*", "$DEST/bibtex/bib/$package/");
+  &mv_with_mkdir ("bibtex/bst/*", "$DEST/bibtex/bst/$package/");
 }
 
 sub POSTunimath_plain_xetex {
