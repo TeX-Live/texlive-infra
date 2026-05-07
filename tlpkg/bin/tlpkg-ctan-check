@@ -407,7 +407,7 @@ my @TLP_working = qw(
     gfsartemisia gfsbaskerville gfsbodoni gfscomplutum gfsdidot gfsdidotclassic
     gfdl gfsneohellenic gfsneohellenicmath
     gfsporson gfssolomos
-    ghab ghsystem gi-handout gillcm gillius gincltex gindex ginpenc
+    ghab ghsystem gia-handout gillcm gillius gincltex gindex ginpenc
     git-latexdiff gitfile-info gitinfo gitinfo-lua gitinfo2
     gitlog gitstatus gitver
     glmatrix globalvals glosmathtools gloss glossaries
@@ -649,7 +649,8 @@ my @TLP_working = qw(
     musixtex musixtex-fonts musixtnt musuos muthesis
     mversion mwcls mwe mweights mxedruli
     mycv mylatex mylatexformat mynsfc mystyletau
-  na-box na-position nag naive-ebnf nameauth namedef namedtensor namespc
+  na-box na-position nag naive-ebnf
+    nameauth namedef namedtensor namespc
     nanicolle nanumtype1 nar
     natbib natded nath nature
     navigator navydocs

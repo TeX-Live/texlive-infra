@@ -1034,6 +1034,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'mxedruli',    "&MAKEflatten",
  'mychemistry', "die 'skipping, obsolete on ctan'",
  'na-border',	"die 'skipping, nonfree font'",
+ 'na-pageborder',"die 'skipping, nonfree license cc-by-nd'",
  'na-position',	"&MAKEflatten",
  'nahuatl',	"die 'skipping, generic mf filenames, capitalization'",
  'named',	"die 'skipping, await request for old bst+sty'",
