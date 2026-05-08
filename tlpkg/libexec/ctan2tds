@@ -1972,6 +1972,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'simple-resume-cv'	=> '&POST_simple_rmFonts',
  'simple-thesis-dissertation' => '&POST_simple_rmFonts',
  'simplesystemtex'	=> '&POSTsimplesystemtex',
+ 'spim-phdthesisthemes' => '&POST_onelevel',
  'splitindex'		=> '&POST_do_man',
  'sqltex',		=> '&POSTsqltex',
  'starray'		=> '&POST_onelevel',
@@ -4321,6 +4322,7 @@ $standardclean = '(\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
  'retosmatematicos' => 'retosmatematicos-documentacion.pdf', # no source
  'scientific-thesis-cover' => 'demo.pdf',		# no source
  'sectionbox'    => 'example/lenna.*.jpg',              # nonfree
+ 'spim-phdthesisthemes' => 'logos/.*',			# nonfree
  'startex'	 => 'epsf.tex',				# stale copy
  'stubs'         => 'stubs.pdf',                        # no source
  'susy'          => 'susy.pdf',                         # no source
@@ -8503,8 +8505,12 @@ sub POST_onelevel {
   print "POST_onelevel ($package) - handle known subdirectories\n";
 
   # if tex/ subdir contains *.bst (utbmciad-report et al.), move them up front.
+  # spim-phdthesisthemes has the bst in a subdir, tex/share/. Sigh.
+  chomp (my @bst = `find tex -name \*.bst`);
   my $dest_bst = "$DEST/bibtex/bst/$package";
-  &mv_with_mkdir ("tex/*.bst", $dest_bst);
+  for my $bst (@bst) {
+    &mv_with_mkdir ($bst, $dest_bst);
+  }
 
   for my $dir (glob ("*")) {
     next unless -d $dir; # leave files where they are

@@ -861,7 +861,7 @@ my @TLP_working = qw(
     songbook songproj songs sort-by-letters soton soul soulpos
     soup sourcecodepro sourcesans sourceserif
     spacekern spacingtricks spalign spark-otf sparklines spath3 spbmark
-    spectral spectralsequences spelatex spelling spie spix
+    spectral spectralsequences spelatex spelling spie spim-phdthesisthemes spix
     sphack sphdthesis splentinex splines splitbib splitindex
     spot spotcolor spotxcolor spreadtab spverbatim sqltex
     sr-vorl srbook-mem srbtiks srcltx srdp-mathematik srcredact
