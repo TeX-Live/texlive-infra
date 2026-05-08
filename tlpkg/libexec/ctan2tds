@@ -1036,6 +1036,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'na-border',	"die 'skipping, nonfree font'",
  'na-pageborder',"die 'skipping, nonfree license cc-by-nd'",
  'na-position',	"&MAKEflatten",
+ 'na-urmborder',"&MAKEflatten",
  'nahuatl',	"die 'skipping, generic mf filenames, capitalization'",
  'named',	"die 'skipping, await request for old bst+sty'",
  'namunsrt',	"die 'skipping, await request for old bst'",
@@ -1729,7 +1730,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'tui'                  => '&PREHOOK_tui',
  'typog'                => '&PREHOOK_typog',
  'univie-ling'		=> '&PREHOOK_flatten1',
- 'utbmciad-report'	=> '&PREHOOK_utbmciad_report',
  'utf8mex'              => '&PREHOOK_flatten1',
  'vhistory'             => '&PREHOOK_vhistory',
  'wasy'                 => '&PREHOOK_wasy',
@@ -1777,6 +1777,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'bootstrapicons'	=> '&POST_onelevel',
  'calculatoritems'	=> '&POST_onelevel',
  'cascadiamono-otf'	=> '&POST_onelevel',
+ 'ciad-beamertheme'	=> '&POST_onelevel',
  'circularglyphs'	=> '&POST_onelevel',
  'citation-style-language' => '&POST_do_man',
  'cjk-gs-integrate'	=> '&POSTcjk_gs_integrate',
@@ -2020,6 +2021,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'updatemarks'		=> '&POST_onelevel',
  'uplatex'		=> '&POST_preserve_man',
  'upmendex'		=> '&POSTupmendex',
+ 'utbmciad-report'	=> '&POST_onelevel',
  'vectorlogos'		=> '&POST_onelevel',
  'velthuis'		=> '&POSTvelthuis',
  'vscodeicons'		=> '&POST_onelevel',
@@ -2769,7 +2771,6 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'upca',        '^upca\.tex',
  'uptex-base',	'\.(ini|src|tex)$',
  'url',         '^[^m].*\.sty',         # not miscdoc.sty
- 'utbmciad-report',	'nologo|frontbackgr|' . $standardtex, 
  'utf8mex',     '^utf8.*\.(ini|tex)',
  'utfsym',	'\.tikz$|' . $standardtex,
  'variations',  '^variations\.tex|' . $standardtex,  # not docvariations.tex
@@ -4281,6 +4282,7 @@ $standardclean = '(\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
  'aucklandthesis' => '.*\.pdf',                         # no source, nonfree
  'bbcard'        => 'bbcard.tpm',                       # old TL infra
  'chessfss'      => 'chessfonts_gallery.pdf|chessfss.pdf', # no source
+ 'ciad-beamertheme' => 'logos/.*',			# nonfree
  'comprehensive' => '-letter.pdf',			# have a4, save space
  'culmus'	 => '\.*pfa',				# have pfb
  'dfgproposal'   => '1_02.*\.pdf',                      # nonfree specs
@@ -4330,6 +4332,7 @@ $standardclean = '(\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
  'tree-dvips'    => 'avm.*',                            # author no response
  'ucs'		 => 'languages.ps.gz',			# no source
  'unifith'	 => 'unifilogo\.pdf$',			# nonfree
+ 'utbmciad-report' => 'logos/.*',			# nonfree
  'xymtex'        => 'doc/.*\.pdf$',                     # no source
  'yannisgr'      => '^(digits|gen_acc)\.mf'             # levy dup
 );
@@ -6879,12 +6882,6 @@ sub PREHOOK_typog {
   &SYSTEM ("make typog-grep.pl typog-grep.1");
 }
 
-sub PREHOOK_utbmciad_report {
-  print "PREHOOK_$package - rm logos, cd src\n";
-  &killfiles ("logos/.*", "more");
-  &xchdir ("src");
-}
-
 sub PREHOOK_unzip {
   print "PREHOOK_unzip - $package\n";
   &SYSTEM ("unzip -q -o -d $DEST *.zip && $RM *.zip");
@@ -8505,6 +8502,10 @@ sub POSTzhmetrics {
 sub POST_onelevel {
   print "POST_onelevel ($package) - handle known subdirectories\n";
 
+  # if tex/ subdir contains *.bst (utbmciad-report et al.), move them up front.
+  my $dest_bst = "$DEST/bibtex/bst/$package";
+  &mv_with_mkdir ("tex/*.bst", $dest_bst);
+
   for my $dir (glob ("*")) {
     next unless -d $dir; # leave files where they are
 
@@ -8539,11 +8540,13 @@ sub POST_onelevel {
     print "\t onelevel: renaming $dir to $dest\n";
     &rename_with_mkdir ($dir, $dest);
   }
-
+  
   # do data/ subdir (e.g., dlrg-templates) after main loop, since we
   #   want it in a subdir of the tex/ dir.
   # Ditto logos/ (beamertheme-cleaneasy), which might be too aggressive
   #   and we'll have to back off to a separate routine.
+  #   Also happens for utbmciad-report et al., which get cleaned to just
+  #   README.TEXLIVE, but seems ok/preferable to have that in runtime too.
   for my $subdir (("data", "logos")) {
     next unless -d $subdir;
     my $dest = "$DEST/tex/$whichformat/$package/$subdir";
