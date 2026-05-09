@@ -167,6 +167,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'avantgar',    "die 'skipping, part of urw-base35, frozen'",
  'axodraw',	"die 'skipping, nonfree'",
  'babel-frenchb',  "die 'skipping, use babel-french'",
+ 'babel-kazakh',   "&MAKEflatten",
  'babel-serbianc', "&MAKEflatten",
  'babel-slovene',  "die 'skipping, use babel-slovenian'",
  'babel-spanglish',"die 'skipping, obsolete on CTAN'",

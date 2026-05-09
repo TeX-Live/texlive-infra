@@ -80,7 +80,7 @@ my @TLP_working = qw(
     babel-hebrew babel-hungarian
     babel-icelandic babel-indonesian babel-interlingua
     babel-irish babel-italian babel-japanese
-    babel-kurmanji babel-latin babel-latvian babel-lithuanian
+    babel-kazakh babel-kurmanji babel-latin babel-latvian babel-lithuanian
     babel-macedonian babel-malay
     babel-norsk babel-occitan babel-piedmontese
     babel-polish babel-portuges babel-romanian babel-romansh

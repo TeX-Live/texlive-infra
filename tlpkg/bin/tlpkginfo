@@ -150,6 +150,7 @@ sub find_ctan_dir {
       "macros/plain/$me",			# plnfss
       "macros/luatex/latex/$me",		# luabidi
       "macros/latex/required/$me",		# babel
+      "macros/latex/contrib/babel-contrib/$me", # more babel
       "macros/latex/exptl/$me",			# semioneside
       "macros/latex/contrib/powerdot/contrib/$me_wo_powerdot", # powerdot-doc-vn
       "macros/latex/contrib/gene/$me",		# eqname
