@@ -650,7 +650,7 @@ my @TLP_working = qw(
     musixtex musixtex-fonts musixtnt musuos muthesis
     mversion mwcls mwe mweights mxedruli
     mycv mylatex mylatexformat mynsfc mystyletau
-  na-box na-position na-urmborder nag naive-ebnf
+  na-box na-fancyborders na-position na-urmborder nag naive-ebnf
     nameauth namedef namedtensor namespc
     nanicolle nanumtype1 nar
     natbib natded nath nature
@@ -828,7 +828,8 @@ my @TLP_working = qw(
     schulmathematik sclang-prettifier
     schule schulschriften schwalbe-chess
     scikgtex sciposter scientific-thesis-cover scontents
-    scrabble scrambledenvs scratch scratch3 scratchx screenplay screenplay-pkg
+    scrabble scrambledenvs scratch scratch3 scratchx screenplay
+    screenplay-pkg screenwriter
     scrhack scripture scrjrnl scrlayer-fancyhdr scrlttr2copy scrwfile scsnowman
     sdaps sdrt sduthesis
     se2thesis seatingchart
