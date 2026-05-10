@@ -3451,6 +3451,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'cleveref'     => 'latex',  # requires interaction
  'clrstrip'	=> 'tex',
  'codebox',	=> 'etex',
+ 'contract',	=> 'etex-answer-y',
  'ctable'       => 'etex',  # requires interaction
  'curve2e'      => 'pdflatex',   # 8bit
  'dateiliste'   => 'latex',  # requires interaction
