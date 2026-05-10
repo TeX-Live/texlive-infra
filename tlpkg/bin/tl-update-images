@@ -153,8 +153,7 @@ MAKEINST ()
   # and thus installed normally over the net.
   # keep in sync with info on http://tug.org/texlive/doc.html.
   prune="aarch64-linux amd64-netbsd armhf-linux \
-         i386-freebsd i386-linux i386-netbsd i386-solaris \
-         x86_64-linuxmusl x86_64-solaris"
+         i386-freebsd i386-linux i386-netbsd x86_64-linuxmusl"
     # testing removal of more platforms:
     # amd64-freebsd x86_64-cygwin x86_64-darwinlegacy"
     # that would leave only x86_64-linux universal-darwin windows.
