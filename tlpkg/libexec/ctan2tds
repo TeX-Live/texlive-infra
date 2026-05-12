@@ -2604,6 +2604,7 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'pkgloader',   '^[^t].*\.sty', # not .cls, not test*.sty
  'placeins-plain',      'placeins.tex',
  'plain',	'\.tex',
+ 'plain-grid',	'plaingrid.\.tex',
  'plain-widow',	'pxw.*\.tex',
  'plantuml',,	'\.lua|' . $standardtex,
  'plgraph',     '\.tex',
