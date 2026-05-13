@@ -1035,10 +1035,11 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'mxedruli',    "&MAKEflatten",
  'mychemistry', "die 'skipping, obsolete on ctan'",
  'na-border',	"die 'skipping, nonfree font'",
- 'na-fancyborders', "&MAKEflatten",
- 'na-pageborder',"die 'skipping, nonfree license cc-by-nd'",
- 'na-position',	"&MAKEflatten",
- 'na-urmborder',"&MAKEflatten",
+ 'na-cover',		"&MAKEflatten",
+ 'na-fancyborders',	"&MAKEflatten",
+ 'na-pageborder',	"die 'skipping, nonfree license cc-by-nd'",
+ 'na-position',		"&MAKEflatten",
+ 'na-urmborder',	"&MAKEflatten",
  'nahuatl',	"die 'skipping, generic mf filenames, capitalization'",
  'named',	"die 'skipping, await request for old bst+sty'",
  'namunsrt',	"die 'skipping, await request for old bst'",
@@ -3619,6 +3620,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'svn-multi'    => 'latex',  # interaction for .pl
  'swfigure'	=> 'etex',
  'tabular2'	=> 'pdflatex-preserve-pdf --engine xelatex',
+ 'tabularht'	=> 'etex',
  'teubner'      => 'latex',  # interaction
  'telprint'	=> 'tex',
  'termlist'     => 'tex',    # interaction for .pl

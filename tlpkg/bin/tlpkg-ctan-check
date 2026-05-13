@@ -650,7 +650,7 @@ my @TLP_working = qw(
     musixtex musixtex-fonts musixtnt musuos muthesis
     mversion mwcls mwe mweights mxedruli
     mycv mylatex mylatexformat mynsfc mystyletau
-  na-box na-fancyborders na-position na-urmborder nag naive-ebnf
+  na-box na-cover na-fancyborders na-position na-urmborder nag naive-ebnf
     nameauth namedef namedtensor namespc
     nanicolle nanumtype1 nar
     natbib natded nath nature
@@ -892,8 +892,8 @@ my @TLP_working = qw(
     tabbing tabfigures table-fct tableaux tablefootnote tableof tablericons
     tablists tablor tabls tablvar
     tabriz-thesis tabstackengine tabto-generic tabto-ltx
-    tabu tabular2 tabularborder tabularray tabularcalc
-    tabularew tabularray-abnt
+    tabu tabular2 tabularray-abnt tabularborder tabularray tabularcalc
+    tabularew tabularht
     tabulary tabvar tagging tagpair tagpdf talk talos tamefloats
     tamethebeast tango tangocolors tangramtikz tap tapir tasks
     tblr-extras tcldoc tcolorbox tdclock tds tdsfrmath
