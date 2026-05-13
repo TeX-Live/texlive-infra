@@ -30,7 +30,7 @@ test -d $TMPDIR || { echo "$0: no directory $TMPDIR, goodbye." >&2; exit 1; }
 
 cp="cp -fv"
 mv="mv -fv"
-diff="diff -U 2"
+diff="diff -U 0"
 
 mydir=`cd \`dirname $0\` && /bin/pwd`
 Master=`cd $mydir/../.. && /bin/pwd`
@@ -278,13 +278,12 @@ if $config_scripts_only; then :; else
     echo "$0: ctan mirror list already updated today, skipping update:" >&2
     ls -lt $mirrors4tl >&2
     
-#     && rsync rsync://rsync.dante.ctan.org/MirMon/mirmon.state $ctan_mirmon; then
   elif wget -nv https://ctan.org/tex-archive/CTAN.sites -O $ctan_mirrors \
      && scp -pq ctan.org:/serv/ctan/scripts/mirmon-2.11/mirmon.state \
                 $ctan_mirmon; then
     #echo "got new mirror data"; ls -ltr $TMPDIR
     $mydir/tl-update-ctan-mirrors -v $ctan_mirrors $ctan_mirmon \
-      >$mirrors4tl.new
+      >$mirrors4tl.new 2>$mirrors4tl.err
     if test $? -ne 0 || test ! -s $mirrors4tl.new; then
       echo "$0: tl-update-ctan-mirrors apparently failed, skipping." >&2
     elif $diff $mirrors4tl $mirrors4tl.new; then
@@ -293,8 +292,9 @@ if $config_scripts_only; then :; else
     else
       $chicken $mv $mirrors4tl.new $mirrors4tl
       $verbose "  $mirrors4tl update."
+      # It's nice to see that the files are current.
       test $verbose >/dev/null \
-      && ls -l $ctan_mirrors $ctan_mirmon $mirrors4tl
+      && ls -l $ctan_mirrors $ctan_mirmon $mirrors4tl $mirrors4tl.err
       update_list="$update_list $mirrors4tl"
     fi
   else
