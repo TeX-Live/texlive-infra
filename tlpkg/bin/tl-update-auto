@@ -272,6 +272,7 @@ fi # !config_scripts_only #(tlman)
 if $config_scripts_only; then :; else
   ctan_mirrors=$TMPDIR/mirrors           # incoming data from CTAN
   ctan_mirmon=$TMPDIR/mirmon.state
+  mirrors4err=$TMPDIR/ctan-mirrors.err
   mirrors4tl=tlpkg/installer/ctan-mirrors.pl  # massaged for TL
 
   if test -n "`find $mirrors4tl -newermt '23 hours ago'`"; then
@@ -283,7 +284,7 @@ if $config_scripts_only; then :; else
                 $ctan_mirmon; then
     #echo "got new mirror data"; ls -ltr $TMPDIR
     $mydir/tl-update-ctan-mirrors -v $ctan_mirrors $ctan_mirmon \
-      >$mirrors4tl.new 2>$mirrors4tl.err
+      >$mirrors4tl.new 2>$mirrors4err
     if test $? -ne 0 || test ! -s $mirrors4tl.new; then
       echo "$0: tl-update-ctan-mirrors apparently failed, skipping." >&2
     elif $diff $mirrors4tl $mirrors4tl.new; then
@@ -294,7 +295,7 @@ if $config_scripts_only; then :; else
       $verbose "  $mirrors4tl update."
       # It's nice to see that the files are current.
       test $verbose >/dev/null \
-      && ls -l $ctan_mirrors $ctan_mirmon $mirrors4tl $mirrors4tl.err
+      && ls -l $ctan_mirrors $ctan_mirmon $mirrors4tl $mirrors4err
       update_list="$update_list $mirrors4tl"
     fi
   else
