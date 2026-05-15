@@ -650,7 +650,8 @@ my @TLP_working = qw(
     musixtex musixtex-fonts musixtnt musuos muthesis
     mversion mwcls mwe mweights mxedruli
     mycv mylatex mylatexformat mynsfc mystyletau
-  na-box na-cover na-fancyborders na-position na-urmborder nag naive-ebnf
+  na-box na-cover na-fancyborders na-position
+    na-tikzornament na-urmborder nag naive-ebnf
     nameauth namedef namedtensor namespc
     nanicolle nanumtype1 nar
     natbib natded nath nature
