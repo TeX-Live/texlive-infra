@@ -159,7 +159,7 @@ my @TLP_working = qw(
     bookcover bookdb bookest bookhands booklet bookman bookmark
     bookshelf booktabs booktabs-de booktabs-fr booktabstabular
     boolexpr boondox bootstrapicons bophook
-    borceux bosisio
+    borceux bosisio boustrophedon
     boxedminipage boxhandler bpchem bpolynomial
     br-lex bracealign bracketkey braids braille braket
     brandeis-dissertation brandeis-problemset brandeis-thesis
