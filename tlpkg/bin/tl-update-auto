@@ -279,18 +279,19 @@ if $config_scripts_only; then :; else
     echo "$0: ctan mirror list already updated today, skipping update:" >&2
     ls -lt $mirrors4tl >&2
     
-  elif wget -nv https://ctan.org/tex-archive/CTAN.sites -O $ctan_mirrors \
-     && scp -pq ctan.org:/serv/ctan/scripts/mirmon-2.11/mirmon.state \
+  elif scp -pq ctan.org:/home/ftp/pub/tex/CTAN.sites $ctan_mirrors \
+    && scp -pq ctan.org:/serv/ctan/scripts/mirmon-2.11/mirmon.state \
                 $ctan_mirmon; then
     #echo "got new mirror data"; ls -ltr $TMPDIR
     $mydir/tl-update-ctan-mirrors -v $ctan_mirrors $ctan_mirmon \
       >$mirrors4tl.new 2>$mirrors4err
     if test $? -ne 0 || test ! -s $mirrors4tl.new; then
       echo "$0: tl-update-ctan-mirrors apparently failed, skipping." >&2
-    elif $diff $mirrors4tl $mirrors4tl.new; then
+    elif cmp -s $mirrors4tl $mirrors4tl.new; then
       $verbose "  $mirrors4tl ok."
       rm -f $mirrors4tl.new
     else
+      $diff $mirrors4tl $mirrors4tl.new | sed '/^@/d' # minimal diff output
       $chicken $mv $mirrors4tl.new $mirrors4tl
       $verbose "  $mirrors4tl update."
       # It's nice to see that the files are current.
