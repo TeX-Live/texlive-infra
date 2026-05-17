@@ -1765,6 +1765,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'barracuda'		=> '&POSTbarracuda',
  'beautybook'		=> '&POSTbeautybook',
  'beamertheme-cleaneasy' => '&POST_onelevel',
+ 'beamertheme-geode'    => '&POST_onelevel',
  'bhcexam'		=> '&POST_rmsymlink',
  'bib2gls'		=> '&POSTbib2gls',
  'biber'		=> '&POSTbiber',

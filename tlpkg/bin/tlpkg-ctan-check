@@ -101,7 +101,7 @@ my @TLP_working = qw(
     beamersubframe beamerswitch beamertheme-arguelles beamertheme-bilkent-econ
     beamertheme-cleaneasy beamertheme-csh beamertheme-cuerna
     beamertheme-detlevcm beamertheme-durham
-    beamertheme-epyt beamertheme-focus beamertheme-gotham
+    beamertheme-epyt beamertheme-focus beamertheme-geode beamertheme-gotham
     beamertheme-light beamertheme-metropolis beamertheme-mirage
     beamertheme-npbt
     beamertheme-phnompenh beamertheme-pure-minimalistic beamertheme-rainbow
