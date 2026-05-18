@@ -29,6 +29,7 @@ fi
 mydir=`cd \`dirname $0\` && pwd`
 PATH=$mydir:/usr/local/gnu/bin:/usr/local/bin:$PATH # sha*sum+makensis on tug
 master=`cd $mydir/../.. && pwd`
+tl_sign_file=$master/tlpkg/bin/tl-sign-file
 
 TMPDIR=${TMPDIR-/tmp}
 cd $TMPDIR
@@ -40,9 +41,14 @@ do_updater ()
   type=$1  # sh or exe
   newfile=`ls update-*.$type`
   if test -z "$newfile"; then
-    echo "$0: no new file update-*.$type in `pwd`" >&2
+    echo "$0: no new file in `pwd`: update-*.$type" >&2
     exit 1
   fi
+  if test ! -s "$newfile"; then
+    echo "$0: new file is empty in `pwd`: $newfile" >&2
+    exit 1
+  fi
+  #
   rm -f $tlcrit/update-*.$type*  # rm old file and checksum
   mv $newfile $tlcrit            # move new file
   #
@@ -53,17 +59,13 @@ do_updater ()
   # make checksum for new file:
   sha512sum $newfile >$newfile.sha512
   # sign it:
-  $master/tlpkg/bin/tl-sign-file $newfile.sha512 || exit 1
+  $tl_sign_file $newfile.sha512
   #
-  # create the generic names as symlinks.  target files must be nonempty.
-  test -s $newfile \
-    && ln -s $newfile update-tlmgr-latest.$type
-  #
-  test -s $newfile.sha512 \
-    && ln -s $newfile.sha512 update-tlmgr-latest.$type.sha512
-  #
-  test -s $newfile.sha512.asc \
-    && ln -s $newfile.sha512.asc update-tlmgr-latest.$type.sha512.asc
+  # generic name can be a symlink, but the checksum and signed checksum
+  # have to be their own files, since they embed the filename.
+  ln -s $newfile update-tlmgr-latest.$type
+  sha512sum update-tlmgr-latest.$type >update-tlmgr-latest.$type.sha512
+  $tl_sign_file update-tlmgr-latest.$type.sha512
   #
   cd $origdir
 }
@@ -93,7 +95,7 @@ fi
 
 # update Unix disaster recovery.
 echo "$0: running tl-makeself-from-tlnet $tlcrit..."
-tl-makeself-from-tlnet $tlcrit
+tl-makeself-from-tlnet $tlcrit 
 do_updater sh
 
 # update the Windows updater executable.

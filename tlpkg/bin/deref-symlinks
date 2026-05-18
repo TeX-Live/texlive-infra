@@ -13,8 +13,14 @@ else
 fi
 
 for f in "$@"; do
-  test -h "$f" || continue  # skip non-symlinks
-  test -f "$f" || continue  # skip links to anything but regular files
+  if test ! -h "$f"; then
+    echo "$0: skipping non-symlink: $f" >&2
+    continue
+  elif test ! -f "$f"; then
+    echo "$0: skipping symlink to non-file: $f" >&2
+    file "$f" >&2
+    continue
+  fi
   
   cp -p --dereference "$f" "$f".file  # expand link
   mv -v "$f" "$f".link                # move link out of the way
