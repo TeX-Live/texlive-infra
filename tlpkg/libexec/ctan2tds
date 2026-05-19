@@ -1211,6 +1211,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'pst-diffraction',     "&MAKEpst",
  'pst-electricfield',   "&MAKEpst",
  'pst-eps',     "&MAKEpst",
+ 'pst-eqhz',    "&MAKEpst",
  'pst-eucl',    "&MAKEpst",
  'pst-exa',     "&MAKEflatten",
  'pst-feyn',	"&MAKEpst",
@@ -3423,6 +3424,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'asciilist'	=> 'latex',  # requires interaction
  'askinclude'	=> 'tex',    # else doc is generated
  'atenddvi'	=> 'etex',
+ 'attinormativi'=> 'xelatex',
  'atveryend'	=> 'etex',
  'babel'	=> 'etex',
  'babel-belarusian'	=> 'tex -8bit', # do not make doc, no ^^

@@ -760,7 +760,7 @@ my @TLP_working = qw(
     pst-calculate pst-calendar pst-cie pst-circ
     pst-coil pst-contourplot pst-cox
     pst-dart pst-dbicons pst-diffraction
-    pst-electricfield pst-eps pst-eucl pst-eucl-translation-bg pst-exa
+    pst-electricfield pst-eps pst-eqhz pst-eucl pst-eucl-translation-bg pst-exa
     pst-feyn pst-fill pst-fit pst-flags pst-fourbarlinkage
     pst-fr3d pst-fractal pst-fun pst-func
     pst-gantt pst-gears pst-geo pst-geometrictools
