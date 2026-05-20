@@ -395,7 +395,7 @@ my @TLP_working = qw(
     froufrou frpseudocode
     ftc-notebook ftcap ftnxtra
     fullblck fullminipage fullwidth
-    functan functional fundus-calligra fundus-cyr fundus-sueterlin
+    functan functional fundus-calligra fundus-cyr fundus-suetterlin
     futharksymb fvextra fwlw
   g-brief gaceta galois gamebook gamebooklib gammas
     garamond-libre garamond-math garuda-c90

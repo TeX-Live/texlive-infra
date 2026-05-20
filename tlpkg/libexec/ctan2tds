@@ -621,7 +621,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'fribidixetex',"die 'skipping, compiled, await request, 2016'",
  'fribrief',    "die 'skipping, nonfree license'",
  'fullpict',    "die 'skipping, noinfo license'",
- 'fundus',      "die 'skipping, use fundus-* names'",
+ 'fundus',      "die 'skipping, use fundus-* names (run: cl2x fundus)'",
  'fundus-cmoutlines',   "die 'skipping, noinfo license of fonts'",
  'fundus-la',           "die 'skipping, noinfo license of fonts'",
  'fundus-pvscript',     "die 'skipping, noinfo license of fonts'",
