@@ -63,7 +63,7 @@ my @TLP_working = qw(
     asymptote-faq-zh-cn asymptote-by-example-zh-cn asymptote-manual-zh-cn
     asy-overview asypictureb atableau atbegshi
     atenddvi atendofenv atkinson atveryend
-    attachfile attachfile2
+    attachfile attachfile2 attinormativi
     aucklandthesis augie auncial-new aurical aurl
     auto-pst-pdf-lua autobreak autopdf
     authoraftertitle authorarchive authordate authorindex
