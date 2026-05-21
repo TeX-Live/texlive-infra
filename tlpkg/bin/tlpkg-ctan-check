@@ -694,7 +694,7 @@ my @TLP_working = qw(
     outerhbox outilsgeomtikz outline outliner outlines outlining outoruby
     overarrows overlays overlock overpic
   pacioli packdoc padcount
-    pagecolor pagecont pagegrid pagelayout
+    page-canons pagecolor pagecont pagegrid pagelayout
     pagella-otf pagenote pagerange pagesel pageslts
     palatino palette panda pangram panneauxroute
     paper papercdcase papermas papertex
