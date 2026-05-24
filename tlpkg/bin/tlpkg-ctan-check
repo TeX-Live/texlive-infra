@@ -746,7 +746,8 @@ my @TLP_working = qw(
     ppmcheckpdf ppr-prv ppt-slides pracjourn practicalreports
     precattl prelim2e preprint prerex present
     pressrelease prettyref prettytok preview prftree
-    principia printlen prisma-flow-diagram proba probsoln prociagssymp
+    principia printcolormanager printlen
+    prisma-flow-diagram proba probsoln prociagssymp
     prodint productbox profcollege proflabo proflycee profmaquette
     profsio program
     progress progressbar projlib pronunciation
