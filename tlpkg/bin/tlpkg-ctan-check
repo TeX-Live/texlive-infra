@@ -1335,13 +1335,13 @@ sub do_tlp {
     # Different cluttex.lua gets installed.
     next if $basefile eq "cluttex.lua";
 
-    # Compares director to binary.
+    # Compares directory to binary.
     next if $basefile eq "optexcount";
 
     # Files we have edited in TL, will probably never be updated
     # upstream (authors won't make new releases, though they've agreed
     # to the changes), and aren't worth bothering CTAN about.
-    next if $basefile =~ /^(culmus.map|ebong.py)$/;
+    next if $basefile =~ /^(culmus.map|ebong.py|attinormativi.ins)$/;
 
     # Wrong README gets compared.
     next if $basefile eq "README" && $file =~ m,/(pmx|cs)/,;
