@@ -126,7 +126,7 @@ my @TLP_working = qw(
     biblatex-chicago biblatex-claves biblatex-cse biblatex-cv
     biblatex-dw biblatex-enc biblatex-ext
     biblatex-fiwi biblatex-gb7714-2015 biblatex-german-legal biblatex-gost
-    biblatex-historian
+    biblatex-greifswald biblatex-historian
     biblatex-ieee biblatex-ijsra biblatex-iso690
     biblatex-jura2 biblatex-juradiss biblatex-license
     biblatex-lni biblatex-luh-ipw biblatex-lncs biblatex-manuscripts-philology
@@ -933,7 +933,7 @@ my @TLP_working = qw(
     tikz-kalender tikz-karnaugh tikz-ladder tikz-lake-fig tikz-layers
     tikz-mirror-lens tikz-nef tikz-network tikz-nfold tikz-opm tikz-optics
     tikz-osci tikz-page tikz-palattice tikz-planets tikz-qtree
-    tikz-relay tikz-sfc tikz-shields tikz-swigs
+    tikz-relay tikz-sections tikz-sfc tikz-shields tikz-swigs
     tikz-timing tikz-trackschematic tikz-triminos tikz-truchet
     tikzbrickfigurines tikzbricks tikzcalendarnotes tikzcodeblocks
     tikzdotncross tikzducks
