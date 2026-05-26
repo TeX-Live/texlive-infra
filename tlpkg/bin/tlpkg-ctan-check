@@ -688,7 +688,7 @@ my @TLP_working = qw(
     onedown onepgnote onlinebrief24 onlyamsmath onrannual opbible opcit
     opencolor openmoji open-everyday-symbols opensans oplotsymbl
     opteng optex optexcount optidef optikz optional options
-    orcidlink ordinalpt orientation orkhun
+    orbitals orcidlink ordinalpt orientation orkhun
     oscola oststud oswald ot-tableau othello othelloboard
     ou-tma oubraces oup-authoring-template
     outerhbox outilsgeomtikz outline outliner outlines outlining outoruby
@@ -779,7 +779,8 @@ my @TLP_working = qw(
     pst-shell pst-sigsys pst-slpe pst-solarsystem pst-solides3d pst-soroban
     pst-spectra pst-spectrum pst-sphericaltrochoid pst-spinner
     pst-stru pst-support
-    pst-text pst-thick pst-tools pst-tree pst-turtle pst-tvz pst-uml
+    pst-text pst-thick pst-titration pst-tools
+    pst-tree pst-turtle pst-tvz pst-uml
     pst-vectorian pst-vehicle pst-venn pst-vowel
     pst2pdf pstool pstricks pstricks-add pstricks_calcnotes pstring
     ptex-base ptex-fontmaps ptex-fonts ptex-manual
