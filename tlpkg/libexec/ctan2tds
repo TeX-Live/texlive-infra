@@ -2370,7 +2370,6 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'francais-bst','francaisbst.tex',
  'frankenstein','\.(sto|stq)|' . $standardtex,
  'gates',       '\.lua|gates.tex|' . $standardtex, # both t-gates and gates
- 'gbt7714',     '\.bib|' . $standardtex,
  'genealogytree','code\.tex|' . $standardtex,
  'genmisc',     '\.sty|\.tex',
  'geometry',    '\.sty|\.clo|\.ldf|\.cls|\.def|\.fd$', # not cfg
@@ -3754,6 +3753,7 @@ $standardbib = 'NULL';  # almost all bib files are for the doc
  'cnltx'                => '\.bib$',
  'dtk-bibliography'	=> '\.bib$',
  'gloss'		=> 'glsbase.bib',
+ 'gbt7714'              => 'gbt7714-examples.bib',
  'nostarch'		=> '\.bib$',
 );
 
