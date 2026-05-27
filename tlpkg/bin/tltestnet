@@ -1,11 +1,36 @@
-#!/bin/sh
+#!/bin/sh -e
 # $Id$
 # Public domain.  Originally written 2019, Karl Berry.
-# Run an update of tlnet, but in a test directory.
+# Run an update of tlnet, but in a test directory, and
+# using PATH rather than the reference tree,
+# so changes to the infrastructure can be tested without committing.
 
-testnet=/home/texlive/tstftp/tstlive/tstnet
-# the subdirectories there are necessary because we make the trial
-# directories two levels up. Imagine tstftp = ~ftp, tstlive = ~ftp/texlive.
+# the subdirectories here are necessary because we make the trial-*
+# directory two levels up. Imagine tstftp = ~ftp, tstlive = ~ftp/texlive.
+testlive=/home/texlive/tstftp/tstlive
+#
+testnet=$testlive/tstnet # equivalent of tlnet.
+
+# if we don't have the test directory, or if we're asked to,
+# start from scratch:
+if test ! -d $testlive || test x"$1" = xscratch; then
+  rm -rf $testlive
+  mkdir -p $testlive
+
+  # populate the test tlnet as a copy of the real one:
+  cp -a /home/ftp/texlive/tlnet/ $testnet/
+
+elif test x"$1" = xupdate; then
+  # if the testing goes on across nightly updates, most likely want to
+  # get the latest.
+  echo "$0: doing rsync from tlnet to $testnet"
+  rsync -av /home/ftp/texlive/tlnet/ $testnet/ \
+  | tee /tmp/testnetrsync.out | /l/bin/rsyncstats
+
+elif test $# -ne 0; then
+  echo "$0: unknown options: $*" >&2
+  exit 1
+fi
 
 fast=true
 if $fast; then
@@ -18,13 +43,22 @@ else
   consistency=
 fi
 
-# We assume the texlive.tlpdb file is up to date. It could be rebuilt
-# with the command here, but it's usually not desirable, because with
-# --fix-reverse updates can get committed, and without it, the result
-# may not be consistent.
+echo
+echo "$0: will run:"
+echo "     `command -v tl-update-tlnet`"
+printf "CTRL-c now if that's the wrong hierarchy ..."
+sleep 4 # chance to interrupt if in wrong place.
+echo
+
+# If texlive.tlpdb needs to be updated, uncomment this.
+# Probably you won't want to commit anything, since this whole script
+# is about testing. But if the result is inconsistent, you can enable
+# the --fix-reverse-revisions option.
 # 
-#catup= #--catalogue-compare=$tlnet_dir
-#./tlpkg/bin/tl-update-tlpdb -v --fix-reverse-revisions $catup
+catup= #--catalogue-compare=$testnet
+tlut_opt="--commit-max=0 --no-commit"
+#tlut_opt=--fix-reverse-revisions
+tl-update-tlpdb -v $tlut_opt $catup
 
 # run out of PATH, not the reference tree.
 tl-update-tlnet --dest $testnet --scheme $scheme $install_pkg $consistency
