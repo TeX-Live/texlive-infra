@@ -62,8 +62,8 @@ my @TLP_working = qw(
     assignment association-matrix assoccnt asternote astro asyfig
     asymptote-faq-zh-cn asymptote-by-example-zh-cn asymptote-manual-zh-cn
     asy-overview asypictureb atableau atbegshi
-    atenddvi atendofenv atkinson atveryend
-    attachfile attachfile2 attinormativi
+    atenddvi atendofenv atkinson atomicreactions
+    attachfile attachfile2 attinormativi atveryend
     aucklandthesis augie auncial-new aurical aurl
     auto-pst-pdf-lua autobreak autopdf
     authoraftertitle authorarchive authordate authorindex
@@ -765,7 +765,7 @@ my @TLP_working = qw(
     pst-feyn pst-fill pst-fit pst-flags pst-fourbarlinkage
     pst-fr3d pst-fractal pst-fun pst-func
     pst-gantt pst-gears pst-geo pst-geometrictools
-    pst-gr3d pst-grad pst-graphicx pst-hsb
+    pst-gr3d pst-grad pst-graphicx pst-hertz pst-hsb
     pst-infixplot pst-intersect pst-jtree pst-kepler pst-knot
     pst-labo pst-layout
     pst-lens pst-light3d pst-lsystem

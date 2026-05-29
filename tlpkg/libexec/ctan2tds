@@ -1231,6 +1231,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'pst-gr3d',    "&MAKEpst",
  'pst-grad',    "&MAKEpst",
  'pst-graphicx',"&MAKEpst",
+ 'pst-hertz',	"&MAKEpst",
  'pst-hsb',	"&MAKEpst",
  'pst-infixplot',"&MAKEpst",
  'pst-jftree',  "&MAKEpst",
