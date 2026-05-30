@@ -1885,6 +1885,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'lua-placeholders'	=> '&POST_onelevel',
  'lua-regression'	=> '&POST_onelevel',
  'lua-tikz3dtools'	=> '&POST_onelevel',
+ 'luadraw'		=> '&POST_onelevel',
  'luaotfload'		=> '&POST_do_man',
  'luatex-cn'		=> '&POST_onelevel',
  'luahyperbolic'	=> '&POSTluahyperbolic',
@@ -8535,7 +8536,8 @@ sub POST_onelevel {
     my $thisformat;
     #
     my $destdir = $dir;
-    if ($dir =~ /^((lua)?(la)?tex|code|src|theme)$/) { # tex/$format/$package
+    # first, files that should end up in tex/$format/$package
+    if ($dir =~ /^((lua)?(la)?tex|code|files|src|theme)$/) {
       $destdir = "tex";
       $thisformat = $whichformat;
 
