@@ -4328,6 +4328,7 @@ $standardclean = '(\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
  'mwcls'	 => 'mwclsdoc.pdf',			# no source
  'mgltex'	 => '\.(pdf|eps)$|sample.tex',		# cc nc
  'numericplots'  => '.*\.m',                            # matlab
+ 'nwafupaper'	 => 'nwafupaper.pdf',			# no source
  'oinuit'        => 'cmssbxo10.tfm',                    # should not be here
  'padauk'	 => '\.pdf$',				# no source
  'pas-cours'     => '\.pdf$',                           # no source
