@@ -339,7 +339,7 @@ my @TLP_working = qw(
     etoc etoolbox etoolbox-de etoolbox-generic etsvthor
     euclidean-lattice euclideangeometry euenc euflag eukdate
     euler euler-math eulerpx eulervm
-    eurion euro euro-ce euromoney europasscv europecv eurosym
+    eurion euro euro-ce euromoney europasscv europasscv2025 europecv eurosym
     evangelion-jfm everyhook everypage everysel everyshi
     exam exam-lite exam-n exam-randomizechoices exam-zh
     examdesign example examplep examz
@@ -751,7 +751,7 @@ my @TLP_working = qw(
     prodint productbox profcollege proflabo proflycee profmaquette
     profsio program
     progress progressbar projlib pronunciation
-    proof-at-the-end proofread prooftrees proposal properties
+    proof-at-the-end proofgraph proofread prooftrees proposal properties
     prosper protex protocol prtec przechlewski-book
     psbao pseudo pseudocode psfrag psfrag-italian psfragx
     psgo psizzl pslatex psnfss pspicture
