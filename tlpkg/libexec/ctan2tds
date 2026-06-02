@@ -2191,7 +2191,7 @@ $standardfmt='latex';
 # be used just for building/testing, so define variables for both.
 $standardtex_no_lua
    = '(\.(.bx|4ht|cls|clo|cmap|(code|lib)\.tex'
-    . '|def|dfu|fd|fontspec|ldf|opm|py|sty|trsl)'
+    . '|def|dfu|fd|fontspec|ini|ldf|opm|py|sty|trsl)'
     . '|^lbx|.*[^c]\.cfg)$'; # not ltxdoc.cfg
 $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
 #
