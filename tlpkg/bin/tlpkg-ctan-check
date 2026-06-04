@@ -765,7 +765,8 @@ my @TLP_working = qw(
     pst-feyn pst-fill pst-fit pst-flags pst-fourbarlinkage
     pst-fr3d pst-fractal pst-fun pst-func
     pst-gantt pst-gears pst-geo pst-geometrictools
-    pst-gr3d pst-grad pst-graphicx pst-hertz pst-hsb pst-hypertiling
+    pst-gr3d pst-grad pst-graphicx
+    pst-hertz pst-hsb pst-hyperboloid pst-hypertiling
     pst-infixplot pst-intersect pst-jtree pst-kepler pst-knot
     pst-labo pst-layout
     pst-lens pst-light3d pst-lsystem
