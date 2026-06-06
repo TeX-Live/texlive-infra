@@ -1845,6 +1845,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'gost'			=> '&POSTgost',
  'grotesq'		=> '&POSTgrotesq',
  'grverb'		=> '&POSTgrverb',
+ 'hawkdraw'		=> '&POSThawkdraw',
  'guide-latex-fr'	=> '&POST_rmsymlink',
  'haranoaji'		=> '&POST_preserve_postcode',
  'hebdomon'		=> '&POST_onelevel',
@@ -7740,6 +7741,11 @@ sub POSTgrverb {
   print "POST$package - rename psfonts.map\n";
   my $mapdir = "$DEST/fonts/map/dvips/grverb";
   &SYSTEM ("$MV $mapdir/psfonts.map $mapdir/grverb.map");
+}
+
+sub POSThawkdraw {
+  print "POST$package - move t-* to context\n";
+  &mv_with_mkdir ("t-$package.tex", "$DEST/tex/context/third/$package");
 }
 
 sub POSThmtrump {
