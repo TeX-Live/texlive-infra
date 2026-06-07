@@ -67,7 +67,7 @@ my @TLP_working = qw(
     aucklandthesis augie auncial-new aurical aurl
     auto-pst-pdf-lua autobreak autopdf
     authoraftertitle authorarchive authordate authorindex
-    auto-pst-pdf autoaligne autoarea autofancyhdr automata autonum
+    auto-pst-pdf autoaffil autoaligne autoarea autofancyhdr automata autonum
     autopuncitems autosp autotype auxhook
     avantgar avremu awami awesomebox axessibility axodraw2
   b1encoding babel
