@@ -222,7 +222,7 @@ my @TLP_working = qw(
     colorsep colorspace colortab
     colortbl colorwav colorweb colourchange
     combelow combine combinedgraphics combofont comfortaa comicneue
-    comma commado commalists-tools commath commedit comment
+    comma commado commalists-tools commath commedit comment comment2tex
     commonunicode commutative-diagrams
     compactbib compare competences
     complexity complexpolylongdiv components
@@ -293,7 +293,7 @@ my @TLP_working = qw(
     dinat dinbrief dingbat directory dirtree dirtreex dirtytalk
     disser ditaa dithesis
     dk-bib dlfltxb dlrg-templates
-    dnaseq dnp dnsrecord doc-pictex docbytex doclicense
+    dnaseq dnp dnsrecord doc-pictex docbytex docext doclicense
     docmfp docmute docshots docsurvey doctools documentation docutils
     doi doibanner doipubmed domaincoloring domitian
     dosepsbin dotlessi dot2texi dotarrow dotseqn dottex
@@ -746,7 +746,7 @@ my @TLP_working = qw(
     ppmcheckpdf ppr-prv ppt-slides pracjourn practicalreports
     precattl prelim2e preprint prerex present
     pressrelease prettyref prettytok preview prftree
-    principia printcolormanager printfilelist printlen
+    principia printcolormanager printfilelist tprintlen
     prisma-flow-diagram proba probsoln prociagssymp
     prodint productbox profcollege proflabo proflycee profmaquette
     profsio program
