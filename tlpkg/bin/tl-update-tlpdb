@@ -550,7 +550,7 @@ sub create_tlpdb {
 # This was not an issue before the switch to versioned containers in
 # November 2019 and the TL'20 release; before then, we recreated all
 # packages at every yearly release, so got all Catalogue updates at that
-# time. But nowadays we don't ever blindly recreate all packages.
+# time. But since then we don't ever blindly recreate all packages.
 # 
 sub tlpdb_catalogue_compare {
   my ($master_tlpdb,$cmp_tlpdb_str) = @_;
@@ -561,6 +561,9 @@ sub tlpdb_catalogue_compare {
     if ! defined $cmp_tlpdb;  
   debug ("$prg: got comparison tlpdb from: $cmp_tlpdb_str\n");
 
+  # See explanation at the subroutine.
+  &sort_catalogue_topics ($cmp_tlpdb);
+
   for my $p ($master_tlpdb->list_packages()) {
     my $tlpA = $master_tlpdb->get_package($p);
     my $tlpB = $cmp_tlpdb->get_package($p);
@@ -568,9 +571,10 @@ sub tlpdb_catalogue_compare {
     next unless defined $tlpA && defined $tlpB;
     
     # The Master tree isn't relocatable, so for the comparison (tlnet) tree,
-    # must swap RELOC marker for actual tree so we can compare strings.
+    # must replace RELOC marker with the actual tree so we can compare strings.
     $tlpB->replace_reloc_prefix();
     
+    # Finally, we can compare them.
     if (! &tlpobj_catalogue_equal($tlpA, $tlpB)) {
       debug("$prg: had Catalogue changes in package: $p\n");
       $ret{$p} = 1;
@@ -750,6 +754,42 @@ sub equal_longdesc {
                 " != compare db: $desc2\n");
   }
   return $ret;
+}
+
+
+# Sort the Catalogue topics alphabetically of each package in TLPDB.
+# Changes are made in place within TLPDB.
+# 
+# In June 2026, we started sorting the Catalogue topics on input, in
+# TeXCatalogue::initialize, so the tlpdb values would be stable.
+# 
+# So, the Master tlpdb (which is updated from scratch every day) has
+# sorted topics, while the comparison (tlnet) tlpdb does not.
+# 
+# We don't want to force an update of every affected package just for
+# this no-op change. So: sort the tlnet topics so they will compare equal.
+# 
+# To avoid the unnecessary updates, this sorting of the tlnet topics
+# needs to be kept in place forever, or until we have a reason to
+# regenerate every package from scratch.
+#
+sub sort_catalogue_topics {
+  my ($tlpdb) = @_;
+  for my $pkgname ($tlpdb->list_packages()) {
+    my $p = $tlpdb->get_package($pkgname);
+
+    my $catdata = $p->cataloguedata;
+    #&debug_hash ("catdata $p->name", $catdata);
+    next if ! defined $catdata;
+    next if ! &is_hash_ref ($catdata);
+    
+    my $topics = $catdata->{"topics"};
+    next if ! defined $topics;
+    
+    my @topics = split (" ", $topics);
+    my @s_topics = sort @topics;
+    $p->cataloguedata->{'topics'} = "@s_topics";
+  }
 }
 
 sub finish {

@@ -5,6 +5,14 @@
 # using PATH rather than the reference tree,
 # so changes to the infrastructure can be tested without committing.
 
+if test $# -gt 2; then
+  echo "Usage: $0 [create|update] [only]" >&2
+  echo "(See the source.)" >&2
+  # We could add more options for "fast" or "tlpdb_only" or
+  # the catup options below, but just edit the script ...
+  exit 1
+fi
+
 # the subdirectories here are necessary because we make the trial-*
 # directory two levels up. Imagine tstftp = ~ftp, tstlive = ~ftp/texlive.
 testlive=/home/texlive/tstftp/tstlive
@@ -13,7 +21,7 @@ testnet=$testlive/tstnet # equivalent of tlnet.
 
 # if we don't have the test directory, or if we're asked to,
 # start from scratch:
-if test ! -d $testlive || test x"$1" = xscratch; then
+if test ! -d $testlive || test x"$1" = xcreate; then
   rm -rf $testlive
   mkdir -p $testlive
 
@@ -25,14 +33,22 @@ elif test x"$1" = xupdate; then
   # get the latest.
   echo "$0: doing rsync from tlnet to $testnet"
   rsync -av /home/ftp/texlive/tlnet/ $testnet/ \
-  | tee /tmp/testnetrsync.out | /l/bin/rsyncstats
+  | tee /tmp/testnetrsync.out | tail -2
 
 elif test $# -ne 0; then
   echo "$0: unknown options: $*" >&2
   exit 1
 fi
 
-fast=true
+# with second arg only, quit after creating/updating the files.
+if test x"$2" = xonly; then
+  echo "$0: ${1}d: $testnet"
+  echo "$0: exiting by request."
+  ls -lt $testnet/archive | head
+  exit 0
+fi
+
+fast=true # set manually
 if $fast; then
   scheme=minimal
   install_pkg=--no-install-pkg
@@ -43,22 +59,33 @@ else
   consistency=
 fi
 
-echo
-echo "$0: will run:"
-echo "     `command -v tl-update-tlnet`"
-printf "CTRL-c now if that's the wrong hierarchy ..."
-sleep 4 # chance to interrupt if in wrong place.
-echo
+tlpdb_only=true # set manually
 
 # If texlive.tlpdb needs to be updated, uncomment this.
 # Probably you won't want to commit anything, since this whole script
 # is about testing. But if the result is inconsistent, you can enable
-# the --fix-reverse-revisions option.
+# the --fix-reverse-revisions option and accept the commits.
 # 
 catup= #--catalogue-compare=$testnet
+if test -n "$catup"; then
+  # save dump of catalogue for subsequent runs; remove when done"
+  catup="$catup --catalogue-dump=${TMPDIR-/tmp}/cat.pl"
+fi
 tlut_opt="--commit-max=0 --no-commit"
 #tlut_opt=--fix-reverse-revisions
-tl-update-tlpdb -v $tlut_opt $catup
+cmd="tl-update-tlpdb -v $tlut_opt $catup"
+
+echo
+echo "$0: will run:"
+echo "  `command -v tl-update-tlpdb`"
+echo "that is:"
+echo "  $cmd"
+printf "CTRL-c now if that's the wrong hierarchy or options ..."
+sleep 8 # chance to interrupt if in wrong place.
+echo; echo
+
+$cmd
+if $tlpdb_only; then exit 0; fi
 
 # run out of PATH, not the reference tree.
 tl-update-tlnet --dest $testnet --scheme $scheme $install_pkg $consistency
