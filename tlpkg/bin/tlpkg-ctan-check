@@ -579,7 +579,8 @@ my @TLP_working = qw(
     lualatex-doc-de
     lualatex-math lualatex-truncate lualibs lualinalg lualineno
     luamathalign luamaths
-    luamesh luamml luamodulartables luamplib luanumint luaoptions luaotfload
+    luamesh luamml luamodulartables luamplib luanumbers luanumint
+    luaoptions luaotfload
     luapackageloader luaplot luaprogtable luapstricks
     luaquotes luarandom
     luaset luasseq
@@ -761,7 +762,7 @@ my @TLP_working = qw(
     pst-calculate pst-calendar pst-cie pst-circ
     pst-coil pst-contourplot pst-cox
     pst-dart pst-dbicons pst-diffraction
-    pst-electricfield pst-eps pst-eqhz pst-ellipsoid
+    pst-electricfield pst-electrolysis pst-eps pst-eqhz pst-ellipsoid
     pst-eucl pst-eucl-translation-bg pst-exa
     pst-feyn pst-fill pst-fit pst-flags pst-fourbarlinkage
     pst-fr3d pst-fractal pst-fun pst-func
