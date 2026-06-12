@@ -972,7 +972,7 @@ my @TLP_working = qw(
     trigonometry trimspaces trivfloat trivialpursuit trsym truncate truthtable
     tsemlines tsvtemplate
     tucv tuda-ci tudscr tufte-latex tugboat tugboat-plain tuple
-    tui turabian turabian-formatting turkmen
+    tui turabian turabian-formatting turkce-sayi turkmen
     turnstile turnthepage tutodoc tuzuk
     twemoji-colr twemojis twoinone twoup twoxtwogame
     txfonts txfontsb txgreeks txuprcal
