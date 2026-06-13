@@ -1,7 +1,10 @@
 (This file public domain.  Originally written by Norbert Preining and
 Karl Berry, 2010.)
 
+<p><b>tlmgr 78616 (released 13jun26):</b>
 <li>tlmgr check executes: recognize xetex.
+<li>usual config.guess and curl-ca-bundle.crt updates.
+<li>internal debugging and doc updates.
 
 <p><b>tlmgr 78301 (released 7mar26):</b>
 <li>tlmgr info longdesc warning/bug fixed.
