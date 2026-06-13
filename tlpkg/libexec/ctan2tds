@@ -1201,6 +1201,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'pst-bspline', "&MAKEpst",
  'pst-calculate',	"&MAKEpst",
  'pst-calendar',	"&MAKEflatten",
+ 'pst-chladni',	"&MAKEpst",
  'pst-cie',     "&MAKEpst",
  'pst-circ',    "&MAKEpst",
  'pst-coil',    "&MAKEpst",
@@ -2667,6 +2668,7 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'rsfs',        'scrload\.tex|' . $standardtex,
  'ruhyphen',    '\.tex',
  'ruler',	'\.tex',
+ 'runcode',	'\.sty',	# not \.py
  'runtexfile',	'NULL',			# not example .sty
  'sa-tikz',     'tikzlib.*tex|' . $standardtex,
  'sansmath',    '^..[^s].*\.sty',	# not miscdoc.sty
@@ -3318,6 +3320,7 @@ $standardsource = '(\.(bat|c|drv|[dem]tx|fea|fdd|ins|mk|sfd|dbj|mbs)'
  'pygmentex',		'NULL',	# keep together
  'rcs',                 'rcs.el|src|' . $standardsource,
  'ruhyphen',            '^[^.]*$|README.ru|hyphen.rules',
+ 'runcode',             'NULL',                 # not .fea
  'selnolig',            'NULL',                 # not .fea
  'shipunov',		'NULL',                 # .bat in scripts
  'sqltex',		'.',
@@ -3437,6 +3440,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'atveryend'	=> 'etex',
  'babel'	=> 'etex',
  'babel-belarusian'	=> 'tex -8bit', # do not make doc, no ^^
+ 'babel-breton'		=> 'etex',
  'babel-french'		=> 'luatex',
  'babel-greek'		=> 'latex', # requires interaction
  'babel-serbianc'	=> 'latex', # requires interaction

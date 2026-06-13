@@ -760,7 +760,7 @@ my @TLP_working = qw(
     pst-2dplot pst-3d pst-3dplot
     pst-abspos pst-am pst-antiprism pst-arrow pst-asr pst-bar
     pst-barcode pst-bezier pst-blur pst-bspline
-    pst-calculate pst-calendar pst-cie pst-circ
+    pst-calculate pst-calendar pst-chladni pst-cie pst-circ
     pst-coil pst-contourplot pst-cox
     pst-dart pst-dbicons pst-diffraction
     pst-electricfield pst-electrolysis pst-eps pst-eqhz pst-ellipsoid
