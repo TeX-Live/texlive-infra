@@ -7751,7 +7751,7 @@ sub POSTgrverb {
 
 sub POSThawkdraw {
   print "POST$package - move t-* to context\n";
-  &mv_with_mkdir ("t-$package.tex", "$DEST/tex/context/third/$package");
+  &mv_with_mkdir ("t-$package.*", "$DEST/tex/context/third/$package");
 }
 
 sub POSThmtrump {
