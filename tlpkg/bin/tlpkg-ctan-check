@@ -748,7 +748,7 @@ my @TLP_working = qw(
     ppmcheckpdf ppr-prv ppt-slides pracjourn practicalreports
     precattl prelim2e preprint prerex present
     pressrelease prettyref prettytok preview prftree
-    principia printcolormanager printfilelist tprintlen
+    principia printcolormanager printfilelist printlen
     prisma-flow-diagram proba probsoln prociagssymp
     prodint productbox profcollege proflabo proflycee profmaquette
     profsio program
@@ -1017,7 +1017,8 @@ my @TLP_working = qw(
     voss-mathcol
     vpe vruler vscodeicons vtable vwcol
   wadalab wallcalendar wallpaper wargame warning warpcol
-    was wasy wasy-type1 wasysym webguide webquiz weiqi whatsnote wheelchart
+    was wasy wasy-type1 wasysym webguide webquiz weiqi westlakethesis
+    whatsnote wheelchart
     widetable widows-and-orphans williams willowtreebook
     windycity withargs witharrows
     wnri wnri-latex wordcloud wordcount wordle wordlike worldflags worksheet
