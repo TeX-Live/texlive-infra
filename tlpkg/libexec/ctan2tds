@@ -2803,6 +2803,7 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'vruler',      '^..[^s].*\.sty', # not miscdoc.sty
  'wallcalendar','i18n|\.lua$|' . $standardtex,
  'wasy',        'wasyfont\.tex',
+ 'westlakethesis','westlake-(badge|logo|paint).*|' . $standardtex,
  'witharrows',  'witharrows\.tex|' . $standardtex,
  'wordcount',   '\.tex',
  'worldflags',	'worldflag_.*tex$|' . $standardtex,
