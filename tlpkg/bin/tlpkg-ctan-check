@@ -833,7 +833,7 @@ my @TLP_working = qw(
     sauter sauterfonts saveenv savefnmark savesym savetrees
     sblarticle sblbook sblfonts sblidx sblreport
     scale scalebar scalerel scaletextbullet scanpages
-    schedule schemabloc schemata schola-otf scholax schooldocs
+    schedule schemabloc schemata schola-otf scholatex scholax schooldocs
     schulmathematik sclang-prettifier
     schule schulschriften schwalbe-chess
     scikgtex sciposter scientific-thesis-cover scontents
