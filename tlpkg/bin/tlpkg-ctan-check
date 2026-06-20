@@ -446,7 +446,7 @@ my @TLP_working = qw(
     hep hep-acronym hep-bibliography hep-float hep-font hep-float hep-graphic
     hep-math hep-math-font hep-paper hep-reference hep-text hep-title hepnames
     hepparticles hepthesis hepunits here hereapplies heria heros-otf hershey-mp
-    heuristica hexboard hexgame
+    heuristica hexboard hexdumptikz hexgame
     hf-tikz hfbright hfoldsty hfutexam hfutthesis
     hhtensor hideanswer hideproofs highlightlatex highlightx
     hindawi-latex-template hindmadurai
