@@ -31,7 +31,7 @@ my @TLP_working = qw(
     adjmulticol adfsymbols adjustbox adobemapping
     adrconv adtrees advdate advice
     ae aeguill aeskwadraat aesupp affilauthor afperpack afthesis
-    aguplus aiaa aichej aiplans ajl akktex akletter akshar
+    aguplus aiaa aichej aidisclose aiplans ajl akktex akletter akshar
     albatross alchemist alegreya alertmessage alfaslabone
     alg algobox algolrevived
     algorithm2e algorithmicx algorithms algpseudocodex algxpar
@@ -401,7 +401,7 @@ my @TLP_working = qw(
   g-brief gaceta galois gamebook gamebooklib gammas
     garamond-libre garamond-math garuda-c90
     garrigues gastex gates gatherenum gauss
-    gb4e gb4e-next gbt7714 gcard gchords gcite gckanbun
+    gb4e gb4e-next gbt7714 gbt9704 gcard gchords gcite gckanbun
     gelasio gelasiomath genealogy genealogytree gender gene-logic genealogy-profiles
     genmpage gensymb gentium-otf gentium-sil gentle gentombow geometry
     geradwp german germbib germkorr geschichtsfrkl

@@ -2208,6 +2208,7 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'acro',	'definitions\.tex|' . $standardtex,
  'adfsymbols',	'adfsymbols-uni\.tex|' . $standardtex,
  'aeskwadraat',	'logos|' . $standardtex,
+ 'aidisclose',	'langdef|' . $standardtex,
  'algxpar',	'\.kw\.tex|' . $standardtex,
  'aobs-tikz',   'tikz.*tex',
  'aomart',	'aom_orcid_logo|' . $standardtex,
