@@ -3662,6 +3662,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'xecjk'        => 'xecjk-xelatex',
  'xmuthesis'	=> 'etex',
  'yathesis'	=> 'pdftex',
+ 'zhlineskip'	=> 'etex',
  'zref'		=> 'etex',
 );
 $standardinsrunner = "latex -8bit";
