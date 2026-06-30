@@ -1,6 +1,11 @@
 (This file public domain.  Originally written by Norbert Preining and
 Karl Berry, 2010.)
 
+<p><b>tlmgr 79491 (released 1jul26):</b>
+<li>report collections that have been forcibly removed, instead of warning.
+<li>when finding dependencies, ignore collections that are dependencies
+of a package.
+
 <p><b>tlmgr 78616 (released 13jun26):</b>
 <li>tlmgr check executes: recognize xetex.
 <li>usual config.guess and curl-ca-bundle.crt updates.
