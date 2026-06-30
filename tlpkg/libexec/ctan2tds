@@ -8413,12 +8413,10 @@ sub POSTtikz_cd {
 
 sub POSTtikz_ext {
   print "POST$package - per-format subdirs\n";
-  &xmkdir ("$DEST/tex/generic", "$DEST/tex/latex", "$DEST/tex/plain");
-  &SYSTEM ("$MV tex/generic $DEST/tex/generic/$package");
-  &SYSTEM ("$MV tex/latex   $DEST/tex/latex/$package");
-  &SYSTEM ("$MV tex/plain   $DEST/tex/plain/$package");
+  &mv_with_mkdir ("tex/generic/*", "$DEST/tex/generic/$package");
+  &mv_with_mkdir ("tex/latex/*",   "$DEST/tex/latex/$package");
+  &mv_with_mkdir ("tex/plain/*",   "$DEST/tex/plain/$package");
   &SYSTEM ("$MV doc/* .");
-  #&SYSTEM ($RMDIR_EMPTY);
 }
 
 sub POSTtkz_berge {
