@@ -593,7 +593,7 @@ my @TLP_working = qw(
     luwa-ul luwiantype lwarp lxfonts lxgw-fonts ly1 lydtype lyluatex
   macrolist macros2e macroswap mafr
     magaz magicnum magicthegathering magicwatermark magra
-    mahjong mailing mailmerge maine-thesis
+    mahjong mahjong-tiles mailing mailmerge maine-thesis
     make4ht makebarcode makebase makebox
     makecell makecirc makecmds makecookbook
     makedtx makeglos makegobbler makelabels makeplot maker makerobust
