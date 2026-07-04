@@ -431,7 +431,8 @@ sub create_tlpdb {
 
     (my $base_f = $f) =~ s/\.tlpsrc$//;
     $base_f = TeXLive::TLUtils::basename($base_f);
-    warn "$f: package name " . $tlp->name . " does not match filename\n"
+    tlwarn("$prg: package name `$tlp->{name}' does not match "
+           . "base of filename: $f\n")
       if $tlp->name ne $base_f;
       
     if ($tlc) {

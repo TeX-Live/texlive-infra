@@ -10,7 +10,7 @@ umask 022
 exec </dev/null # no redirection
 
 # maybe someday we'll make real options.
-chicken=echo
+#chicken=echo
 chicken=
 #
 if test "x$1" = x-v; then
@@ -41,6 +41,23 @@ trap "rm -f $temp*" 0 1 2 15
 
 update_list=
 add_list=
+
+
+#  texlive-catalogue-only.tlpdb.
+#
+if $config_scripts_only; then :; else
+tlcat=tlpkg/texlive-catalogue-only.tlpdb
+$mydir/tl-dump-catalogue-as-tlpdb -q >$temp.cat.new || echo "failed" >&2
+#
+# It will be an unusual day indeed when no Catalogue information
+# changes, but might as well check.
+if $diff $tlcat $temp.cat.new >$temp.cat.diff; then
+  $verbose " $tlcat ok."
+else
+  $chicken $cp $temp.cat.new $tlcat
+  update_list="$update_list $tlcat"
+fi
+fi # !config_scripts_only #(texlive-catalogue-only)
 
 
 #  autogenerate README.EN from readme.html.
