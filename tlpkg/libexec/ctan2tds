@@ -2676,6 +2676,7 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'sapthesis',	'sapienzalogo.pdf|' . $standardtex,
  'scaletextbullet',	'\.sty$',	# not .cls
  'scholax',	'.*-subs\.tex|' . $standardtex,
+ 'scholatex',	'schola.*\.lua|' . $standardtex_no_lua, # not tests-audit.lua
  'scrhack',	'.hak$|' . $standardtex,
  'scrlttr2copy','\.lco',
  'sdaps',	'\.dict$|code128|' . $standardtex,
