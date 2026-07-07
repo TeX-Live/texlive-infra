@@ -307,7 +307,7 @@ my @TLP_working = qw(
     dtxtut ducksay duckuments duerer duerer-latex duotenzor dutchcal
     dvdcoll dvgloss dviasm dviincl dviinfox
     dvipsconfig dynamicnumber dynblocks dynkin-diagrams dyntree
-  e-french ean ean13isbn easing easy easy-todo
+  e-french ean ean13isbn easing easter easy easy-todo
     easybook easydtx easyfig easyfloats easyformat easylist easyreview
     ebezier ebgaramond ebgaramond-maths ebong ebook ebproof ebsthesis
     ec ecc ecclesiastic ecltree ecnuthesis eco ecobiblatex
