@@ -177,7 +177,8 @@ my @TLP_working = qw(
     cancel
     canoniclayout cantarell
     capt-of captcont captdef caption
-    carbohydrates cardgame carlisle carlito carolmin-ps carom cartonaugh
+    carbohydrates cardgame carlisle carlito carolmin-ps
+    carom-billiards cartonaugh
     cascade cascadia-code cascadiamono-otf cascadilla cases casyl
     catchfile catchfilebetweentags catcodes catechis
     catoptions catppuccinpalette causets
@@ -636,7 +637,7 @@ my @TLP_working = qw(
     moderncv modernnewspaper modernposter modernruler moderntimeline
     modes modiagram
     modref modroman modular modulus
-    mohe-book mohelper moloch monaspace-otf mongolian-babel montserrat
+    mohe-book mohelper moloch monaspace-otf mongolian-babel monoref montserrat
     monofill montex moodle
     moreenum morefloats morehype moremath moresize
     moreverb morewrites morisawa movement-arrows movie15
