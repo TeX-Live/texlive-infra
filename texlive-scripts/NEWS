@@ -1,6 +1,10 @@
 (This file public domain.  Originally written by Norbert Preining and
 Karl Berry, 2010.)
 
+<p><b>tlmgr 79591 (released 10jul26):</b>
+<li>prepare for separating Catalogue information from main tlpdb;
+no user-visible changes intended.
+
 <p><b>tlmgr 79491 (released 1jul26):</b>
 <li>report collections that have been forcibly removed, instead of warning.
 <li>when finding dependencies, ignore collections that are dependencies
