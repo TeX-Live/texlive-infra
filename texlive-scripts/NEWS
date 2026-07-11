@@ -1,6 +1,11 @@
 (This file public domain.  Originally written by Norbert Preining and
 Karl Berry, 2010.)
 
+<p><b>tlmgr 79639 (released 12jul26):</b>
+<li>attempt to recover from horrible tlmgr --machine-readable error
+trying to download the new Catalogue database from the net,
+where it does not (and doesn't need to) exist.
+
 <p><b>tlmgr 79591 (released 10jul26):</b>
 <li>prepare for separating Catalogue information from main tlpdb;
 no user-visible changes intended.
