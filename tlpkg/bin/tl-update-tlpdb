@@ -1001,7 +1001,7 @@ and L<TeXLive::TLPOBJ>).
 =head1 SEE ALSO
 
 The modules in C<Master/tlpkg/TeXLive/> (L<TeXLive::TLConfig> and
-the rest), and the other scripts in C<Master/tlpg/bin/> (especially
+the rest), and the other scripts in C<Master/tlpkg/bin/> (especially
 C<tl-update-containers>), the documentation in C<Master/tlpkg/doc/>, etc.
 
 =head1 AUTHORS AND COPYRIGHT

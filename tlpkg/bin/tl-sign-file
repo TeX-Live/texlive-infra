@@ -26,7 +26,7 @@ rm -f "$1.asc"
 sign_cmd="tlgpg --detach-sign --armor"
 if $sign_cmd "$1"; then
   # signing will succeed even with expired keys and other problems, so
-  # do verification; our tlpgpg-verify script will report the errors, so
+  # do verification; our tlgpg-verify script will report the errors, so
   # just exit if it fails.
   if tlgpg-verify "$1"; then :; else
     echo "$0: gpg signing did not verify, exiting." >&2
