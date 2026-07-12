@@ -439,7 +439,8 @@ my @TLP_working = qw(
     gs1 gsemthesis gtl gtrlib-largetrees gtrcrd
     gu gudea guitar guitarchordschemes guitartabs guitlogo gzt
   h2020proposal ha-prosper hackthefootline hacm hagenberg-thesis halloweenmath
-    hamnosys handin handout handoutwithnotes hands hang hanging hanoi hanzibox
+    hamnosys handin handout handoutwithnotes hands handstroke
+    hang hanging hanoi hanzibox
     happy4th har2nat haranoaji haranoaji-extra
     hardwrap harmony harnon-cv harpoon
     harvard harveyballs harvmac hatching hausarbeit-jura havannah hawkdraw
