@@ -2335,6 +2335,7 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'epsf-dvipdfmx', 'epsf-dvipdfmx\.tex',
  'esami',       '\.sty|\.lng',          # no example .cfg
  'euflag',	'euflag.sty',		# not classpack.sty
+ 'exam-zh',	'exam-zh.*\.(cls|sty)',	# not xdyydoc.cls
  'expex',       '\.tex|' . $standardtex,
  'exsheets',    'dicts|' . $standardtex,
  'eijkhout',    '\.tex',
