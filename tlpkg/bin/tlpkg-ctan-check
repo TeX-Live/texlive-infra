@@ -641,7 +641,7 @@ my @TLP_working = qw(
     mohe-book mohelper moloch monaspace-otf mongolian-babel monoref montserrat
     monofill montex moodle
     moreenum morefloats morehype moremath moresize
-    moreverb morewrites morisawa movement-arrows movie15
+    moreverb morewrites morisawa morse-simple movement-arrows movie15
     mp-gears mp-geom2d mp-neuralnetwork mp3d
     mparhack mparrows mpattern mpchess mpcolornames
     mpfonts mpgraphics mpkiviat
