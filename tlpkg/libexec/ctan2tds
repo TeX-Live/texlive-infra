@@ -2193,11 +2193,12 @@ $standardfmt='latex';
 # packages which need special .tex/.sty files installed. Usually .lua
 # files are intended for the runtime, but it's not uncommon for them to
 # be used just for building/testing, so define variables for both.
-$standardtex_no_lua
+$standardtex_base
    = '(\.(.bx|4ht|cls|clo|cmap|(code|lib)\.tex'
-    . '|def|dfu|fd|fontspec|ini|ldf|opm|py|sty|trsl)'
+    . '|def|dfu|fd|fontspec|ini|ldf|opm|sty|trsl)'
     . '|^lbx|.*[^c]\.cfg)$'; # not ltxdoc.cfg
-$standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
+$standardtex = "($standardtex_base" . '|(?<!build)\.lua$)'; # never build.lua
+$standardtex_py = "($standardtex_base" . '|\.py$)'; # never build.lua
 #
 %specialtex = (
  '2up',         '2up\.tex|' . $standardtex,
@@ -2343,6 +2344,7 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'einfuehrung2','NULL',                 # doc package
  'eltex',       'eltex.*tex',
  'elsarticle',  'elsarticle.cls',       # no rvdtx, pdfwidgets
+ 'emojinames',	$standardtex_no_py,
  'endofproofwd','\.pdf_tex$|endofproofwd\.pdf|' . $standardtex,
  'enigma',      'NULL',
  'epigram',     'epigram.tex',
@@ -2677,7 +2679,7 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'sapthesis',	'sapienzalogo.pdf|' . $standardtex,
  'scaletextbullet',	'\.sty$',	# not .cls
  'scholax',	'.*-subs\.tex|' . $standardtex,
- 'scholatex',	'schola.*\.lua|' . $standardtex_no_lua, # not tests-audit.lua
+ 'scholatex',	'schola.*\.lua|' . $standardtex_base, # not tests-audit.lua
  'scrhack',	'.hak$|' . $standardtex,
  'scrlttr2copy','\.lco',
  'sdaps',	'\.dict$|code128|' . $standardtex,
@@ -2702,7 +2704,7 @@ $standardtex = "($standardtex_no_lua" . '|(?<!build)\.lua$)'; # not build.lua
  'startex',     '\.(tex|stx|lan)$',
  'stretchy',	'str.*\.tex',
  'stricttex',	$standardtex,
- 'struktex',	$standardtex_no_lua,
+ 'struktex',	$standardtex_base,
  'subfigure',   '\.sty|[^c]\.cfg',      # not ltxdoc.cfg, would be system-wide
  'syntax',      'syntax\.tex',
  'systeme',     '^systeme\.tex$|' . $standardtex,

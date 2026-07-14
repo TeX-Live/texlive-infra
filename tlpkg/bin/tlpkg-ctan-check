@@ -323,7 +323,7 @@ my @TLP_working = qw(
     elmath elocalloc elpres els-cas-templates elsarticle
     elteiktdk elteikthesis eltex elvish elzcards
     emarks embedall embedfile embrac emf emisa
-    emo emoji emojicite emotion emp emptypage emulateapj
+    emo emoji emojicite emojinames emotion emp emptypage emulateapj
     enctex encxvlna endfloat endheads endiagram
     endnotes endnotes-hy endnotesj endofproofwd
     engpron engrec engtlc enigma enotez ensps-colorscheme
