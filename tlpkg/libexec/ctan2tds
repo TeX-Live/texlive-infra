@@ -2198,7 +2198,7 @@ $standardtex_base
     . '|def|dfu|fd|fontspec|ini|ldf|opm|sty|trsl)'
     . '|^lbx|.*[^c]\.cfg)$'; # not ltxdoc.cfg
 $standardtex = "($standardtex_base" . '|(?<!build)\.lua$)'; # never build.lua
-$standardtex_py = "($standardtex_base" . '|\.py$)'; # never build.lua
+$standardtex_py = "($standardtex_base" . '|\.py$)'; # next time we need .py
 #
 %specialtex = (
  '2up',         '2up\.tex|' . $standardtex,
@@ -2344,7 +2344,7 @@ $standardtex_py = "($standardtex_base" . '|\.py$)'; # never build.lua
  'einfuehrung2','NULL',                 # doc package
  'eltex',       'eltex.*tex',
  'elsarticle',  'elsarticle.cls',       # no rvdtx, pdfwidgets
- 'emojinames',	$standardtex_no_py,
+ 'emojinames',	'emojinames-map.tex|' . $standardtex_base,
  'endofproofwd','\.pdf_tex$|endofproofwd\.pdf|' . $standardtex,
  'enigma',      'NULL',
  'epigram',     'epigram.tex',
@@ -8592,7 +8592,7 @@ sub POST_onelevel {
   for my $subdir (("data", "logos")) {
     next unless -d $subdir;
     my $dest = "$DEST/tex/$whichformat/$package/$subdir";
-    print "\t onelevel: renaming special subdir $dir to $dest\n";
+    print "\t onelevel: renaming special subdir $subdir to $dest\n";
     &rename_with_mkdir ($subdir, $dest);
   }
 
