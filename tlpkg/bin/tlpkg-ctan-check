@@ -459,7 +459,8 @@ my @TLP_working = qw(
     hmtrump hobby hobete hobsub hologo homework
     hook-pre-commit-pkg hopatch horoscop
     hpsdiss href-ul hrefhide hrlatex
-    hu-berlin-bundle huawei huaz huffman hulipsum hustthesis hustvisual
+    hu-berlin-bundle huawei huaz huffman hulipsum
+    hust-beamer hustthesis hustvisual
     hvarabic hvextern hvfloat hvindex hvlogos hvpygmentex hvqrurl
     hwemoji hycolor hypcap hypdestopt hypdoc hypdvips
     hyper hyperbar hypernat hyperref hyperxmp
@@ -572,7 +573,7 @@ my @TLP_working = qw(
     ltablex ltabptch ltb2bib ltmermaid
     ltx-talk ltxcmds ltxdockit ltxfileinfo ltxguidex ltximg
     ltxkeys ltxmisc ltxnew ltxtools
-    lua-alt-getopt lua-check-hyphen lua-list-hyphen
+    lua-alt-getopt lua-calendrica lua-check-hyphen lua-list-hyphen
     lua-physical lua-placeholders
     lua-regression lua-tikz3dtools lua-tinyyaml lua-typo lua-uca lua-ul
     lua-uni-algos lua-unicode-math lua-visual-debug lua-widow-control
@@ -756,7 +757,7 @@ my @TLP_working = qw(
     prisma-flow-diagram proba probsoln prociagssymp
     prodint productbox profcollege proflabo proflycee profmaquette
     profsio program
-    progress progressbar projlib pronunciation
+    progress progressbar projlib promec-ufrgs pronunciation
     proof-at-the-end proofgraph proofread prooftrees proposal properties
     prosper protex protocol prtec przechlewski-book
     psbao pseudo pseudocode psfrag psfrag-italian psfragx
@@ -906,7 +907,7 @@ my @TLP_working = qw(
     tabriz-thesis tabstackengine tabto-generic tabto-ltx
     tabu tabular2 tabularray-abnt tabularborder tabularray tabularcalc
     tabularew tabularht
-    tabulary tabvar tagging tagpair tagpdf talk talos tamefloats
+    tabulary tabvar tagging tagpair tagpdf talk talkpal talos tamefloats
     tamethebeast tango tangocolors tangramtikz tap tapir tasks
     tblr-extras tcldoc tcolorbox tdclock tds tdsfrmath
     technics technion-thesis-template ted telprint
