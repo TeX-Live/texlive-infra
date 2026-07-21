@@ -421,7 +421,7 @@ sub prepare {
     } 
   }
   
-#warn "prepare: initial tds_path for $pkg = $tds_path\n";
+warn "prepare: initial tds_path for $pkg = $tds_path\n";
   # various exceptions to tds.zip location ...
   if ($pkg =~ /^(context(-legacy)?|mptopdf)$/) {
     # Max's repackaging:
@@ -457,7 +457,7 @@ sub prepare {
                ? "unzip -q -o $tds_path -d $tmpdir"
                : "tar -C $tmpdir -xf $tds_path";
   system ($unpack) == 0 || die "unpack failed: $!\n($unpack)";
-  system ("chmod -R a+rX $tmpdir");
+  system ("chmod -R a+rX,u+w $tmpdir");
   
   # create a sentinel file for ctan2tds' donormal() to check.
   system ("echo $tds_path >$tmpdir/TDS_READY")
@@ -494,6 +494,9 @@ sub copy_to_tmpdir {
   }
   if ($zip) {
     system ("cd $pkgdir && unzip -q $zip && rm $zip");
+    system ("chmod -R a+rX,u+w $pkgdir");
+    # qqq these exceptions + unzip + etc. should be combined with prepare().
+    # right now getting unzipped twice
   }
   
   # the pl package in TeX Live is a combination of the pl-mf and
