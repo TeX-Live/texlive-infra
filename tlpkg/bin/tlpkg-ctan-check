@@ -500,7 +500,7 @@ my @TLP_working = qw(
     jyu-chem-thesis
   kalendarium kanaparser kanbun kantlipsum karnaugh karnaugh-map karnaughmap
     kastrup kaytannollista-latexia
-    kblocks kdgdocs kdpcover keisennote kerkis kerntest ketcindy
+    kblocks kbordermatrix kdgdocs kdpcover keisennote kerkis kerntest ketcindy
     keycommand keyfloat keyindex keyparse keyreader keystroke keytheorems
     keyval2e keyvaltable kfupm-math-exam khatalmaqala kinematikz kix kixfont
     kkluaverb kkran kksymbols knitting knittingpattern knowledge
@@ -850,7 +850,7 @@ my @TLP_working = qw(
     semesterplanner semesterplannerlua seminar semioneside semproc semtex
     sepfootnotes sepnum seqcalc seqsplit
     serbian-apostrophe serbian-date-lat serbian-def-cyr serbian-lig
-    sesamanuel sesstime setdeck setspace setspaceenhanced
+    sesamanuel sesstime setbuilder setdeck setspace setspaceenhanced
     seu-ml-assign seuthesis seuthesix sexam
     sf298 sfee sffms sfg
     sfmath sgame shade shadethm shadow shadowtext shapepar shapes sharedline
