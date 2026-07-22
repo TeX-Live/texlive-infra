@@ -767,6 +767,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'jpicedt',	"die 'skipping, ancient program'",
  'juliamono', "&MAKEflatten",
  'kalendar',    "die 'skipping, noinfo license'",
+ 'kbordermatrix', "&MAKEflatten",
  'kd',          "die 'skipping, too old, too complicated, sorry'",
  'kdgcoursetext',       "die 'skipping, confused/nonfree license'",
  'kdgcoursetext',       "die 'skipping, replaced by kdgdocs'",
