@@ -608,7 +608,7 @@ my @TLP_working = qw(
     math-into-latex-4 math-operator
     mathabx mathabx-type1 mathador mathalpha mathastext
     mathcommand mathcomp mathdesign mathdots mathexam
-    mathfam256 mathfixs mathfont mathgreeks
+    mathfam256 mathfixs mathfont mathformule mathgreeks
     mathlig mathpartir mathpazo mathpunctspace
     mathsemantics mathspec mathtools matlab-prettifier mathspic maths-symbols
     matrix-skeleton mattens maybemath maze
@@ -979,6 +979,7 @@ my @TLP_working = qw(
     tucv tuda-ci tudscr tufte-latex tugboat tugboat-plain tuple
     tui turabian turabian-formatting turkce-sayi turkmen
     turnstile turnthepage tutodoc tuzuk
+    tvthesis
     twemoji-colr twemojis twoinone twoup twoxtwogame
     txfonts txfontsb txgreeks txuprcal
     type1cm typed-checklist typeface typehtml typeoutfileinfo typewriter
