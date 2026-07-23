@@ -421,7 +421,7 @@ sub prepare {
     } 
   }
   
-warn "prepare: initial tds_path for $pkg = $tds_path\n";
+  #warn "prepare: initial tds_path for $pkg = $tds_path\n";
   # various exceptions to tds.zip location ...
   if ($pkg =~ /^(context(-legacy)?|mptopdf)$/) {
     # Max's repackaging:

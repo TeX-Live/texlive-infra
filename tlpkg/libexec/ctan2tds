@@ -3630,6 +3630,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'scrhack'	=> 'etex-answer-y',
  'scrlayer-fancyhdr' => 'etex-answer-y',
  'scrwfile'	=> 'etex',
+ 'seatingchart'	=> 'etex-answer-y',
  'secnum'	=> 'etex-answer-y',
  'setspaceenhanced' => 'etex-answer-y',
  'silence'      => 'latex -translate-file=empty.tcx',   # no 8-bit
