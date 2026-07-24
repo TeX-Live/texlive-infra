@@ -922,7 +922,7 @@ my @TLP_working = qw(
     tex-label tex-locale tex-nutshell tex-overview tex-ps
     tex-virtual-academy-pl tex-vpat
     tex4ebook texaccents texapi texblend texbytopic texcount
-    texdate texdef texdiff texdimens texdirflatten texdoc texdraw
+    texdate texdef texecole texdiff texdimens texdirflatten texdoc texdraw
     texfindpkg texfot texilikechaps texilikecover
     texliveonfly texloganalyser texlogfilter texlogos texlogsieve
     texmate texments texnegar
