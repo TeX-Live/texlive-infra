@@ -229,7 +229,8 @@ my @TLP_working = qw(
     compactbib compare competences
     complexity complexpolylongdiv components
     comprehensive computational-complexity
-    concepts concmath concmath-fonts concmath-otf concprog concrete
+    concepts concmath concmath-fonts concmath-otf
+    concprog concrete concrete-vec
     conditext confproc constants conteq
     context-animation context-calendar-examples context-chat
     context-collating-marks
