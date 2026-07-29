@@ -213,7 +213,8 @@ my @TLP_working = qw(
     clock clojure-pamphlet cloze clrdblpg clrscode clrscode3e clrstrip cluttex
     cm cm-lgc cm-mf-extra-bold cm-super cm-unicode
     cmap cmarrows cmathbb cmbright cmcyr
-    cmdstring cmdtrack cmexb cmextra cmll cmpica cmpj cmsd cmsrb cmtiup
+    cmdstring cmdtrack
+    cmexb cmextra cmgraded cmll cmpica cmpj cmsd cmsrb cmtiup
     cmupint cnbwp cnltx cntformats cntperchap
     cochineal codeanatomy codebox codedescribe codedoc
     codehigh codepage codesection codicefiscaleitaliano
@@ -875,7 +876,7 @@ my @TLP_working = qw(
     skills skmath skrapport skull
     slantsc slideshow slixte
     smalltableof smart-eqn smartnotes smartdiagram smartref smartunits smflatex
-    snapshot snaptodo sneaker snotez
+    smileghost snapshot snaptodo sneaker snotez
     songbook songproj songs sort-by-letters soton soul soulpos
     soup sourcecodepro sourcesans sourceserif
     spacekern spacingtricks spalign spark-otf sparklines spath3 spbmark
