@@ -5553,6 +5553,8 @@ sub runfonts {
 
 
 sub MAKEflatten {
+  print "MAKEflatten for $package\n";
+
   # don't do this in a tds-ready tree...
   -e "$RAW_DIR/$packagedir/TDS_READY"
    && die "$0: using MAKEflatten with TDS_READY tree $RAW_DIR/$packagedir.\n";
@@ -6361,10 +6363,12 @@ sub MAKEukrhyph {
   &runjob("rm $DEST/tex/generic/ukrhyph/*.ps");
  }
 
-# The jadetex distribution is a mess.  Last updated in 2003, so no point in
-# trying to push changes upstream that I can see, though.
-sub MAKEjadetex
-{
+# The jadetex distribution is a mixed-together tarball.
+# It is still used by docbook-to-pdf in the Debian (at least) build.
+# 
+sub MAKEjadetex {
+  print "MAKE$package - unpack and rearrange tarball\n";
+
   # Unpack the tarball.
   &SYSTEM ("cd $packagedir && tar xf jadetex*.tar.gz && mv jadetex-*/* .");
   &SYSTEM ("cd $packagedir && (rm -rf jadetex-3* doc/.cvsignore)");
@@ -6374,22 +6378,25 @@ sub MAKEjadetex
 
   # Rename resulting jadetex/jadetex dirs to jadetex/base.
   &xchdir ($DEST);
-  for my $dir ("doc", "source", "tex") {
-    &SYSTEM ("$MV $dir/jadetex/jadetex $dir/jadetex/base");
+  &xmkdir ("doc/otherformats/jadetex");
+  #warn "hello", `ls -R`, "goodbye\n";
+  for my $basedir ("doc", "source", "tex") {
+    # otherformats/ for doc/
+    my $dir = $basedir eq "doc" ? "$basedir/otherformats" : $basedir;
+    &SYSTEM ("$MV $basedir/jadetex/jadetex $dir/jadetex/base");
   }
-
-  # This didn't get flattened since there's a name clash.
-  &SYSTEM ("$MV doc/jadetex/base/doc/Makefile doc/jadetex/base");
 
   # Their pdfjadetex.ini predates pdftexconfig.tex.
   my $pdfini = "tex/jadetex/base/pdfjadetex.ini";
   &SYSTEM ("(echo '\\input pdftexconfig.tex'; cat $pdfini) >/tmp/pj$$;
            mv /tmp/pj$$ $pdfini");
+
+  print "still POST$package - man pages\n";
+  &POST_do_man ("doc/otherformats/jadetex/base");
 }
 
-sub MAKElfb
-{
-  # remove pregenerated pk files.
+sub MAKElfb {
+  print "MAKE$package - remove pregenerated pk files\n";
   &MAKEflatten ();
   print "\t SPECIAL removing lfb PK files\n";
   &SYSTEM("rm *pk");
