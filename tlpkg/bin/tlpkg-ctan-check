@@ -290,7 +290,7 @@ my @TLP_working = qw(
     defoldfonts dehyph dehyph-exptl
     dejavu dejavu-otf
     delim delimseasy delimset delimtxt delvierre democodetools denisbdoc
-    deutschesmuseum derivative dhua
+    deutschesmuseum derivative dfg-crc dhua
     diabetes-logbook diadia diagbox diagmac2 dialogl diagnose dice dichokey
     dickimaw dictsym didactic didec diffcoeff digestif digiconfigs
     dijkstra dimnum din1505
@@ -762,7 +762,8 @@ my @TLP_working = qw(
     prodint productbox profcollege proflabo proflycee profmaquette
     profsio program
     progress progressbar projlib promec-ufrgs pronunciation
-    proof-at-the-end proofgraph proofread prooftrees proposal properties
+    proof-at-the-end proofgraph proofread prooftrees
+    proposal properties propositions
     prosper protex protocol prtec przechlewski-book
     psbao pseudo pseudocode psfrag psfrag-italian psfragx
     psgo psizzl pslatex psnfss pspicture
@@ -942,7 +943,7 @@ my @TLP_working = qw(
     ticket ticollege tictactoe tidyres tiet-question-paper
     tikz2d-fr tikz3d-fr tikz-3dplot
     tikz-among-us tikz-bagua tikz-bayesnet tikz-bbox tikz-bpmn
-    tikz-catan tikz-cd tikz-cookingsymbols
+    tikz-catan tikz-cd tikz-chemlab tikz-cookingsymbols
     tikz-decofonts tikz-dependency tikz-dimline tikz-ext
     tikz-feynhand tikz-feynman tikz-imagelabels tikz-inet
     tikz-kalender tikz-karnaugh tikz-ladder tikz-lake-fig tikz-layers
