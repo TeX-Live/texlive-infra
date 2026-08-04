@@ -51,7 +51,8 @@ my @TLP_working = qw(
     appendix appendixnumberbeamer
     apprendre-a-programmer-en-tex apprends-latex
     apptools apxproof
-    arabi arabic-book arabicfront arabi-add arabluatex arabtex arabxetex
+    arabdoc arabi arabi-add arabic-book arabicfront
+    arabluatex arabtex arabxetex
     aramaic-serto arara archaeologie archaic archivo arcs arev argumentation
     arimo armtex
     around-the-bend arphic arphic-ttf arraycols arrayjobx arraysort
@@ -440,7 +441,8 @@ my @TLP_working = qw(
     grid grid-system gridpapers gridset gridslides grotesq grundgesetze
     gs1 gsemthesis gtl gtrlib-largetrees gtrcrd
     gu gudea guitar guitarchordschemes guitartabs guitlogo gzt
-  h2020proposal ha-prosper hackthefootline hacm hagenberg-thesis halloweenmath
+  h2020proposal ha-prosper hackthefootline hacm hadith
+    hagenberg-thesis halloweenmath
     hamnosys handin handout handoutwithnotes hands handstroke
     hang hanging hanoi hanzibox
     happy4th har2nat haranoaji haranoaji-extra
