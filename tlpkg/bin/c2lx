@@ -55,7 +55,7 @@ elif test "x$1" = xminim-all; then
   pkgs="minim-hatching minim-math minim-mp minim-pdf minim-xmp minim"
 elif test $# -eq 1; then
   echo "$0: unknown latex or group type: $1" >&2
-  echo "$0: must be one of: e dev 3 3dev ... minim-all (USTL)." >&2
+  echo "$0: must be one of: e dev 3 ... minim-all (USTL)." >&2
   exit 1
 else
   label="explicitly given"
