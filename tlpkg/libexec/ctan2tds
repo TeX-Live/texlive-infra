@@ -7687,7 +7687,7 @@ sub POSTepspdf {
 
 sub POSTexam_zh {
   print "POST$package - just tex/* in runtime\n";
-  &mv_with_mkdir ("tex/*", "$DEST/tex/latex/$package");
+  &mv_with_mkdir ("tex/*", "$DEST/tex/$standardfmt/$package");
 }
 
 sub POSTfixme {
