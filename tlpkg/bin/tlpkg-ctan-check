@@ -121,7 +121,7 @@ my @TLP_working = qw(
     biblatex biblatex-abnt biblatex-abs-annote
     biblatex-accursius biblatex-ajc2020unofficial
     biblatex-ams biblatex-anonymous biblatex-apa biblatex-apa6
-    biblatex-archaeology biblatex-arthistory-bonn
+    biblatex-archaeology biblatex-arthistory-bonn biblatex-asa
     biblatex-bath biblatex-bookinarticle biblatex-bookinother biblatex-bwl
     biblatex-caspervector biblatex-cheatsheet biblatex-chem
     biblatex-chicago biblatex-claves biblatex-cse biblatex-cv
@@ -867,7 +867,7 @@ my @TLP_working = qw(
     show-pdf-tags show2e showcharinbox showdim showexpl showhyphenation
     showkerning showlabels showtags shtthesis
     shuffle
-    sidecap sidenotes sidenotesplus sides signchart
+    sidecap sidenotes sidenotesplus sides signchart siicusp-abstracts
     silence sillypage sim-os-menus
     simple-resume-cv simple-thesis-dissertation simplebnf simplecd simplecv
     simpleicons simpleinvoice simplekv simplenodes
