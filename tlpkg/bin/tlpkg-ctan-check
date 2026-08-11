@@ -671,7 +671,7 @@ my @TLP_working = qw(
     navigator navydocs
     ncclatex ncctools nchairx ncntrsbk
     nddiss ndsu-thesis ndsu-thesis-2022
-    needspace neoschool nestquot neuralnetwork nevelok
+    needspace nehgs-register neoschool nestquot neuralnetwork nevelok
     newcastle-bst newcommand newcomputermodern newenviron newfile newfloat
     newlfm newpax newpx
     newsletr newspaper
