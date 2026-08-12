@@ -957,7 +957,8 @@ my @TLP_working = qw(
     tikzdotncross tikzducks
     tikzfill tikzfxgraph tikzinclude tikzlings
     tikzmark tikzmarmots tikzorbital
-    tikzpackets tikzpagenodes tikzpeople tikzpfeile tikzpingus tikzposter
+    tikzpackets tikzpagenodes tikzpeople tikzpfeile tikzphysics
+    tikzpingus tikzposter
     tikzquads tikzquests tikzscale tikzsymbols
     tikztosvg tikzviolinplots tile-graphic tilings
     timbreicmc timechart timeop times timetable timing-diagrams
