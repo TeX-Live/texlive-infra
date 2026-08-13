@@ -2362,6 +2362,7 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'esint-type1', 'esint.tex',
  'etdipa',	'NULL',			# doc says "copy all files"
  'europasscv',  '(icon|logo).*\.pdf|' . $standardtex,
+ 'europasscv2025','(colors|locale|logo.*pdf)|' . $standardtex,
  'europecv',    'EuropeFlag|europasslogo|\.cls|\.def',
  'exam-n',	'\.cls',		# not .clo example file
  'expltools',	'NULL',			# doc
