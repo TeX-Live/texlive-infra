@@ -1471,6 +1471,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'texlog-extract',      "die 'skipping, Ruby, not self-locating'",
  'texlog_extract',      "die 'skipping, Ruby, not self-locating'",
  'texmacs',             "die 'skipping, binary'",
+ 'texlipse',    "die 'skipping, obsolete on ctan'",
  'texpower',    "&MAKEnosymlinks",
  'texsis',      "die 'skipping, its own distribution'",
  'texsis',      "die 'skipping, needs its own format-level directory, sorry'", #"&MAKEtexsis",
@@ -2206,6 +2207,7 @@ $standardtex_base
     . '|^lbx|.*[^c]\.cfg)$'; # not ltxdoc.cfg
 $standardtex = "($standardtex_base" . '|(?<!build)\.lua$)'; # never build.lua
 $standardtex_py = "($standardtex_base" . '|\.py$)'; # next time we need .py
+$standardtex_py = $standardtex_py; # avoid useless warning until then
 #
 %specialtex = (
  '2up',         '2up\.tex|' . $standardtex,

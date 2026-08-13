@@ -932,7 +932,7 @@ my @TLP_working = qw(
     texfindpkg texfot texilikechaps texilikecover
     texliveonfly texloganalyser texlogfilter texlogos texlogsieve
     texmate texments texnegar
-    texonly texosquery texplate texpower texproposal texshade texsurgery
+    texosquery texplate texpower texproposal texshade texsurgery
     textcsc textualicomma texvc
     textcase textfit textglos textgreek textmerg textopo textpath textpos
     tfrupee thaienum thaispec thalie
