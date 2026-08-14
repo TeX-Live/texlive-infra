@@ -121,6 +121,7 @@ my @TLP_working = qw(
     biblatex biblatex-abnt biblatex-abs-annote
     biblatex-accursius biblatex-ajc2020unofficial
     biblatex-ams biblatex-anonymous biblatex-apa biblatex-apa6
+    biblatex-apa-zh
     biblatex-archaeology biblatex-arthistory-bonn biblatex-asa
     biblatex-bath biblatex-bookinarticle biblatex-bookinother biblatex-bwl
     biblatex-caspervector biblatex-cheatsheet biblatex-chem
