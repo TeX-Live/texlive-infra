@@ -928,7 +928,7 @@ my @TLP_working = qw(
     tex-ewd tex-font-errors-cheatsheet tex-gyre tex-gyre-math tex-ini-files
     tex-label tex-locale tex-nutshell tex-overview tex-ps
     tex-virtual-academy-pl tex-vpat
-    tex4ebook texaccents texapi texblend texbytopic texcount
+    tex4ebook texaccents texapi texblend texbytopic texchanges texcount
     texdate texdef texecole texdiff texdimens texdirflatten texdoc texdraw
     texfindpkg texfot texilikechaps texilikecover
     texliveonfly texloganalyser texlogfilter texlogos texlogsieve

@@ -3344,6 +3344,7 @@ $standardsource = '(\.(bat|c|drv|[dem]tx|fea|fdd|ins|mk|sfd|dbj|mbs)'
  'tds',			'NULL',			# doc pkg
  'tex-vpat',		'NULL',
  'texaccents',		'\.inc',
+ 'texchanges',		'NULL',
  'texdraw',		'NULL',
  'texfindpkg',		'tfpbuild.lua',
  'texosquery',		'java|\.batch$|' . $standardsource,
@@ -7188,7 +7189,7 @@ sub POSTbiblatex {
   &SYSTEM ("$MV bibtex/bib $dest_bib/$package");
   &SYSTEM ("$MV bibtex/bst $dest_bst/$package");
   &SYSTEM ("test -d bibtex/csf && $MV bibtex/csf $dest_csf/$package");
-  &SYSTEM ("$MV latex $DEST/tex/latex/$package");
+  &SYSTEM ("$MV latex/* $DEST/tex/latex/$package");
   &SYSTEM ("$MV doc/* .");
 }
 
