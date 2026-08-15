@@ -7125,8 +7125,8 @@ sub POSTbiber {
     # biber-linux_x86_32.tar.gz      -> linux_x86_32
     # etc.
     # hopefully biber won't have any platform names starting with a numeral.
-    # $1 = possible version number
-    # $2 = biber platform name, with trailing -
+    # $1 = possible version number, with trailing -
+    # $2 = biber platform name
     # $3 = archive extension
     $archive =~ m/^$package-([0-9.-]+-)?([a-zA-Z].*?)\.(zip|tar(\..z|$))/;
     my $biber_platform = $2;
@@ -7139,6 +7139,11 @@ sub POSTbiber {
     die "unknown biber platform $biber_platform (from $archive), goodbye"
       if ! $tl_platform;
     print "\t got tl_platform=$tl_platform\n";
+    #
+    if ($tl_platform eq "x86_64-solaris") {
+      print "\t skipped biber binary for $tl_platform\n";
+      next;
+    }
 
     my $unarchiver = &unarchiver ($archive);
     &xsystem ("$unarchiver $archive");
