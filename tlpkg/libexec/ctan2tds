@@ -1736,6 +1736,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'spectralsequences'	=> '&PREHOOK_spectralsequences',
  'suftesi'              => '&PREHOOK_suftesi',
  'stix'                 => '&PREHOOK_stix',
+ 'texchanges'		=> '&PREHOOK_texchanges',
  'texdraw'              => '&PREHOOK_texdraw',
  'texfot'               => '&PREHOOK_texfot',
  'texlogfilter'         => '&PREHOOK_texlogfilter',
@@ -4127,6 +4128,7 @@ $standardttf = '\.ttf|\.TTC';
  'tex4ebook'		=> 'tex4ebook$',
  'texaccents'		=> 'texaccents.sno',
  'texblend'		=> 'texblend$',
+ 'texchanges'           => 'texchanges-merge\.py$',
  'texcount'             => '\.pl$',
  'texdef'               => '\.pl$',
  'texdiff'              => 'texdiff$',
@@ -4246,6 +4248,7 @@ $standardttf = '\.ttf|\.TTC';
  'srcredact'            => '\.1$',
  'sty2dtx'              => '\.1$',
  'texaccents'		=> '\.1$',
+ 'texchanges'		=> '\.1$',
  'texdiff'              => 'texdiff.1',
  'texdirflatten'        => 'texdirflatten.1',
  'texdoc'               => '\.1$',
@@ -4415,9 +4418,11 @@ for (@ARGV) { # we don't actually support multiple packages in one run
       || $package =~ /^(biber|context|hyph-utf8|mptopdf|musixtnt)$/) {
     $BUILDDEST = "$COOKED_PKG/Build/source";
     $TOPDEST = "$COOKED_PKG/Master";
+    print "\t (main) have bin, so using BUILDDEST=$BUILDDEST\n";
   } else {
     $BUILDDEST = "no-builddest-should-be-needed";
     $TOPDEST = $COOKED_PKG;         # that is, Master
+    print "\t (main) no bin, so TOPDEST=$COOKED_PKG\n";
   }
 
   $DEST_TREE = $specialdest{$package} || $standarddest; # usually texmf-dist
@@ -6896,6 +6901,11 @@ sub PREHOOK_suftesi {
 sub PREHOOK_stix {
   print "PREHOOK_$package - run tex stix.fdd since latex breaks on it\n";
   &SYSTEM ("cd latex && tex stix.fdd");
+}
+
+sub PREHOOK_texchanges {
+  print "PREHOOK_$package - mv scripts/* files\n";
+  &SYSTEM ("$MV scripts/* .");
 }
 
 sub PREHOOK_texdraw {
