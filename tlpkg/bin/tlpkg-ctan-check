@@ -617,7 +617,7 @@ my @TLP_working = qw(
     mathfam256 mathfixs mathfont mathformule mathgreeks
     mathlig mathpartir mathpazo mathpunctspace
     mathsemantics mathspec mathtools matlab-prettifier mathspic maths-symbols
-    matrix-skeleton mattens maybemath maze
+    matrix-skeleton matrixdiagrams mattens maybemath maze
     mcaption mceinleger mcexam mcf2graph mcite mciteplus mcmthesis
     mdframed mdputu mdsymbol mdwtools
     measurebox mecaso media4svg media9 medmath medstarbeamer
@@ -740,7 +740,7 @@ my @TLP_working = qw(
     phfnote phfparen phfqit phfquotetext
     phfsvnwatermark phfthm
     philex philokalia philosophersimprint phimisci
-    phonenumbers phonetic phonrule photo photobook
+    phonenumbers phonetic phonrule photo photobook phtitration
     physconst physics physics2 physics3 physics-patch physunits
     piano picinpar pict2e
     pictex pictex2 pictexsum pictochrono picture piechartmp piff pigpen
