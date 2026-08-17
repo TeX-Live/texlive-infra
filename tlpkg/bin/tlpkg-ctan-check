@@ -707,7 +707,7 @@ my @TLP_working = qw(
     ou-tma oubraces oup-authoring-template
     outerhbox outilsgeomtikz outline outliner outlines outlining outoruby
     overarrows overlays overlock overpic
-  pacioli packdoc padcount
+  pl46-fonts pacioli packdoc padcount
     page-canons pagecolor pagecont pagegrid pagelayout
     pagella-otf pagenote pagerange pagesel pageslts
     palatino palette panda pangram panneauxroute
@@ -1049,7 +1049,7 @@ my @TLP_working = qw(
     xetexref xevlna xfakebold xfor xfrac xgreek xhfill
     xifthen xii xii-lat ximera
     xindex xindy-persian xint xint-regression xintsession xistercian xits
-    xkcdcolors xkeymask xkeyval xlop xltabular xltxtra
+    xkcdcolors xkeymask xkeyval xlistings xlop xltabular xltxtra
     xmeaning xml2pmx xmltex xmpincl xmuthesis xnewcommand
     xoptarg xpatch xpeek xpeekahead xpiano xpicture xpinyin
     xprintlen xpunctuate
