@@ -793,6 +793,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'ktv-texdata',         "&MAKEflatten",
  'kurier',              "&MAKEcopy",
  'kuvio',               "die 'skipping, nonfree license'",
+ 'l3backend',       	"die 'skipping, now part of l3kernel'",
  'l3backend-dev',       "die 'skipping, now part of l3kernel-dev'",
  'l2a',                 "die 'skipping, another old detex, needs compilation'",
  'l2tabu-it',           "die 'skipping, use l2tabu-italian'",

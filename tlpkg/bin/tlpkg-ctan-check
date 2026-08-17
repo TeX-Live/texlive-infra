@@ -517,7 +517,7 @@ my @TLP_working = qw(
     ktbox ktv-texdata ku-template kurdishlipsum kurier
     kvdefinekeys kvmap kvoptions kvsetkeys
   l2picfaq l2tabu l2tabu-english l2tabu-french l2tabu-italian l2tabu-spanish
-    l3backend l3build l3experimental
+    l3build l3experimental
     l3kernel l3kernel-dev l3packages l3sys-query
     labbook labels labels4easylist labelschanged
     labyrinth ladder lambda-lists lambdax langcode langnames
