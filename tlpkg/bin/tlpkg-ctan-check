@@ -191,7 +191,7 @@ my @TLP_working = qw(
     centeredline centerlastline cesenaexam
     cfr-initials cfr-lm
     changebar changelayout changelog changepage changes
-    chappg chapterfolder char2path charissil charter
+    chappg chapterfolder char2path charissil charter chatui
     chbibref cheatsheet checkcites checkend checklistings chem-journal
     chemarrow chembst chemcompounds chemcono chemexec
     chemfig chemformula chemformula-ru chemgreek chemmacros
@@ -347,7 +347,7 @@ my @TLP_working = qw(
     euler euler-math eulerpx eulervm
     eurion euro euro-ce euromoney europasscv europasscv2025 europecv eurosym
     evangelion-jfm everyhook everypage everysel everyshi
-    exam exam-lite exam-n exam-randomizechoices exam-zh
+    exam exam-lite exam-ltr exam-n exam-randomizechoices exam-rtl exam-zh
     examdesign example examplep examz
     exceltex excludeonly exercise exercisebank exercisepoints exercises
     exercisesheets exesheet exframe exp-testopt
