@@ -221,7 +221,8 @@ else
   cat <<END_ABORT_NODIR >&2
 $0: Cannot find TeX Live root using kpsewhich --var-value=SELFAUTOPARENT.
 $0: (no tlpkg/texlive.tlpdb and/or tlpkg/tlpobj/.)
-$0: Please set your PATH as needed, otherwise it's hopeless.
+$0: Please set your PATH as needed, otherwise it's hopeless. Current PATH:
+$0:   $PATH
 END_ABORT_NODIR
   exit 1
 fi
