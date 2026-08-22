@@ -604,7 +604,7 @@ my @TLP_working = qw(
   macrolist macros2e macroswap mafr
     magaz magicnum magicthegathering magicwatermark magra
     mahjong mahjong-tiles mailing mailmerge maine-thesis
-    make4ht makebarcode makebase makebox
+    make-paper-tarball make4ht makebarcode makebase makebox
     makecell makecirc makecmds makecookbook
     makedtx makeglos makegobbler makelabels makeplot maker makerobust
     makeshape mandi manfnt manfnt-font manuscript manyind
