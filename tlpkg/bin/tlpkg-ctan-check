@@ -183,7 +183,7 @@ my @TLP_working = qw(
     carom-billiards cartonaugh
     cascade cascadia-code cascadiamono-otf cascadilla cases casyl
     catchfile catchfilebetweentags catcodes catechis
-    catoptions catppuccinpalette causets
+    catoptions catppuccinpalette causalmodels causets
     cbcoptic cbfonts cbfonts-fd
     cc-pl ccaption ccfonts ccicons cclicenses ccool
     cd cd-cover cdcmd cdpbundl
@@ -485,7 +485,7 @@ my @TLP_working = qw(
     inlinebib inlinedef inlinegraphicx inlinelabel innerscript
     inputenx inputnormalization inputtrc
     inriafonts insbox install-latex-guide-zh-cn installfont
-    intcalc inter interactiveworkbook
+    intcalc integramme inter interactiveworkbook
     interchar interfaces interlinear interpreter interval intexgral intopdf
     intro-scientific
     inversepath invoice invoice-class invoice2
@@ -741,7 +741,7 @@ my @TLP_working = qw(
     phfnote phfparen phfqit phfquotetext
     phfsvnwatermark phfthm
     philex philokalia philosophersimprint phimisci
-    phonenumbers phonetic phonrule photo photobook phtitration
+    phonenumbers phonetic phonrule phosphoricons photo photobook phtitration
     physconst physics physics2 physics3 physics-patch physunits
     piano picinpar pict2e
     pictex pictex2 pictexsum pictochrono picture piechartmp piff pigpen

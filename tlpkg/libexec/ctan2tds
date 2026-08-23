@@ -1149,6 +1149,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'phaistos',    "&MAKEflatten",
  'philosophers-imprint', "die 'skipping, use philosophersimprint'",
  'phonenumbers',"&MAKEflatten",
+ 'phosphoricons',	 "&MAKEflatten",
  'physe',       "die 'skipping, noinfo license, c.1992 plain format for physics'",
  'physymb',	"die 'skipping, obsolete per author requests'",
  'phyzzx',      "die 'skipping, noinfo license, c.1988 plain format for physics'",
