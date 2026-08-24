@@ -408,7 +408,8 @@ my @TLP_working = qw(
     garamond-libre garamond-math garuda-c90
     garrigues gastex gates gatherenum gauss
     gb4e gb4e-next gbt7714 gbt9704 gcard gchords gcite gckanbun
-    gelasio gelasiomath genealogy genealogytree gender gene-logic genealogy-profiles
+    geist-font gelasio gelasiomath
+    genealogy genealogytree gender gene-logic genealogy-profiles
     genmpage gensymb gentium-otf gentium-sil gentle gentombow geometry
     geradwp german germbib germkorr geschichtsfrkl
     getfiledate getitems getmap getoptk gettitlestring gfnotation
@@ -650,7 +651,7 @@ my @TLP_working = qw(
     mohe-book mohelper moloch monaspace-otf mongolian-babel monoref montserrat
     monofill montex moodle
     moreenum morefloats morehype moremath moresize
-    moreverb morewrites morisawa morse-simple movement-arrows movie15
+    moreverb morewrites morisawa morse-simple mousik movement-arrows movie15
     mp-gears mp-geom2d mp-neuralnetwork mp3d
     mparhack mparrows mpattern mpchess mpcolornames
     mpfonts mpgraphics mpkiviat
