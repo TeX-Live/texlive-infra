@@ -53,12 +53,14 @@ my @TLP_working = qw(
     apptools apxproof
     arabdoc arabi arabi-add arabic-book arabicfront
     arabluatex arabtex arabxetex
-    aramaic-serto arara archaeologie archaic archivo arcs arev argumentation
+    aramaic-serto arara archaeologie archaic archivo
+    arcs arcs2 arev argumentation
     arimo armtex
     around-the-bend arphic arphic-ttf arraycols arrayjobx arraysort
     arsclassica arsenal arsenal-math
     arvo arydshln articleingud
-    asaetr asana-math asapsym ascelike ascii-chart ascii-font asciilist ascmac
+    asaetr asana-math asapsym ascelike
+    ascii-chart ascii-emoticon ascii-font asciilist ascmac
     askinclude askmaps asmeconf asmejour aspectratio aspen
     assignment association-matrix assoccnt asternote astro asyfig
     asymptote-faq-zh-cn asymptote-by-example-zh-cn asymptote-manual-zh-cn
@@ -834,7 +836,8 @@ my @TLP_working = qw(
     revbadge reverxii revquantum revtex revtex4-1
     rgltxdoc ribbonproofs rigidnotation rit-fonts
     rjlparshap rlepsf rmathbr rmpage
-    robotarm roboto robust-externalize robustcommand robustindex rojud
+    robotarm robotkarol roboto
+    robust-externalize robustcommand robustindex rojud
     romanbar romanbarpagenumber romandeadf romanneg romannum
     rorlink rosario rotfloat rotpages rouequestions roundbox roundrect
     rpgicons rrgtrees rsc rsfs rsfso
