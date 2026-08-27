@@ -1333,6 +1333,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'rangen',      "die 'skipping, per author request'",
  'ratexdb',     "die 'skipping, needs sql, etc.'",
  'realcalc',    "die 'skipping, nosell license'",
+ 'realdentalcosts-data',    "die 'skipping per ctan, license'",
  'refer',	"die 'skipping, noinfo license (part of refer-tools)'",
  'refer-tools',	"die 'skipping, noinfo license (and old)'",
  'references',  "die 'skipping, requires binary'",
