@@ -488,7 +488,7 @@ my @TLP_working = qw(
     initials inkpaper inline-images
     inlinebib inlinedef inlinegraphicx inlinelabel innerscript
     inputenx inputnormalization inputtrc
-    inriafonts insbox install-latex-guide-zh-cn installfont
+    inriafonts insbox inspirehep install-latex-guide-zh-cn installfont
     intcalc integramme inter interactiveworkbook
     interchar interfaces interlinear interpreter interval intexgral intopdf
     intro-scientific
@@ -499,7 +499,7 @@ my @TLP_working = qw(
     isphysicalmath issuulinks istgame itnumpar
     iwona iwonamath
   jablantile jacow jamtimes japanese-mathformulas japanese-otf
-    jbact jetbrainsmono-otf jeuxcartes jfmutil jieeetran jigsaw
+    jbact jetbrainsmono-otf jeuxcartes jfmutil jieeetran jiffy jigsaw
     jknapltx jkmath jlabels jlreq jlreq-deluxe
     jmb jmlr jmsdelim jneurosci jnuexam
     jobname-suffix joinbox josefin jourcl jourrr jouthesis
