@@ -824,7 +824,8 @@ my @TLP_working = qw(
     randbild randexam randintlist
     random randomlist randomwalk randtext
     rank-2-roots rbt-mathnotes rccol rcs rcs-multi rcsinfo
-    readablecv readarray realboxes realhats realscripts realtranspose
+    readablecv readarray
+    realboxes realdentalcosts-data realhats realscripts realtranspose
     rebuttal rec-thy
     recipe recipebook recipecard recorder-fingering recycle rectopma
     refcheck refcount refenums reflectgraphics refman refstyle
