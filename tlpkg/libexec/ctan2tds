@@ -1779,6 +1779,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'attachfile2'		=> '&tl_man_to_pdf',
  'autosp'		=> '&POSTautosp',
  'axodraw2'		=> '&POSTaxodraw2',
+ 'babel-malagasy'	=> '&POST_onelevel',
  'barracuda'		=> '&POSTbarracuda',
  'beautybook'		=> '&POSTbeautybook',
  'beamertheme-cleaneasy' => '&POST_onelevel',
