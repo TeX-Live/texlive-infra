@@ -196,7 +196,7 @@ my @TLP_working = qw(
     chappg chapterfolder char2path charissil charter chatui
     chbibref cheatsheet checkcites checkend checklistings chem-journal
     chemarrow chembst chemcompounds chemcono chemexec
-    chemfig chemformula chemformula-ru chemgreek chemmacros
+    chemfig chemformula chemformula-ru chemgreek chemidentifier chemmacros
     chemnum chemobabel chempid chemplants
     chemschemex chemsec chemstyle cherokee
     chess chess-problem-diagrams chessboard chessfss chet chextras
@@ -608,7 +608,7 @@ my @TLP_working = qw(
     luwa-ul luwiantype lwarp lxfonts lxgw-fonts ly1 lydtype lyluatex
   macrolist macros2e macroswap mafr
     magaz magicnum magicthegathering magicwatermark magra
-    mahjong mahjong-tiles mailing mailmerge maine-thesis
+    mahjong mahjonggame mahjong-tiles mailing mailmerge maine-thesis
     make-paper-tarball make4ht makebarcode makebase makebox
     makecell makecirc makecmds makecookbook
     makedtx makeglos makegobbler makelabels makeplot maker makerobust
@@ -826,7 +826,7 @@ my @TLP_working = qw(
     random randomlist randomwalk randtext
     rank-2-roots rbt-mathnotes rccol rcs rcs-multi rcsinfo
     readablecv readarray
-    realboxes realdentalcosts-data realhats realscripts realtranspose
+    realboxes realhats realscripts realtranspose
     rebuttal rec-thy
     recipe recipebook recipecard recorder-fingering recycle rectopma
     refcheck refcount refenums reflectgraphics refman refstyle
