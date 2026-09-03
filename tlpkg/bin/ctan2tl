@@ -32,14 +32,16 @@ if test "x$1" = x--help; then
   echo "--git         for git."
   echo
   echo "This never actually commits anything to the repository, but"
-  echo "by default it does svn update the potentially affected directories."
+  echo "  by default it does svn update the potentially affected directories."
   echo
   echo "Without --place, it only creates files in Build/tmp.{raw,cooked}."
   echo "With --place, it also does repository adds and removes,"
-  echo "but never commits."
+  echo "  but never commits."
   echo
-  echo "Read and understand https://tug.org/texlive/pkgupdate.html"
-  echo "before running this."
+  echo "This copies files and then invokes tlpkg/libexec/ctan2tds,"
+  echo "  which does the real work."
+  echo
+  echo "See https://tug.org/texlive/pkgupdate.html for more details."
   exit 0
 fi
 

@@ -1,11 +1,7 @@
 #!/usr/bin/env perl
 # $Id$
 # Originally written by Karl Berry. Public domain.
-# 
-# Convenience front-end script to run ctan2tl. It rearranges the output
-# so error messages come first, then the list of changed files. Also
-# accepts platform abbreviations to run tl-update-bindir, etc. Don't
-# take it too seriously, it's just for convenience.
+# Wrapper for ctan2tl to rearrange output.
 
 use Cwd;
 use File::Basename;
@@ -16,6 +12,19 @@ exit (&main ());
 
 sub main {
   my $arg = $ARGV[0];
+  if ($arg eq "--help") {
+    print <<END_USAGE;
+Usage: c2l [-][p] [PKG-OR-PLATFORM]
+
+Wrapper for ctan2tl. It rearranges the output so error messages come
+first, then the list of changed files. Also accepts platform
+abbreviations to run tl-update-bindir.
+
+See https://tug.org/texlive/pkgupdate.html for more details.
+END_USAGE
+    exit 0;
+  }
+
   if ($arg =~ m![^a-z0-9-_]!) {
     die "$0: package name must contain only a-z0-9-_: $arg\n";
   }

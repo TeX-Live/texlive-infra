@@ -24,6 +24,18 @@ use strict; use warnings;
 exit (&main ());
 
 sub main {
+  if ($ARGV[0] eq "--help") {
+    print <<END_USAGE;
+Usage: c2a [PKG-OR-PLATFORM] [-][p]
+
+Wrapper for c2l. It automatically reruns c2a with -p[lace] if no files
+were added or removed by the update.
+
+See https://tug.org/texlive/pkgupdate.html for more details.
+END_USAGE
+    exit 0;
+  }
+
   die "Usage: $0 PKGNAME [-][p]\n" if (@ARGV == 0 || @ARGV > 2); # USTL
   my $status = 1; # default to failure
 

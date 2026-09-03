@@ -3,7 +3,17 @@
 # Public domain. Originally written by Karl Berry, 2021.
 # c2b - run c2a but inside /home/texlive/branch.
 
-PATH=`echo $PATH | sed -e s,karl/Master,branch/Master,g`
+PATH=`echo $PATH | sed -e s,$USER/Master,branch/Master,g`
+
+if test x"$1" = x--help; then
+  echo "$0: run c2a, but using the branch, typically /home/texlive/branch;"
+  echo "$0:   i.e., PATH is transformed from $USER/Master to branch/Master."
+  echo "$0: This is used after the pretest starts, since we have to"
+  echo "$0:   double-commit all updates to trunk and branch (see releng.txt)."
+  echo "$0: PATH=$PATH"
+  exit 0
+fi
+
 cd $HOME || exit 1   # just in case . is a trunk bin directory
 exec ${c2a-c2a} "$@" # allowing overriding with c2lx, as in:
                      #   c2a=c2lx c2b jxu
