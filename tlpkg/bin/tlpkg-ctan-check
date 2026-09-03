@@ -662,7 +662,7 @@ my @TLP_working = qw(
     mpman-ru mpostinl mptrees msc msg mslapa msu-thesis mtgreek
     mucproc mugsthesis muling multenum multi-sudoku
     multiaudience multibbl multibib multibibliography
-    multicap multicolrule multidef multido multienv multiexpand
+    multicap multicolrule multicoltab multidef multido multienv multiexpand
     multifootnote multilang multinotes multiobjective multiple-choice
     multirow multitoc munich
     musical musicography musikui musixguit
@@ -951,7 +951,7 @@ my @TLP_working = qw(
     thinsp thmbox thmtools
     threadcol threeddice threeparttable threeparttablex
     thuaslogos thubeamer thucoursework thumb thumbpdf thumbs thumby thuthesis
-    ticket ticollege tictactoe tidyres tiet-question-paper
+    ticket ticollege tictactoe tidyres tietreport tiet-question-paper
     tikz2d-fr tikz3d-fr tikz-3dplot
     tikz-among-us tikz-bagua tikz-bayesnet tikz-bbox tikz-bpmn
     tikz-catan tikz-cd tikz-chemlab tikz-cookingsymbols

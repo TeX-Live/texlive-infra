@@ -175,6 +175,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'babyloniannum', "die 'skipping, requires nonfree fonts'",
  'backgammon',  "die 'skipping, nonfree license'",
  'bangtex',     "&MAKEflatten",
+ 'bar',         "die 'skipping, nonfree license'",
  'bardi',       "die 'skipping, nonfree license'",
  'bardiag',     "&MAKEbardiag",
  'bargraph-js',	"die 'skipping, requires acrobat and non-unique filename'",
