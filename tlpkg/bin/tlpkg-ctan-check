@@ -612,7 +612,7 @@ my @TLP_working = qw(
     make-paper-tarball make4ht makebarcode makebase makebox
     makecell makecirc makecmds makecookbook
     makedtx makeglos makegobbler makelabels makeplot maker makerobust
-    makeshape mandi manfnt manfnt-font manuscript manyind
+    makeshape malagasy-numberwords mandi manfnt manfnt-font manuscript manyind
     marathi marcellus margbib marginalia
     marginfit marginfix marginnote maritime markdown marvosym
     matapli matc3 matc3mem match_parens
