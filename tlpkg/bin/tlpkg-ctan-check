@@ -1018,7 +1018,7 @@ my @TLP_working = qw(
     unibidi-lua unicode-alphabets unicode-data unicode-bidi
     unicode-math unicode-math-input
     unicodefonttable unifith unifront unigrazpub unimath-plain-xetex
-    uninormalize uniquecounter unisc unisugar
+    uninormalize unipersian uniquecounter unisc unisugar
     unitconv unitn-bimrep units unitsdef
     universa universalis univie-ling unizgklasa
     unravel unswcover
