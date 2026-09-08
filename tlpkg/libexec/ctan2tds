@@ -1869,6 +1869,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'hawkdraw'		=> '&POSThawkdraw',
  'haranoaji'		=> '&POST_preserve_postcode',
  'hebdomon'		=> '&POST_onelevel',
+ 'hicite'		=> '&POSThicite',
  'highlightx'		=> '&POST_onelevel',
  'hmtrump'		=> '&POSThmtrump',
  'huffman'		=> '&POST_onelevel',
@@ -3303,6 +3304,7 @@ $standardsource = '(\.(bat|c|drv|[dem]tx|fea|fdd|ins|mk|sfd|dbj|mbs)'
  'gckanbun',		'NULL',			# leave makefile
  'geometry-de',         'NULL',                 # keep together
  'grverb',              '\.vpl|' . $standardsource,
+ 'hicite',		'NULL',
  'hypdestopt',		'NULL',
  'hyper',               '\.pl|' . $standardsource,
  'hyphenex',            '.',			# everything
@@ -7806,6 +7808,12 @@ sub POSTgrverb {
 sub POSThawkdraw {
   print "POST$package - move t-* to context\n";
   &mv_with_mkdir ("t-$package.*", "$DEST/tex/context/third/$package");
+}
+
+sub POSThicite {
+  print "POST$package - move tex/* to runtime, manual pdf up\n";
+  # not POST_onelevel because the tex/ dir already exists from .ins.
+  &mv_with_mkdir ("tex/*", "$DEST/tex/latex/$package");
 }
 
 sub POSThmtrump {
