@@ -8613,11 +8613,11 @@ sub POST_onelevel {
     #
     my $destdir = $dir;
     # first, files that should end up in tex/$format/$package
-    if ($dir =~ /^((lua)?(la)?tex|code|files|src|theme)$/) {
+    if ($dir =~ /^((lua)?(la)?tex|code|files|theme)$/) {
       $destdir = "tex";
       $thisformat = $whichformat;
 
-    } elsif ($dir =~ /^(source)$/) { # source/$format/$package
+    } elsif ($dir =~ /^(source|src)$/) { # source/$format/$package
       $destdir = "source";
       $thisformat = $whichformat;
 
