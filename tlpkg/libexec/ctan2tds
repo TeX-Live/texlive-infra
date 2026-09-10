@@ -168,6 +168,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'axodraw',	"die 'skipping, nonfree'",
  'babel-frenchb',  "die 'skipping, use babel-french'",
  'babel-kazakh',   "&MAKEflatten",
+ 'babel-malagasy', "die 'skipping, awaiting integration into hyph-utf8'",
  'babel-serbianc', "&MAKEflatten",
  'babel-slovene',  "die 'skipping, use babel-slovenian'",
  'babel-spanglish',"die 'skipping, obsolete on CTAN'",
