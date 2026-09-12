@@ -772,7 +772,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'joy-of-tex',	"die 'skipping, nonfree'",
  'jpgfdraw',    "die 'skipping, replaced by flowframtk'",
  'jpicedt',	"die 'skipping, ancient program'",
- 'jss-lint',	"die 'skipping, just doc with no source'",
+ 'jss-lint',	"die 'skipping, online service, doc with no source'",
  'juliamono',	"&MAKEflatten",
  'kalendar',    "die 'skipping, noinfo license'",
  'kbordermatrix', "&MAKEflatten",
