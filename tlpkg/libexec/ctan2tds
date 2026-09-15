@@ -469,6 +469,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'dfgproposal', "die 'skipping, replaced by proposal'",
  'diagmac',     "die 'skipping, for latex 2.09 and we have diagmac2'",
  'diagnose',    "&MAKEflatten",
+ 'diagramf',    "die 'skipping, noinfo license'",
  'diagrams',    "die 'skipping, use specific package name'",
  'diagxy',      "die 'skipping, use barr'",
  'dictsym',     "&MAKEunzipandflatten",
