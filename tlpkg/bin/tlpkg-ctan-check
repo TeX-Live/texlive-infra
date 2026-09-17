@@ -274,7 +274,7 @@ my @TLP_working = qw(
   dad dancers dantelogo darkmode
     dashbox dashrule dashrulex dashundergaps
     dataref datatool datatool-english datatool-regions datax
-    dateiliste datenumber datestamp
+    dateiliste datemultical datenumber datestamp
     datetime datetime2 datetime2-bahasai datetime2-basque
     datetime2-breton datetime2-bulgarian datetime2-catalan
     datetime2-croatian datetime2-czech datetime2-danish datetime2-dutch
@@ -962,7 +962,8 @@ my @TLP_working = qw(
     tikz-mirror-lens tikz-nef tikz-network tikz-nfold tikz-opm tikz-optics
     tikz-osci tikz-page tikz-palattice tikz-planets tikz-qtree
     tikz-relay tikz-sections tikz-sfc tikz-shields tikz-swigs
-    tikz-timing tikz-trackschematic tikz-triminos tikz-truchet
+    tikz-tensor-networks tikz-timing tikz-trackschematic
+    tikz-triminos tikz-truchet
     tikzbrickfigurines tikzbricks tikzcalendarnotes tikzcodeblocks
     tikzdotncross tikzducks
     tikzfill tikzfxgraph tikzinclude tikzlings
