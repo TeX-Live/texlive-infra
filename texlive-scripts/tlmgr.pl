@@ -3363,7 +3363,7 @@ sub action_update {
   }
   my $prefetch_idx = 0;
   foreach my $pkg (@toprefetch) {
-    TeXLive::TLUtils::prefetch_position($prefetch, $prefetch_idx++);
+    TeXLive::TLUtils::prefetch_pump($prefetch, $prefetch_idx++);
 
     if (!$is_new{$pkg}) {
       # skip this loop if infra update on w32
@@ -4041,7 +4041,7 @@ sub action_install {
 
   my $prefetch_idx = 0;
   foreach my $pkg (@todo) {
-    TeXLive::TLUtils::prefetch_position($prefetch, $prefetch_idx++);
+    TeXLive::TLUtils::prefetch_pump($prefetch, $prefetch_idx++);
     my $flag = $FLAG_INSTALL;
     my $re = "";
     my $tlp = $remotetlpdb->get_package($pkg);
@@ -10732,8 +10732,10 @@ the installation proceeds:
 Even one worker helps, since it downloads while the installation unpacks;
 more workers additionally overlap the downloads with each other.  The
 downloader is the one that would be used anyway (see C<TEXLIVE_DOWNLOADER>
-above).  This has no effect on Windows or when installing from a local
-repository.
+above), except that C<lwp> cannot be used for this: the containers are
+fetched by running a downloader, and C<lwp> runs inside C<tlmgr> itself.
+If it is the only one available, nothing is prefetched.  This has no
+effect when installing from a local repository.
 
 Containers are removed again as they are installed.  To bound what the
 background download may pile up in the meantime, it pauses while more than

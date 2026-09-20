@@ -81,7 +81,7 @@ C<TeXLive::TLUtils> - TeX Live infrastructure miscellany
   TeXLive::TLUtils::time_estimate($totalsize, $donesize, $starttime)
   TeXLive::TLUtils::install_packages($from_tlpdb,$media,$to_tlpdb,$what,$opt_src, $opt_doc, $retry, $continue);
   TeXLive::TLUtils::prefetch_start($from_tlpdb,$packages,$opt_src,$opt_doc,$tags);
-  TeXLive::TLUtils::prefetch_position($handle,$index);
+  TeXLive::TLUtils::prefetch_pump($handle,$index);
   TeXLive::TLUtils::prefetch_stop($handle);
   TeXLive::TLUtils::do_postaction($how, $tlpobj, $do_fileassocs, $do_menu, $do_desktop, $do_script);
   TeXLive::TLUtils::update_context_cache($plat_bindir);
@@ -225,7 +225,7 @@ BEGIN {
     &install_package
     &install_packages
     &prefetch_start
-    &prefetch_position
+    &prefetch_pump
     &prefetch_stop
     &make_var_skeleton
     &make_local_skeleton
@@ -1895,7 +1895,7 @@ sub install_packages {
   my $starttime = time();
   my @packs_again; # packages that we failed to download and should retry later
   foreach my $package (@packs) {
-    prefetch_position($prefetch, $n);
+    prefetch_pump($prefetch, $n);
     my $tlpobj = $tlpobjs{$package};
     my $reloc = $tlpobj->relocated;
     $n++;
@@ -1953,56 +1953,64 @@ sub install_packages {
 
 =item C<prefetch_start($from_tlpdb, $packages, $opt_src, $opt_doc, $tags)>
 
-=item C<prefetch_position($handle, $index)>
+=item C<prefetch_pump($handle, $index)>
 
 =item C<prefetch_stop($handle)>
 
-Start downloading the containers for C<@$packages> in the background, in
+Fetch the containers for C<@$packages> alongside the installation, in
 installation order, and stop again.  C<prefetch_start> returns a handle to
 pass to the other two, or C<undef> if nothing was started.  C<@$packages>
 must be the list the installation loop itself walks, in that order, and the
-loop must call C<prefetch_position> with the index it has reached, which is
-one short write and waits for nothing.
+loop must call C<prefetch_pump> with the index it has reached.
 
-The workers run for the whole installation rather than in batches, so the
-downloading overlaps the unpacking instead of taking turns with it, and the
-installation loop never waits for them: C<unpack> takes a container from the
-cache directory if it is there and downloads it itself if it is not, exactly
-as it does without any of this.  Nothing here is a precondition for
-anything, and the checksums recorded in the tlpdb are verified both when a
-container is prefetched and again in C<unpack>.
+C<prefetch_pump> is where all the work is arranged, and it waits for
+nothing: it collects the downloads that have finished, verifies them and
+moves them into the cache, throws away what the installation has gone past,
+and starts more.  The downloads themselves run as separate processes, so
+they carry on while the installation unpacks; this only has to be called
+often enough to keep them supplied, which once per package is.
 
-How far ahead the workers may run is bounded by how much they have put in
-the cache that the installation has not consumed yet: they pause while that
-exceeds C<TL_PREFETCH_WINDOW_MB> megabytes (default 64, C<0> for no limit)
-and resume as C<unpack> takes containers away.  The check is made before a
-worker starts on a chunk, and a chunk always takes at least one container
-however large it is, so in practice the cache reaches a few (around 2-3)
-times the setting before they all pause.
+Running the downloader rather than downloading here is what lets this work
+everywhere.  Nothing is forked but a process that immediately becomes the
+downloader, so there is no Perl state to inherit, and on Windows not even
+that: C<system(1, ...)> starts the command directly.  The cost is that
+C<lwp> cannot be used for this, since it lives inside this process and
+there is nothing to start; whatever else C<download_file> would have
+chosen is used, and if that is the only choice there is, nothing is
+prefetched.
 
-This is why C<prefetch_position> matters.  The installation can overtake
-the workers -- it downloads a container itself whenever the cache does not
-have it yet -- and anything they fetch behind it is then never consumed.
-Left in the cache it would hold the cache over the budget for good, and
-every worker would wait for a drain that cannot come.  Knowing where the
-installation is, the workers skip past it and throw away what it has
-already gone by.
+The installation never waits: C<unpack> takes a container from the cache
+directory if it is there and downloads it itself if it is not, exactly as
+it does without any of this.  Nothing here is a precondition for anything,
+and the checksums recorded in the tlpdb are verified both when a container
+is prefetched and again in C<unpack>.
+
+How far ahead this runs is bounded by how much is in the cache that the
+installation has not consumed yet: nothing new is started while that
+exceeds C<TL_PREFETCH_WINDOW_MB> megabytes (default 64, C<0> for no limit).
+The check is made before starting on the next containers, and at least one
+is always taken however large it is, so in practice the cache reaches a few
+(around 2-3) times the setting.
+
+This is why C<prefetch_pump> is given the index.  The installation can
+overtake the downloads -- it fetches a container itself whenever the cache
+does not have it yet -- and anything fetched behind it is then never
+consumed.  Left in the cache it would hold the cache over the budget for
+good and nothing would ever start again.  Knowing where the installation
+is, this skips past it and throws away what it has already gone by.
 
 Prefetching is off unless C<TL_PARALLEL_PREFETCH> is set to something other
-than C<0>: a number is the number of workers, C<auto> is as many as there
-are processors, capped at 8 so as not to hammer the mirrors.  Even a single
-worker helps, since it downloads while the installation unpacks.  Each
-worker downloads
-with whatever C<download_file> would use anyway; a persistent connection is
-reused for the worker's lifetime, and for C<curl>, C<wget> and C<aria2c> the
-same is achieved by handing the downloader several urls at a time.
+than C<0>: a number is how many downloads run at a time, C<auto> is as many
+as there are processors, capped at 8 so as not to hammer the mirrors.  Even
+one helps, since it downloads while the installation unpacks.  Each gets
+several urls at a time so that one connection serves them all (see
+C<%BatchDownloaderArgs>).
 
 C<$tags>, if given, is a hash whose keys are packages that were requested
 from one particular repository; those are left to the sequential path, since
 the container to fetch is then not the one this would pick.
 
-Does nothing on Windows, for non-NET packages, or when no workers are
-asked for.
+Does nothing for non-NET packages, or when nothing is asked for.
 
 =cut
 
@@ -2098,70 +2106,23 @@ sub _prefetch_worklist {
   return @work;
 }
 
-sub _prefetch_position {
-  # Where the installation has got to, as an index into the package list it
-  # was started with.  Written by the installation, read by the workers.  A
-  # single small write by a single writer, so no locking: a worker that
-  # happens to read it mid-write sees nothing and stays where it is.
-  my ($file, $idx) = @_;
-  if (defined($idx)) {
-    open(my $f, ">", $file) || return 0;
-    print $f "$idx\n";
-    close($f);
-    return $idx;
-  }
-  open(my $f, "<", $file) || return 0;
-  chomp(my $p = <$f>);
-  close($f);
-  return (defined($p) && $p =~ m/^[0-9]+$/) ? $p : 0;
-}
-
 sub _prefetch_prune {
   # Drop containers for packages the installation has already gone past.
   # It downloaded those itself when it found them missing, so nothing will
   # ever take them out of the cache, and left there they would hold it over
-  # the budget for good and stall every worker.  Returns how far we got, so
-  # the next call can carry on from there.
-  my ($work, $dir, $pos, $from) = @_;
-  my $i = $from;
-  while ($i <= $#$work && $work->[$i][4] < $pos) {
-    unlink("$dir/$work->[$i][1]");
-    $i++;
+  # the budget for good and nothing would ever start again.
+  my ($h) = @_;
+  my $w = $h->{'work'};
+  while ($h->{'pruned'} <= $#$w && $w->[$h->{'pruned'}][4] < $h->{'pos'}) {
+    unlink("$h->{'dir'}/$w->[$h->{'pruned'}][1]");
+    $h->{'pruned'}++;
   }
-  return $i;
-}
-
-sub _prefetch_take {
-  # Claim the next few indices and return the first of them and how many.
-  # A chunk is at most $chunk files and at most $cap bytes: without the byte
-  # cap a worker could claim eight doc containers at once and blow through
-  # the budget by a long way before the next check.  Always at least one,
-  # so a container larger than the cap still gets fetched.
-  my ($ctr, $chunk, $cap, $work, $pos) = @_;
-  open(my $f, "+<", $ctr) || return (undef, 0);
-  flock($f, LOCK_EX) || do { close($f); return (undef, 0); };
-  chomp(my $i = <$f>);
-  # skip whatever the installation has already installed: fetching it now
-  # would only produce a container that nobody is going to ask for
-  $i++ while ($i <= $#$work && $work->[$i][4] < $pos);
-  my ($n, $bytes) = (0, 0);
-  while ($n < $chunk && $i + $n <= $#$work) {
-    my $sz = $work->[$i + $n][2] || 0;
-    last if ($n > 0 && $cap && $bytes + $sz > $cap);
-    $bytes += $sz;
-    $n++;
-  }
-  seek($f, 0, 0);
-  truncate($f, 0);
-  print $f ($i + ($n || 1)), "\n";
-  close($f);                            # releases the lock
-  return ($i, $n);
 }
 
 sub _prefetch_cache_bytes {
-  # what the workers have put in the cache that the installation has not
-  # taken away yet.  Names starting with a dot (the counter, the staging
-  # directories) are the machinery and do not count.
+  # what has been put in the cache that the installation has not taken away
+  # yet.  Names starting with a dot (the staging directories) are the
+  # machinery and do not count.
   my ($dir) = @_;
   my $n = 0;
   opendir(my $dh, $dir) || return 0;
@@ -2174,11 +2135,105 @@ sub _prefetch_cache_bytes {
   return $n;
 }
 
+sub _prefetch_spawn {
+  # Start a command and return its process id without waiting for it.  This
+  # is the only part that differs between platforms, and it is deliberately
+  # the whole of the difference: everything else here runs in the one
+  # process that is doing the installation.
+  my (@cmd) = @_;
+  if (wndws()) {
+    # system(1, ...) starts the command and hands back its pid
+    my $pid = system(1, @cmd);
+    return (defined($pid) && $pid > 0) ? $pid : undef;
+  }
+  my $pid = fork();
+  return undef if !defined($pid);
+  return $pid if $pid;
+  # Child: exec straight away, so no Perl state, no END blocks and no
+  # inherited connection ever belong to it -- it simply becomes the
+  # downloader.
+  open(STDIN, "<", nulldev());
+  open(STDOUT, ">", nulldev());
+  exec { $cmd[0] } @cmd
+    or POSIX::_exit(127);
+}
+
+sub _prefetch_launch {
+  # Fill the free slots, as long as there is work and room in the cache.
+  my ($h) = @_;
+  my $w = $h->{'work'};
+  for my $slot (@{$h->{'slots'}}) {
+    next if defined($slot->{'pid'});
+    last if ($h->{'budget'}
+             && _prefetch_cache_bytes($h->{'dir'}) > $h->{'budget'});
+    # skip whatever the installation has already installed: fetching it now
+    # would only produce a container that nobody is going to ask for
+    $h->{'next'}++
+      while ($h->{'next'} <= $#$w && $w->[$h->{'next'}][4] < $h->{'pos'});
+    last if ($h->{'next'} > $#$w);
+    my ($n, $bytes) = (0, 0);
+    while ($n < $h->{'chunk'} && $h->{'next'} + $n <= $#$w) {
+      my $sz = $w->[$h->{'next'} + $n][2] || 0;
+      last if ($n > 0 && $h->{'cap'} && $bytes + $sz > $h->{'cap'});
+      $bytes += $sz;
+      $n++;
+    }
+    last if !$n;
+    my @items = @{$w}[$h->{'next'} .. $h->{'next'} + $n - 1];
+    $h->{'next'} += $n;
+    mkdirhier($slot->{'stage'});
+    my @cmd = _download_files_command([map { [$_->[0], $_->[1]] } @items],
+                                      $slot->{'stage'}, $h->{'type'});
+    my $pid = @cmd ? _prefetch_spawn(@cmd) : undef;
+    if (!defined($pid)) {
+      debug("TLUtils::_prefetch_launch: cannot start a downloader\n");
+      $h->{'next'} -= $n;             # give the work back
+      last;
+    }
+    $slot->{'pid'} = $pid;
+    $slot->{'items'} = \@items;
+  }
+}
+
+sub _prefetch_reap {
+  # Collect the slots that have finished and publish what they fetched.
+  # With $wait the call blocks until they are all done, which is what
+  # prefetch_stop wants.
+  my ($h, $wait) = @_;
+  for my $slot (@{$h->{'slots'}}) {
+    next if !defined($slot->{'pid'});
+    my $r = waitpid($slot->{'pid'}, $wait ? 0 : POSIX::WNOHANG());
+    next if (!$wait && $r == 0);      # still running
+    $slot->{'pid'} = undef;
+    # publish atomically: the installation reads the cache directory while
+    # this writes to it, and must never see a half-written container
+    for my $i (@{$slot->{'items'}}) {
+      my $f = "$slot->{'stage'}/$i->[1]";
+      next if (! -r $f);
+      # it may have gone past this one while it was downloading, in which
+      # case publishing it would just leave litter in the cache
+      if ($i->[4] >= $h->{'pos'} && _prefetch_verify($f, $i->[3], $i->[2])) {
+        rename($f, "$h->{'dir'}/$i->[1]") || unlink($f);
+      }
+    }
+    unlink(glob("$slot->{'stage'}/*"));   # whatever did not make it
+    $slot->{'items'} = [];
+  }
+}
+
 sub prefetch_start {
   my ($fromtlpdb, $what, $opt_src, $opt_doc, $tags) = @_;
-  return undef if wndws();
   my $jobs = _prefetch_jobs();
   return undef if ($jobs < 1);
+  # Everything is fetched by running a downloader, so there has to be one
+  # that can be run: lwp lives inside this process and there is nothing to
+  # start.  Whatever download_file would have chosen is used here too.
+  my $type = _batch_downloader();
+  if (!defined($type)) {
+    debug("TLUtils::prefetch_start: no downloader that can be run "
+          . "separately, not prefetching\n");
+    return undef;
+  }
   my @work = _prefetch_worklist($fromtlpdb, $what, $opt_src, $opt_doc, $tags);
   return undef if !@work;
 
@@ -2189,117 +2244,51 @@ sub prefetch_start {
   return undef if !@work;
   $jobs = scalar(@work) if ($jobs > @work);
 
-  my $ctr = "$dir/.prefetch-next";
-  open(my $c, ">", $ctr) || return undef;
-  print $c "0\n";
-  close($c);
-  my $posfile = "$dir/.prefetch-pos";
-  _prefetch_position($posfile, 0);
-
-  # A persistent connection is reused however the work is handed out, so
-  # take one file at a time and let the queue balance.  A program downloader
-  # only reuses the connection within one invocation, so give it several
-  # files at a time -- but only a few: container sizes span three orders of
-  # magnitude, and past about eight what a worker loses when it draws a big
-  # one outweighs the connections that were saved.
-  my $use_lwp = defined($::tldownload_server);
-  my $chunk = $use_lwp ? 1 : 8;
+  my $budget = _prefetch_budget();
+  # Several containers per invocation, so that one connection serves them
+  # all -- but only a few: container sizes span three orders of magnitude,
+  # and past about eight what is lost when a slot draws a big one outweighs
+  # the connections that were saved.
+  my $chunk = 8;
   my $percpu = int((@work + $jobs - 1) / $jobs);
   $chunk = $percpu if ($chunk > $percpu && $percpu > 0);
-  my $budget = _prefetch_budget();
-  # so that all workers together cannot hold much more than the budget
-  my $cap = $budget ? int($budget / $jobs) : 0;
-  my $parent = $$;
 
+  my $h = {
+    'work' => \@work, 'dir' => $dir, 'type' => $type,
+    'next' => 0, 'pos' => 0, 'pruned' => 0,
+    'jobs' => $jobs, 'chunk' => $chunk, 'budget' => $budget,
+    # so that all the slots together cannot hold much more than the budget
+    'cap' => ($budget ? int($budget / $jobs) : 0),
+    'slots' => [ map { { 'pid' => undef, 'items' => [],
+                         'stage' => "$dir/.stage$_" } } (1 .. $jobs) ],
+  };
   logit(\*STDERR, 0, "Prefetching " . scalar(@work)
         . " containers using $jobs parallel downloads\n");
-
-  my @pids;
-  for (1 .. $jobs) {
-    my $pid = fork();
-    if (!defined($pid)) {
-      tlwarn("prefetch: fork failed, the remaining containers are downloaded"
-             . " one by one during installation\n");
-      last;
-    }
-    if ($pid) {
-      push @pids, $pid;
-      next;
-    }
-    # worker
-    $::tl_prefetch_handle = undef;      # do not let the END block fire here
-    $SIG{'INT'} = $SIG{'TERM'} = 'DEFAULT';
-    $::tldownload_server = undef;
-    setup_persistent_downloads($::tldownload_certs) if $use_lwp;
-    my $stage = "$dir/.stage$$";
-    # a die in here would otherwise be invisible: containers would quietly
-    # not be prefetched while everything looked fine
-    eval {
-      mkdirhier($stage);
-      my $pruned = 0;
-      while (1) {
-        my $pos = _prefetch_position($posfile);
-        $pruned = _prefetch_prune(\@work, $dir, $pos, $pruned);
-        # stay no further ahead of the installation than the budget allows
-        while ($budget && _prefetch_cache_bytes($dir) > $budget) {
-          _prefetch_exit() if (getppid() != $parent);
-          select(undef, undef, undef, 0.5);
-          # the installation moves on while we wait, so keep clearing out
-          # what it has gone past; otherwise the cache would never drop
-          # below the budget again and we would wait for ever
-          $pos = _prefetch_position($posfile);
-          $pruned = _prefetch_prune(\@work, $dir, $pos, $pruned);
-        }
-        _prefetch_exit() if (getppid() != $parent);
-        my ($i, $n) = _prefetch_take($ctr, $chunk, $cap, \@work, $pos);
-        last if (!defined($i) || $i > $#work || !$n);
-        my @slice = @work[$i .. $i + $n - 1];
-        _download_files([map { [$_->[0], $_->[1]] } @slice], $stage);
-        # publish atomically: the installation reads this directory while we
-        # write to it, and must never see a half-written container
-        $pos = _prefetch_position($posfile);
-        for my $w (@slice) {
-          my $f = "$stage/$w->[1]";
-          next if (! -r $f);
-          # it may have gone past this one while we were downloading, in
-          # which case publishing it would just leave litter in the cache
-          if ($w->[4] >= $pos && _prefetch_verify($f, $w->[3], $w->[2])) {
-            rename($f, "$dir/$w->[1]") || unlink($f);
-          }
-        }
-        unlink(glob("$stage/*"));       # whatever did not make it
-      }
-      1;
-    } || tlwarn("prefetch: worker failed: $@");
-    rmtree($stage) if (-d $stage);
-    _prefetch_exit();
-  }
-  return undef if !@pids;
-  $::tl_prefetch_handle = { 'pids' => \@pids, 'pos' => $posfile };
-  return $::tl_prefetch_handle;
+  _prefetch_launch($h);
+  $::tl_prefetch_handle = $h;
+  return $h;
 }
 
-sub _prefetch_exit {
-  # leave without running END blocks or global destruction: those belong to
-  # install-tl and tlmgr, not to a download worker
-  POSIX::_exit(0);
-}
-
-sub prefetch_position {
-  # Tell the workers which package the installation is on, so that they can
-  # skip ahead of it.  Cheap enough to call for every package: one short
-  # write, and nothing waits on it.
+sub prefetch_pump {
+  # Called by the installation for every package, with the index it has
+  # reached.  Collects whatever has finished, throws away what the
+  # installation has gone past, and starts more.  Nothing waits here.
   my ($h, $idx) = @_;
   return if !defined($h);
-  _prefetch_position($h->{'pos'}, $idx);
+  $h->{'pos'} = $idx if defined($idx);
+  _prefetch_reap($h, 0);
+  _prefetch_prune($h);
+  _prefetch_launch($h);
 }
 
 sub prefetch_stop {
   my ($h) = @_;
-  return if (!defined($h) || !@{$h->{'pids'}});
-  kill('TERM', @{$h->{'pids'}});
-  waitpid($_, 0) for @{$h->{'pids'}};
-  @{$h->{'pids'}} = ();
+  return if !defined($h);
+  for my $slot (@{$h->{'slots'}}) {
+    kill('TERM', $slot->{'pid'}) if defined($slot->{'pid'});
+  }
+  _prefetch_reap($h, 1);
+  rmtree($_->{'stage'}) for grep { -d $_->{'stage'} } @{$h->{'slots'}};
   $::tl_prefetch_handle = undef;
 }
 
@@ -3805,10 +3794,16 @@ sub _batch_downloader {
   return undef;
 }
 
-sub _download_files_batch {
+sub _download_files_command {
+  # The command that fetches these files into $dir in one invocation, with
+  # the list of urls written where the downloader expects to find it.
   my ($work, $dir, $type) = @_;
   my $spec = $BatchDownloaderArgs{$type};
-  my ($fh, $listfile) = tl_tmpfile();
+  return () if !defined($spec);
+  my $prog = $::progs{$FallbackDownloaderProgram{$type}};
+  return () if !defined($prog);
+  my $listfile = "$dir/.list";
+  open(my $fh, ">", $listfile) || return ();
   for my $w (@$work) {
     my %val = ('u' => $w->[0], 'f' => "$dir/$w->[1]", 'b' => $w->[1]);
     (my $line = $spec->{'listfmt'}) =~ s/%([ufb])/$val{$1}/g;
@@ -3816,34 +3811,9 @@ sub _download_files_batch {
   }
   close($fh);
   my @args = map { (my $a = $_) =~ s/%d/$dir/g; $a } @{$spec->{'args'}};
-  my $prog = $::progs{$FallbackDownloaderProgram{$type}};
-  debug("TLUtils::_download_files_batch: $prog @args $listfile ("
+  debug("TLUtils::_download_files_command: $prog @args $listfile ("
         . scalar(@$work) . " files)\n");
-  my $ret = system($prog, @args, $listfile);
-  unlink($listfile);
-  return ($ret == 0);
-}
-
-# Download the files in @$work, a list of [$url, $filename] pairs, into
-# $dir.  Where the configured downloader can take a list of urls in one
-# invocation (see %BatchDownloaderArgs) it is called once for the whole
-# list, so the connection is set up once instead of once per file;
-# otherwise, and with persistent connections (which are reused anyway),
-# the files are fetched one by one with download_file.
-#
-# Missing and partial files are not reported: the caller verifies what
-# arrived, and a container that did not make it is simply downloaded again
-# later by unpack.
-sub _download_files {
-  my ($work, $dir) = @_;
-  # with a persistent connection there is nothing to batch: LWP keeps the
-  # connection open across calls within this process.
-  if (!defined($::tldownload_server) || !$::tldownload_server->enabled) {
-    my $type = _batch_downloader();
-    return _download_files_batch($work, $dir, $type) if defined($type);
-  }
-  download_file($_->[0], "$dir/$_->[1]") for @$work;
-  return 1;
+  return ($prog, @args, $listfile);
 }
 
 =item C<nulldev ()>
@@ -4860,9 +4830,6 @@ false.
 
 sub setup_persistent_downloads {
   my $certs = shift;
-  # remember them: a prefetch worker cannot share this connection and has
-  # to build its own, with the same certificates
-  $::tldownload_certs = $certs if defined($certs);
   if ($TeXLive::TLDownload::net_lib_avail) {
     ddebug("setup_persistent_downloads has net_lib_avail set\n");
     if ($::tldownload_server) {
