@@ -2524,6 +2524,7 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'lua2dox',     'NULL',         # .def is lua code
  'luaaddplot',	'luaaddplot.tex|' . $standardtex,
  'luabidi',	'(arabmaths|footnoterule)|' . $standardtex,
+ 'luacoolprop',	'[pt]-luacoolprop.tex|' . $standardtex, # plain and context
  'luaintro',    'NULL',         # doc pkg
  'luakeys',	'\.lua|luakeys(-debug)?\.tex|' . $standardtex,
  'lualatex-math', '\.sty',      # not phst-doc.cls
@@ -2809,6 +2810,7 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'underoverlap','underoverlap\.sty',
  'underscore',  '^..[^s].*\.sty',       # not miscdoc.sty
  'undolabl',    '\.sty|[^c]\.cfg',      # omit ltxdoc.cfg, would be system-wide
+ 'unhook',      'unhook.tex',
  'unibidi-lua',	'unibidi-lua.tex|' . $standardtex,
  'unicode-alphabets',	'\..sv|' . $standardtex,
  'unicode-math-input',	'\.sty|unicode-math-input-table\.tex',	# not .py

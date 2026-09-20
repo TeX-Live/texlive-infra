@@ -591,7 +591,7 @@ my @TLP_working = qw(
     lua-uni-algos lua-unicode-math lua-visual-debug lua-widow-control
     luaaddplot
     luabibentry luabidi luabreakurl
-    luacas luacensor luacode luacolor luacomplex luadraw
+    luacas luacensor luacode luacolor luacomplex luacoolprop luadraw
     luafindfont luagcd luahttp luahyperbolic luahyphenrules
     luaimageembed luaindex luainputenc luakeys luakeyval
     lualatex-doc-de
@@ -742,7 +742,8 @@ my @TLP_working = qw(
     pgf pgf-blur pgf-go pgf-interference pgf-periodictable pgf-pie
     pgf-soroban pgf-spectra pgf-umlcd pgf-umlsd
     pgfgantt pgfkeysearch pgfkeyx pgfmath-xfp pgfmolbio pgfmorepages
-    pgfopts pgfornament pgfornament-han pgfplots pgfplotsthemebeamer
+    pgfopts pgfornament pgfornament-han
+    pgfplots pgfplots-autonode pgfplotsthemebeamer
     phaistos phfcc phfextendedabstract phffullpagefigure
     phfnote phfparen phfqit phfquotetext
     phfsvnwatermark phfthm
@@ -1015,7 +1016,7 @@ my @TLP_working = qw(
     umthesis umtypewriter
     unam-thesis unamth-template unamthesis unbtex
     undar-digitacion undergradmath underlin underoverlap underscore undolabl
-    unfonts-core unfonts-extra
+    unfonts-core unfonts-extra unhook
     uni-titlepage uni-wtal-ger uni-wtal-lin
     unibidi-lua unicode-alphabets unicode-data unicode-bidi
     unicode-math unicode-math-input
