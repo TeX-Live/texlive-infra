@@ -26,6 +26,7 @@ BEGIN {
     @AcceptedFallbackDownloaders
     %FallbackDownloaderProgram
     %FallbackDownloaderArgs
+    %BatchDownloaderArgs
     $DefaultCompressorFormat
     $CompressorExtRegexp
     %Compressors
@@ -163,6 +164,38 @@ our %FallbackDownloaderArgs = (
                "--timeout=$NetworkTimeout",
                '--auto-file-renaming=false', '--allow-overwrite=true',
                '--quiet=true', '-x', '1', '-s', '1'],
+);
+# Fetching many files with one invocation, so that the connection is reused
+# instead of being set up again for every container.  Downloaders without an
+# entry here are simply called once per file.
+#   listfmt  the line(s) written to the list file for each file, with
+#            %u the url, %f the full destination path, %b its base name
+#   args     the invocation, with %d the destination directory; the name of
+#            the list file is appended by TLUtils::_download_files_batch
+our %BatchDownloaderArgs = (
+  'curl' => { 'listfmt' => "url = \"%u\"\noutput = \"%f\"\n",
+              'args' => ['--user-agent', 'texlive/curl',
+                         '--retry', '4', '--retry-delay', '4',
+                         '--connect-timeout', "$NetworkTimeout",
+                         '--fail', '--location', '--silent', '--config'] },
+  # wget names the files after the url, which is what we want here, and
+  # -nc keeps it from appending .1 to a name that is already taken
+  'wget' => { 'listfmt' => "%u\n",
+              'args' => ['--user-agent=texlive/wget', '--tries=4',
+                         "--timeout=$NetworkTimeout", '-q', '-nc',
+                         '--directory-prefix=%d', '--input-file'] },
+  'aria2c' => { 'listfmt' => "%u\n  out=%b\n",
+                'args' => ['--user-agent=texlive/aria2c', '--max-tries=4',
+                           "--connect-timeout=$NetworkTimeout",
+                           "--timeout=$NetworkTimeout",
+                           '--auto-file-renaming=false',
+                           '--allow-overwrite=true', '--quiet=true',
+                           # -j1 -x1 -s1: one connection, since the caller
+                           # already runs as many of these as it wants in
+                           # parallel; aria2c would otherwise default to 5
+                           # downloads of its own per invocation
+                           '-j', '1', '-x', '1', '-s', '1',
+                           '--dir=%d', '--input-file'] },
 );
 # the way we package things on the web
 our $DefaultCompressorFormat = "xz";

@@ -3522,6 +3522,14 @@ These override the normal choice of the download and other utility
 programs; see the C<tlmgr> documentation, e.g.,
 L<https://tug.org/texlive/doc/tlmgr.html#ENVIRONMENT-VARIABLES>.
 
+=item C<TL_PARALLEL_PREFETCH>
+
+=item C<TL_PREFETCH_WINDOW_MB>
+
+These fetch the containers in the background while installing, instead of
+one at a time; off by default. See the C<tlmgr> documentation, e.g.,
+L<https://tug.org/texlive/doc/tlmgr.html#ENVIRONMENT-VARIABLES>.
+
 =item C<TEXLIVE_INSTALL_ENV_NOCHECK>
 
 Omit the check for environment variables containing the string C<tex>.
