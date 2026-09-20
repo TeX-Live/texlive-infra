@@ -3282,7 +3282,7 @@ sub download_file {
   } elsif ($ENV{"TL_DOWNLOAD_PROGRAM"}) {
     push @downloader_trials, 'custom';
   } else {
-    @downloader_trials = qw/lwp curl wget/;
+    @downloader_trials = qw/lwp aria2c curl wget/;
   }
 
   my $success = 0;
@@ -3357,6 +3357,12 @@ sub _download_file_lwp {
 
 sub _download_file_program {
   my ($url, $dest, $type) = @_;
+  # aria2c takes --out relative to --dir, so split $dest; before the
+  # separator conversion below.
+  my ($destdir, $destfile);
+  if ($type eq 'aria2c' && $dest ne "|") {
+    ($destdir, $destfile) = (dirname($dest), basename($dest));
+  }
   if (wndws()) {
     $dest =~ s!/!\\!g;
   }
@@ -3374,18 +3380,29 @@ sub _download_file_program {
   } else {
     $downloader = $::progs{$FallbackDownloaderProgram{$type}};
     @downloaderargs = @{$FallbackDownloaderArgs{$type}};
+    push (@downloaderargs, "--dir=$destdir", "--out=$destfile")
+      if defined($destdir);
     $downloaderargs = join(' ',@downloaderargs);
   }
 
   debug("downloading $url using $downloader $downloaderargs\n");
   my $ret;
   if ($dest eq "|") {
+    if ($type eq 'aria2c') {
+      # aria2c cannot write to stdout; fall through to another downloader
+      # rather than silently create a file named "-".
+      debug("TLUtils::_download_file_program: aria2c cannot write to a pipe\n");
+      return 0;
+    }
     open(RETFH, "$downloader $downloaderargs - $url|")
     || die "open($url) via $downloader $downloaderargs failed: $!";
     # opening to a pipe always succeeds, so we return immediately
     return \*RETFH;
   } else {
-    $ret = system ($downloader, @downloaderargs, $dest, $url);
+    # for aria2c the destination is already in @downloaderargs (--dir/--out)
+    $ret = defined($destdir)
+           ? system ($downloader, @downloaderargs, $url)
+           : system ($downloader, @downloaderargs, $dest, $url);
     # we have to reverse the meaning of ret because system has 0=success.
     $ret = ($ret ? 0 : 1);
   }

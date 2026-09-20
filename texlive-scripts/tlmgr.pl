@@ -10651,7 +10651,7 @@ automatically selected by the installer. The order of selection is:
 
 If the environment variable C<TEXLIVE_DOWNLOADER> is defined, use it;
 abort if the specified program doesn't work. Possible values: C<lwp>,
-C<curl>, C<wget>. The necessary options are added internally.
+C<aria2c>, C<curl>, C<wget>. The necessary options are added internally.
 
 =item 2.
 
@@ -10666,16 +10666,21 @@ efficient method, as it supports persistent downloads).
 
 =item 4.
 
-If curl is available (from the system) and working, use that.
+If aria2c is available (from the system) and working, use that.
 
 =item 5.
+
+If curl is available (from the system) and working, use that.
+
+=item 6.
 
 If wget is available (either from the system or TL) and working, use that.
 
 =back
 
-TL provides C<wget> binaries for platforms where necessary, so some
-download method should always be available.
+No aria2c binaries are shipped with TeX Live, so it is used only when the
+system provides it. TL provides C<wget> binaries for platforms where
+necessary, so some download method should always be available.
 
 =item C<TEXLIVE_PREFER_OWN>
 

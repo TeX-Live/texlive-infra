@@ -143,8 +143,13 @@ if ($^O =~ /^MSWin/i) {
 }
 
 #
-our @AcceptedFallbackDownloaders = qw/curl wget/;
-our %FallbackDownloaderProgram = ( 'wget' => 'wget', 'curl' => 'curl');
+our @AcceptedFallbackDownloaders = qw/curl wget aria2c/;
+our %FallbackDownloaderProgram = ( 'wget' => 'wget', 'curl' => 'curl',
+                                   'aria2c' => 'aria2c');
+# The curl and wget lists end with the option taking the output file name,
+# which _download_file_program appends. aria2c is different: its --out is
+# relative to --dir, so both are appended there and its list has no
+# trailing output option.
 our %FallbackDownloaderArgs = (
   'curl' => ['--user-agent', 'texlive/curl',
              '--retry', '4', '--retry-delay', '4',
@@ -152,6 +157,12 @@ our %FallbackDownloaderArgs = (
              '--fail', '--location', '--silent', '--output'],
   'wget' => ['--user-agent=texlive/wget', '--tries=4',
              "--timeout=$NetworkTimeout", '-q', '-O'],
+  # -x1 -s1: a single connection per file, as curl and wget do
+  'aria2c' => ['--user-agent=texlive/aria2c', '--max-tries=4',
+               "--connect-timeout=$NetworkTimeout",
+               "--timeout=$NetworkTimeout",
+               '--auto-file-renaming=false', '--allow-overwrite=true',
+               '--quiet=true', '-x', '1', '-s', '1'],
 );
 # the way we package things on the web
 our $DefaultCompressorFormat = "xz";
