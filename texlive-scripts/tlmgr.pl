@@ -3345,8 +3345,26 @@ sub action_update {
   # OTOH, the control flow in the "new package" part is much simpler
   # and following it after the change would make it much harder
   #
-  foreach my $pkg (@inst_packs, @new_packs, @inst_colls, @new_colls, @inst_schemes, @new_schemes) {
-    
+  # fetch the containers in the background while we install; a no-op unless
+  # TL_PARALLEL_PREFETCH is set.  The list has to be the one the loop below
+  # walks, in that order, because the prefetch follows the loop through it;
+  # packages that are not going to be installed are skipped by name.
+  my @toprefetch = (@inst_packs, @new_packs, @inst_colls, @new_colls,
+                    @inst_schemes, @new_schemes);
+  my %noprefetch;
+  if ($opts{"no-auto-install"}) {
+    $noprefetch{$_} = 1 for (@new_packs, @new_colls, @new_schemes);
+  }
+  my $prefetch;
+  if (!$opts{"list"} && !$opts{"dry-run"}) {
+    $prefetch = TeXLive::TLUtils::prefetch_start($remotetlpdb, \@toprefetch,
+      $localtlpdb->option("install_srcfiles"),
+      $localtlpdb->option("install_docfiles"), \%noprefetch);
+  }
+  my $prefetch_idx = 0;
+  foreach my $pkg (@toprefetch) {
+    TeXLive::TLUtils::prefetch_position($prefetch, $prefetch_idx++);
+
     if (!$is_new{$pkg}) {
       # skip this loop if infra update on w32
       next if ($pkg =~ m/^00texlive/);
@@ -3652,6 +3670,8 @@ sub action_update {
       }
     }
   }
+
+  TeXLive::TLUtils::prefetch_stop($prefetch);
 
   #
   # special check for depending format updates:
@@ -4009,7 +4029,19 @@ sub action_install {
   print "total-bytes\t$sizes{'__TOTAL__'}\n" if $::machinereadable;
   print "end-of-header\n" if $::machinereadable;
 
+  # fetch the containers in the background while we install; a no-op unless
+  # TL_PARALLEL_PREFETCH is set.  %packs holds packages asked for from one
+  # particular repository; the prefetch leaves those alone, since it
+  # resolves pkg@tag differently than get_package does.
+  my $prefetch;
+  $prefetch = TeXLive::TLUtils::prefetch_start($remotetlpdb, \@todo,
+    $localtlpdb->option("install_srcfiles"),
+    $localtlpdb->option("install_docfiles"), \%packs)
+    if !$opts{"dry-run"};
+
+  my $prefetch_idx = 0;
   foreach my $pkg (@todo) {
+    TeXLive::TLUtils::prefetch_position($prefetch, $prefetch_idx++);
     my $flag = $FLAG_INSTALL;
     my $re = "";
     my $tlp = $remotetlpdb->get_package($pkg);
@@ -4066,6 +4098,7 @@ sub action_install {
     $donesize += $sizes{$pkg};
     $currnr++;
   }
+  TeXLive::TLUtils::prefetch_stop($prefetch);
   print "end-of-updates\n" if $::machinereadable;
 
 
@@ -10681,6 +10714,33 @@ If wget is available (either from the system or TL) and working, use that.
 No aria2c binaries are shipped with TeX Live, so it is used only when the
 system provides it. TL provides C<wget> binaries for platforms where
 necessary, so some download method should always be available.
+
+=item C<TL_PARALLEL_PREFETCH>
+
+=item C<TL_PREFETCH_WINDOW_MB>
+
+When installing or updating over the network, C<tlmgr> downloads one
+container at a time, so most of the time is spent waiting for the server.
+C<TL_PARALLEL_PREFETCH> instead fetches containers in the background while
+the installation proceeds:
+
+  unset or 0   one container at a time, as before (the default)
+  1            one background worker
+  N            N background workers
+  auto         as many as there are processors, at most 8
+
+Even one worker helps, since it downloads while the installation unpacks;
+more workers additionally overlap the downloads with each other.  The
+downloader is the one that would be used anyway (see C<TEXLIVE_DOWNLOADER>
+above).  This has no effect on Windows or when installing from a local
+repository.
+
+Containers are removed again as they are installed.  To bound what the
+background download may pile up in the meantime, it pauses while more than
+C<TL_PREFETCH_WINDOW_MB> megabytes (default 64; C<0> for no limit) are
+waiting to be installed.  The workers check before starting on the next
+containers rather than during, so the cache in fact reaches a few (around
+2-3) times this setting.
 
 =item C<TEXLIVE_PREFER_OWN>
 
