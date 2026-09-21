@@ -1372,6 +1372,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'sae',         "die 'skipping, nosell license'",
  'saferef',     "die 'skipping, nonfree license'",
  'sagetex',     "die 'skipping, omitted at author request (25 Jan 2010 19:50:16)'",
+ 'sansforgetica',"die 'skipping, nonfree font'",
  'sansmathaccent',      "&MAKEflatten",
  'sansmathfonts',       "&MAKEflatten",
  'scholax',		"&MAKEflatten",

@@ -601,7 +601,7 @@ my @TLP_working = qw(
     luaoptions luaotfload
     luapackageloader luaplot luaprogtable luapstricks
     luaquotes luarandom
-    luaset luasseq
+    luaset luasseq luatagging
     luatbls luatex85 luatexbase luatexja luatexko luatextra
     luatex-cn luatex-type-definitions luatikz
     luatodonotes luatruthtable luavlna luaxml
