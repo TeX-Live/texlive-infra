@@ -18,6 +18,7 @@ profiledir=$Master/tlpkg/dev/profiles
 
 instdir=/tmp/ki
 output_sizes=false
+parallel=
 profile=$profiledir/TLinfra.pro
 quiet=false
 repo=$Master
@@ -28,6 +29,8 @@ while test $# -gt 0; do
   case $1 in
   -o)           shift; instdir=$1;;
   -p|--profile) shift; profile=$1;;
+  -P|--parallel)
+               parallel="TL_PARALLEL_PREFETCH=auto TL_PREFETCH_WINDOW_MB=200";;
   -q|--quiet)   quiet=true;;
   -r|--repo)    shift; repo=$1;;
   -strict|--strict) strict=-strict;;
@@ -57,7 +60,7 @@ if test ! -f "$profile"; then
   fi
 fi
 
-if test ! -x "$repo/install-tl"; then
+if false && test ! -x "$repo/install-tl"; then
   echo "$0: goodbye, no install-tl in repository: $repo" >&2
   exit 1
 fi
@@ -79,9 +82,19 @@ fi
 
 #TEXLIVE_INSTALL_PAPER=letter; export TEXLIVE_INSTALL_PAPER # testing
 
+if test x"$repo" = xctan || echo "$repo" | grep http >/dev/null; then
+  # network install, run a local install-tl
+  install_tl=$Master/install-tl
+else
+  # local install, use install-tl from that local dir.
+  install_tl=$repo/install-tl
+fi
+#
 pro=--profile=$profile
+
+# use time command instead of builtin, shorter and more informative.
 set -x
-time $repo/install-tl $verbose $pro --repo $repo
+command time env $parallel $install_tl $verbose $pro --repo $repo
 status=$?
 
 if test $status -eq 0 && $output_sizes; then

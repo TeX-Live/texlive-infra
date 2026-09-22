@@ -1,15 +1,15 @@
 #!/usr/bin/env perl
 # $Id$
-# Copyright 2011-2023 Norbert Preining
+# Copyright 2011-2026 Norbert Preining
 # This file is licensed under the GNU General Public License version 2
 # or any later version.
 #
 # Write parsable list of active CTAN mirrors; run from tl-update-auto cron.
 # 
-# Needed input are the files from:
+# Needed input are these files:
 #   https://ctan.org/mirrors (aka CTAN.sites and README.mirrors)
 #   (via scp) ctan.org:/serv/ctan/scripts/mirmon-2.11/mirmon.state
-#     (on web: https://ctan.org/mirrors/mirmon)
+#   (or on web: https://ctan.org/mirrors/mirmon)
 
 use strict;
 $^W = 1;
@@ -23,7 +23,7 @@ exit (&main ());
 
 sub main {
   if (@ARGV != 2 && @ARGV != 3) {
-    die "Usage: $0 [-v[v]] CTAN_SITES MIRMON_STATE.\n";
+    die "Usage: $0 [-v[v]] CTAN_SITES MIRMON_STATE.\nWrites to stdout.\n";
   }
   ($prg = $0) =~ s,^.*/,,;
   
