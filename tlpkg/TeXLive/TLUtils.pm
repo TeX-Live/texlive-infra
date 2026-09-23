@@ -3698,6 +3698,8 @@ sub _download_file_lwp {
       return(0);
     }
   }
+  # a connection that never worked is not set up again, see TLDownload
+  return(0) if $::tldownload_server->unusable;
   if (!$::tldownload_server->enabled) {
     # try to reinitialize a disabled connection
     # disabling happens after 6 failed download trials
@@ -3712,7 +3714,7 @@ sub _download_file_lwp {
     # which, if it succeeds, automatically set enabled to 1
   }
   # we are still here, so try to download
-  debug("persistent connection set up, trying to get $url (for $dest)\n");
+  debug("trying to get $url via lwp persistent connection (for $dest)\n");
   my $ret = $::tldownload_server->get_file($url, $dest);
   if ($ret) {
     ddebug("downloading file via persistent connection succeeded\n");
