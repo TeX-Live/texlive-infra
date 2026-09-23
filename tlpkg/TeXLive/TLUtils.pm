@@ -1888,7 +1888,7 @@ sub install_packages {
     $totalsize += $tlpsizes{$p};
   }
   # fetch the containers in the background while we install; a no-op unless
-  # TL_PARALLEL_PREFETCH is set
+  # TL_PREFETCH is set
   my $prefetch;
   $prefetch = prefetch_start($fromtlpdb, \@packs, $opt_src, $opt_doc)
     if ($media eq 'NET');
@@ -1987,7 +1987,7 @@ is prefetched and again in C<unpack>.
 
 How far ahead this runs is bounded by how much is in the cache that the
 installation has not consumed yet: nothing new is started while that
-exceeds C<TL_PREFETCH_WINDOW_MB> megabytes (default 64, C<0> for no limit).
+exceeds the C<MB> part of C<TL_PREFETCH> (default 64, C<0> for no limit).
 The check is made before starting on the next containers, and at least one
 is always taken however large it is, so in practice the cache reaches a few
 (around 2-3) times the setting.
@@ -1999,12 +1999,12 @@ consumed.  Left in the cache it would hold the cache over the budget for
 good and nothing would ever start again.  Knowing where the installation
 is, this skips past it and throws away what it has already gone by.
 
-Prefetching is off unless C<TL_PARALLEL_PREFETCH> is set to something other
-than C<0>: a number is how many downloads run at a time, C<auto> is as many
-as there are processors, capped at 8 so as not to hammer the mirrors.  Even
-one helps, since it downloads while the installation unpacks.  Each gets
-several urls at a time so that one connection serves them all (see
-C<%BatchDownloaderArgs>).
+Prefetching is off unless C<TL_PREFETCH> (C<JOBS[:MB]>) is set, with
+C<JOBS> other than C<0>: a number is how many downloads run at a time,
+C<auto> is as many as there are processors, capped at 8 so as not to hammer
+the mirrors.  Even one helps, since it downloads while the installation
+unpacks.  Each gets several urls at a time so that one connection serves
+them all (see C<%BatchDownloaderArgs>).
 
 C<$tags>, if given, is a hash whose keys are packages that were requested
 from one particular repository; those are left to the sequential path, since
@@ -2014,34 +2014,30 @@ Does nothing for non-NET packages, or when nothing is asked for.
 
 =cut
 
-sub _prefetch_jobs {
-  # unset or 0: off.  A number: that many workers.  auto: as many as there
-  # are processors, but never more than 8 connections, to be nice to the
-  # mirrors.
-  my $v = $ENV{'TL_PARALLEL_PREFETCH'};
-  return 0 if (!defined($v) || $v eq '');
-  if ($v eq 'auto') {
+sub _prefetch_settings {
+  # TL_PREFETCH=JOBS[:MB].  JOBS unset or 0: off; a number: that many
+  # downloads at a time; auto: as many as there are processors, but never
+  # more than 8 connections, to be nice to the mirrors.  MB is the cache
+  # budget in megabytes (default 64, 0 for no limit).  Returns the number of
+  # jobs and the budget in bytes.
+  my $v = $ENV{'TL_PREFETCH'};
+  return (0, 0) if (!defined($v) || $v eq '');
+  my ($jobs, $wmb) = ($v =~ m/^(auto|[0-9]+)(?::([0-9]+))?$/);
+  if (!defined($jobs)) {
+    tlwarn("TL_PREFETCH=$v is not of the form N[:MB] or auto[:MB], "
+           . "ignoring\n");
+    return (0, 0);
+  }
+  if ($jobs eq 'auto') {
     if (!defined($::tl_prefetch_nproc)) {
       chomp(my $n = `getconf _NPROCESSORS_ONLN 2>/dev/null`);
       $n = 4 if (!$n || $n !~ m/^[0-9]+$/ || $n < 1); # getconf not usable
       $::tl_prefetch_nproc = ($n > 8 ? 8 : $n);
     }
-    return $::tl_prefetch_nproc;
+    $jobs = $::tl_prefetch_nproc;
   }
-  if ($v !~ m/^[0-9]+$/) {
-    tlwarn("TL_PARALLEL_PREFETCH=$v is neither a number nor auto, ignoring\n");
-    return 0;
-  }
-  return $v;
-}
-
-sub _prefetch_budget {
-  my $wmb = 64;
-  if (defined($ENV{'TL_PREFETCH_WINDOW_MB'})
-      && $ENV{'TL_PREFETCH_WINDOW_MB'} =~ m/^[0-9]+$/) {
-    $wmb = $ENV{'TL_PREFETCH_WINDOW_MB'};
-  }
-  return $wmb * 1048576;
+  $wmb = 64 if !defined($wmb);
+  return ($jobs, $wmb * 1048576);
 }
 
 sub _prefetch_verify {
@@ -2223,7 +2219,7 @@ sub _prefetch_reap {
 
 sub prefetch_start {
   my ($fromtlpdb, $what, $opt_src, $opt_doc, $tags) = @_;
-  my $jobs = _prefetch_jobs();
+  my ($jobs, $budget) = _prefetch_settings();
   return undef if ($jobs < 1);
   # Everything is fetched by running a downloader, so there has to be one
   # that can be run: lwp lives inside this process and there is nothing to
@@ -2244,7 +2240,6 @@ sub prefetch_start {
   return undef if !@work;
   $jobs = scalar(@work) if ($jobs > @work);
 
-  my $budget = _prefetch_budget();
   # Several containers per invocation, so that one connection serves them
   # all -- but only a few: container sizes span three orders of magnitude,
   # and past about eight what is lost when a slot draws a big one outweighs

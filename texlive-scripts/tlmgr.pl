@@ -363,6 +363,7 @@ my %globaloptions = (
   "persistent-downloads" => "!",
   "pause" => 1,
   "pin-file" => "=s",
+  "prefetch" => "=s",
   "print-platform|print-arch" => 1,
   "print-platform-info" => 1,
   "usermode|user-mode" => 1,
@@ -408,6 +409,9 @@ sub main {
   TeXLive::TLUtils::process_logging_options();
 
   GetOptions(\%opts, keys(%optarg)) or pod2usage(2);
+
+  # read where it is used, in TLUtils::prefetch_start
+  $ENV{'TL_PREFETCH'} = $opts{'prefetch'} if defined($opts{'prefetch'});
 
   # load the config file and set the config options
   # load it BEFORE starting downloads as we set persistent-downloads there!
@@ -3346,7 +3350,7 @@ sub action_update {
   # and following it after the change would make it much harder
   #
   # fetch the containers in the background while we install; a no-op unless
-  # TL_PARALLEL_PREFETCH is set.  The list has to be the one the loop below
+  # TL_PREFETCH is set.  The list has to be the one the loop below
   # walks, in that order, because the prefetch follows the loop through it;
   # packages that are not going to be installed are skipped by name.
   my @toprefetch = (@inst_packs, @new_packs, @inst_colls, @new_colls,
@@ -4030,7 +4034,7 @@ sub action_install {
   print "end-of-header\n" if $::machinereadable;
 
   # fetch the containers in the background while we install; a no-op unless
-  # TL_PARALLEL_PREFETCH is set.  %packs holds packages asked for from one
+  # TL_PREFETCH is set.  %packs holds packages asked for from one
   # particular repository; the prefetch leaves those alone, since it
   # resolves pkg@tag differently than get_package does.
   my $prefetch;
@@ -8479,6 +8483,10 @@ Change the pinning file location from C<TEXMFLOCAL/tlpkg/pinning.txt>
 (see L</Pinning> below).  Documented only for completeness, as this is
 only useful in debugging.
 
+=item B<--prefetch> I<jobs>[B<:>I<mb>]
+
+Same as setting C<TL_PREFETCH> to I<jobs>[B<:>I<mb>], which see below.
+
 =item B<--usermode>
 
 Activates user mode for this run of C<tlmgr>; see L<USER MODE> below.
@@ -10715,19 +10723,20 @@ No aria2c binaries are shipped with TeX Live, so it is used only when the
 system provides it. TL provides C<wget> binaries for platforms where
 necessary, so some download method should always be available.
 
-=item C<TL_PARALLEL_PREFETCH>
-
-=item C<TL_PREFETCH_WINDOW_MB>
+=item C<TL_PREFETCH>
 
 When installing or updating over the network, C<tlmgr> downloads one
 container at a time, so most of the time is spent waiting for the server.
-C<TL_PARALLEL_PREFETCH> instead fetches containers in the background while
-the installation proceeds:
+C<TL_PREFETCH> (or the C<--prefetch> option, which overrides it) instead
+fetches containers in the background while the installation proceeds.
+Its value is I<jobs>[B<:>I<mb>], where I<jobs> is
 
   unset or 0   one container at a time, as before (the default)
   1            one background worker
   N            N background workers
   auto         as many as there are processors, at most 8
+
+and I<mb> is explained below; for example, C<auto:200>.
 
 Even one worker helps, since it downloads while the installation unpacks;
 more workers additionally overlap the downloads with each other.  The
@@ -10739,7 +10748,7 @@ effect when installing from a local repository.
 
 Containers are removed again as they are installed.  To bound what the
 background download may pile up in the meantime, it pauses while more than
-C<TL_PREFETCH_WINDOW_MB> megabytes (default 64; C<0> for no limit) are
+I<mb> megabytes (default 64; C<0> for no limit) are
 waiting to be installed.  The workers check before starting on the next
 containers rather than during, so the cache in fact reaches a few (around
 2-3) times this setting.
