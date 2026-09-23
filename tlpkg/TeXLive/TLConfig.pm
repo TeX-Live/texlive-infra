@@ -144,7 +144,8 @@ if ($^O =~ /^MSWin/i) {
 }
 
 #
-our @AcceptedFallbackDownloaders = qw/curl wget aria2c/;
+# in order of preference; download_file tries lwp first, then these
+our @AcceptedFallbackDownloaders = qw/aria2c curl wget/;
 our %FallbackDownloaderProgram = ( 'wget' => 'wget', 'curl' => 'curl',
                                    'aria2c' => 'aria2c');
 # The curl and wget lists end with the option taking the output file name,

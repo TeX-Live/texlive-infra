@@ -2263,7 +2263,7 @@ sub prefetch_start {
                          'stage' => "$dir/.stage$_" } } (1 .. $jobs) ],
   };
   logit(\*STDERR, 0, "Prefetching " . scalar(@work)
-        . " containers using $jobs parallel downloads\n");
+        . " containers using $jobs parallel downloads ($type)\n");
   _prefetch_launch($h);
   $::tl_prefetch_handle = $h;
   return $h;
@@ -3366,6 +3366,11 @@ sub setup_programs {
     }
   }
   $::progs{'working_downloaders'} = [ @working_downloaders ];
+  debug("TLUtils::setup_programs: downloaders, after lwp, in order of "
+        . "preference: @working_downloaders"
+        . ($ENV{'TEXLIVE_DOWNLOADER'}
+           ? " (but TEXLIVE_DOWNLOADER=$ENV{'TEXLIVE_DOWNLOADER'})" : "")
+        . "\n");
   my @working_compressors;
   for my $defprog (sort 
               { $Compressors{$a}{'priority'} <=> $Compressors{$b}{'priority'} }
@@ -3649,7 +3654,7 @@ sub download_file {
   } elsif ($ENV{"TL_DOWNLOAD_PROGRAM"}) {
     push @downloader_trials, 'custom';
   } else {
-    @downloader_trials = qw/lwp aria2c curl wget/;
+    @downloader_trials = ('lwp', @AcceptedFallbackDownloaders);
   }
 
   my $success = 0;
