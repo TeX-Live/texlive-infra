@@ -2287,6 +2287,9 @@ sub prefetch_stop {
   for my $slot (@{$h->{'slots'}}) {
     kill('TERM', $slot->{'pid'}) if defined($slot->{'pid'});
   }
+  # nothing will be installed any more, so what the killed downloads left
+  # behind is neither checked nor published, just cleaned up
+  $h->{'pos'} = ~0;
   _prefetch_reap($h, 1);
   rmtree($_->{'stage'}) for grep { -d $_->{'stage'} } @{$h->{'slots'}};
   $::tl_prefetch_handle = undef;
