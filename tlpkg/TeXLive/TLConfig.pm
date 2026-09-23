@@ -191,6 +191,10 @@ our %BatchDownloaderArgs = (
                            "--timeout=$NetworkTimeout",
                            '--auto-file-renaming=false',
                            '--allow-overwrite=true', '--quiet=true',
+                           # it would otherwise create the file at its full
+                           # size at once, and _prefetch_await takes the
+                           # size to mean the file is complete
+                           '--file-allocation=none',
                            # -j1 -x1 -s1: one connection, since the caller
                            # already runs as many of these as it wants in
                            # parallel; aria2c would otherwise default to 5

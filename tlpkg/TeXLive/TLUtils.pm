@@ -2049,17 +2049,18 @@ sub _prefetch_verify {
   # of the offending file in a directory that is never cleaned up and prints
   # a backtrace -- right when a download has really failed, but here a bad
   # container just means unpack fetches it again.
-  my ($file, $checksum, $size) = @_;
+  # With $keep the file is left alone.
+  my ($file, $checksum, $size, $keep) = @_;
   return 0 if (! -r $file);
   if ($checksum && $checksum ne "-1" && $::checksum_method) {
     return 1 if (TeXLive::TLCrypto::tlchecksum($file) eq $checksum);
-    debug("TLUtils::_prefetch_verify: checksum mismatch, dropping $file\n");
-    unlink($file);
+    debug("TLUtils::_prefetch_verify: checksum mismatch for $file\n");
+    unlink($file) if !$keep;
     return 0;
   }
   if ($size && $size ne "-1" && (stat $file)[7] != $size) {
-    debug("TLUtils::_prefetch_verify: wrong size, dropping $file\n");
-    unlink($file);
+    debug("TLUtils::_prefetch_verify: wrong size for $file\n");
+    unlink($file) if !$keep;
     return 0;
   }
   return 1;
@@ -2225,8 +2226,11 @@ sub _prefetch_await {
   # slot is downloading its containers right now, wait for them instead of
   # letting unpack fetch them a second time.  The downloaders write each
   # file under its final name as they go, so one is complete when it has
-  # the size recorded in the tlpdb; the other files of the batch are not
-  # waited for.
+  # the size recorded in the tlpdb (for aria2c only because its batch
+  # arguments turn off preallocation); the other files of the batch are
+  # not waited for.  If a file of the right size does not verify, stop
+  # waiting and leave the package to unpack, rather than wait for the
+  # whole batch.
   # ponytail: no timeout of our own, the downloader's retries and timeouts
   # bound the wait, as they would for unpack's own download.
   my ($h) = @_;
@@ -2234,46 +2238,40 @@ sub _prefetch_await {
     next if !defined($slot->{'pid'});
     my @mine = grep { $_->[4] == $h->{'pos'} } @{$slot->{'items'}};
     next if !@mine;
-    my $done = sub {
-      for my $i (@mine) {
-        return 0 if (!$i->[2] || $i->[2] eq "-1");  # size unknown
-        my $s = (stat("$slot->{'stage'}/$i->[1]"))[7];
-        return 0 if (!defined($s) || $s != $i->[2]);
-      }
-      return 1;
-    };
-    my $exited = 0;
     debug("TLUtils::_prefetch_await: waiting for "
-          . join(" ", map { $_->[1] } @mine) . "\n") if !$done->();
-    until ($done->()) {
+          . join(" ", map { $_->[1] } @mine) . "\n");
+    my $exited = 0;
+    while (@mine) {
       if (waitpid($slot->{'pid'}, POSIX::WNOHANG()) != 0) {
         $exited = 1;
         last;
       }
+      my $i = $mine[0];
+      my $f = "$slot->{'stage'}/$i->[1]";
+      my $s = (stat($f))[7];
+      # with the size unknown, this simply waits for the slot to finish
+      if ($i->[2] && $i->[2] ne "-1" && defined($s) && $s == $i->[2]) {
+        if (!_prefetch_verify($f, $i->[3], $i->[2], 1)) {
+          debug("TLUtils::_prefetch_await: $i->[1] does not verify, "
+                . "not waiting for it\n");
+          last;
+        }
+        # rename fails on Windows while the downloader still has the file
+        # open, so that is simply tried again
+        if (rename($f, "$h->{'dir'}/$i->[1]")) {
+          shift @mine;
+          $slot->{'items'} = [ grep { $_ != $i } @{$slot->{'items'}} ];
+          next;
+        }
+      }
       select(undef, undef, undef, 0.1);
     }
-    # a slot that has exited is published by _prefetch_reap as usual
-    if (!$exited) {
-      my @moved;
-      for my $i (@mine) {
-        my $f = "$slot->{'stage'}/$i->[1]";
-        # rename fails on Windows while the downloader still has the file
-        # open; then wait for it to finish the batch after all
-        last if (!_prefetch_verify($f, $i->[3], $i->[2])
-                 || !rename($f, "$h->{'dir'}/$i->[1]"));
-        push @moved, $i;
-      }
-      if (@moved == @mine) {
-        $slot->{'items'} = [ grep { $_->[4] != $h->{'pos'} }
-                             @{$slot->{'items'}} ];
-        # the rest of the batch is still coming; but if that was the last
-        # of it, the downloader is only exiting, and waiting for that lets
-        # the slot start on the next batch before the installation gets there
-        next if @{$slot->{'items'}};
-      }
-      waitpid($slot->{'pid'}, 0);
-    }
-    _prefetch_reap($h, 0);
+    # if that was the last of the batch, the downloader is only exiting, and
+    # waiting for that lets the slot start on the next batch before the
+    # installation gets there; a slot that has exited is published by
+    # _prefetch_reap as usual
+    waitpid($slot->{'pid'}, 0) if (!$exited && !@{$slot->{'items'}});
+    _prefetch_reap($h, 0) if ($exited || !@{$slot->{'items'}});
   }
 }
 
