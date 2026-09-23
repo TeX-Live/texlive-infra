@@ -4016,6 +4016,7 @@ $standardttf = '\.ttf|\.TTC';
  'puyotikz'		=> '\.py$',
  'pythontex'            => '([23]|_.*)\.py$',
  'shipunov'		=> '\.(bat|sh|pl)$',
+ 'show-pdf-tags'        => '\.rn[gc]$',
  'songs'		=> '\.lua$',
  'spelling'             => '\.lua$',
  'texdoc',		=> '[^c]\.tlu$', # luckily that's enough
