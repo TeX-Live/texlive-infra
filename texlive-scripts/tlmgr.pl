@@ -10743,8 +10743,8 @@ more workers additionally overlap the downloads with each other.  The
 downloader is the one that would be used anyway (see C<TEXLIVE_DOWNLOADER>
 above), except that C<lwp> cannot be used for this: the containers are
 fetched by running a downloader, and C<lwp> runs inside C<tlmgr> itself.
-If it is the only one available, nothing is prefetched.  This has no
-effect when installing from a local repository.
+If it is the only one available, nothing is prefetched, with a warning.
+This has no effect when installing from a local repository.
 
 Containers are removed again as they are installed.  To bound what the
 background download may pile up in the meantime, it pauses while more than

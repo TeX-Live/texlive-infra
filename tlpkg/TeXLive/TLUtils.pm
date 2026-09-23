@@ -2221,17 +2221,20 @@ sub prefetch_start {
   my ($fromtlpdb, $what, $opt_src, $opt_doc, $tags) = @_;
   my ($jobs, $budget) = _prefetch_settings();
   return undef if ($jobs < 1);
+  my @work = _prefetch_worklist($fromtlpdb, $what, $opt_src, $opt_doc, $tags);
+  return undef if !@work;
   # Everything is fetched by running a downloader, so there has to be one
   # that can be run: lwp lives inside this process and there is nothing to
   # start.  Whatever download_file would have chosen is used here too.
   my $type = _batch_downloader();
   if (!defined($type)) {
-    debug("TLUtils::prefetch_start: no downloader that can be run "
-          . "separately, not prefetching\n");
+    if (!$::tl_prefetch_warned) {
+      tlwarn("TL_PREFETCH is set, but there is no downloader that can be "
+             . "run separately (lwp cannot), not prefetching\n");
+      $::tl_prefetch_warned = 1;
+    }
     return undef;
   }
-  my @work = _prefetch_worklist($fromtlpdb, $what, $opt_src, $opt_doc, $tags);
-  return undef if !@work;
 
   $::tl_prefetch_dir = tl_tmpdir() if !defined($::tl_prefetch_dir);
   my $dir = $::tl_prefetch_dir;
