@@ -1963,12 +1963,15 @@ pass to the other two, or C<undef> if nothing was started.  C<@$packages>
 must be the list the installation loop itself walks, in that order, and the
 loop must call C<prefetch_pump> with the index it has reached.
 
-C<prefetch_pump> is where all the work is arranged, and it waits for
-nothing: it collects the downloads that have finished, verifies them and
-moves them into the cache, throws away what the installation has gone past,
-and starts more.  The downloads themselves run as separate processes, so
-they carry on while the installation unpacks; this only has to be called
-often enough to keep them supplied, which once per package is.
+C<prefetch_pump> is where all the work is arranged: it collects the
+downloads that have finished, verifies them and moves them into the cache,
+throws away what the installation has gone past, and starts more.  The only
+thing it waits for is the package about to be installed, and only when its
+containers are being downloaded at that moment; fetching them a second time
+would just compete with the download that is already under way.  The
+downloads themselves run as separate processes, so they carry on while the
+installation unpacks; this only has to be called often enough to keep them
+supplied, which once per package is.
 
 Running the downloader rather than downloading here is what lets this work
 everywhere.  Nothing is forked but a process that immediately becomes the
@@ -1979,11 +1982,11 @@ there is nothing to start; whatever else C<download_file> would have
 chosen is used, and if that is the only choice there is, nothing is
 prefetched.
 
-The installation never waits: C<unpack> takes a container from the cache
-directory if it is there and downloads it itself if it is not, exactly as
-it does without any of this.  Nothing here is a precondition for anything,
-and the checksums recorded in the tlpdb are verified both when a container
-is prefetched and again in C<unpack>.
+Apart from that, the installation never waits: C<unpack> takes a
+container from the cache directory if it is there and downloads it itself
+if it is not, exactly as it does without any of this.  Nothing here is a
+precondition for anything, and the checksums recorded in the tlpdb are
+verified both when a container is prefetched and again in C<unpack>.
 
 How far ahead this runs is bounded by how much is in the cache that the
 installation has not consumed yet: nothing new is started while that
@@ -2217,6 +2220,63 @@ sub _prefetch_reap {
   }
 }
 
+sub _prefetch_await {
+  # The installation is about to unpack the package at $h->{'pos'}.  If a
+  # slot is downloading its containers right now, wait for them instead of
+  # letting unpack fetch them a second time.  The downloaders write each
+  # file under its final name as they go, so one is complete when it has
+  # the size recorded in the tlpdb; the other files of the batch are not
+  # waited for.
+  # ponytail: no timeout of our own, the downloader's retries and timeouts
+  # bound the wait, as they would for unpack's own download.
+  my ($h) = @_;
+  for my $slot (@{$h->{'slots'}}) {
+    next if !defined($slot->{'pid'});
+    my @mine = grep { $_->[4] == $h->{'pos'} } @{$slot->{'items'}};
+    next if !@mine;
+    my $done = sub {
+      for my $i (@mine) {
+        return 0 if (!$i->[2] || $i->[2] eq "-1");  # size unknown
+        my $s = (stat("$slot->{'stage'}/$i->[1]"))[7];
+        return 0 if (!defined($s) || $s != $i->[2]);
+      }
+      return 1;
+    };
+    my $exited = 0;
+    debug("TLUtils::_prefetch_await: waiting for "
+          . join(" ", map { $_->[1] } @mine) . "\n") if !$done->();
+    until ($done->()) {
+      if (waitpid($slot->{'pid'}, POSIX::WNOHANG()) != 0) {
+        $exited = 1;
+        last;
+      }
+      select(undef, undef, undef, 0.1);
+    }
+    # a slot that has exited is published by _prefetch_reap as usual
+    if (!$exited) {
+      my @moved;
+      for my $i (@mine) {
+        my $f = "$slot->{'stage'}/$i->[1]";
+        # rename fails on Windows while the downloader still has the file
+        # open; then wait for it to finish the batch after all
+        last if (!_prefetch_verify($f, $i->[3], $i->[2])
+                 || !rename($f, "$h->{'dir'}/$i->[1]"));
+        push @moved, $i;
+      }
+      if (@moved == @mine) {
+        $slot->{'items'} = [ grep { $_->[4] != $h->{'pos'} }
+                             @{$slot->{'items'}} ];
+        # the rest of the batch is still coming; but if that was the last
+        # of it, the downloader is only exiting, and waiting for that lets
+        # the slot start on the next batch before the installation gets there
+        next if @{$slot->{'items'}};
+      }
+      waitpid($slot->{'pid'}, 0);
+    }
+    _prefetch_reap($h, 0);
+  }
+}
+
 sub prefetch_start {
   my ($fromtlpdb, $what, $opt_src, $opt_doc, $tags) = @_;
   my ($jobs, $budget) = _prefetch_settings();
@@ -2270,13 +2330,15 @@ sub prefetch_start {
 sub prefetch_pump {
   # Called by the installation for every package, with the index it has
   # reached.  Collects whatever has finished, throws away what the
-  # installation has gone past, and starts more.  Nothing waits here.
+  # installation has gone past, and starts more.  Waits only for the
+  # containers of the package at $idx, if they are being downloaded.
   my ($h, $idx) = @_;
   return if !defined($h);
   $h->{'pos'} = $idx if defined($idx);
   _prefetch_reap($h, 0);
   _prefetch_prune($h);
   _prefetch_launch($h);
+  _prefetch_await($h);
 }
 
 sub prefetch_stop {
