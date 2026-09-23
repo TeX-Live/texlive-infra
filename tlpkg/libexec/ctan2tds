@@ -2768,6 +2768,7 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'tikz-mirror-lens',	'\.cwl|' . $standardtex,
  'tikz-qtree',  '(pgf|tikz-)(subpic|q?tree(-compat)?)\.(tex|sty)',
  'tikz-sfc',		'\.code\.tex$',
+ 'tikz-tensor-networks',  'tenkz-language-registry\.tex|' . $standardtex,
  'tikz-trackschematic',	'\.code\.tex$|tic\.sty$', # not *documentation.sty
  'tikzducks',	'(code|-(generic|plain)).tex$|ducks\.sty|\.mkiv$',
  'tikzposter',  'tikzposter[^-].*\.tex|' . $standardtex,
