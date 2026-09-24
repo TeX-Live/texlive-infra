@@ -84,6 +84,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'aastex',      "&MAKEflatten",
  'academicons', "&MAKEflatten",
  'accenti',     "die 'skipping, use bosisio'",
+ 'accessibility',"die 'skipping, obsolete on ctan'",
  'acmtrans',    "die 'skipping, nonfree (nosell) license'",
  'acroflex',    "die 'skipping, per author (dps) request'",
  'acromake',    "die 'skipping, nonfree (nomodify) license'",
@@ -1691,7 +1692,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'a2ping'		=> '&PREHOOK_a2ping',
  'apa6'                 => '&PREHOOK_apa6',
  'apa7'                 => '&PREHOOK_apa7',
-# 'bibtexperllibs'       => '&PREHOOK_bibtexperllibs',
+ 'arabtex-granada'	=> '&PREHOOK_arabtex_granada',
  'cals'                 => '&PREHOOK_cals',
  'changes'		=> '&PREHOOK_changes',
  'chess'                => '&PREHOOK_chess',
@@ -3267,6 +3268,7 @@ $standardsource = '(\.(bat|c|drv|[dem]tx|fea|fdd|ins|mk|sfd|dbj|mbs)'
  'ae',                  '\.mtx|\.etx|\.tex|clean|go|install|makepl',
  'amsldoc-vn',          'NULL',
  'apl',                 ".",                    # everything, simplest
+ 'arabtex-granada',     'NULL',
  'arabxetex',           'NULL',                 # dtx with others, why not
  'axodraw2',		$standardsource . '|test', # in source/ to remove
  'babelbib',            'NULL',                 # dtx with others, why not
@@ -6681,6 +6683,11 @@ sub PREHOOK_apa6 {
 sub PREHOOK_apa7 {
   print "PREHOOK_$package - subdirectories needed for dtx\n";
   &SYSTEM ("mkdir config");
+}
+
+sub PREHOOK_arabtex_granada {
+  print "PREHOOK_$package - delete vendor tree\n";
+  &SYSTEM ("$RM -rf vendor");
 }
 
 sub PREHOOK_bibtexperllibs {

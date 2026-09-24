@@ -24,7 +24,7 @@ my @TLP_working = qw(
     aaai-named aalok aastex abbr abc
     abnt abntex2 abntexto abntexto-ufc abntexto-uece
     aboensis abraces abspos abstract abstyles
-    academicons accanthis accents accessibility accfonts accsupp achemso
+    academicons accanthis accents accfonts accsupp achemso
     acmart acmconf acro acronym acroterm
     active-conf actuarialangle actuarialsymbol
     addfont addliga addlines addtoluatexpath
@@ -53,7 +53,7 @@ my @TLP_working = qw(
     apprendre-a-programmer-en-tex apprends-latex
     apptools apxproof
     arabdoc arabi arabi-add arabic-book arabicfront
-    arabluatex arabtex arabxetex
+    arabluatex arabtex arabtex-granada arabxetex
     aramaic-serto arara archaeologie archaic archivo
     arcs arcs2 arev argumentation
     arimo armtex
