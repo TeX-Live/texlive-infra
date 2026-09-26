@@ -1,0 +1,67 @@
+;;; Inno Setup script to build TeX Live ISO Installer Launcher
+;;
+;; Copyright (C) 2026 Vincent Goulet
+;;
+;; Author: Vincent Goulet
+
+[Setup]
+ArchitecturesAllowed=x64compatible
+ArchitecturesInstallIn64BitMode=x64compatible
+AppName=TeX Live
+AppVerName=TeX Live @version@
+AppPublisherURL=https://tug.org/texlive
+WizardStyle=modern
+PrivilegesRequiredOverridesAllowed=dialog commandline
+DefaultDirName={autopf}
+DisableDirPage=yes
+Uninstallable=no
+OutputBaseFilename=texlive@version@
+Compression=zip/9
+SolidCompression=yes
+
+[Languages]
+Name: "english"; MessagesFile: "compiler:Default.isl";
+Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
+Name: "catalan"; MessagesFile: "compiler:Languages\Catalan.isl"
+Name: "czech"; MessagesFile: "compiler:Languages\Czech.isl"
+Name: "danish"; MessagesFile: "compiler:Languages\Danish.isl"
+Name: "dutch"; MessagesFile: "compiler:Languages\Dutch.isl"
+Name: "finnish"; MessagesFile: "compiler:Languages\Finnish.isl"
+Name: "french"; MessagesFile: "compiler:Languages\French.isl";
+Name: "german"; MessagesFile: "compiler:Languages\German.isl"
+Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
+Name: "norwegian"; MessagesFile: "compiler:Languages\Norwegian.isl"
+Name: "polish"; MessagesFile: "compiler:Languages\Polish.isl"
+Name: "portuguese"; MessagesFile: "compiler:Languages\Portuguese.isl"
+Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
+Name: "slovenian"; MessagesFile: "compiler:Languages\Slovenian.isl"
+Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
+
+[CustomMessages]
+TLCaption=TeX Live ISO Installer Launcher
+TLDescription=Gateway to the installation of TeX Live
+TLMessage=This setup wizard will launch the TeX Live installer from the bundled official ISO image. Follow the instructions in the installer.%n%nNo Internet access is needed during installation.
+french.TLCaption=Lanceur de l'installateur de TeX Live
+french.TLDescription=Passerelle vers l'installation de TeX Live
+french.TLMessage=Cet assistant d'installation va se charger de lancer l'installateur de TeX Live à partir de l'image disque ISO officielle intégrée. Suivez les instructions dans l'installateur.%n%nAucun accès à Internet n'est requis durant l'installation.
+
+[Files] 
+Source: "texlive@version@.iso"; Flags: dontcopy noencryption 
+Source: "start-installer.ps1"; DestDir: "{tmp}"
+
+[Run]
+Filename: "powershell.exe"; \
+  Parameters: "-ExecutionPolicy Bypass -File ""{tmp}\start-installer.ps1"" {tmp}\texlive@version@.iso"; \
+  WorkingDir: {tmp}; Flags: runhidden
+
+[Code] 
+function InitializeSetup: Boolean; 
+begin 
+  ExtractTemporaryFile('texlive@version@.iso');
+  Result := True
+end;
+
+procedure InitializeWizard();
+begin
+  CreateOutputMsgPage(wpWelcome, ExpandConstant('{cm:TLCaption}'), ExpandConstant('{cm:TLDescription}'), ExpandConstant('{cm:TLMessage}'));
+end;

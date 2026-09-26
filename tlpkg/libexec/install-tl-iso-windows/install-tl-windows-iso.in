@@ -1,0 +1,129 @@
+;;; Inno Setup script to build TeX Live ISO Installer Launcher
+;;
+;; Copyright (C) 2026 Vincent Goulet
+;;
+;; Author: Vincent Goulet
+
+[Setup]
+ArchitecturesAllowed=x64compatible
+ArchitecturesInstallIn64BitMode=x64compatible
+AppName=TeX Live
+AppVerName=TeX Live @version@
+AppPublisherURL=https://tug.org/texlive
+WizardStyle=modern
+PrivilegesRequiredOverridesAllowed=dialog commandline
+DefaultDirName={autopf}
+DisableDirPage=yes
+Uninstallable=no
+OutputDir=.
+OutputBaseFilename=install-tl-windows-iso
+Compression=zip/9
+SolidCompression=yes
+
+[Languages]
+Name: "english"; MessagesFile: "compiler:Default.isl";
+Name: "brazilianportuguese"; MessagesFile: "compiler:Languages\BrazilianPortuguese.isl"
+Name: "catalan"; MessagesFile: "compiler:Languages\Catalan.isl"
+Name: "czech"; MessagesFile: "compiler:Languages\Czech.isl"
+Name: "danish"; MessagesFile: "compiler:Languages\Danish.isl"
+Name: "dutch"; MessagesFile: "compiler:Languages\Dutch.isl"
+Name: "finnish"; MessagesFile: "compiler:Languages\Finnish.isl"
+Name: "french"; MessagesFile: "compiler:Languages\French.isl";
+Name: "german"; MessagesFile: "compiler:Languages\German.isl"
+Name: "italian"; MessagesFile: "compiler:Languages\Italian.isl"
+Name: "norwegian"; MessagesFile: "compiler:Languages\Norwegian.isl"
+Name: "polish"; MessagesFile: "compiler:Languages\Polish.isl"
+Name: "portuguese"; MessagesFile: "compiler:Languages\Portuguese.isl"
+Name: "russian"; MessagesFile: "compiler:Languages\Russian.isl"
+Name: "slovenian"; MessagesFile: "compiler:Languages\Slovenian.isl"
+Name: "spanish"; MessagesFile: "compiler:Languages\Spanish.isl"
+
+[CustomMessages]
+TLWelcomeCaption=TeX Live ISO Installer Launcher
+TLWelcomeDescription=Installation of TeX Live from an ISO image
+TLWelcomeMessage=This setup wizard will download the official TeX Live ISO image, and then launch the TeX Live installer.%n%nYou will need to select a repository to download the ISO from on the next page.%n%nDownloading the ISO image will take time. Once the download is complete, no Internet access is needed during the installation.
+TLMirrorCaption=Repository for the ISO image
+TLMirrorDescription=Closer is better
+TLMirrorMessage=Please select a nearby repository to download the ISO image from, then click Next.
+TLMirrorAutomatic=Automatic
+french.TLWelcomeCaption=Lanceur de l'installateur de TeX Live
+french.TLWelcomeDescription=Installation de TeX Live depuis l'image ISO
+french.TLWelcomeMessage=Cet assistant d'installation va télécharger l'image ISO officielle de TeX Live, puis lancer l'installateur de TeX Live.%n%nVous devrez sélectionner un site de téléchargement de l'image ISO à l'écran suivant.%n%nLe téléchargement prendra du temps. Une fois le téléchargement complété, l'accès à Internet n'est plus requis pour l'installation.
+french.TLMirrorCaption=Site de téléchargement de l'image ISO
+french.TLMirrorDescription=Plus près, c'est mieux
+french.TLMirrorMessage=Choisissez un site de téléchargement de l'image ISO près de vous, puis cliquez sur Suivant.
+french.TLMirrorAutomatic=Automatique
+
+[Files] 
+Source: "{tmp}\texlive@version@.iso"; Flags: dontcopy external
+Source: "start-installer.ps1"; DestDir: "{tmp}"
+
+[Run]
+Filename: "powershell.exe"; \
+  Parameters: "-ExecutionPolicy Bypass -File ""{tmp}\start-installer.ps1"" {tmp}\texlive@version@.iso"; \
+  WorkingDir: {tmp}; Flags: runhidden
+
+[Code] 
+var
+  OutputMsgWizardPage: TOutputMsgWizardPage;
+  DownloadPage: TDownloadWizardPage;
+  MirrorPage: TInputOptionWizardPage;
+  Url: String;
+ 
+procedure InitializeWizard();
+begin
+  OutputMsgWizardPage := CreateOutputMsgPage(wpWelcome,
+    ExpandConstant('{cm:TLWelcomeCaption}'),
+    ExpandConstant('{cm:TLWelcomeDescription}'),
+    ExpandConstant('{cm:TLWelcomeMessage}'));
+  
+  MirrorPage := CreateInputOptionPage(OutputMsgWizardPage.ID,
+    ExpandConstant('{cm:TLMirrorCaption}'),
+    ExpandConstant('{cm:TLMirrorDescription}'),
+    ExpandConstant('{cm:TLMirrorMessage}'),
+    True, True);
+  MirrorPage.Add(ExpandConstant('{cm:TLMirrorAutomatic}') + ' (mirrors.ctan.org)');
+    
+  DownloadPage := CreateDownloadPage(
+    SetupMessage(msgWizardPreparing),
+    SetupMessage(msgPreparingDesc),
+    nil);
+  DownloadPage.ShowBaseNameInsteadOfUrl := True;
+end;
+
+function NextButtonClick(CurPageID: Integer): Boolean;
+var
+  Error: String;
+begin
+  if CurPageID = MirrorPage.ID then
+  begin
+    case MirrorPage.SelectedValueIndex of
+      0: Url := 'https://mirrors.ctan.org';
+    end;
+  end;
+  if CurPageID = wpReady then
+  begin
+    DownloadPage.Clear;
+    DownloadPage.Add(
+      Url + '/systems/texlive/Images/texlive@version@.iso',
+      'texlive@version@.iso', '');
+    DownloadPage.Show;
+    try
+      try
+        DownloadPage.Download;
+        Result := True;
+      except
+        if DownloadPage.AbortedByUser then
+          Log('Aborted by user.')
+        else begin
+          Error := Format('%s: %s', [DownloadPage.LastBaseNameOrUrl, GetExceptionMessage]);
+          SuppressibleMsgBox(AddPeriod(Error), mbCriticalError, MB_OK, IDOK);
+        end;
+        Result := False;
+      end;
+    finally
+      DownloadPage.Hide;
+    end;
+  end;
+  Result := True;
+end;
