@@ -1,0 +1,21 @@
+Originally written by Vincent Goulet, 2026.
+
+This directory contains files to build install-tl-iso-windows.exe, the
+TeX Live ISO Installer Launcher for Windows.
+
+TeX Live ISO Installer Launcher provides an installation wizard to
+download the latest TeX Live ISO image, mount the image, and then
+launch the TeX Live installer (at which point no Internet access is
+needed). The wizard cleans up once the installation is complete.
+
+Makefile			Recipes to build the InnoSetup script,
+				the CTAN mirror list and the installer;
+				see the header of the file.
+
+install-tl-iso-windows.in	Input file for make to build the
+				InnoSetup script.
+
+start-installer.ps1		PowerShell script to start
+				'install-tl-windows.bat' from the
+				TeX Live ISO image. Only file included
+				in the installer.
