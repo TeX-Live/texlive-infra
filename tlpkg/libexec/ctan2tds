@@ -2452,6 +2452,7 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'ifis-macros',	'ifis[^-].*.tex',	# not ifis-macros-doc
  'ifmslide',    '[^n]\.(eps|pdf|jpg)|' . $standardtex,  # not ifmman.pdf
  'ijsra',	'ijsra_logo.*|' . $standardtex,
+ 'impe-framework', 'catalog|core|modules|impe-system.tex|' . $standardtex,
  'incgraph',    'incgraph.sty',		# not .doc.sty
  'insbox',      'insbox.tex',
  'install-latex-guide-zh-cn','NULL',	# doc package

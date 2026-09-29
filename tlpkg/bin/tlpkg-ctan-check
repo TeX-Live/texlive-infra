@@ -483,8 +483,8 @@ my @TLP_working = qw(
     ifallfalse iffont ifis-macros ifmslide ifmtarg ifnextok ifoddpage
     ifplatform ifptex ifsym iftex ifthenx ifxptex
     iitem ijmart ijqc ijsra
-    imac image-gallery imakeidx impatient impatient-cn
-    imfellenglish impnattypo import imsproc imtekda
+    imac image-gallery imakeidx imfellenglish impatient impatient-cn
+    impe-framework impnattypo import imsproc imtekda
     incgraph includernw inconsolata inconsolata-nerd-font
     index indextools indextra infufrgs infwarerr
     initials inkpaper inline-images
