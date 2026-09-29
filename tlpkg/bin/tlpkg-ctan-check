@@ -659,7 +659,7 @@ my @TLP_working = qw(
     moreverb morewrites morisawa morse-simple mousik movement-arrows movie15
     mp-gears mp-geom2d mp-neuralnetwork mp3d
     mparhack mparrows mpattern mpchess mpcolornames
-    mpfonts mpgraphics mpkiviat
+    mpfonts mpformulation mpgraphics mpkiviat
     mpman-ru mpostinl mptrees msc msg mslapa msu-thesis mtgreek
     mucproc mugsthesis muling multenum multi-sudoku
     multiaudience multibbl multibib multibibliography
@@ -753,7 +753,7 @@ my @TLP_working = qw(
     piano picinpar pict2e
     pictex pictex2 pictexsum pictochrono picture piechartmp piff pigpen
     pinlabel pinoutikz pitex piton pittetd pixelart pixelarttikz
-    pkfix pkfix-helper pkgloader pkginfograb pkuthss
+    pkfix pkfix-helper pkginfograb pkgloader pkgmeta pkuthss
     pl placeat placeins placeins-plain
     plain-doc plain-grid plain-widow plainpkg plainyr
     plari plantslabels plantuml plates
@@ -1061,7 +1061,7 @@ my @TLP_working = qw(
     xetexref xevlna xfakebold xfor xfrac xgreek xhfill
     xifthen xii xii-lat ximera
     xindex xindy-persian xint xint-regression xintsession xistercian xits
-    xkcdcolors xkeymask xkeyval xlistings xlop xltabular xltxtra
+    xjyutping xkcdcolors xkeymask xkeyval xlistings xlop xltabular xltxtra
     xmeaning xml2pmx xmltex xmpincl xmuthesis xnewcommand
     xoptarg xpatch xpeek xpeekahead xpiano xpicture xpinyin
     xprintlen xpunctuate

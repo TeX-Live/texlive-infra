@@ -1174,6 +1174,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'pitthesis',   "die 'skipping, noinfo license'",
  'pkgcheck',	"die 'skipping, rust compilation + unacceptable program name'",
  'pkginfograb', "&MAKEflatten",
+ 'pkgmeta',	"&MAKEflatten",
  'pl',		"&MAKEflatten",
  'pl-mf',	"die 'skipping, use pl'",
  'pl-qx',       "&MAKEplqx",
