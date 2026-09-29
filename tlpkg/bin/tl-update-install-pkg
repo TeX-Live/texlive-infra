@@ -12,12 +12,13 @@ BEGIN {
   $^W = 1;
   my $me = $0;
   chomp ($thisdir = `pwd`);
+  # $::installer dir == Master, should rename.
   if ($me =~ m!/!) {
     ($::installerdir = $me) =~ s!(.*)/.*$!$1/../..!;
   } else {
     $::installerdir = '../..';
   }
-  chdir ($installerdir) || die "$prg: chdir($installerdir) failed: $!";
+  chdir ($installerdir) || die "$0: chdir($installerdir) failed: $!";
   chomp ($installerdir = `pwd`);
   unshift (@INC, "$::installerdir/tlpkg");
   #
@@ -46,6 +47,11 @@ Generate a .tar.gz file for Unix, a .exe for Windows, and a .zip file
 for all systems containing all the files needed to install TeX Live from
 the network.  An existing directory must be specified as the output
 location.
+
+Also copy install-tl-iso-windows.exe (as-is in the repository) from
+Master/tlpkg/libexec/install-tl-iso-windows/ into the target directory.
+
+Checksum and gpg-sign all output files.
 
 Options:
   -h, --help        Print this message and exit.
@@ -237,11 +243,25 @@ sub install_files {
   $outputdir = abs_path ($outputdir);
   info ("$prg: Installing to $outputdir\n");
   for my $f ("install-tl-unx.tar.gz", "install-tl.zip",
-             "install-tl-windows.exe") {
-    copy ("$tmpdir/$f", $outputdir);
-    xsystem ("cd $outputdir && $TeXLive::TLConfig::ChecksumProgram $f >$f.$TeXLive::TLConfig::ChecksumExtension");
-    xsystem ("cd $outputdir && rm -f $f.$TeXLive::TLConfig::ChecksumExtension.asc");
-    xsystem ("cd $outputdir && $opt_gpgcmd $f.$TeXLive::TLConfig::ChecksumExtension");
+             "install-tl-windows.exe", "install-tl-iso-windows.exe") {
+    my $srcdir;
+    if ($f eq "install-tl-iso-windows.exe") {
+      # The Windows download-and-use-iso installer is prebuilt; just copy it.
+      $srcdir = "$::installerdir/tlpkg/libexec/install-tl-iso-windows";
+    } else {
+      $srcdir = $tmpdir;
+    }
+    copy ("$srcdir/$f", $outputdir);
+    #
+    # Abbreviations to make the long command invocations to make the
+    # checksums and gpg signatures a bit more readable:
+    my $in_outdir = "cd $outputdir &&";
+    my $ckprog = $TeXLive::TLConfig::ChecksumProgram;
+    my $ckext = $TeXLive::TLConfig::ChecksumExtension;
+    #
+    xsystem ("$in_outdir $ckprog $f >$f.$ckext"); # make checksum
+    xsystem ("$in_outdir rm -f $f.$ckext.asc");   # clear old .asc
+    xsystem ("$in_outdir $opt_gpgcmd $f.$ckext"); # sign checksum
     system ('ls', '-l', "$outputdir/$f");
   }
 
