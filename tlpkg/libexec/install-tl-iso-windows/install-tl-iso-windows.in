@@ -25,7 +25,7 @@ SolidCompression=yes
 
 [Languages]
 Name: "english"; MessagesFile: "compiler:Default.isl";
-; Name: "chinese"; MessagesFile: "Chinese.isl";
+Name: "chineseSimplified"; MessagesFile: "compiler:Languages\ChineseSimplified.isl";
 Name: "czech"; MessagesFile: "compiler:Languages\Czech.isl";
 Name: "danish"; MessagesFile: "compiler:Languages\Danish.isl";
 Name: "dutch"; MessagesFile: "compiler:Languages\Dutch.isl";
@@ -58,6 +58,13 @@ french.TLMirrorCaption=Site de téléchargement de l'image ISO
 french.TLMirrorDescription=Plus près, c'est mieux
 french.TLMirrorMessage=Choisissez un site de téléchargement de l'image ISO près de vous, puis cliquez sur Suivant.
 french.TLMirrorAutomatic=Automatique
+chineseSimplified.TLWelcomeCaption=TeX Live ISO 安装程序启动器
+chineseSimplified.TLWelcomeDescription=从 ISO 镜像安装 TeX Live
+chineseSimplified.TLWelcomeMessage=本安装向导将下载官方 TeX Live ISO 镜像，然后启动 TeX Live 安装程序。%n%n您需要在下一页选择用于下载 ISO 镜像的站点。%n%n下载 ISO 镜像需要一些时间。下载完成后，安装过程中无需连接互联网。
+chineseSimplified.TLMirrorCaption=ISO 镜像下载站点
+chineseSimplified.TLMirrorDescription=越近越好
+chineseSimplified.TLMirrorMessage=请选择一个离您较近的 ISO 镜像下载站点，然后点击“下一步”。
+chineseSimplified.TLMirrorAutomatic=自动
 
 [Files] 
 Source: "{tmp}\texlive.iso"; Flags: dontcopy external
