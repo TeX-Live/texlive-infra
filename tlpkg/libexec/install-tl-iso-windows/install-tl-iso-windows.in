@@ -7,11 +7,15 @@
 ;; by the Free Software Foundation, either version 2 of the License,
 ;; or (at your option) any later version.
 
+#define version <year>
+#define innoscript <installer>
+#define launcher <script>
+
 [Setup]
 ArchitecturesAllowed=x64compatible
 ArchitecturesInstallIn64BitMode=x64compatible
 AppName=TeX Live
-AppVerName=TeX Live @version@
+AppVerName=TeX Live {#version}
 AppPublisherURL=https://tug.org/texlive
 WizardStyle=modern
 PrivilegesRequiredOverridesAllowed=dialog commandline
@@ -19,7 +23,7 @@ DefaultDirName={autopf}
 DisableDirPage=yes
 Uninstallable=no
 OutputDir=.
-OutputBaseFilename=@innoscript@
+OutputBaseFilename={#innoscript}
 Compression=zip/9
 SolidCompression=yes
 
@@ -68,11 +72,11 @@ chineseSimplified.TLMirrorAutomatic=自动
 
 [Files] 
 Source: "{tmp}\texlive.iso"; Flags: dontcopy external
-Source: "@launcher@"; DestDir: "{tmp}"
+Source: "{#launcher}"; DestDir: "{tmp}"
 
 [Run]
 Filename: "powershell.exe"; \
-  Parameters: "-ExecutionPolicy Bypass -File ""{tmp}\@launcher@"" {tmp}\texlive.iso"; \
+  Parameters: "-ExecutionPolicy Bypass -File ""{tmp}\{#launcher}"" {tmp}\texlive.iso"; \
   WorkingDir: {tmp}; Flags: runhidden
 
 [Code] 

@@ -51,20 +51,21 @@ mirrors:
 .PHONY: innoscript
 innoscript: ${MIRRORLIST}
 	@printf "%s\n" "----- Building the Inno script..."
-	awk 'BEGIN { FS = "," } \
-	     /@version@/ { sub("@version@", "${TLVERSION}") } \
-	     /@innoscript@/ { sub("@innoscript@", "${INNOSCRIPT:.iss=}") } \
-	     /@launcher@/ { sub("@launcher@", "${LAUNCHER}") } \
+	awk '/^#define / { \
+	         if ($$2 == "version")    $$3 = "\"${TLVERSION}\""; \
+	         if ($$2 == "innoscript") $$3 = "\"${INNOSCRIPT:.iss=}\""; \
+	         if ($$2 == "launcher")   $$3 = "\"${LAUNCHER}\"" \
+	     } \
 	     { \
 	         print; \
 	         if (/MirrorPage\.Add/) { \
-	             while (getline < "${MIRRORLIST}") \
+	             FS = ","; while (getline < "${MIRRORLIST}") \
 	                 print "  MirrorPage.Add(\047" $$1 " (" $$2 ")\047);"; \
 	             close("ctan-mirrors.csv") \
 	         } \
 	         else if (/0: Url :=/) { \
 	             print; \
-	             while (getline < "${MIRRORLIST}") \
+	             FS = ","; while (getline < "${MIRRORLIST}") \
 	                 print "      " ++i ": Url := \047" $$3 "\047;" \
 	         } \
 	     }' ${INNOSCRIPT:.iss=.in} > ${INNOSCRIPT}
