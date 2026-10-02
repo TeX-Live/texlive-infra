@@ -27,17 +27,16 @@ verbose=
 
 while test $# -gt 0; do
   case $1 in
-  -o)           shift; instdir=$1;;
-  -p|--profile) shift; profile=$1;;
-  -P|--parallel)
-               parallel="TL_PARALLEL_PREFETCH=auto TL_PREFETCH_WINDOW_MB=200";;
-  -q|--quiet)   quiet=true;;
-  -r|--repo)    shift; repo=$1;;
+  -o)            shift; instdir=$1;;
+  -p|--profile)  shift; profile=$1;;
+  -P|--parallel) parallel=TL_PREFETCH=auto;;
+  -q|--quiet)    quiet=true;;
+  -r|--repo)     shift; repo=$1;;
   -strict|--strict) strict=-strict;;
-  -sz|--sizes)  output_sizes=true;;
-  -v|-vv)       verbose=$1;;
-  --help)       echo "ustl. sorry."; exit 0;;
-  --version)    echo "$vc_id"; exit 0;;
+  -sz|--sizes)   output_sizes=true;;
+  -v|-vv)        verbose=$1;;
+  --help)        echo "ustl. sorry."; exit 0;;
+  --version)     echo "$vc_id"; exit 0;;
   *) echo "$0: unrecognized argument \`$1'." >&2
      exit 1;;
   esac

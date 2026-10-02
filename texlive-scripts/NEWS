@@ -1,6 +1,20 @@
 (This file public domain.  Originally written by Norbert Preining and
 Karl Berry, 2010.)
 
+<p><b>tlmgr and install-tl tbd</b>
+<li>new option <tt>--prefetch</tt> and environment variable
+    <tt>TEXLIVE_PREFETCH</tt> to download packages in parallel.
+<li>add aria2c as another external downloader.
+<li>prefer <tt>TEXLIVE_*</tt> to <tt>TL_*</tt> for all environment
+    variable names:
+    <ul>
+    <li><tt>TEXLIVE_DOWNLOAD_PROGRAM</tt>, <tt>TEXLIVE_DOWNLOAD_ARGS</tt>
+    <li><tt>TEXLIVE_GNUPG</tt>
+    <li><tt>TEXLIVE_JSONMODE</tt>
+    </ul>
+<li>new install launcher for Windows, install-tl-iso-windows,
+    which downloads the released iso and then starts a local installation.
+
 <p><b>infra 79982 (released 15aug26):</b>
 <li>don't complain about a missing texlive-catalogue-only.tlpdb,
 even on Windows. (TLPDB.pm r79981)
