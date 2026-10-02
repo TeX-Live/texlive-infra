@@ -908,7 +908,7 @@ my @TLP_working = qw(
     strands stretchy stricttex string-diagrams stringenc stringstrings
     structmech struktex
     sttools stubs studenthandouts sty2dtx styledcmd styleitems
-    suanpan suanpan-l3
+    suai-report suanpan suanpan-l3
     subdocs subdepth subeqn subeqnarray
     subfig subfigmat subfigure subfiles subfloat substances
     substnote substr subsupscripts subtext
