@@ -436,7 +436,8 @@ my @TLP_working = qw(
     gmdoc gmdoc-enhance
     gmiflink gmp gmutils gmverb gmverse gnuplottex
     go gobble gofonts gost gothic gotoh
-    grabbox gradient-text gradientframe grading-scheme gradstudentresume
+    grabbox gradbars gradient-text gradientframe
+    grading-scheme gradstudentresume
     grafcet grant
     graph35 graphbox graphics
     graphics-cfg graphics-def graphics-pln
