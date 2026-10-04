@@ -949,6 +949,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'mactex',	"die 'skipping, whole distribution'",
  'magra',	"&MAKEflatten",
  'magyar',      "die 'skipping, use babel-hungarian'",
+ 'mahjong-tiles',"die 'skipping, generic filenames under assets/, no reply to 13sep26 email'",
  'make-env',    "die 'skipping, no license, too old to bother with'",
  'makebarcode', "&MAKEcopy",
  'makecell',    "&MAKEnosymlinks",
