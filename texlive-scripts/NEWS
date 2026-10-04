@@ -1,7 +1,7 @@
 (This file public domain.  Originally written by Norbert Preining and
 Karl Berry, 2010.)
 
-<p><b>tlmgr and install-tl tbd</b>
+<p><b>tlmgr and install-tl 80485:</b>
 <li>new option <tt>--prefetch</tt> and environment variable
     <tt>TEXLIVE_PREFETCH</tt> to download packages in parallel.
 <li>add aria2c as another external downloader.
@@ -12,6 +12,8 @@ Karl Berry, 2010.)
     <li><tt>TEXLIVE_GNUPG</tt>
     <li><tt>TEXLIVE_JSONMODE</tt>
     </ul>
+
+<p><b>installation (released 1oct26):</b>
 <li>new install launcher for Windows, install-tl-iso-windows,
     which downloads the released iso and then starts a local installation.
 
