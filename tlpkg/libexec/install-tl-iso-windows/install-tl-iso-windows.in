@@ -56,11 +56,9 @@ TLMirrorDescription=Closer is better.
 TLMirrorSubCaption=Please select a nearby repository to download the ISO image from, then click Next.
 TLMirrorAutomatic=Automatic
 TLUpdateCaption=Update TeX Live?
-TLUpdateDescription=Start up-to-date.
-TLUpdateSubCaption=The wizard may now update the TeX Live infrastructure and all installed packages to the latest version available.%n%nThis optional step may take a lot of time. You may also update later using TeX Live Manager.%n%nIf you proceed, you will have to locate the installation folder of TeX Live on the next page.
+TLUpdateSubCaption=The wizard may now update the TeX Live infrastructure and all installed packages to the latest versions available.%n%nThis optional step may take a lot of time. You may also update later using TeX Live Manager.%n%nIf you proceed, you will have to specify the installation folder of TeX Live on the next page.
 TLDirCaption=TeX Live Installation Folder
-TLDirDescription=Locate where TeX Live files are installed.
-TLDirSubCaption=Choose the folder containing the TeX Live {#version} tree. The default location is preselected below.%n%nTo continue, click Next. If you would like to select a different folder, click Browse.
+TLDirSubCaption=Choose the folder containing the TeX Live {#version} tree.%n%nThe TeX Live installer default location is preselected below. To continue, click Next.%n%nIf you chose a different folder in the TeX Live installer, click Browse to select it.
 TLFailedUpdate=Update failed. Check the TeX Live path.
 french.TLWelcomeCaption=Lanceur de l'installateur de TeX Live
 french.TLWelcomeDescription=Installation de TeX Live depuis l'image ISO.
@@ -70,11 +68,9 @@ french.TLMirrorDescription=Plus près, c'est mieux.
 french.TLMirrorSubCaption=Choisissez un site de téléchargement de l'image ISO près de vous, puis cliquez sur Suivant.
 french.TLMirrorAutomatic=Automatique
 french.TLUpdateCaption=Mettre à jour TeX Live?
-french.TLUpdateDescription=Pour débuter à la fine pointe.
-french.TLUpdateSubCaption=L'assistant peut maintenant mettre à jour l'infrastructure de TeX Live et tous ses paquetages vers les plus récentes versions disponibles.%n%nCette étape optionnelle peut prendre beaucoup de temps. Vous pouvez aussi effectuer la mise à jour plus tard avec TeX Live Manager.%n%nSi vous allez de l'avant, vous devrez identifier le dossier d'installation de TeX Live à l'écran suivant.
+french.TLUpdateSubCaption=L'assistant peut maintenant mettre à jour l'infrastructure de TeX Live et tous ses paquetages vers les plus récentes versions disponibles.%n%nCette étape optionnelle peut prendre beaucoup de temps. Vous pouvez aussi effectuer la mise à jour plus tard avec TeX Live Manager.%n%nSi vous allez de l'avant, vous devrez spécifier le dossier d'installation de TeX Live à l'écran suivant.
 french.TLDirCaption=Dossier d'installation de TeX Live
-french.TLDirDescription=Indentifiez où se trouvent les fichiers de TeX Live.
-french.TLDirSubCaption=Choisir le dossier qui contient l'arborescence de TeX Live {#version}. L'emplacement par défaut est présélectionné ci-dessous.%n%nPour continuer cliquer sur Suivant. Pour sélectionner un dossier, cliquer sur Parcourir.
+french.TLDirSubCaption=Choisir le dossier qui contient l'arborescence de TeX Live {#version}. L'emplacement par défaut de l'installateur de TeX Live est présélectionné ci-dessous. Pour continuer cliquer sur Suivant.%n%nSi vous avez choisi un autre emplacement dans l'installateur de TeX Live, cliquer sur Parcourir pour le sélectionner.
 french.TLFailedUpdate=Échec de la mise à jour. Vérifiez le chemin d'accès de TeX Live.
 chineseSimplified.TLWelcomeCaption=TeX Live ISO 安装程序启动器
 chineseSimplified.TLWelcomeDescription=从 ISO 镜像安装 TeX Live
@@ -125,14 +121,14 @@ begin
 
   UpdatePage := CreateInputOptionPage(wpInstalling + 1,
     ExpandConstant('{cm:TLUpdateCaption}'),
-    ExpandConstant('{cm:TLUpdateDescription}'),
+    '',
     ExpandConstant('{cm:TLUpdateSubCaption}'),
     False, False);
   UpdatePage.Add('Update all packages to current version');
   
   TeXLiveDirPage := CreateInputDirPage(UpdatePage.ID, 
     ExpandConstant('{cm:TLDirCaption}'),
-    ExpandConstant('{cm:TLDirDescription}'),
+    '',
     ExpandConstant('{cm:TLDirSubCaption}'),
     False, '');
   TeXLiveDirPage.Add('');
