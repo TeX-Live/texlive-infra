@@ -700,6 +700,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'he-le-na',    "die 'skipping, nonfree (shareware) license'",
  'helmholtz-ellis-ji-notation', "&MAKEflatten",
  'helvetic',	"die 'skipping, part of urw-base35, frozen'",
+ 'hauthesis',	"&MAKEflatten",
  'heros-otf',	"&MAKEflatten",
  'hershey',	"die 'skipping, ancient font'",
  'heuristica',	"&MAKEflatten",
@@ -3321,6 +3322,7 @@ $standardsource = '(\.(bat|c|drv|[dem]tx|fea|fdd|ins|mk|sfd|dbj|mbs)'
  'gckanbun',		'NULL',			# leave makefile
  'geometry-de',         'NULL',                 # keep together
  'grverb',              '\.vpl|' . $standardsource,
+ 'hauthesis',		'NULL',
  'hicite',		'NULL',
  'hypdestopt',		'NULL',
  'hyper',               '\.pl|' . $standardsource,
