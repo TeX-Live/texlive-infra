@@ -1732,6 +1732,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'latex2e-help-texinfo-spanish' => '&PREHOOK_latex2e_help_texinfo_spanish',
  'lilyglyphs'           => '&PREHOOK_lilyglyphs',
  'lollipop'             => '&PREHOOK_flatten1',
+ 'lucidcv'		=> '&PREHOOK_lucidcv',
  'makegobbler'          => '&PREHOOK_makegobbler',
  'matapli'              => '&PREHOOK_flatten1',
  'mathspic'             => '&PREHOOK_mathspic',
@@ -5479,11 +5480,11 @@ sub runjob {
   return $status;
 }
 
-# Remove all files matching something in $KILLPATT.
+# Remove all files (not directories) matching something in $KILLPATT.
 # Also remove .ps files for which we have a .pdf.
 #
 # if MORE is true, remove additional files matching something in
-# $moreclean and create a README.TEXLIVE which lists the removed files.
+# $moreclean and create a README.TEXLIVE file which lists the removed files.
 # As a kludge (once used for rangen and marvosym, now for sectionbox and
 # xymtex), if KILLPATT starts with a directory path (e.g., doc/), we cd
 # to that directory before globbing (and cd back at the end).
@@ -5491,9 +5492,8 @@ sub runjob {
 # The NOTCTAN argument is used for microtype, where we have to remove
 # derived files which don't exist on CTAN.
 #
-# (Switching all the kill patterns to globs, so we could just use the
-# glob function, seemed too ugly.  And removing the file in a posthook
-# would have meant a separate fn for README.TEXLIVE, also ugly.)
+# Switching all the kill patterns to globs, so we could just use the
+# glob function, seemed too ugly.
 #
 sub killfiles {
    my ($killpatt,$more,$notctan) = @_;
@@ -5531,36 +5531,8 @@ sub killfiles {
 
    if ($more && @delfiles) {
      # create/update README.TEXLIVE.
-     open (RTL, ">README.TEXLIVE") || warn "open(>README.TEXLIVE) failed: $!";
-     print RTL <<"EOF";
-The files below have been removed in the TeX Live installation of
-the current package, possibly because of missing source (e.g., a
-PDF with no source), possibly because their only purpose is to support
-nonfree fonts or other software, possibly for other reasons.
-More info: https://tug.org/texlive/pkgcontrib.html#requirements
-
-If this is a concern, please contact the package maintainer.
-
-EOF
-     if (! $notctan) {
-       # get package url on CTAN
-       my $ctan_url = '.';
-       chomp (my $ctan_dir = `tlpkginfo --ctan-dir $packagedir`);
-       if (not $?) {
-         $ctan_dir =~ s!$ctan_root/!!;
-         $ctan_url = " at\n\thttps://mirror.ctan.org/$ctan_dir";
-       }
-       print <<CTAN;
-You can find these files on CTAN$ctan_url.
-
-CTAN
-     }
-     for my $f (@delfiles) {
-       print RTL "\t$f\n";
-     }
-     close RTL;
+     &create_README_TEXLIVE (! $notctan, @delfiles);
    }
-
    # if we cd'd, cd back.
    &xchdir ($origdir) if $origdir;
 
@@ -5597,6 +5569,41 @@ sub runfonts {
          }
          &SYSTEM("$MV $FileBase.tfm $DEST/fonts/tfm/$Foundry/$package");
     }
+}
+
+
+# Create a file README.TEXLIVE in the current directory, reporting that
+# @delfiles have been removed in TL. If first arg $SHOWCTAN is true,
+# show link to CTAN directory.
+# 
+sub create_README_TEXLIVE {
+  my ($showctan, @delfiles) = @_;
+  open (RTL, ">README.TEXLIVE") || warn "open(>README.TEXLIVE) failed: $!";
+  print RTL <<"EOF";
+The files below have been removed in the TeX Live installation of
+the current package, possibly because of missing source (e.g., a
+PDF with no source), possibly because their only purpose is to support
+nonfree fonts or other software, possibly because they duplicate files
+from other packages, possibly for other reasons.
+More info: https://tug.org/texlive/pkgcontrib.html#requirements
+
+If this is a concern, please contact the package maintainer.
+
+EOF
+  for my $f (@delfiles) {
+    print RTL "\t$f\n";
+  }
+  if ($showctan) {
+    # get package url on CTAN
+    my $ctan_url = '.';
+    chomp (my $ctan_dir = `tlpkginfo --ctan-dir $packagedir`);
+    if (! $?) {
+      $ctan_dir =~ s!$ctan_root/!!;
+      $ctan_url = " at\n\thttps://mirror.ctan.org/$ctan_dir";
+    }
+    print RTL "\nYou can find these files on CTAN$ctan_url\n\n";
+  }
+  close RTL;
 }
 
 
@@ -6695,6 +6702,7 @@ sub PREHOOK_apa7 {
 sub PREHOOK_arabtex_granada {
   print "PREHOOK_$package - delete vendor tree\n";
   &SYSTEM ("$RM -rf vendor");
+  &create_README_TEXLIVE (1, "vendor/");
 }
 
 sub PREHOOK_bibtexperllibs {
@@ -6867,6 +6875,12 @@ sub PREHOOK_lilyglyphs {
   print "PREHOOK_$package - mv */*.py scripts for specialscripts, rm ~\n";
   &SYSTEM ("$MV scripts/* .");
   &SYSTEM ("find -name \*~ | xargs $RM");
+}
+
+sub PREHOOK_lucidcv {
+  print "PREHOOK_$package - delete dup fonts\n";
+  &SYSTEM ("$RM -rf fonts");
+  &create_README_TEXLIVE (1, "fonts/");
 }
 
 sub PREHOOK_makegobbler {

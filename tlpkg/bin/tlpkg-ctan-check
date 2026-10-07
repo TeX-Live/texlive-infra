@@ -607,7 +607,7 @@ my @TLP_working = qw(
     luatbls luatex85 luatexbase luatexja luatexko luatextra
     luatex-cn luatex-type-definitions luatikz
     luatodonotes luatruthtable luavlna luaxml
-    lucide-admonitions lucide-icons luciole lutabulartools
+    lucidcv lucide-admonitions lucide-icons luciole lutabulartools
     luwa-ul luwiantype lwarp lxfonts lxgw-fonts ly1 lydtype lyluatex
   macrolist macros2e macroswap mafr
     magaz magicnum magicthegathering magicwatermark magra
@@ -620,7 +620,7 @@ my @TLP_working = qw(
     marginfit marginfix marginnote maritime markdown marvosym
     matapli matc3 matc3mem match_parens
     math-into-latex-4 math-operator
-    mathabx mathabx-type1 mathador mathalpha mathastext
+    mathabx mathabx-type1 mathador mathaidisclose mathalpha mathastext
     mathcommand mathcomp mathdesign mathdots mathexam
     mathfam256 mathfixs mathfont mathformule mathgreeks
     mathlig mathpartir mathpazo mathpunctspace
