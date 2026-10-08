@@ -1463,6 +1463,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'taupin',      "die 'skipping, noinfo license'",
  'taylor',      "die 'skipping, nonfree'",
  'tclldoc',     "die 'skipping, use tcldoc'",
+ 'tcode',	"die 'skipping, non-unique filenames'",
  'technica',    "die 'skipping, generic .sty names'",
  'telugu',	"die 'skipping, old language support, await request'",
  'template',    "die 'skipping, use xpackages'",
