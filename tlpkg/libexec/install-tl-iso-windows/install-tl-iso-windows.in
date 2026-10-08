@@ -79,6 +79,11 @@ chineseSimplified.TLMirrorCaption=ISO 镜像下载站点
 chineseSimplified.TLMirrorDescription=越近越好
 chineseSimplified.TLMirrorSubCaption=请选择一个离您较近的 ISO 镜像下载站点，然后点击“下一步”。
 chineseSimplified.TLMirrorAutomatic=自动
+chineseSimplified.TLUpdateCaption=更新 TeX Live？
+chineseSimplified.TLUpdateSubCaption=向导现在可以将 TeX Live 的基础结构和所有已安装的软件包更新到可用的最新版本。%n%n此可选步骤可能耗时很长。您也可以稍后使用 TeX Live Manager 进行更新。%n%n如果继续，您将需要在下一页指定 TeX Live 的安装文件夹。
+chineseSimplified.TLDirCaption=TeX Live 安装文件夹
+chineseSimplified.TLDirSubCaption=选择包含 TeX Live {#version} 目录树的文件夹。%n%n下面已预选 TeX Live 安装程序的默认位置。要继续，请点击“下一步”。%n%n如果您在 TeX Live 安装程序中选择了其他文件夹，请点击“浏览”进行选择。
+chineseSimplified.TLFailedUpdate=更新失败。请检查 TeX Live 路径。
 
 [Files] 
 Source: "{tmp}\texlive.iso"; Flags: dontcopy external
