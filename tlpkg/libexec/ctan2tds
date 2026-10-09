@@ -3579,6 +3579,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'hanzibox'	=> 'etex',
  'hecthese'	=> 'etex',
  'hf-tikz'      => 'tex',
+ 'hithesis'	=> 'etex',
  'hitszbeamer'	=> 'tex',
  'hobby'	=> 'tex',
  'hologo'	=> 'tex -8bit',
