@@ -1051,7 +1051,7 @@ my @TLP_working = qw(
     was wasy wasy-type1 wasysym webguide webquiz weiqi westlakethesis
     whatsnote wheelchart
     widetable widows-and-orphans williams willowtreebook
-    windycity withargs witharrows
+    windycity wiseref withargs witharrows
     wnri wnri-latex wordcloud wordcount wordle wordlike worldflags worksheet
     wrapfig wrapfig2 wrapstuff wrapstuff-doc-en
     writeongrid wsemclassic wsuipa wtref
