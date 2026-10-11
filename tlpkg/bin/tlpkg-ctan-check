@@ -439,7 +439,7 @@ my @TLP_working = qw(
     grabbox gradbars gradient-text gradientframe
     grading-scheme gradstudentresume
     grafcet grant
-    graph35 graphbox graphics
+    graph35 graphbox graphicnovel graphics
     graphics-cfg graphics-def graphics-pln
     graphicx-psmin graphicscache graphicxbox graphicxpsd
     graph-theory-symbol graphpaper graphviz gratzer-color-scheme grayhints
@@ -452,7 +452,7 @@ my @TLP_working = qw(
   h2020proposal ha-prosper hackthefootline hacm hadith
     hagenberg-thesis halloweenmath
     hamnosys handin handout handoutwithnotes hands handstroke
-    hang hanging hanoi hanzibox
+    hang hanging hangulmath hanoi hanzibox
     happy4th har2nat haranoaji haranoaji-extra
     hardwrap harmony harnon-cv harpoon
     harvard harveyballs harvmac hatching hausarbeit-jura hauthesis
@@ -563,7 +563,7 @@ my @TLP_working = qw(
     libris lie-hasse liederbuch liftarm
     light-latex-make ligtype lilyglyphs limap limecv
     lineara linearregression linebreaker linegoal
-    lineno ling-macros linguex linguexx linguisticspro linguistix
+    lineno linesys ling-macros linguex linguexx linguisticspro linguistix
     linkedthm linop
     lion-msc lipsum lisp-on-tex
     listbib listing listings listings-ext listingsutf8 listlbls listliketab
