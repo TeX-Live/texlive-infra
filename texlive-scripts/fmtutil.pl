@@ -61,6 +61,7 @@ use Cwd;
 # call functions with TeXLive::TLUtils prefix, and makes it easier to
 # find and if necessary remove references to TLUtils
 use TeXLive::TLUtils qw(wndws);
+use TeXLive::TLConfig;
 
 require TeXLive::TLWinGoo if wndws();
 
@@ -149,6 +150,7 @@ our @cmdline_options = (  # in same order as help message
   "no-error-if-no-format",
   "nohash",
   "parallel:s",
+  "no-parallel",
   "recorder",
   "refresh",
   "status-file=s",
@@ -675,10 +677,10 @@ Run $prg --help for full documentation of fmtutil.
 # number of formats to build at the same time, from --parallel[=N] or FMTUTIL_PARALLEL
 #
 sub parallel_jobs {
-  # a plain --parallel leaves '' in $opts{'parallel'} but we want it to be auto
-  $opts{'parallel'} = 'auto' if (defined($opts{'parallel'}) && $opts{'parallel'} eq '');
-  my $n = defined($opts{'parallel'}) ? $opts{'parallel'} : (
-    defined($ENV{'FMTUTIL_PARALLEL'}) ? $ENV{'FMTUTIL_PARALLEL'} : '' );
+  TeXLive::TLUtils::setup_prefetch_parallel_env_var(
+    'FMTUTIL_PARALLEL', 'parallel', 'no-parallel', \%opts, $TeXLive::TLConfig::DefaultFmtutilParallelPolicy
+  );
+  my $n = $ENV{'FMTUTIL_PARALLEL'};
   # 0 and 1 both are the same, no parallel
   return 1 if (!defined($n) || $n eq '' || $n eq '0' || $n eq '1' || $opts{'dry-run'} || $mktexfmtMode);
   if ($n eq 'auto') {
