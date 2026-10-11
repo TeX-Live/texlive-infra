@@ -1,6 +1,13 @@
 (This file public domain.  Originally written by Norbert Preining and
 Karl Berry, 2010.)
 
+<p><b>tlmgr, install-tl, fmtutil 80599:</b>
+<li>parallel downloading via prefetch is now the default for tlmgr and
+install-tl; can be disabled with <tt>--no-prefetch</tt>, or
+<tt>TEXLIVE_PREFETCH=0</tt>.
+<li>fmtutil now builds formats in parallel by default; can be disabled
+with <tt>fmtutil --no-parallel</tt> or <tt>FMTUTIL_PARALLEL=0</tt>.
+
 <p><b>tlmgr and install-tl 80485:</b>
 <li>new option <tt>--prefetch</tt> and environment variable
     <tt>TEXLIVE_PREFETCH</tt> to download packages in parallel.

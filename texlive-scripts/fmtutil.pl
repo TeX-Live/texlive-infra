@@ -674,15 +674,18 @@ Run $prg --help for full documentation of fmtutil.
 }
 
 #  parallel_jobs
-# number of formats to build at the same time, from --parallel[=N] or FMTUTIL_PARALLEL
+# number of formats to build at the same time, from --parallel[=N] or
+# FMTUTIL_PARALLEL envvar.
 #
 sub parallel_jobs {
   TeXLive::TLUtils::setup_prefetch_parallel_env_var(
-    'FMTUTIL_PARALLEL', 'parallel', 'no-parallel', \%opts, $TeXLive::TLConfig::DefaultFmtutilParallelPolicy
+    'FMTUTIL_PARALLEL', 'parallel', 'no-parallel', \%opts,
+    $TeXLive::TLConfig::DefaultFmtutilParallelPolicy
   );
   my $n = $ENV{'FMTUTIL_PARALLEL'};
   # 0 and 1 both are the same, no parallel
-  return 1 if (!defined($n) || $n eq '' || $n eq '0' || $n eq '1' || $opts{'dry-run'} || $mktexfmtMode);
+  return 1 if (!defined($n) || $n eq '' || $n eq '0' || $n eq '1'
+               || $opts{'dry-run'} || $mktexfmtMode);
   if ($n eq 'auto') {
     if (wndws()) {
       $n = $ENV{'NUMBER_OF_PROCESSORS'};
@@ -1694,11 +1697,14 @@ Options:
                            is missing, if it is included in the list.
   --no-strict             exit successfully even if a format fails to build
   --nohash                don't update ls-R files
-  --parallel[=auto|N]     build up to N formats concurrently; without N or auto,
-                           the number of CPUs (at most 8). Setting N to 0
-                           disables concurrent building.
-                           Can be configured also via env var FMTUTIL_PARALLEL
-                           (but empty env var does not trigger auto)
+  --parallel[=auto|N]     build up to N formats concurrently; with "auto"
+                            or with no value given, use the number of CPUs
+                            or 8, whichever is smaller.
+                          Specifying "0" disables concurrent building.
+                          Can also be configured with the environment
+                            variable FMTUTIL_PARALLEL; if that is 
+                            set to the empty string, concurrent building
+                            is disabled.
   --recorder              pass the -recorder option and save .fls files
   --refresh               recreate only existing format files
   --status-file FILE      append status information about built formats to FILE
