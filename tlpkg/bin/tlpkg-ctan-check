@@ -22,7 +22,7 @@ my @TLP_working = qw(
   12many 2up
   a0poster a2ping a4wide a5comb
     aaai-named aalok aastex abbr abc
-    abnt abntex2 abntexto abntexto-ufc abntexto-uece
+    abnt abntex2 abntex2-ufv abntexto abntexto-ufc abntexto-uece
     aboensis abraces abspos abstract abstyles
     academicons accanthis accents accfonts accsupp achemso
     acmart acmconf acro acronym acroterm
@@ -151,7 +151,7 @@ my @TLP_working = qw(
     bibleref bibleref-french bibleref-german bibleref-lds bibleref-mouth
     bibleref-parse bibleref-sbl bibletext
     biblist bibtex bibtexperllibs bibtools bibtopic
-    bibtopicprefix bibexport bibunits
+    bibtopicprefix bibexport bibstyles-ru bibunits
     bidi bidi-atbegshi bidicontour bidihl
     bidipagegrid bidipresentation bidishadowtext
     bigfoot bigintcalc bigints bilingualpages binarytree binomexp
@@ -749,7 +749,7 @@ my @TLP_working = qw(
     phaistos phfcc phfextendedabstract phffullpagefigure
     phfnote phfparen phfqit phfquotetext
     phfsvnwatermark phfthm
-    philex philokalia philosophersimprint phimisci
+    philex philokalia philosophersimprint philphys phimisci
     phonenumbers phonetic phonrule phosphoricons photo photobook phtitration
     physconst physics physics2 physics3 physics-patch physunits
     piano picinpar pict2e

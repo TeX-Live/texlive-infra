@@ -1787,6 +1787,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
 
 %posthook = (
  'acmart'		=> '&POSTacmart',
+ 'abntex2-ufv'		=> '&POST_onelevel',
  'afperpack'		=> '&POST_onelevel',
  'albatross'		=> '&POST_do_man',
  'amscls-doc'		=> '&POST_rmsymlink',
@@ -1814,6 +1815,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'biblatex-dw'		=> '&POST_onelevel',
  'biblatex-ms'		=> '&POSTbiblatex',
  'biblatex-software'	=> '&POST_rmsymlink',
+ 'bibstyles-ru'		=> '&POST_onelevel',
  'bibtex'		=> '&POSTbibtex',
  'bibtexperllibs'	=> '&POSTbibtexperllibs',
  'blopentype'		=> '&POST_onelevel',
@@ -8645,7 +8647,8 @@ sub POST_onelevel {
 
   # if tex/ subdir contains *.bst (utbmciad-report et al.), move them up front.
   # spim-phdthesisthemes has the bst in a subdir, tex/share/. Sigh.
-  chomp (my @bst = `find tex -name \*.bst`);
+  # Might as well move any other bst files here also.
+  chomp (my @bst = `find . -name \*.bst`);
   my $dest_bst = "$DEST/bibtex/bst/$package";
   for my $bst (@bst) {
     &mv_with_mkdir ($bst, $dest_bst);
