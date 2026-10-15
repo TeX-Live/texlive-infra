@@ -408,7 +408,7 @@ my @TLP_working = qw(
     ftc-notebook ftcap ftnxtra
     fullblck fullminipage fullwidth
     functan functional fundus-calligra fundus-cyr fundus-suetterlin
-    futharksymb fvextra fwlw
+    futharksymb fvextra fwlw fxpicture
   g-brief gaceta galois gamebook gamebooklib gammas
     garamond-libre garamond-math garuda-c90
     garrigues gastex gates gatherenum gauss
@@ -619,7 +619,7 @@ my @TLP_working = qw(
     marathi marcellus margbib marginalia
     marginfit marginfix marginnote maritime markdown marvosym
     matapli matc3 matc3mem match_parens
-    math-into-latex-4 math-operator
+    math-into-latex-4 math-operator math-shorthandz
     mathabx mathabx-type1 mathador mathaidisclose mathalpha mathastext
     mathcommand mathcomp mathdesign mathdots mathexam
     mathfam256 mathfixs mathfont mathformule mathgreeks
