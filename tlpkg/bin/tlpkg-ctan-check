@@ -101,7 +101,8 @@ my @TLP_working = qw(
     beamer beamer2thesis beamer-fuberlin beamer-reveal beamer-rl
     beamer-theme-albi beamer-tut-pt beamer-varbox beamer-verona
     beamerappendixnote beameraudience beamerauxtheme
-    beamercolorthemeowl beamerdarkthemes beamerposter
+    beamercolortheme-chalkboard beamercolorthemeowl
+    beamerdarkthemes beamerposter
     beamersubframe beamerswitch beamertheme-arguelles beamertheme-bilkent-econ
     beamertheme-cleaneasy beamertheme-csh beamertheme-cuerna
     beamertheme-detlevcm beamertheme-durham
