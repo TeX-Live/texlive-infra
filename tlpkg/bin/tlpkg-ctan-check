@@ -387,7 +387,7 @@ my @TLP_working = qw(
     flowchart flowfram fltpoint
     fmp fmtcount
     fn2end fnbreak fncychap fncylab fnpara fnpct fnspe fntproof fnumprint
-    fodot foekfont foilhtml foliono fonetika
+    fodot foekfont foilhtml folarrow foliono fonetika
     font-change font-change-xetex
     fontawesome fontawesome5 fontawesome6 fontawesome7 fontawesomescaled
     fontaxes fontbook fontch fontinst

@@ -1716,6 +1716,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'easyfloats'		=> '&PREHOOK_flatten1',
  'enctex'		=> '&PREHOOK_flatten1',
  'fixme'                => '&PREHOOK_fixme',
+ 'folarrow'    		=> '&PREHOOK_folarrow',
  'font-change-xetex'    => '&PREHOOK_flatten1',
  'fontools'             => '&PREHOOK_fontools',
  'gost'                 => '&PREHOOK_flatten1',
@@ -6800,6 +6801,18 @@ sub PREHOOK_fixme {
   &xmkdir ("themes", "layouts", "layouts/env", "layouts/target");
 }
 
+sub PREHOOK_folarrow {
+  # fonts/map, fonts/tfm, fonts/opentype, etc.; move up so our regular
+  # code will see the individual files. Fortunately there are no
+  # collisions. Similarly move up tex/*.
+  print "PREHOOK_$package - move files out of subdirs\n";
+  &SYSTEM ("$MV fonts/*/* ."); # files get moved to runtime
+  &SYSTEM ("$MV tex/* .");     # files get moved to runtime
+  #
+  # Also move up doc/* to avoid redundancy, since we're in the doc dir.
+  &SYSTEM ("$MV doc/* .");     # just for cleanliness
+}
+
 sub PREHOOK_flatten1 {
   print "PREHOOK_$package - move all files up one level\n";
   &SYSTEM ("$MV */* .");
@@ -8694,7 +8707,7 @@ sub POST_onelevel {
   #   want it in a subdir of the tex/ dir.
   # Ditto logos/ (beamertheme-cleaneasy), which might be too aggressive
   #   and we'll have to back off to a separate routine.
-  #   Also happens for utbmciad-report et al., which get cleaned to just
+  # Also happens for utbmciad-report et al., which get cleaned to just
   #   README.TEXLIVE, but seems ok/preferable to have that in runtime too.
   for my $subdir (("data", "logos")) {
     next unless -d $subdir;
