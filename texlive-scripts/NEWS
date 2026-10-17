@@ -1,6 +1,9 @@
 (This file public domain.  Originally written by Norbert Preining and
 Karl Berry, 2010.)
 
+<p><b>tlmgr 80658 (released 17oct26):</b>
+<li>parallelize fmtutil calls from tlmgr.
+
 <p><b>install-tl 80605, tlmgr, TLUtils.pm (released 12oct26):</b>
 <li>fix retrieval of number of processor on Windows.
 <li>cosmetic message fixes.
