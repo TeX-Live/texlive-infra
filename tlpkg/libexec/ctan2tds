@@ -4804,8 +4804,10 @@ sub setup {
   # remove README symlinks.
   &SYSTEM ("test -h $packagedir/README && $RM $packagedir/README");
 
-  # remove .DS_Store files
+  # remove .DS_Store and other bogus files.
   &SYSTEM ("find -name .DS_Store | xargs $RM");
+  &SYSTEM ("find -name '._*' | xargs $RM");
+  &SYSTEM ("find -name __pycache__ | xargs $RM -r");
 
   return if $ctl eq "nocopytodoc";
   # copy everything to the doc directory
@@ -4883,9 +4885,6 @@ sub donormal {
 
    # do the postaction in any case (we need to adapt some tds zips).
    &do_posthook ();
-
-   # remove ._ files left in tarballs by careless authors.
-   &SYSTEM ("find $DEST -name '._*' | xargs --no-run-if-empty $RM");
 
    # Delete empty directories; assume GNU find, to make it easy.
    print "\t DONORMAL removing empty directories from dest: $DEST\n";
