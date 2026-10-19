@@ -775,7 +775,7 @@ my @TLP_working = qw(
     principia printcolormanager printfilelist printlen
     prisma-flow-diagram proba problib probsoln prociagssymp
     prodint productbox profcollege proflabo proflycee profmaquette
-    profsio program
+    profsio program programmes-cpge
     progress progressbar projlib promec-ufrgs pronunciation
     proof-at-the-end proofgraph proofread prooftrees
     proposal properties propositions
