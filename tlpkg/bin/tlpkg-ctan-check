@@ -864,9 +864,10 @@ my @TLP_working = qw(
     schulmathematik sclang-prettifier
     schule schulschriften schwalbe-chess
     scikgtex sciposter scientific-thesis-cover scontents
-    scrabble scrambledenvs scratch scratch3 scratchx screenplay
+    scrabble scrambledenvs scratch scratch3 scratchx scrdate screenplay
     screenplay-pkg screenwriter
-    scrhack scripture scrjrnl scrlayer-fancyhdr scrlttr2copy scrwfile scsnowman
+    scrhack scripture scrjrnl scrlayer-fancyhdr
+    scrlttr2copy scrtime scrwfile scsnowman
     sdaps sdrt sduthesis
     se2thesis seatingchart
     secdot secnum secretx section sectionbox sectionbreak sectsty seealso
