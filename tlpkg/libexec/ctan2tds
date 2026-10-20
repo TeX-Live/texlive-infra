@@ -2061,6 +2061,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'tipa-de'		=> '&POST_rmsymlink',
  'tkz-berge'		=> '&POSTtkz_berge',
  'tkz-bernoulli'        => '&POST_onelevel',
+ 'tkz-fn' 	        => '&POST_onelevel',
  'tkz-grapheur'		=> '&POST_onelevel',
  'tkz-interval'		=> '&POST_onelevel',
  'tlc3-examples'	=> '&POSTtlc3_examples',
