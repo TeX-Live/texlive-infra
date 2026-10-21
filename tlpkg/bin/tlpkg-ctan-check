@@ -66,7 +66,7 @@ my @TLP_working = qw(
     assignment association-matrix assoccnt asternote astro asyfig
     asymptote-faq-zh-cn asymptote-by-example-zh-cn asymptote-manual-zh-cn
     asy-overview asypictureb atableau atbegshi
-    atenddvi atendofenv atkinson atomicreactions
+    atenddvi atendofenv atkinson atomicreactions atsresume
     attachfile attachfile2 attinormativi atveryend
     aucklandthesis augie auncial-new aurical aurl
     auto-pst-pdf-lua autobreak autopdf
@@ -396,7 +396,7 @@ my @TLP_working = qw(
     fonts-arundina fonts-churchslavonic fonts-tlwg
     fontscale fontscripts fontsetup fontsize fontspec fonttable fontwrap
     footbib footmisc footmisx footnotebackref footnotehyper
-    footnoterange footnpag
+    footnotenosplit footnoterange footnpag
     forarray foreign forest forest-ext forest-quickstart forloop
     formal-grammar formlett formation-latex-ul forms16be formular forum
     fouridx fourier fouriernc fox-listings
@@ -753,7 +753,7 @@ my @TLP_working = qw(
     phfsvnwatermark phfthm
     philex philokalia philosophersimprint philphys phimisci
     phonenumbers phonetic phonrule phosphoricons photo photobook phtitration
-    physconst physics physics2 physics3 physics-patch physunits
+    physconst physics physics2 physics3 physics-patch physketch physunits
     piano picinpar pict2e
     pictex pictex2 pictexsum pictochrono picture piechartmp piff pigpen
     pinlabel pinoutikz pitex piton pittetd pixelart pixelarttikz
@@ -971,7 +971,7 @@ my @TLP_working = qw(
     tikz-osci tikz-page tikz-palattice tikz-planets tikz-qtree
     tikz-relay tikz-sections tikz-sfc tikz-shields tikz-swigs
     tikz-tensor-networks tikz-timing tikz-trackschematic
-    tikz-triminos tikz-truchet
+    tikz-triminos tikz-truchet tikz-umld
     tikzbrickfigurines tikzbricks tikzcalendarnotes tikzcodeblocks
     tikzdotncross tikzducks
     tikzfill tikzfxgraph tikzinclude tikzlings

@@ -3392,6 +3392,7 @@ $standardsource = '(\.(bat|c|drv|[dem]tx|fea|fdd|ins|mk|sfd|dbj|mbs)'
  'texosquery',		'java|\.batch$|' . $standardsource,
  'thailatex',           'NULL',                 # no gain in splitting up
  'tikz-sections',       'NULL',			# not Makefile
+ 'tikz-umld',           'NULL',			# not Makefile
  'tikztosvg',		'NULL',			# not Makefile
  'tlcockpit',		'TODO|build|project|src',
  'translation-array-fr',        'NULL',         # doc
@@ -4414,6 +4415,7 @@ $standardclean = '(\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
  'piechartmp'    => 'piechartmp.pdf',                   # no source
  'ptptex'        => '(overcite|cite|wrapfig).sty',      # duplicated
  'retosmatematicos' => 'retosmatematicos-documentacion.pdf', # no source
+ 'runtexshebang' => 'runtexshebang.pdf',                # no source
  'scientific-thesis-cover' => 'demo.pdf',		# no source
  'sectionbox'    => 'example/lenna.*.jpg',              # nonfree
  'spim-phdthesisthemes' => 'logos/.*',			# nonfree
