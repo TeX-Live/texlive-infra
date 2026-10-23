@@ -164,7 +164,7 @@ my @TLP_working = qw(
     boites boldtensors bondgraph bondgraphs bonum-otf book-of-common-prayer
     bookcover bookdb bookest bookhands booklet bookman bookmark
     bookshelf booktabs booktabs-de booktabs-fr booktabstabular
-    boolexpr boondox bootstrapicons bophook
+    boolalg boolexpr boondox bootstrapicons bophook
     borceux bosisio boustrophedon
     boxedminipage boxhandler bpchem bpolynomial
     br-lex bracealign bracketkey braids braille braket
@@ -1018,7 +1018,7 @@ my @TLP_working = qw(
     ucharcat ucharclasses ucbthesis ucdavisthesis ucph-revy
     ucs ucsmonograph
     ucthesis udepcolor udes-genie-these udesoftec udiss
-    uebungsblatt uestcthesis ufrgscca
+    uebungsblatt uestcthesis ufrgscca ugentdocs
     uhhassignment uhrzeit uiucredborder uiucthesis
     ukbill ukrhyph ulem ullrcorners ulqda ulthese
     umbclegislation umich-thesis uml umlaute umoline

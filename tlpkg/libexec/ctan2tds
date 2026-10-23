@@ -2509,6 +2509,7 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'latex-veryshortguide','NULL', # keep doc together
  'latex4wp',    	'NULL', # keep doc together
  'latex4wp-it', 	'NULL', # keep doc together
+ 'latexbangla',		'code|' . $standardtex,
  'leadsheets',		'\.library\.|' . $standardtex,
  'lecturer',    	'(t-)?lecturer.(tex|sty)|ltr-',
  'leipzig',     	'leipzig\.tex|' . $standardtex,
