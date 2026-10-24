@@ -162,7 +162,7 @@ my @TLP_working = qw(
     blochsphere block blockdraw_mp blopentype bloques blowup blox
     bmstu bmstu-iu8 bnumexpr bodegraph bodeplot bohr boisik bold-extra
     boites boldtensors bondgraph bondgraphs bonum-otf book-of-common-prayer
-    bookcover bookdb bookest bookhands booklet bookman bookmark
+    bookbangla bookcover bookdb bookest bookhands booklet bookman bookmark
     bookshelf booktabs booktabs-de booktabs-fr booktabstabular
     boolalg boolexpr boondox bootstrapicons bophook
     borceux bosisio boustrophedon
@@ -223,7 +223,7 @@ my @TLP_working = qw(
     cmexb cmextra cmgraded cmll cmpica cmpj cmsd cmsrb cmtiup
     cmupint cnbwp cnltx cntformats cntperchap
     cochineal codeanatomy codebox codedescribe codedoc
-    codehigh codepage codesection codicefiscaleitaliano
+    codehigh codemwe codepage codesection codicefiscaleitaliano
     coelacanth coffeestains collargs collcell collectbox collref
     colophon color-edits colorblind colordoc
     coloredbelts coloredtheorem colorframed
@@ -304,7 +304,7 @@ my @TLP_working = qw(
     disser ditaa dithesis
     dk-bib dlfltxb dlrg-templates
     dnaseq dnp dnsrecord doc-pictex docbytex docext doclicense
-    docmfp docmute docshots docsurvey doctools documentation docutils
+    docmfp docmute docref docshots docsurvey doctools documentation docutils
     doi doibanner doipubmed domaincoloring domitian
     dosepsbin dotlessi dot2texi dotarrow dotseqn dottex
     doublestroke doulossil dowith download dox dozenal

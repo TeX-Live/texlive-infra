@@ -485,10 +485,11 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'dktools',     "die 'skipping, needs compilation, etc.'",
  'dmfonts',     "die 'skipping, needs work'",
  'dnp',         "&MAKEdnp",
- 'do-it-yourself-tex', "die 'skipping, huge documentation package'",
+ 'do-it-yourself-tex',	"die 'skipping, huge documentation package'",
  'docassembly',	"die 'skipping, requires adobe (dps)'",
+ 'docref',	'&MAKEflatten',
  'dogma',       "die 'skipping, requires nonfree font'",
- 'domaincoloring' => '&MAKEflatten',
+ 'domaincoloring',	'&MAKEflatten',
  'dot2tex',     "die 'skipping, only useful with supporting python setup'",
  'domitian',	"&MAKEflatten",
  'dozenal',	"&MAKEflatten",
@@ -2299,6 +2300,7 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'bibtex',      'apalike\..*|' . $standardtex,
  'bidi',        '^bidi\.tex|' . $standardtex,
  'blockdraw_mp','NULL',                 # skip .sty's
+ 'bookbangla',	'code|' . $standardtex,
  'bookshelf',	'^bookshelf-svgnam\.tex|' . $standardtex,
  'booktabs-de', 'NULL',                 # doc package
  'booktabs-fr', 'NULL',                 # doc package
@@ -2611,6 +2613,7 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'mycv',        'mycv.*\.tex|' . $standardtex,
  'mylatex',     	'.*\.ltx',
  'mylatexformat',       '.*\.ltx',
+ 'mystyletau',	'mystyletau-.*\.pdf|' . $standardtex,
  'nag',         '\.nag|' . $standardtex,
  'navigator',   '(t-)?navigator.tex|' . $standardtex,
  'nchairx',	'.*(logo|header)\.pdf|' . $standardtex,
