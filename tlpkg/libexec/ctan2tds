@@ -1722,6 +1722,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'fontools'             => '&PREHOOK_fontools',
  'gost'                 => '&PREHOOK_flatten1',
  'gothic'		=> '&PREHOOK_gothic',
+ 'gradbars'		=> '&PREHOOK_gradbars',
  'grotesq'		=> '&PREHOOK_unzip',
  'hagenberg-thesis'	=> '&PREHOOK_hagenberg_thesis',
  'hduthesis'		=> '&PREHOOK_flatten1',
@@ -1881,6 +1882,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'gitinfo-lua'		=> '&POST_onelevel',
  'glossaries'		=> '&POST_do_man',
  'gost'			=> '&POSTgost',
+ 'gradbars'		=> '&POST_onelevel',
  'grotesq'		=> '&POSTgrotesq',
  'grverb'		=> '&POSTgrverb',
  'guide-latex-fr'	=> '&POST_rmsymlink',
@@ -2738,6 +2740,7 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'seminar',     '\.bug|\.bg?|\.cls|\.sty|2up.tex',
  'shade',       'shade\.tex',  # not description.tex
  'shortmathj',	'shortmathj\.sty',
+ 'showhanmengrid', $standardtex_base, # not .lua
  'shadethm',    '\.sth|' . $standardtex,
  'sillypage',	'sillywalk-map.pdf|' . $standardtex,
  'simpleicons',	'glyphs-.*tex|' . $standardtex,
@@ -3334,6 +3337,7 @@ $standardsource = '(\.(bat|c|drv|[dem]tx|fea|fdd|ins|mk|sfd|dbj|mbs)'
  'fullblck',            '\.asc|' . $standardsource,
  'gckanbun',		'NULL',			# leave makefile
  'geometry-de',         'NULL',                 # keep together
+ 'gradbars',            'NULL',                 # keep together
  'grverb',              '\.vpl|' . $standardsource,
  'hauthesis',		'NULL',
  'hicite',		'NULL',
@@ -6842,6 +6846,12 @@ sub PREHOOK_gothic {
   &SYSTEM ("$RM corkpaper.tex *.zip"); # symlink
 }
 
+sub PREHOOK_gradbars {
+  my $cmd = "texlua scripts/unpack.lua";
+  print "PREHOOK_$package - run $cmd\n";
+  &xsystem ($cmd);
+}
+
 sub PREHOOK_hagenberg_thesis {
   print "PREHOOK_$package - flatten doc and latex, not others\n";
   # doc (but not examples/) files at top, move latex/ files to be installed
@@ -8687,7 +8697,7 @@ sub POST_onelevel {
     #
     my $destdir = $dir;
     # first, files that should end up in tex/$format/$package
-    if ($dir =~ /^((lua)?(la)?tex|code|files|theme)$/) {
+    if ($dir =~ /^((lua)?(la)?tex|code|files|sty|theme)$/) {
       $destdir = "tex";
       $thisformat = $whichformat;
 

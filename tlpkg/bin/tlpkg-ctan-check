@@ -880,8 +880,8 @@ my @TLP_working = qw(
     sf298 sfee sffms sfg
     sfmath sgame shade shadethm shadow shadowtext shapepar shapes sharedline
     shdoc shipunov shobhika short-math-guide shortmathj shorttoc
-    show-pdf-tags show2e showcharinbox showdim showexpl showhyphenation
-    showkerning showlabels showtags shtthesis
+    show-pdf-tags show2e showcharinbox showdim showexpl showhanmengrid
+    showhyphenation showkerning showlabels showtags shtthesis
     shuffle
     sidecap sidenotes sidenotesplus sides signchart siicusp-abstracts
     silence sillypage sim-os-menus
