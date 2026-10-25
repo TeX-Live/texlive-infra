@@ -933,8 +933,8 @@ my @TLP_working = qw(
     tabu tabular2 tabularray-abnt tabularborder tabularray tabularcalc
     tabularew tabularht
     tabulary tabvar tagging tagpair tagpdf talk talkpal talos tamefloats
-    tamethebeast tango tangocolors tangramtikz tap tapir tasks
-    tblr-extras tcldoc tcolorbox tdclock tds tdsfrmath
+    tamethebeast tamu-talk tango tangocolors tangramtikz tap tapir tasks
+    tblr-extras tcbpagefootnote tcldoc tcolorbox tdclock tds tdsfrmath
     technics technion-thesis-template ted telprint
     templates-fenn templates-sommer templatetools tempora temporal-logic
     tengwarscript
