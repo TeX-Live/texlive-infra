@@ -35,7 +35,7 @@ my @TLP_working = qw(
     aguplus aiaa aichej aidisclose aiplans ajl akktex akletter akshar
     albatross alchemist alegreya alertmessage alfaslabone
     alg algobox algolrevived
-    algorithm2e algorithmicx algorithms algpseudocodex algxpar
+    algorithm2e algorithmicx algorithmlite algorithms algpseudocodex algxpar
     aliascnt aligned-overset
     alkalami allrunes almendra almfixed alnumsec
     alpha-persian alphalph
@@ -305,7 +305,7 @@ my @TLP_working = qw(
     dk-bib dlfltxb dlrg-templates
     dnaseq dnp dnsrecord doc-pictex docbytex docext doclicense
     docmfp docmute docref docshots docsurvey doctools documentation docutils
-    doi doibanner doipubmed domaincoloring domitian
+    doi doibanner doipubmed domaincoloring domitian doodle-icons
     dosepsbin dotlessi dot2texi dotarrow dotseqn dottex
     doublestroke doulossil dowith download dox dozenal
     dpcircling dpfloat dprogress
@@ -482,7 +482,7 @@ my @TLP_working = qw(
     hyphenat hyphenex hyplain
   iacrj iaria iaria-lite ibarra ibrackets ibycus-babel ibygrk icite icsv
     ideavault identkey idxcmds idxlayout
-    ieeeconf ieejtran ieeepes ieeetran ietfbibs iexec
+    ieeeconf ieejtran ieeepes ieeetran iesibai-template ietfbibs iexec
     ifallfalse iffont ifis-macros ifmslide ifmtarg ifnextok ifoddpage
     ifplatform ifptex ifsym iftex ifthenx ifxptex
     iitem ijmart ijqc ijsra

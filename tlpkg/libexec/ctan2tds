@@ -1854,6 +1854,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'digestif'		=> '&POSTdigestif',
  'dlrg-templates'	=> '&POST_onelevel',
  'doipubmed'		=> '&POSTlatex2html',
+ 'doodle-icons'		=> '&POST_onelevel',
  'dozenal'		=> '&POSTdozenal',
  'e-french'		=> '&POSTe_french',
  'easydtx'		=> '&POST_do_man',
