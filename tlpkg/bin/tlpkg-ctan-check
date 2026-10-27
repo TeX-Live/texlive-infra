@@ -449,7 +449,7 @@ my @TLP_working = qw(
     grfext grffile grfpaste
     grid grid-system gridpapers gridset gridslides grotesq grundgesetze
     gs1 gsemthesis gtl gtrlib-largetrees gtrcrd
-    gu gudea guitar guitarchordschemes guitartabs guitlogo gzt
+    gu gudea guitar guitarchordschemes guitartabs guitlogo gyoudori gzt
   h2020proposal ha-prosper hackthefootline hacm hadith
     hagenberg-thesis halloweenmath
     hamnosys handin handout handoutwithnotes hands handstroke
@@ -916,7 +916,7 @@ my @TLP_working = qw(
     structmech struktex
     sttools stubs studenthandouts sty2dtx styledcmd styleitems
     suai-report suanpan suanpan-l3
-    subdocs subdepth subeqn subeqnarray
+    subcaptionlite subdocs subdepth subeqn subeqnarray
     subfig subfigmat subfigure subfiles subfloat substances
     substnote substr subsupscripts subtext
     sudoku sudokubundle suftesi sugconf sunpath
@@ -952,8 +952,8 @@ my @TLP_working = qw(
     texliveonfly texloganalyser texlogfilter texlogos texlogsieve
     texmate texments texnegar
     texosquery texplate texpower texproposal texshade texsurgery
-    textcsc textualicomma texvc
-    textcase textfit textglos textgreek textmerg textopo textpath textpos
+    textcase textcsc textdate textfit textglos textgreek textmerg textopo
+    textpath textpos textualicomma texvc
     tfrupee thaienum thaispec thalie
     theanodidot theanomodern theanooldstyle theatre
     thematicpuzzle theoremref thermodynamics

@@ -1887,6 +1887,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'grotesq'		=> '&POSTgrotesq',
  'grverb'		=> '&POSTgrverb',
  'guide-latex-fr'	=> '&POST_rmsymlink',
+ 'gyoudori'		=> '&POST_onelevel',
  'hadith'		=> '&POST_onelevel',
  'hawkdraw'		=> '&POSThawkdraw',
  'haranoaji'		=> '&POST_preserve_postcode',
