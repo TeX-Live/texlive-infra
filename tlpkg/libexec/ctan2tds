@@ -1967,6 +1967,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'numericplots'		=> '&POSTnumericplots',
  'nwejm'		=> '&POSTnwejm',
  'opbible'		=> '&POSTopbible',
+ 'openglyph'		=> '&POSTopenglyph',
  'openmoji'		=> '&POST_onelevel',
  'optex'		=> '&POSToptex',
  'outilsgeomtikz'	=> '&POST_onelevel',
@@ -8281,9 +8282,24 @@ sub POSTnwejm {
 }
 
 sub POSTopbible {
-  print "POST$package - mv doc macros subdirs\n";
+  print "POST$package - mv macros doc subdirs\n";
   rmdir ("$DEST/tex/$whichformat/$package");
   &xsystem ("$MV macros $DEST/tex/$whichformat/$package"); # optex
+  &xsystem ("$MV doc/* .");
+}
+
+sub POSTopenglyph {
+  print "POST$package - mv tex source fonts subdirs\n";
+  #
+  rmdir ("$DEST/tex/$whichformat/$package");
+  &xsystem ("$MV tex $DEST/tex/$whichformat/$package");
+  #
+  $sourceformat = $specialsourcefmt{$package} || $standardsourcefmt;
+  &xsystem ("$MV source/* $DEST/source/$sourceformat/$package");
+  #
+  my $foundry = $specialfoundry{$package} || $standardfoundry;
+  &mv_with_mkdir ("fonts/*", "$DEST/fonts/opentype/$foundry/$package");
+  #
   &xsystem ("$MV doc/* .");
 }
 
@@ -8672,6 +8688,7 @@ sub POSTzhmetrics {
   &SYSTEM ("$MV $DEST/fonts/map/ttf2pk/ttfonts.map $DEST/source/fonts/zhmetrics");
 }
 
+
 # Generic post hook actions follow, with an underscore following POST.
 
 # Many people upload to ctan with a single directory level,
@@ -8686,6 +8703,7 @@ sub POST_onelevel {
   chomp (my @bst = `find . -name \*.bst`);
   my $dest_bst = "$DEST/bibtex/bst/$package";
   for my $bst (@bst) {
+    print "\t  onelevel: renaming bst $bst to $dest_bst\n";
     &mv_with_mkdir ($bst, $dest_bst);
   }
 
@@ -8721,7 +8739,7 @@ sub POST_onelevel {
       next;
     }
     my $dest = "$DEST/$destdir/$thisformat/$package";
-    print "\t onelevel: renaming $dir to $dest\n";
+    print "\t  onelevel: renaming $dir to $dest\n";
     &rename_with_mkdir ($dir, $dest);
   }
   
@@ -8734,12 +8752,12 @@ sub POST_onelevel {
   for my $subdir (("data", "logos")) {
     next unless -d $subdir;
     my $dest = "$DEST/tex/$whichformat/$package/$subdir";
-    print "\t onelevel: renaming special subdir $subdir to $dest\n";
+    print "\t  onelevel: renaming special subdir $subdir to $dest\n";
     &rename_with_mkdir ($subdir, $dest);
   }
 
   # move files in doc[s]/ up to cwd. If there are clashes, will error out.
-  print "\t onelevel: moving doc[s]/ up a level\n";
+  print "\t  onelevel: moving doc[s]/ up a level\n";
   &xsystem ("$MV doc/* .") if -d "doc";
   &xsystem ("$MV docs/* .") if -d "docs";
 
@@ -8748,7 +8766,7 @@ sub POST_onelevel {
   # anything in subdirs.
   my $srcdest = "$DEST/source/$whichformat/$package";
   if (glob ("$srcdest/*.ins") || glob ("$srcdest/*.dtx")) {
-    print "\t onelevel: doing runins in installed $srcdest\n";
+    print "\t  onelevel: doing runins in installed $srcdest\n";
     &runins_subdir ($srcdest);
   }
 }
