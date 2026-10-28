@@ -230,7 +230,8 @@ my @TLP_working = qw(
     colorinfo coloring colorist colorprofiles
     colorsep colorspace colortab
     colortbl colorwav colorweb colourchange
-    combelow combgames-tikz combine combinedgraphics combofont
+    combelow combgames-symbols combgames-tikz
+    combine combinedgraphics combofont
     comfortaa comicneue
     comma commado commalists-tools commath commedit comment comment2tex
     commonunicode commutative-diagrams
