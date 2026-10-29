@@ -512,7 +512,7 @@ my @TLP_working = qw(
     jobname-suffix joinbox josefin jourcl jourrr jouthesis
     jpneduenumerate jpnedumathsymbols jpsj jsclasses
     jslectureplanner jsonparse jsonresume
-    juliamono jumplines junicode junicodevf jupynotex
+    juliamono jumplines juniamaroc-beamer junicode junicodevf jupynotex
     jura juraabbrev jurabib juramisc jurarsp js-misc jvlisting jwjournal
     jyu-chem-thesis
   kalendarium kanaparser kanbun kantlipsum karnaugh karnaugh-map karnaughmap
@@ -622,7 +622,7 @@ my @TLP_working = qw(
     makeshape malagasy-numberwords mandi manfnt manfnt-font manuscript manyind
     marathi marcellus margbib marginalia
     marginfit marginfix marginnote maritime markdown marvosym
-    matapli matc3 matc3mem match_parens
+    matapli matc3 matc3mem match_parens matchedsplit
     math-into-latex-4 math-operator math-shorthandz
     mathabx mathabx-type1 mathador mathaidisclose mathalpha mathastext
     mathcommand mathcomp mathdesign mathdots mathexam
@@ -845,7 +845,7 @@ my @TLP_working = qw(
     resphilosophica responsive rest-api
     resumecls resumemac retosmatematicos returntogrid
     revbadge reverxii revquantum revtex revtex4-1
-    rgltxdoc ribbonproofs rigidnotation rit-fonts
+    rgltxdoc rhode-island-thesis ribbonproofs rigidnotation rit-fonts
     rjlparshap rlepsf rmathbr rmpage
     robotarm robotkarol roboto
     robust-externalize robustcommand robustindex rojud

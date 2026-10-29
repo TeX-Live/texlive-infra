@@ -2485,7 +2485,8 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'jeuxcartes',	'CaJ.*\.(png|pdf)|' . $standardtex,
  'jieeetran',	'NULL',			# not .py
  'js-misc',     '(cassette|idverb|js-misc|schild|sperr|xfig)\.tex',
- 'jslectureplanner', '\.lps|' . $standardtex,
+ 'jslectureplanner',	'\.lps|' . $standardtex,
+ 'juniamaroc-beamer',	'assets|' . $standardtex,
  'jupynotex',	'\.py|' . $standardtex,
  'kanaparser',	'kanaparser.(tex|lua)$',
  'kanbun',	'\.lua$|' . $standardtex,
