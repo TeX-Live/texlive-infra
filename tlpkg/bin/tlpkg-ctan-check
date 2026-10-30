@@ -412,7 +412,7 @@ my @TLP_working = qw(
     fullblck fullminipage fullwidth
     functan functional fundus-calligra fundus-cyr fundus-suetterlin
     futharksymb fvextra fwlw fxpicture
-  g-brief gaceta galois gamebook gamebooklib gammas
+  g-brief gaceta galois game-icons gamebook gamebooklib gammas
     garamond-libre garamond-math garuda-c90
     garrigues gastex gates gatherenum gauss
     gb4e gb4e-next gbt7714 gbt9704 gcard gchords gcite gckanbun

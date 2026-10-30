@@ -1876,6 +1876,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'formation-latex-ul'	=> '&POSTformation_latex_ul',
  'fpl'			=> '&POSTfpl',
  'frenchle'		=> '&POST_rmsymlink',
+ 'game-icons'		=> '&POST_onelevel',
  'genealogy-profiles'	=> '&POST_onelevel',
  'gentium-sil'		=> '&POSTgentium_sil',
  'gentium-tug'		=> '&POSTgentium_tug',
