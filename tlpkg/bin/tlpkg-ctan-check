@@ -568,7 +568,7 @@ my @TLP_working = qw(
     lineara linearregression linebreaker linegoal
     lineno linesys ling-macros linguex linguexx linguisticspro linguistix
     linkedthm linop
-    lion-msc lipsum lisp-on-tex
+    lion-msc lipsum lisnoti lisp-on-tex
     listbib listing listings listings-ext listingsutf8 listlbls listliketab
     listofitems listofsymbols listparskip litetable
     lithuanian liturg liturgy-cw lkproof
