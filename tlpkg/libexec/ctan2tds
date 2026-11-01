@@ -1376,6 +1376,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'rubikrotation',"die 'skipping, use rubik'",
  'rubiktwocube', "die 'skipping, use rubik'",
  'russian',     "die 'skipping, babel non-update, must install as doc only'",
+ 'rustfig',     "die 'skipping, rust compilation'",
  'sa-tikz',     "&MAKEflatten",
  'sae',         "die 'skipping, nosell license'",
  'saferef',     "die 'skipping, nonfree license'",
