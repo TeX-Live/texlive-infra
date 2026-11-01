@@ -783,6 +783,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'jpicedt',	"die 'skipping, ancient program'",
  'jss-lint',	"die 'skipping, online service, doc with no source'",
  'juliamono',	"&MAKEflatten",
+ 'juniamaroc-beamer',	"die 'skipping, nonfree assets/'",
  'kalendar',    "die 'skipping, noinfo license'",
  'kbordermatrix', "&MAKEflatten",
  'kd',          "die 'skipping, too old, too complicated, sorry'",

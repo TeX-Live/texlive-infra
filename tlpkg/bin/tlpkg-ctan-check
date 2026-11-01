@@ -512,7 +512,7 @@ my @TLP_working = qw(
     jobname-suffix joinbox josefin jourcl jourrr jouthesis
     jpneduenumerate jpnedumathsymbols jpsj jsclasses
     jslectureplanner jsonparse jsonresume
-    juliamono jumplines juniamaroc-beamer junicode junicodevf jupynotex
+    juliamono jumplines junicode junicodevf jupynotex
     jura juraabbrev jurabib juramisc jurarsp js-misc jvlisting jwjournal
     jyu-chem-thesis
   kalendarium kanaparser kanbun kantlipsum karnaugh karnaugh-map karnaughmap
