@@ -24,7 +24,7 @@ my @TLP_working = qw(
     aaai-named aalok aastex abbr abc
     abnt abntex2 abntex2-ufv abntexto abntexto-ufc abntexto-uece
     aboensis abraces abspos abstract abstyles
-    academicons accanthis accents accfonts accsupp achemso
+    academic-paper-abnt academicons accanthis accents accfonts accsupp achemso
     acmart acmconf acro acronym acroterm
     active-conf actuarialangle actuarialsymbol
     addfont addliga addlines addtoluatexpath
