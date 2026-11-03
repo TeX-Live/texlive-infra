@@ -92,7 +92,7 @@ my @TLP_working = qw(
     babel-serbianc babel-slovak babel-slovenian babel-sorbian
     babel-spanish babel-swedish babel-thai babel-turkish babel-ukrainian
     babel-vietnamese babel-welsh
-    babelbib babelbidi background backnaur baekmuk
+    babelbib babelbidi background backnaur backref baekmuk
     bagpipe bahaistar bangla bangorcsthesis bangorexam bangtex bankstatement
     barcodes bardiag barr barracuda bartel-chess-fonts bashful basicarith
     baskervaldadf baskervaldx baskervillef
@@ -108,7 +108,7 @@ my @TLP_working = qw(
     beamertheme-detlevcm beamertheme-durham
     beamertheme-epyt beamertheme-focus beamertheme-geode beamertheme-gotham
     beamertheme-light beamertheme-metropolis beamertheme-mirage
-    beamertheme-npbt
+    beamertheme-niederrhein beamertheme-npbt
     beamertheme-phnompenh beamertheme-pure-minimalistic beamertheme-rainbow
     beamertheme-saintpetersburg beamertheme-simpledarkblue
     beamertheme-simpleplus beamertheme-spectrum
@@ -678,7 +678,7 @@ my @TLP_working = qw(
     mycv mylatex mylatexformat mynsfc mystyletau
   na-box na-cover na-fancyborders na-list na-position
     na-tikzornament na-urmborder nag naive-ebnf
-    nameauth namedef namedtensor namespc
+    nameauth namedef namedtensor nameref namespc
     nanicolle nanumtype1 nar
     natbib natded nath nature
     navigator navydocs
@@ -877,7 +877,8 @@ my @TLP_working = qw(
     semesterplanner semesterplannerlua seminar semioneside semproc semtex
     sepfootnotes sepnum seqcalc seqsplit
     serbian-apostrophe serbian-date-lat serbian-def-cyr serbian-lig
-    sesamanuel sesstime setbuilder setdeck setspace setspaceenhanced
+    sesamanuel sesameseeds sesstime
+    setbuilder setdeck setspace setspaceenhanced
     seu-ml-assign seuthesis seuthesix sexam
     sf298 sfee sffms sfg
     sfmath sgame shade shadethm shadow shadowtext shapepar shapes sharedline
