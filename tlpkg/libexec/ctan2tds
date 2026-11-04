@@ -4025,6 +4025,7 @@ $standardttf = '\.ttf|\.TTC';
 %specialscripts_nobin = (
  'albatross'		=> '\.jar$',
  'bib2gls'		=> '\.jar$|resources',
+ 'bibupdate'		=> '\.(py|ini)$',
  'changes'		=> '\.py$',
  'cloze'		=> '\.lua$',
  'epspdf'               => '(epspdf(|\.help|\.tlu|.*tk.*)|\.rb|makegray\.pro)$',

@@ -152,7 +152,7 @@ my @TLP_working = qw(
     bibleref bibleref-french bibleref-german bibleref-lds bibleref-mouth
     bibleref-parse bibleref-sbl bibletext
     biblist bibtex bibtexperllibs bibtools bibtopic
-    bibtopicprefix bibexport bibstyles-ru bibunits
+    bibtopicprefix bibexport bibstyles-ru bibunits bibupdate
     bidi bidi-atbegshi bidicontour bidihl
     bidipagegrid bidipresentation bidishadowtext
     bigfoot bigintcalc bigints bilingualpages binarytree binomexp
@@ -818,7 +818,7 @@ my @TLP_working = qw(
     ptex2pdf ptext ptlatexcommands ptolemaicastronomy ptptex
     punk punk-latex punknova purifyeps puyotikz pwebmac pxbase
     pxchfon pxcjkcat pxfonts pxgreeks pxjahyper pxjodel
-    pxpgfmark pxpic pxrubrica pxtatescale pxtxalfa pxufont
+    pxpgfmark pxpgftate pxpic pxrubrica pxtatescale pxtxalfa pxufont
     pygmentex pyjupyter pyluatex pynotebook
     python pythonhighlight pythonimmediate pythontex
   q-and-a qcircuit qcm qobitree qrbill qrcode qrcodetikz
@@ -978,10 +978,10 @@ my @TLP_working = qw(
     tikz-triminos tikz-truchet tikz-umld
     tikzbrickfigurines tikzbricks tikzcalendarnotes tikzcodeblocks
     tikzdotncross tikzducks
-    tikzfill tikzfxgraph tikzinclude tikzlings
+    tikzfill tikzfins tikzfxgraph tikzinclude tikzlings
     tikzmark tikzmarmots tikzorbital
     tikzpackets tikzpagenodes tikzpeople tikzpfeile tikzphysics
-    tikzpingus tikzposter
+    tikzpingus tikzpizza tikzposter
     tikzquads tikzquests tikzscale tikzsymbols
     tikztosvg tikzviolinplots tile-graphic tilings
     timbreicmc timechart timeop times timetable timing-diagrams
