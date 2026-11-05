@@ -625,7 +625,7 @@ my @TLP_working = qw(
     matapli matc3 matc3mem match_parens matchedsplit
     math-into-latex-4 math-operator math-shorthandz
     mathabx mathabx-type1 mathador mathaidisclose mathalpha mathastext
-    mathcommand mathcomp mathdesign mathdots mathexam
+    mathbb-one mathcommand mathcomp mathdesign mathdots mathexam
     mathfam256 mathfixs mathfont mathformule mathgreeks
     mathlig mathpartir mathpazo mathpunctspace
     mathsemantics mathspec mathtools matlab-prettifier mathspic maths-symbols

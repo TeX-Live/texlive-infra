@@ -979,6 +979,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'mathabx-type1',       "&MAKEflatten",
  'mathalpha',		"&MAKEflatten",
  'mathalphabets',	"die 'skipping, nocommercial'",
+ 'mathbb-one',		"&MAKEflatten",
  'mathesatz-examples',  "die 'skipping, big'",
  'mathexam',    "&MAKEflatten",
  'mathgifg',    "die 'skipping, nonfree font support'",
@@ -2889,7 +2890,8 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'xskak',	'^xskak.*sty',		# not UF-.*.sty
  'xwatermark',  '\.sty',                # no .cfg
  'xindex',      '(unicode|xindex)-.*\.lua$',
- 'xlop',        'xlop\.(tex|sty)',      # no manual.sty
+ 'xint',        'calx.*\.tex|' . $standardtex,
+ 'xlop',        'xlop\.(tex|sty)',      # not manual.sty
  'xstring',     'xstring\.tex|' . $standardtex,
  'yamlvars',	'\.lua|' . $standardtex,
  'yathesis',    '\.(sty|cls)$',         # no .cfg
@@ -3739,6 +3741,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'wrapstuff'	=> 'etex',
  'xduthesis'	=> 'tex',
  'xecjk'        => 'xecjk-xelatex',
+ 'xint'		=> 'etex',
  'xmuthesis'	=> 'etex',
  'yathesis'	=> 'pdftex',
  'zhlineskip'	=> 'etex',
