@@ -387,7 +387,7 @@ my @TLP_working = qw(
     fjodor
     flabels flacards flagderiv flashcards flashmovie flexipage flipbook flippdf
     float floatbytocbasic floatflt floatrow floatrowbytocbasic
-    flowchart flowfram fltpoint
+    florilegium flowchart flowfram fltpoint
     fmp fmtcount
     fn2end fnbreak fncychap fncylab fnpara fnpct fnspe fntproof fnumprint
     fodot foekfont foilhtml folarrow foliono fonetika
