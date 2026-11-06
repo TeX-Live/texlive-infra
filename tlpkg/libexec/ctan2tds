@@ -168,7 +168,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'avantgar',    "die 'skipping, part of urw-base35, frozen'",
  'axodraw',	"die 'skipping, nonfree'",
  'babel-frenchb',  "die 'skipping, use babel-french'",
- 'babel-kazakh',   "&MAKEflatten",
+ #'babel-kazakh',   "&MAKEflatten",
  'babel-malagasy', "die 'skipping, awaiting integration into hyph-utf8'",
  'babel-serbianc', "&MAKEflatten",
  'babel-slovene',  "die 'skipping, use babel-slovenian'",
@@ -2253,6 +2253,12 @@ $standardtex_py = "($standardtex_base" . '|\.py$)'; # next time we need .py
 $standardtex_py = $standardtex_py; # avoid useless warning until then
 #
 %specialtex = (
+ # Expressing AND, OR, and NOT in a Single Pattern.  Fun, huh?
+ # assertion", is what works, but it does. found in (and modified from)
+ # http://docstore.mik.ua/orelly/perl/cookbook/ch06_18.htm,
+ # i can't explain why ^(?!...), the "zero-width negative look-ahead
+ # the perl cookbook,
+ # tipa: we want to install all .sty except tipaman|boxchar|codelist.
  '2up',         '2up\.tex|' . $standardtex,
  'FAQ-en',      'NULL',
  'abbr',        '\.tex',
@@ -2260,16 +2266,16 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'academicons',	'academicons-.*.tex|' . $standardtex,
  'acro',	'definitions\.tex|' . $standardtex,
  'adfsymbols',	'adfsymbols-uni\.tex|' . $standardtex,
+ 'ae',          '\.fd$|\.sty',
  'aeskwadraat',	'logos|' . $standardtex,
  'aidisclose',	'langdef|' . $standardtex,
- 'algxpar',	'\.kw\.tex|' . $standardtex,
- 'aobs-tikz',   'tikz.*tex',
- 'aomart',	'aom_orcid_logo|' . $standardtex,
- 'ae',          '\.fd$|\.sty',
  'alchemist',	'alchemist.sty',	# not manual.sty
  'alertmessage','img|' . $standardtex,
+ 'algxpar',	'\.kw\.tex|' . $standardtex,
  'amscls-doc',	'NULL',
  'amstex',      '\.st[iy]|ams(ppt1|tex).tex|amstex.bug',
+ 'aobs-tikz',   'tikz.*tex',
+ 'aomart',	'aom_orcid_logo|' . $standardtex,
  'apa',         '\.apa|\.cls',  # not endfloat.cfg
  'apa6',        'config|' . $standardtex,
  'apa7',        'config|' . $standardtex,
@@ -2283,13 +2289,14 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'axessibility',	'\.lua|' . $standardtex,
  'babel',       	'bl?plain\.tex|' . $standardtex,
  'babel-french',        '\.lua|' . $standardtex,
+ 'babel-kazakh',        'NULL',
  'babel-georgian',      'georgiancaps\.tex|' . $standardtex,
  'babel-latin',		'\.lua|' . $standardtex,
  'babelbib',    '\.bdf|\.sty',
  'bagpipe',	'bagpipex?\.(tex|ini)',
  'bangla',	'banglamap\.tex|' . $standardtex,
- 'bangtex',     'bangfont\.tex|' . $standardtex,
  'bangorcsthesis',	'Bangor-Logo\.tex|' . $standardtex,
+ 'bangtex',     'bangfont\.tex|' . $standardtex,
  'bardiag',     '\.bar|\.sty|\.cfg',
  'barr',        'diagxy.tex',
  'base',        'idx.tex|lablst.tex|latexbug.tex|lablst.tex|docstrip.tex|nfssfont.tex|sample2e.tex|small2e.tex|testpage.tex|ltxcheck.tex|\.cfg|\.fd$|\.cls|\.clo|\.ltx|\.sty|\.def|^\.',
@@ -2297,27 +2304,27 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'bclogo',      'bc[^l].*\.(tex|pdf|eps|mps)|bclogo\.sty',
  'beamer-rl',	'\.dict|' . $standardtex,
  'beamer2thesis','\.jpg|' . $standardtex,
- 'beamertheme-csh',	'.*logo.*pdf|' . $standardtex,
  'beamertheme-bilkent-econ',	'.*logo.*png|' . $standardtex,
+ 'beamertheme-csh',	'.*logo.*pdf|' . $standardtex,
  'beamertheme-npbt',		'images|' . $standardtex,
  'beamertheme-spectrum',	'\.jpg|' . $standardtex,
  'bezierplot',	'\.lua|' . $standardtex,
  'bghyphen',    '\.tex',
  'biblatex-ext','\.lua|' . $standardtex,
- 'biblatex-gost','\.(.bx|def)$',	# not .cfg
  'biblatex-gb7714-2015', '\.(def|[cb]bx)$',	# not .py
+ 'biblatex-gost','\.(.bx|def)$',	# not .cfg
  'bibtex',      'apalike\..*|' . $standardtex,
  'bidi',        '^bidi\.tex|' . $standardtex,
  'blockdraw_mp','NULL',                 # skip .sty's
+ 'bmstu',	'img|sty|logo.pdf|' . $standardtex,
  'bookbangla',	'code|' . $standardtex,
  'bookshelf',	'^bookshelf-svgnam\.tex|' . $standardtex,
  'booktabs-de', 'NULL',                 # doc package
  'booktabs-fr', 'NULL',                 # doc package
- 'bmstu',	'img|sty|logo.pdf|' . $standardtex,
- 'bussproofs-extra', 'bussproofs-extra.sty',	# not bpextra.sty
  'bracealign',  'bracealign.sty',		# not -doc.sty
  'breqn',       '\.sty|\.sym',
  'buctthesis',	'buct.*cls',
+ 'bussproofs-extra', 'bussproofs-extra.sty',	# not bpextra.sty
  'c-pascal',    '^[^d].*\.tex|' . $standardtex, # not demo*.tex
  'calcfrac',	'^calcfrac\.tex|' . $standardtex,
  'calxxxx',     'cal.*\.tex',
@@ -2349,8 +2356,8 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'compare',	'\.tex',
  'components',  'NULL',
  'concepts',    'concepts\.sty',
- 'contracard',  "contracard\.(cls|sty)",
  'contour',     '\.cfg|\.sty|\.cnt',
+ 'contracard',  "contracard\.(cls|sty)",
  'cs-techrep',	'\.cls',		# not docstrip.cfg
  'csplain',     '\.tex',
  'ctib',        '\.sty|\.clo|\.ldf|\.cls|\.def|\.fd$|ctib\.tex',
@@ -2367,9 +2374,9 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'dialogl',     '[^c]\.sty|listout\.tex', # not dialogl-doc.sty
  'didactic',	'\.sty',	# not .py
  'didec',	'didec\.sty',	# not didec.doc.sty
+ 'digestif',	'NULL', # script
  'din1505',     'NULL', # no tex files, only natbib.cfg, would be system-wide
  'dirtree',     '\.tex|' . $standardtex,
- 'digestif',	'NULL', # script
  'disser',      '\.rtx|' . $standardtex,
  'dlfltxb',     '\.sty', # no sample.cfg
  'docbytex',	'docby\.tex',
@@ -2380,37 +2387,36 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'easy',        'easy.*\.sty',          # no mydoc.sty
  'ecv',         '\.sty|\.cls|\.ldf',    # no docstrip.cfg, else system-wide
  'edmac',       'edmac.tex|edstanza.tex|\.sty',
- 'elpres',	'ep-ball-.*|' . $standardtex,
- 'els-cas-templates',	'thumbnails|' . $standardtex,
- 'emo',		'emo-graphics|emo.sty.ltxml|' . $standardtex,
- 'enctex',	'(1250-|852-|csfmacro|enc-u|encmacro|il2-|kam-'
-                  . '|mixcodes|noprefnt|plain-|polyset|t1macro|utf8).*\.tex',
- 'endfloat',	'\.sty',		# not *.cfg
- 'eoldef',	'eoldef\.(tex|sty)$',
- 'epsf-dvipdfmx', 'epsf-dvipdfmx\.tex',
- 'esami',       '\.sty|\.lng',          # no example .cfg
- 'euflag',	'euflag.sty',		# not classpack.sty
- 'exam-zh',	'exam-zh.*\.(cls|sty)',	# not xdyydoc.cls
- 'expex',       '\.tex|' . $standardtex,
- 'exsheets',    'dicts|' . $standardtex,
  'eijkhout',    '\.tex',
  'einfuehrung', 'NULL',                 # doc package
  'einfuehrung2','NULL',                 # doc package
- 'eltex',       'eltex.*tex',
+ 'elpres',	'ep-ball-.*|' . $standardtex,
+ 'els-cas-templates',	'thumbnails|' . $standardtex,
  'elsarticle',  'elsarticle.cls',       # no rvdtx, pdfwidgets
+ 'eltex',       'eltex.*tex',
+ 'emo',		'emo-graphics|emo.sty.ltxml|' . $standardtex,
  'emojinames',	'emojinames-map.tex|' . $standardtex_base,
+ 'enctex',	'(1250-|852-|csfmacro|enc-u|encmacro|il2-|kam-|mixcodes|noprefnt|plain-|polyset|t1macro|utf8).*\.tex',
+ 'endfloat',	'\.sty',		# not *.cfg
  'endofproofwd','\.pdf_tex$|endofproofwd\.pdf|' . $standardtex,
  'enigma',      'NULL',
+ 'eoldef',	'eoldef\.(tex|sty)$',
  'epigram',     'epigram.tex',
  'epsf',        'epsf.(tex|sty)',
+ 'epsf-dvipdfmx', 'epsf-dvipdfmx\.tex',
  'epslatex-fr', 'NULL',
+ 'esami',       '\.sty|\.lng',          # no example .cfg
  'esint-type1', 'esint.tex',
  'etdipa',	'NULL',			# doc says "copy all files"
+ 'euflag',	'euflag.sty',		# not classpack.sty
  'europasscv',  '(icon|logo).*\.pdf|' . $standardtex,
  'europasscv2025','(colors|locale|logo.*pdf)|' . $standardtex,
  'europecv',    'EuropeFlag|europasslogo|\.cls|\.def',
  'exam-n',	'\.cls',		# not .clo example file
+ 'exam-zh',	'exam-zh.*\.(cls|sty)',	# not xdyydoc.cls
+ 'expex',       '\.tex|' . $standardtex,
  'expltools',	'NULL',			# doc
+ 'exsheets',    'dicts|' . $standardtex,
  'fancymag',	'img|' . $standardtex,
  'fancyqr',	'\.code|' . $standardtex,
  'fancytooltips',       'fancytipmark[.1-4].*|' . $standardtex,
@@ -2452,8 +2458,8 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'greek-inputenc', '\.def|\.dfu$',
  'hanoi',       'hanoi\.tex',
  'harvmac',     'mac\.tex',
- 'hduthesis',   'hdu-.*\.pdf|' . $standardtex, # tex/ subdir, better not to flatten
  'hc',          '\.hld|' . $standardtex,
+ 'hduthesis',   'hdu-.*\.pdf|' . $standardtex, # tex/ subdir, better not to flatten
  'hitszthesis',	'\.(sty|cls)$',		# not .cfg
  'hlist',	'hlist\.tex|' . $standardtex,
  'hobby',       'code\.tex|' . $standardtex,
@@ -2546,9 +2552,9 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'lparse',	'lparse.tex|' . $standardtex,
  'lt3luabridge','lt3luabridge\.(tex|sty)$',
  'ltxkeys',     '\.sty|\.clo|\.ldf|\.cls|\.def|\.fd$',  # not cfg
- 'lua-uni-algos',    '\.lua|' . $standardtex,
  'lua-check-hyphen', '\.lua|' . $standardtex,
  'lua-ul',	'\.lua|' . $standardtex,
+ 'lua-uni-algos',    '\.lua|' . $standardtex,
  'lua-unicode-math', '^[lt].*(sty|lua|fd)$',	# not generate*.lua
  'lua-visual-debug', '\.lua|' . $standardtex,
  'lua2dox',     'NULL',         # .def is lua code
@@ -2658,10 +2664,10 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'pdfcprot',    '\.cpa|\.sty',
  'pdfextra',    '\.opm',	# not .sty, done in posthook
  'pdfmanagement', '\.(lua|ltx)$|' . $standardtex,
- 'pdftexcmds',	'\.lua$|' . $standardtex,
- 'pdfscreen',   'overlay.*pdf|but.*pdf|left.*pdf|right\.pdf|pdfscreen.sty',
  'pdfmsym',	'pdfmsym\.tex$',
+ 'pdfscreen',   'overlay.*pdf|but.*pdf|left.*pdf|right\.pdf|pdfscreen.sty',
  'pdfslide',    '\.jpg|\.sty|\.clo|\.cfg|meta.*\.pdf',
+ 'pdftexcmds',	'\.lua$|' . $standardtex,
  'pdfx',        '\.(def|dfu|icc|xmp)$|(glyph|Profiles).*tex|pdfx\.sty|ICC_LIC',
  'pdfxup',	'(template\.tex|\.xup)$',
  'penlight',	'\.lua$|' . $standardtex,
@@ -2688,10 +2694,10 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'plnfss',      '\.tex|\.pfd',
  'plstmary',    '^stmary.tex',
  'pmx',         'pmx\.tex|' . $standardtex,
+ 'poetrytex',   'poetrytex\.sty$', # not -style
  'polexpr',	'polexpr.*\.tex|' . $standardtex,
  'poormanlog',	'poormanlog\.tex|' . $standardtex,
  'poster-mac',  'poster\.tex|' . $standardtex,
- 'poetrytex',   'poetrytex\.sty$', # not -style
  'powerdot',    '\.ps|images|' . $standardtex,
  'ppchtex',     'm.*tex|m.*sty',
  'ppt-slides',	'ppt-(schemes|templates)|' . $standardtex,
@@ -2700,9 +2706,6 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'proflycee',	'\.sty',	# not .py
  'projlib',	'old-modules|' . $standardtex,
  'prosper',     '\.ps|\.eps|\.sty|\.cls',
- 'pstricks',    'pst-*\.tex',
- 'pstricks-examples',   'NULL',
- 'pstricks-examples-en','NULL',
  'pst-bspline', 'pst-bspline\.(tex|sty)',
  'pst-cox',     'pst-cox(coor|eterp)\.tex',
  'pst-eucl-translation-bg', 'NULL',
@@ -2710,6 +2713,9 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'pst-infixplot', 'infix-RPN\.tex|pst-infixplot\.tex',
  'pst-poker',   '\.eps|(color|bw)\.pdf|' . $standardtex,
  'pst-text',    'pst-(char|text)\.(tex|sty)',
+ 'pstricks',    'pst-*\.tex',
+ 'pstricks-examples',   'NULL',
+ 'pstricks-examples-en','NULL',
  'ptex-base',	'\.(ini|lib|src)$|(ascii-jplain|kinsoku|ptex).tex$',
  'ptex-manual', 'NULL', # keep ptex-manual.sty in doc
  'punk',        'NULL', # have separate punk-latex
@@ -2738,8 +2744,8 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'sansmath',    '^..[^s].*\.sty',	# not miscdoc.sty
  'sapthesis',	'sapienzalogo.pdf|' . $standardtex,
  'scaletextbullet',	'\.sty$',	# not .cls
- 'scholax',	'.*-subs\.tex|' . $standardtex,
  'scholatex',	'schola.*\.lua|' . $standardtex_base, # not tests-audit.lua
+ 'scholax',	'.*-subs\.tex|' . $standardtex,
  'scrhack',	'.hak$|' . $standardtex,
  'scrlttr2copy','\.lco',
  'sdaps',	'\.dict$|code128|' . $standardtex,
@@ -2747,18 +2753,18 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'seatingchart','\.sc|' . $standardtex,
  'seminar',     '\.bug|\.bg?|\.cls|\.sty|2up.tex',
  'shade',       'shade\.tex',  # not description.tex
- 'shortmathj',	'shortmathj\.sty',
- 'showhanmengrid', $standardtex_base, # not .lua
  'shadethm',    '\.sth|' . $standardtex,
+ 'shortmathj',	'shortmathj\.sty',
+ 'showexpl',    '\.sty|\.clo|\.ldf|\.cls|\.def|\.fd$',  # not cfg
+ 'showhanmengrid', $standardtex_base, # not .lua
  'sillypage',	'sillywalk-map.pdf|' . $standardtex,
  'simpleicons',	'glyphs-.*tex|' . $standardtex,
  'simplekv',	'simplekv\.tex|' . $standardtex,
  'simurgh',     '\.lua|' . $standardtex,
- 'spanish',     'NULL',  # babel conflict
- 'showexpl',    '\.sty|\.clo|\.ldf|\.cls|\.def|\.fd$',  # not cfg
  'skeycommand', '\.sty|\.clo|\.ldf|\.cls|\.def|\.fd$',  # not cfg
  'smartdiagram','code\.tex|' . $standardtex,
  'songproj',	'\.sty',		# not .py
+ 'spanish',     'NULL',  # babel conflict
  'splitindex',  'splitindex\.tex|' . $standardtex,
  'spotcolor',   'spotcolor.*\.tex|' . $standardtex,
  'standalone',	'standalone\.tex|' . $standardtex,
@@ -2796,6 +2802,7 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'thubeamer',	'thulogo.pdf|' . $standardtex,
  'ticket',      '\.tdf|' . $standardtex,
  'tikz-cd',     'tikz-cd.sty|tikzlibrarycd.code.tex',   # not pgfmanual.sty
+ 'tikz-feynman','\.lua|' . $standardtex,
  'tikz-mirror-lens',	'\.cwl|' . $standardtex,
  'tikz-qtree',  '(pgf|tikz-)(subpic|q?tree(-compat)?)\.(tex|sty)',
  'tikz-sfc',		'\.code\.tex$',
@@ -2803,16 +2810,9 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'tikz-trackschematic',	'\.code\.tex$|tic\.sty$', # not *documentation.sty
  'tikzducks',	'(code|-(generic|plain)).tex$|ducks\.sty|\.mkiv$',
  'tikzposter',  'tikzposter[^-].*\.tex|' . $standardtex,
- # tipa: we want to install all .sty except tipaman|boxchar|codelist.
- # i can't explain why ^(?!...), the "zero-width negative look-ahead
- # assertion", is what works, but it does. found in (and modified from)
- # the perl cookbook,
- # http://docstore.mik.ua/orelly/perl/cookbook/ch06_18.htm,
- # Expressing AND, OR, and NOT in a Single Pattern.  Fun, huh?
  'tipa',        '\.fd$|\.def$|^(?!tipaman|boxchar|codelist).*\.sty$',
  'tipa-de',     'NULL',                 # doc package
  'titleref',    '^..[^s].*\.sty',       # not miscdoc.sty
- 'tikz-feynman','\.lua|' . $standardtex,
  'tkz-orm',     'tkz.*\.sty',           # no pgfmanual.sty
  'tlc2',        'NULL',                 # doc package
  'tlmgr-intro-zh-cn', 'NULL',
@@ -2821,24 +2821,24 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'tokstools',	'tokstools\.tex|' . $standardtex,
  'tools',       '\.cfg|\.sty|\.clo|\.cls|\.def|\.fd$|.?\.tex|^\.tex$',
  'toptesi',	'toptesi\.cfg|\.sty|\.cls',
- 'translator',  '\.dict|translator-language-mappings.tex|' . $standardtex,
  'translation-array-fr',        'NULL', # doc
  'translation-europecv-de',     'NULL', # doc
  'translation-tabbing-fr',      'NULL', # doc
+ 'translator',  '\.dict|translator-language-mappings.tex|' . $standardtex,
  'treetex',     '(treetex|l_pic|classes)\.tex',
  'trigonometry','\.tex',
  'truncate',    '^..[^s].*\.sty',       # not miscdoc.sty
  'tsvtemplate',	'\.tex|' . $standardtex,
  'tudscr',	'DDC.*|TUD.*|' . $standardtex,
  'tugboat-plain','\.cmn|' . $standardtex,
- 'twemojis',	'all-twemojis\.pdf|' . $standardtex,
  'tuple',	'^tuple\.tex|' . $standardtex,
+ 'twemojis',	'all-twemojis\.pdf|' . $standardtex,
  'typstfun',	'NULL',			# doc pkg
  'uantwerpendocs',	'Images|Logos|\.data|' . $standardtex,
  'ucs',		'data|' . $standardtex,
- 'uestcthesis', '\.png|' . $standardtex,
  'udesoftec',   'udesoftec-cover|\.cls|\.def',
  'udiss',	'logos|' . $standardtex,
+ 'uestcthesis', '\.png|' . $standardtex,
  'ulthese',     'ulthese.cls|ul_p\.(eps|pdf)', # logo for the university
  'underoverlap','underoverlap\.sty',
  'underscore',  '^..[^s].*\.sty',       # not miscdoc.sty
@@ -2851,8 +2851,8 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'unimath-plain-xetex',	'unimath-plain-xetex\.tex',
  'uninormalize',	'\.lua|' . $standardtex,
  'unitn-bimrep','\.jpg|' . $standardtex,
- 'univie-ling',	'univie.*logo.*.pdf|' . $standardtex,
  'universa',    '\.fd|uni\.sty',        # not unidoc.sty
+ 'univie-ling',	'univie.*logo.*.pdf|' . $standardtex,
  'uowthesis',   '\.(eps|png)|' . $standardtex,
  'upca',        '^upca\.tex',
  'uptex-base',	'\.(ini|src|tex)$',
@@ -2879,26 +2879,26 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'xcharter',	'(-subs\.tex|\.fd|\.def|\.fontspec|\.sty)$', # not .py
  'xcomment',    'xcomment\.tex|' . $standardtex,
  'xduthesis',	'\.eps|' . $standardtex,
+ 'xduts',	'xdulogo.pdf$|' . $standardtex,
  'xepersian',   'xepersian-mathsdigitspec\.tex|' . $standardtex,
  'xepersian-hm','xepersian-.*-kashida\.tex|' . $standardtex,
  'xesearch',    't-.*|' . $standardtex,
  'xetexfontinfo','\.tex',
  'xetexko',     '\.tab$|' . $standardtex,
- 'xduts',	'xdulogo.pdf$|' . $standardtex,
+ 'xindex',      '(unicode|xindex)-.*\.lua$',
+ 'xint',        '^calx.*\.tex|' . $standardtex,
  'xintsession',	'\.tex',
  'xkeyval',	'(pst-xkey|xkeyval|xkvltxp|xkvview)\.sty$',
- 'xskak',	'^xskak.*sty',		# not UF-.*.sty
- 'xwatermark',  '\.sty',                # no .cfg
- 'xindex',      '(unicode|xindex)-.*\.lua$',
- 'xint',        'calx.*\.tex|' . $standardtex,
  'xlop',        'xlop\.(tex|sty)',      # not manual.sty
+ 'xskak',	'^xskak.*sty',		# not UF-.*.sty
  'xstring',     'xstring\.tex|' . $standardtex,
+ 'xwatermark',  '\.sty',                # no .cfg
  'yamlvars',	'\.lua|' . $standardtex,
  'yathesis',    '\.(sty|cls)$',         # no .cfg
  'yax',         '(t-)?yax\.(sty|tex)|' . $standardtex,
  'yquant',	'\.sty|yquant-.*[^c]\.tex', # not yquant-doc.{tex,pdf}
- 'zefonts',     '\.sty|\.fd',
  'zeckendorf',	'\.sty|zeckendorf(core)?\.tex',
+ 'zefonts',     '\.sty|\.fd',
  'zztex',	'\.tex',
 );
 
