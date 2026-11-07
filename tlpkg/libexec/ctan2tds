@@ -3900,20 +3900,25 @@ $standardmf='[0-9]\.mf';
 
 
 %specialfoundry = (
- 'adforn'       => 'arkandis',
- 'adfsymbols'   => 'arkandis',
- 'asapsym'	=> 'omnibus-type',
- 'berenisadf'	=> 'arkandis',
- 'charter'      => 'bitstrea',
- 'fc'           => 'jknappen',
- 'gentium-sil'	=> 'SIL',
- 'grotesq'	=> 'urw',
+ 'adforn'        => 'arkandis',
+ 'adfsymbols'    => 'arkandis',
+ 'asapsym'       => 'omnibus-type',
+ 'baskervaldadf' => 'arkandis',
+ 'berenisadf'    => 'arkandis',
+ 'charter'       => 'bitstrea',
+ 'electrumadf'   => 'arkandis',
+ 'fc'            => 'jknappen',
+ 'gentium-sil'   => 'SIL',
+ 'grotesq'       => 'urw',
  'jetbrainsmono-otf' => 'SIL',
- 'manfnt-font'	=> 'hoekwater',
- 'mflogo-font'	=> 'hoekwater',
- 'mfpic'	=> 'metafont',
- 'noto-emoji'	=> 'google',
- 'sourcesanspro'=> 'adobe',
+ 'libris'        => 'arkandis',
+ 'manfnt-font'   => 'hoekwater',
+ 'mflogo-font'   => 'hoekwater',
+ 'mfpic'         => 'metafont',
+ 'noto-emoji'    => 'google',
+ 'romandeadf'    => 'arkandis',
+ 'sourcesanspro' => 'adobe',
+ 'venturisadf'   => 'arkandis',
 );
 $standardfoundry='public';
 
