@@ -515,7 +515,8 @@ my @TLP_working = qw(
     juliamono jumplines junicode junicodevf jupynotex
     jura juraabbrev jurabib juramisc jurarsp js-misc jvlisting jwjournal
     jyu-chem-thesis
-  kalendarium kanaparser kanbun kantlipsum karnaugh karnaugh-map karnaughmap
+  kalendarium kanaparser kanban-board kanbun kantlipsum
+    karnaugh karnaugh-map karnaughmap
     kastrup kaytannollista-latexia
     kblocks kbordermatrix kdgdocs kdpcover keisennote kerkis kerntest ketcindy
     keycommand keyfloat keyindex keyparse keyreader keystroke keytheorems
