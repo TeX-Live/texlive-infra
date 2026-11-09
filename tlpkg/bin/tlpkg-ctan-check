@@ -588,7 +588,7 @@ my @TLP_working = qw(
     lshort-slovenian lshort-spanish lshort-thai lshort-turkish lshort-ukr
     lshort-vietnamese
     lstaddons lstbayes lstfiracode lt3graph lt3luabridge lt3rawobjects
-    ltablex ltabptch ltb2bib ltmermaid
+    ltablex ltabptch ltb2bib ltmermaid ltsaskaita
     ltx-talk ltxcmds ltxdockit ltxfileinfo ltxguidex ltximg
     ltxkeys ltxmisc ltxnew ltxtools
     lua-alt-getopt lua-calendrica lua-check-hyphen lua-font-config
@@ -770,7 +770,7 @@ my @TLP_working = qw(
     pmboxdraw pmdraw pmgraph pmhanguljamo pmx pmxchords pnas2009
     poemscol poetry poetrytex poiretone polexpr polski poltawski
     polyglossia polyhedra polynom polynomial polyomino
-    polytable poormanlog postage postcards poster-mac postit postnotes
+    polytable poormanlog postcards poster-mac postit postnotes
     powerdot powerdot-fuberlin powerdot-tuliplab
     ppmcheckpdf ppr-prv ppt-slides pracjourn practicalreports
     precattl prelim2e preprint prerex present
@@ -872,7 +872,7 @@ my @TLP_working = qw(
     scrhack scripture scrjrnl scrlayer-fancyhdr
     scrlttr2copy scrtime scrwfile scsnowman
     sdaps sdrt sduthesis
-    se2thesis seatingchart
+    se2thesis seasonalletters seatingchart
     secdot secnum secretx section sectionbox sectionbreak sectsty seealso
     selectp selinput selnolig semantex semantic semantic-markup semaphor
     semesterplanner semesterplannerlua seminar semioneside semproc semtex

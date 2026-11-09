@@ -1191,6 +1191,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'poltawski',   "&MAKEcopy",
  'polyglossia-kannada', "die 'skipping, now in polyglossia proper'",
  'popupmenu',   "die 'skipping, per author (dps) request'",
+ 'postage',     "die 'skipping, obsolete on ctan'",
  'poster',      "die 'skipping, requires compilation'",
  'powerdot',    "&MAKEflatten",
  'powerdot-FUBerlin', "die 'skipping, use powerdot-fuberlin'",
