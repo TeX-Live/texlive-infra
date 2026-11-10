@@ -1046,7 +1046,7 @@ my @TLP_working = qw(
     ut-thesis utbmciad-report utexasthesis
     utf8add utf8mex utfsym uvaletter uvlhighlight
     uwa-colours uwa-letterhead uwa-pcf uwa-pif uwmslide uwthesis
-  vak vancouver variablelm variations varindex varisize
+  vak vancouver vardadieniai variablelm variations varindex varisize
     varsfromjobname varwidth vaucanson-g vcell vdmlisting
     vectorlogos velthuis venn venndiagram venturisadf
     verbasef verbatimbox verbatimcopy verbdef
