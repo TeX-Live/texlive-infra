@@ -222,7 +222,7 @@ my @TLP_working = qw(
     cmdstring cmdtrack
     cmexb cmextra cmgraded cmll cmpica cmpj cmsd cmsrb cmtiup
     cmupint cnbwp cnltx cntformats cntperchap
-    cochineal codeanatomy codebox codedescribe codedoc
+    cochineal code-link codeanatomy codebox codedescribe codedoc
     codehigh codemwe codepage codesection codicefiscaleitaliano
     coelacanth coffeestains collargs collcell collectbox collref
     colophon color-edits colorblind colordoc

@@ -2289,6 +2289,7 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'babel-georgian',      'georgiancaps\.tex|' . $standardtex,
  'babel-latin',		'\.lua|' . $standardtex,
  'babelbib',    '\.bdf|\.sty',
+ 'babelbidi',	'^[^a].*\.sty|\.def|\.lua',  # not amikhteh-logo.sty
  'bagpipe',	'bagpipex?\.(tex|ini)',
  'bangla',	'banglamap\.tex|' . $standardtex,
  'bangorcsthesis',	'Bangor-Logo\.tex|' . $standardtex,
@@ -3753,9 +3754,10 @@ $standardinsrunner = "latex -8bit";
 
 
 %specialmakeindex= (
- 'apprends-latex'       => 'NULL',      # doc
+ 'apprends-latex'       => 'NULL',      # for doc
  'bigints'              => 'NULL',      # doc
  'bibleref'		=> 'NULL',      # doc
+ 'code-link'		=> 'NULL',	# doc
  'einfuehrung'          => 'NULL',      # doc
  'einfuehrung2'         => 'NULL',      # doc
  'expltools'            => 'NULL',      # doc
@@ -3778,6 +3780,7 @@ $standardinsrunner = "latex -8bit";
  'tzplot'		=> 'NULL',      # doc
  'turnthepage'          => 'NULL',      # doc
  'voss-mathmode'        => 'NULL',      # doc
+ 'xlistings'            => 'NULL',      # doc
 );
 $standardmakeindex='\.ist';
 
