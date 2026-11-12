@@ -112,7 +112,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'algorithm2e', "&MAKEflatten",
  'algorithmicx',"&MAKEnosymlinks",
  'alkalami',    "&MAKEflatten",
- 'allrunes',    "die 'make all fr* tfms, then back to &MAKEflatten'",
+ 'allrunes',    "&MAKEflatten",
  'almfixed',	"&MAKEflatten",
  'alphabib',    "die 'skipping, shell script, and no doc source?'",
  'alterqcm',    "&MAKEaqcm",
