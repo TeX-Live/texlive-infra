@@ -25,7 +25,7 @@ my @TLP_working = qw(
     abnt abntex2 abntex2-ufv abntexto abntexto-ufc abntexto-uece
     aboensis abraces abspos abstract abstyles
     academic-paper-abnt academicons accanthis accents accfonts accsupp achemso
-    acmart acmconf acro acronym acroterm
+    acmart acmconf acousticintervals acro acronym acroterm
     active-conf actuarialangle actuarialsymbol
     addfont addliga addlines addtoluatexpath
     adfathesis adforn adhocfilelist adigraph
@@ -515,7 +515,7 @@ my @TLP_working = qw(
     juliamono jumplines junicode junicodevf jupynotex
     jura juraabbrev jurabib juramisc jurarsp js-misc jvlisting jwjournal
     jyu-chem-thesis
-  kalendarium kanaparser kanban-board kanbun kantlipsum
+  kalendarium kanaparser kanban-board kanbun kanruby kantlipsum
     karnaugh karnaugh-map karnaughmap
     kastrup kaytannollista-latexia
     kblocks kbordermatrix kdgdocs kdpcover keisennote kerkis kerntest ketcindy
