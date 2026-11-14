@@ -176,7 +176,7 @@ my @TLP_working = qw(
     bxjaholiday bxjaprnind bxjatoucs bxpapersize bxpdfver bxeepic bxenclose
     bxjalipsum bxjscls bxnewfont bxorigcapt bxtexlogo bxwareki
     byo-twemojis byrne bytefield
-  c90 c-pascal cabin cachepic cahierprof
+  c90 c-pascal cabin cachepic cacographyu cahierprof
     caladea calcage calcfrac calctab calculation calculator calculatoritems
     calendar-grid calligra calligra-type1 callout-itembox callouts callouts-box
     calrsfs cals calxxxx-yyyy
@@ -436,7 +436,7 @@ my @TLP_working = qw(
     glossaries-polish glossaries-portuges
     glossaries-serbian glossaries-slovene glossaries-spanish
     glossaries-ukrainian
-    gmdoc gmdoc-enhance
+    gmap-ufrgs gmdoc gmdoc-enhance
     gmiflink gmp gmutils gmverb gmverse gnuplottex
     go gobble gofonts gost gothic gotoh
     grabbox gradbars gradient-text gradientframe
@@ -462,8 +462,10 @@ my @TLP_working = qw(
     havannah hawkdraw
     hc hduthesis he-she hebdomon hebrew-fonts hecthese
     helmholtz-ellis-ji-notation helvetic
-    hep hep-acronym hep-bibliography hep-float hep-font hep-float hep-graphic
-    hep-math hep-math-font hep-paper hep-reference hep-text hep-title hepnames
+    hep hep-acronym hep-bibliography hep-cv
+    hep-float hep-font hep-float hep-graphic
+    hep-math hep-math-font hep-paper hep-reference
+    hep-talk hep-text hep-title hepnames
     hepparticles hepthesis hepunits here hereapplies heria heros-otf hershey-mp
     heuristica hexboard hexdumptikz hexgame
     hf-tikz hfbright hfoldsty hfutexam hfutthesis

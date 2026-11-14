@@ -198,8 +198,9 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'beamer-fuberlin',	"&MAKEflatten",
  'beamer-rl',		"&MAKEflatten",
  'beamer2thesis',       "&MAKEflatten",
+ 'beamer2html',		"die 'skipping, generic filenames, termes, mathjax'",
  'beamerauxtheme',	"&MAKEflatten",
- 'beamertheme-edmaths',		"die 'skipping, nonfree images'",
+ 'beamertheme-edmaths',		
  'beamertheme-metropolis',	"&MAKEflatten",
  'beamertheme-trigon',		"&MAKEflatten",
  'beamertheme-upenn-bc',	"&MAKEflatten",
@@ -1828,6 +1829,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'blopentype'		=> '&POST_onelevel',
  'bonum-otf'		=> '&POST_onelevel',
  'bootstrapicons'	=> '&POST_onelevel',
+ 'cacography'		=> '&POST_onelevel',
  'calculatoritems'	=> '&POST_onelevel',
  'cascadiamono-otf'	=> '&POST_onelevel',
  'ciad-beamertheme'	=> '&POST_onelevel',
@@ -4436,6 +4438,7 @@ $standardclean = '(\.head|\.tmp|\.dvi|\.log|\.out|\.aux|\.toc|\.lof|\.lot'
  'gfsdidot'      => '.pdf',                             # no source
  'gfsdidotclassic' => '.pdf',                           # no source
  'gfsneohellenic'=> '.pdf',                             # no source
+ 'gmap-ufrgs'	 => 'gmap-logo.*',			# nonfree
  'ieeetran'	 => 'IEEEtran.*HOWTO.pdf',
  'jknapltx'      => 'ubbold.fd', # clash bbold's Ubbold.fd; sauter bbold fails
  'kinematikz'	 => '.pdf',				# no source

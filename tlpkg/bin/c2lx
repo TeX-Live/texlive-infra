@@ -43,8 +43,10 @@ elif test "x$1" = xfundus; then
   pkgs="fundus-calligra fundus-cyr fundus-suetterlin" # other fonts nonfree
 elif test "x$1" = xhep; then
   shift; label=hep
-  pkgs="hep-font hep-math-font hep-acronym hep-bibliography hep-float"
-  pkgs="$pkgs hep-graphic hep-math hep-paper hep-reference hep-text hep-title"
+  # ordered as on ctan
+  pkgs="hep-font hep-math-font hep-graphic hep-bibliography "
+  pkgs="$pkgs hep-acronym hep-cv hep-float"
+  pkgs="$pkgs hep-math hep-paper hep-reference hep-talk hep-text hep-title"
 elif test "x$1" = xjxu; then
   shift; label=jxu
   pkgs="colorist einfart lebhart minimalist simplivre"
