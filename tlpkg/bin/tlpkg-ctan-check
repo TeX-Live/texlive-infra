@@ -99,7 +99,8 @@ my @TLP_working = qw(
     basque-book basque-date bath-bst
     bbcard bbding bbm bbm-macros bbold bboldx bbold-type1 bchart bclogo
     beamer beamer2thesis beamer-fuberlin beamer-reveal beamer-rl
-    beamer-theme-albi beamer-tut-pt beamer-varbox beamer-verona
+    beamer-textbox-emph beamer-theme-albi beamer-tut-pt
+    beamer-varbox beamer-verona
     beamerappendixnote beameraudience beamerauxtheme
     beamercolortheme-chalkboard beamercolorthemeowl
     beamerdarkthemes beamerposter
@@ -662,7 +663,8 @@ my @TLP_working = qw(
     modernposter modernruler moderntimeline
     modes modiagram
     modref modroman modular modulus
-    mohe-book mohelper moloch monaspace-otf mongolian-babel monoref montserrat
+    moeptikz mohe-book mohelper moloch
+    monaspace-otf mongolian-babel monoref montserrat
     monofill montex moodle
     moreenum morefloats morehype moremath moresize
     moreverb morewrites morisawa morse-simple mousik movement-arrows movie15
