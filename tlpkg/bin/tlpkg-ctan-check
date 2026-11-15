@@ -519,7 +519,7 @@ my @TLP_working = qw(
     jyu-chem-thesis
   kalendarium kanaparser kanban-board kanbun kanruby kantlipsum
     karnaugh karnaugh-map karnaughmap
-    kastrup kaytannollista-latexia
+    kastrup katibmath kaytannollista-latexia
     kblocks kbordermatrix kdgdocs kdpcover keisennote kerkis kerntest ketcindy
     keycommand keyfloat keyindex keyparse keyreader keystroke keytheorems
     keyval2e keyvaltable kfupm-math-exam khatalmaqala kinematikz kix kixfont
@@ -940,7 +940,7 @@ my @TLP_working = qw(
     tabularew tabularht
     tabulary tabvar tagging tagpair tagpdf talk talkpal talos tamefloats
     tamethebeast tamu-talk tango tangocolors tangramtikz tap tapir tasks
-    tblr-extras tcbpagefootnote tcldoc tcolorbox tdclock tds tdsfrmath
+    tblnotes tblr-extras tcbpagefootnote tcldoc tcolorbox tdclock tds tdsfrmath
     technics technion-thesis-template ted telprint
     templates-fenn templates-sommer templatetools tempora temporal-logic
     tengwarscript
@@ -1041,7 +1041,7 @@ my @TLP_working = qw(
     universa universalis univie-ling unizgklasa
     unravel unswcover
     uol-physics-report uothesis uowthesis uowthesistitlepage
-    upca updatemarks uplatex upmethodology uppunctlm upquote
+    upca updatemarks uplatex upmethodology uppunctlm upquote uprightsubs
     uptex-base uptex-fonts upzhkinsoku
     uri url urlbst urcls urwchancal
     usebib useclass user-persona ushort uspace uspatent
