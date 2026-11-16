@@ -280,6 +280,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'byzantinemusic',	"die 'skipping, includes non-relocating jar'",
  'c90',         "&MAKEc90",
  'cachepic',    "&MAKEcopy",
+ 'cacography',	"die 'skipping, requires nonfree handwriting models'",
  'calendar',    "die 'skipping, nosell license'",
  'calendar_barr',       "die 'skipping, ca.2001, noinfo license'",
  'calxxxx',     "die 'skipping, nomodify license'",

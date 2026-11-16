@@ -177,7 +177,7 @@ my @TLP_working = qw(
     bxjaholiday bxjaprnind bxjatoucs bxpapersize bxpdfver bxeepic bxenclose
     bxjalipsum bxjscls bxnewfont bxorigcapt bxtexlogo bxwareki
     byo-twemojis byrne bytefield
-  c90 c-pascal cabin cachepic cacography cahierprof
+  c90 c-pascal cabin cachepic cahierprof
     caladea calcage calcfrac calctab calculation calculator calculatoritems
     calendar-grid calligra calligra-type1 callout-itembox callouts callouts-box
     calrsfs cals calxxxx-yyyy
