@@ -1106,6 +1106,7 @@ my @TLP_no_check = (
   "aleph",		# binary
   "asymptote",		# binary
   "autosp",		# binary
+  "beamertheme-edmaths",# nonfree
   "bibtex",		# binary
   "bibtex8",		# binary
   "bibtexu",		# binary
