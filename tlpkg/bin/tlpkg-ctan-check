@@ -313,7 +313,8 @@ my @TLP_working = qw(
     doublestroke doulossil dowith download dox dozenal
     dpcircling dpfloat dprogress
     drac draftcopy draftfigure
-    draftwatermark dramatist dratex drawing-with-metapost drawmatrix drawstack
+    draftwatermark dramatist dratex drawing-with-metapost
+    drawmatrix drawmgr drawstack
     drm droid droit-fr drs drv dsptricks dsserif
     dtk dtk-bibliography dtxdescribe dtxgallery dtxgen
     dtxtut ducksay duckuments duerer duerer-latex duotenzor dutchcal
