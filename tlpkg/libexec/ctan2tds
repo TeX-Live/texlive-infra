@@ -2655,6 +2655,7 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'omgtudoc-asoiu','\.tpt|' . $standardtex,
  'onedown',	'\.dict|' . $standardtex,
  'optex',	'\.opm|\.ini',
+ 'ou-tma',	'ou.*sty$',		# not doc-changes.sty
  'outerhbox',	'\.sty',
  'overarrows',	'[^c]\.sty',		# not -doc.sty
  'pageslts',    '\.sty|[^c]\.cfg',      # not ltxdoc.cfg
@@ -3647,6 +3648,7 @@ my $core_latex = "$Master/texmf-dist/tex/latex";
  'lni'		=> 'tex --8bit',
  'longtwocolumn'  => 'etex',
  'lscapeenhanced' => 'etex',
+ 'lt3matrix'	=> 'etex',
  'ltxcmds'	=> 'etex',
  'lua-typo'	=> 'etex',
  'lua-ul'	=> 'etex-answer-y',	# https://github.com/latex3/latex2e/issues/558

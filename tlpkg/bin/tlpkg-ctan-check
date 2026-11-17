@@ -590,7 +590,8 @@ my @TLP_working = qw(
     lshort-polish lshort-portuguese lshort-russian lshort-slovak
     lshort-slovenian lshort-spanish lshort-thai lshort-turkish lshort-ukr
     lshort-vietnamese
-    lstaddons lstbayes lstfiracode lt3graph lt3luabridge lt3rawobjects
+    lstaddons lstbayes lstfiracode
+    lt3graph lt3luabridge lt3matrix lt3rawobjects
     ltablex ltabptch ltb2bib ltmermaid ltsaskaita
     ltx-talk ltxcmds ltxdockit ltxfileinfo ltxguidex ltximg
     ltxkeys ltxmisc ltxnew ltxtools
@@ -1022,7 +1023,7 @@ my @TLP_working = qw(
     txfonts txfontsb txgreeks txuprcal
     type1cm typed-checklist typeface typehtml typeoutfileinfo typewriter
     typicons typoaid typog typogrid typstfun tzplot
-  uaclasses uafthesis ualberta uantwerpendocs uassign ucalgmthesis
+  ua-jecon uaclasses uafthesis ualberta uantwerpendocs uassign ucalgmthesis
     ucharcat ucharclasses ucbthesis ucdavisthesis ucph-revy
     ucs ucsmonograph
     ucthesis udepcolor udes-genie-these udesoftec udiss
