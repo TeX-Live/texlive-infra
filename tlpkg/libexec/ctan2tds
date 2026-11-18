@@ -807,6 +807,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'kotex-plain',		"&MAKEflatten",
  'kpfonts',		"&MAKEflatten",
  'kpfonts-otf',		"&MAKEflatten",
+ 'kpi-thesis',		"&MAKEflatten",
  'ktv-texdata',         "&MAKEflatten",
  'kurier',              "&MAKEcopy",
  'kuvio',               "die 'skipping, nonfree license'",

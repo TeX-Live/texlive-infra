@@ -529,7 +529,7 @@ my @TLP_working = qw(
     knuth-errata knuth-hint knuth-lib knuth-local knuth-pdf
     koma-moderncvclassic koma-script koma-script-examples koma-script-sfs
     komacv komacv-rg korigamik kotex-oblivoir kotex-plain kotex-utf kotex-utils
-    kpfonts kpfonts-otf ksfh_nat ksp-thesis
+    kpfonts kpfonts-otf kpi-thesis ksfh_nat ksp-thesis
     ktbox ktv-texdata ku-template kurdishlipsum kurier
     kvdefinekeys kvmap kvoptions kvsetkeys
   l2picfaq l2tabu l2tabu-english l2tabu-french l2tabu-italian l2tabu-spanish
