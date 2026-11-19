@@ -642,7 +642,7 @@ my @TLP_working = qw(
     meetingmins membranecomputing memdesign memexsupp
     memoir memoirchapterstyles memoize memoize-ext
     memory memorygraphs mendex-doc mentis
-    mensa-tex menu menucard menukeys mercatormap merriweather
+    mensa-tex menu menucard menukeys mercatormap mermin-equations merriweather
     messagepassing metacapture
     metafont-beginners metago metalogo metalogox metanorma
     metaobj metaphor metaplot
