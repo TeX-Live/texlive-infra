@@ -119,7 +119,7 @@ my @TLP_working = qw(
     beamerthemejltree beamerthemelalic
     beamerthemenirma beamerthemenord beamertools
     bearwear beaulivre beautybook beautynote
-    beebe begingreek begriff beilstein belleek bengali
+    beebe begingreek begriff beilstein belleek beltmap bengali
     bera berenisadf besjournals bestpapers betababel beton beuron
     bewerbung bez123 bezierplot bfh-ci bgteubner bguq bhcexam
     bib-fr bib2gls bib2qr bibarts bibbreeze bibcop biber biber-ms bibhtml
@@ -405,7 +405,7 @@ my @TLP_working = qw(
     formal-grammar formlett formation-latex-ul forms16be formular forum
     fouridx fourier fouriernc fox-listings
     fp fpl
-    fragmaster fragments fragoli frame framed framedsyntax
+    fragmaster fragments fragoli frame framecite framed framedsyntax
     francais-bst frankenstein frcursive
     frederika2016 freealign freemath frege frenchmath fretplot
     frimurer frletter frontespizio
