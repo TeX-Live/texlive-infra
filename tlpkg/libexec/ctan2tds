@@ -1770,6 +1770,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'spectralsequences'	=> '&PREHOOK_spectralsequences',
  'suftesi'              => '&PREHOOK_suftesi',
  'stix'                 => '&PREHOOK_stix',
+ 'tenkana'		=> '&PREHOOK_tenkana',
  'texchanges'		=> '&PREHOOK_texchanges',
  'texdraw'              => '&PREHOOK_texdraw',
  'texfot'               => '&PREHOOK_texfot',
@@ -4212,6 +4213,7 @@ $standardttf = '\.ttf|\.TTC';
  'splitindex'           => 'splitindex\.pl$',
  'sty2dtx'              => '\.pl$',
  'svn-multi'            => 'svn-multi\.pl$',
+ 'tenkana'		=> 'tenkana.pyz$',
  'tex4ebook'		=> 'tex4ebook$',
  'texaccents'		=> 'texaccents.sno',
  'texblend'		=> 'texblend$',
@@ -4337,6 +4339,7 @@ $standardttf = '\.ttf|\.TTC';
  'spanish-mathml-intent'=> '\.1$',
  'srcredact'            => '\.1$',
  'sty2dtx'              => '\.1$',
+ 'tenkana'		=> '\.1$',
  'texaccents'		=> '\.1$',
  'texchanges'		=> '\.1$',
  'texdiff'              => 'texdiff.1',
@@ -7029,6 +7032,11 @@ sub PREHOOK_suftesi {
 sub PREHOOK_stix {
   print "PREHOOK_$package - run tex stix.fdd since latex breaks on it\n";
   &SYSTEM ("cd latex && tex stix.fdd");
+}
+
+sub PREHOOK_tenkana {
+  print "PREHOOK_$package - move pyz\n";
+  &SYSTEM ("$MV build/tenkana.pyz .");
 }
 
 sub PREHOOK_texchanges {
