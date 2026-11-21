@@ -4213,7 +4213,7 @@ $standardttf = '\.ttf|\.TTC';
  'splitindex'           => 'splitindex\.pl$',
  'sty2dtx'              => '\.pl$',
  'svn-multi'            => 'svn-multi\.pl$',
- 'tenkana'		=> 'tenkana.pyz$',
+ 'tenkana'		=> 'tenkana.py$',
  'tex4ebook'		=> 'tex4ebook$',
  'texaccents'		=> 'texaccents.sno',
  'texblend'		=> 'texblend$',
@@ -7035,8 +7035,14 @@ sub PREHOOK_stix {
 }
 
 sub PREHOOK_tenkana {
-  print "PREHOOK_$package - move pyz\n";
-  &SYSTEM ("$MV build/tenkana.pyz .");
+  print "PREHOOK_$package - build combined zip py\n";
+  # We install it as a .py so that the windows wrapper doesn't have to
+  # recognize a new extension (.pyz). That means in turn that we
+  # (manually) disabled auto-props on tenkana.py when it was committed,
+  # since it shouldn't be treated as a text file:
+  # svn add --no-auto-props tenkana.py
+  # svn propset svn:mime-type application/octet-stream !$
+  &SYSTEM ("./build.sh $package.py; $RM build/$package.pyz");
 }
 
 sub PREHOOK_texchanges {
