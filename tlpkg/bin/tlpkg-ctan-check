@@ -252,7 +252,8 @@ my @TLP_working = qw(
     context-simpleslides context-squares context-sudoku
     context-transliterator context-typescripts context-vim
     context-visualcounter
-    continue contour contracard contract conv-xkv convbkmk convert-jpfonts
+    continue contour contracard contract contributor-credits
+    conv-xkv convbkmk convert-jpfonts
     cooking cooking-units cookingsymbols
     cool coolfn coollist coolstr coolthms cooltooltips
     coop-writing cooperhewitt
@@ -558,7 +559,7 @@ my @TLP_working = qw(
     latexgit latexindent
     latexmk latexmp latexpand
     latino-sine-flexione lato layaureo layouts lazylist
-    lccaps lcd lcg lcyw leading leadsheets leaflet leanify
+    lc-visualizer lccaps lcd lcg lcyw leading leadsheets leaflet leanify
     lebhart lecturenotes lecturer lectures lectureslides
     ledmac leftidx leftindex leipzig lengthconvert leporello
     lete-sans-math letgut letltxmacro
@@ -634,7 +635,8 @@ my @TLP_working = qw(
     mathbb-one mathcommand mathcomp mathdesign mathdots mathexam
     mathfam256 mathfixs mathfont mathformule mathgreeks
     mathlig mathpartir mathpazo mathpunctspace
-    mathsemantics mathspec mathtools matlab-prettifier mathspic maths-symbols
+    mathsemantics mathspec mathtools matlab-prettifier
+    mathspic maths-symbols mathwrap
     matrix-skeleton matrixdiagrams mattens mayanumber maybemath maze
     mcaption mceinleger mcexam mcf2graph mcite mciteplus mcmthesis
     mdframed mdputu mdsymbol mdwtools
@@ -651,7 +653,7 @@ my @TLP_working = qw(
     mf2pt1 mfb-oldstyle mfirstuc mflogo mflogo-font mfnfss mfpic mfpic4ode mftinc
     mgltex mhchem
     mhequ miama mi-solns
-    microtype microtype-de midnight midpage
+    micfong-sans-math microtype microtype-de midnight midpage
     milestonetimeline miller milog milsymb
     mindflow minibox minidocument minifp
     minim minim-hatching minim-math minim-mp minim-pdf minim-xmp
@@ -1060,7 +1062,7 @@ my @TLP_working = qw(
     version versions versonotes vertbars vexillology vgrid
     vhistory visualfaq visualfaq-fr visualpstricks visualtikz visualtoks
     vmargin vntex vocaltract volumes
-    voss-mathcol
+    voss-mathcol vowelchart
     vpe vruler vscodeicons vtable vwcol
   wadalab wallcalendar wallpaper wargame warning warpcol
     was wasy wasy-type1 wasysym webguide webquiz weiqi westlakethesis
