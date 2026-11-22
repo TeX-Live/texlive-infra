@@ -637,7 +637,7 @@ my @TLP_working = qw(
     mathfam256 mathfixs mathfont mathformule mathgreeks
     mathlig mathpartir mathpazo mathpunctspace
     mathsemantics mathspec mathtools matlab-prettifier
-    mathspic maths-symbols mathwrap
+    mathspic maths-symbols
     matrix-skeleton matrixdiagrams mattens mayanumber maybemath maze
     mcaption mceinleger mcexam mcf2graph mcite mciteplus mcmthesis
     mdframed mdputu mdsymbol mdwtools
