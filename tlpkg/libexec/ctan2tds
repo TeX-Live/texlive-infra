@@ -1943,6 +1943,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'lua-placeholders'	=> '&POST_onelevel',
  'lua-regression'	=> '&POST_onelevel',
  'lua-tikz3dtools'	=> '&POST_onelevel',
+ 'luacoolprop'		=> '&POSTluacoolprop',
  'luadraw'		=> '&POST_onelevel',
  'luaotfload'		=> '&POST_do_man',
  'luatex-cn'		=> '&POST_onelevel',
@@ -2639,6 +2640,7 @@ $standardtex_py = $standardtex_py; # avoid useless warning until then
  'newpax',	'.*\.lua|' . $standardtex,
  'newpx',	'.*-subs\.tex|' . $standardtex,
  'newtx',	'.*-subs\.tex|' . $standardtex,
+ 'newtxtt',	'.*-unicode\.tex|' . $standardtex,
  'nodetree',	'nodetree.(tex|lua)|' . $standardtex,
  'noindentafter',       "noindentafter\.sty",
  'nomencl',	'\.sty',		# not .cfg
@@ -8170,6 +8172,12 @@ sub POSTlithuanian {
 sub POSTlua_physical {
   print "POST$package - src/ dir to runtime\n";
   &mv_with_mkdir ("src/*", "$DEST/scripts/$package");
+}
+
+sub POSTluacoolprop {
+  print "POST$package - handle quasi-tds directories\n";
+  &mv_with_mkdir ("tex/luatex/$package/*", "$DEST/tex/luatex/$package");
+  &xsystem ("$MV doc/luatex/$package/* doc");
 }
 
 sub POSTluahyperbolic {

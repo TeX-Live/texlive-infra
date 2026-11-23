@@ -296,7 +296,7 @@ my @TLP_working = qw(
     datetime2-usorbian datetime2-welsh
     dblfloatfix dbshow dccpaper dcpic
     ddphonism
-    de-macro debate decimal decimalcomma decision-table decorule
+    de-macro debate decimal decimalcomma decision-table deckblatt decorule
     defoldfonts dehyph dehyph-exptl
     dejavu dejavu-otf
     delim delimseasy delimset delimtxt delvierre democodetools denisbdoc
