@@ -370,7 +370,7 @@ my @TLP_working = qw(
     fancybox fancyhandout fancyhdr fancyhdr-it fancylabel
     fancymag fancynum fancypar
     fancyqr fancyref fancyslides fancytabs fancytooltips fancyvrb
-    fandol fandol-braille
+    fandol-braille
     fantasquesansmono-otf
     faq-fr faq-fr-gutenberg farbe fariscovernew fascicules fast-diagram
     fbb fbithesis fbox fbs
@@ -947,7 +947,8 @@ my @TLP_working = qw(
     tabularew tabularht
     tabulary tabvar tagging tagpair tagpdf talk talkpal talos tamefloats
     tamethebeast tamu-talk tango tangocolors tangramtikz tap tapir tasks
-    tblnotes tblr-extras tcbpagefootnote tcldoc tcolorbox tdclock tds tdsfrmath
+    tblnotes tblr-extras tcbnestbreak tcbpagefootnote
+    tcldoc tcolorbox tdclock tds tdsfrmath
     technics technion-thesis-template ted telprint
     templates-fenn templates-sommer templatetools tempora temporal-logic
     tengwarscript tenkana
