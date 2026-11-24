@@ -637,7 +637,7 @@ my @TLP_working = qw(
     mathfam256 mathfixs mathfont mathformule mathgreeks
     mathlig mathpartir mathpazo mathpunctspace
     mathsemantics mathspec mathtools matlab-prettifier
-    mathspic maths-symbols
+    mathspic maths-symbols mathwrap
     matrix-skeleton matrixdiagrams mattens mayanumber maybemath maze
     mcaption mceinleger mcexam mcf2graph mcite mciteplus mcmthesis
     mdframed mdputu mdsymbol mdwtools
@@ -692,7 +692,7 @@ my @TLP_working = qw(
     nanicolle nanumtype1 nar
     natbib natded nath nature
     navigator navydocs
-    ncclatex ncctools nchairx ncntrsbk
+    ncclatex ncctools nchairx ncntrsbk ncolumn
     nddiss ndsu-thesis ndsu-thesis-2022
     needspace nehgs-register neoschool nestquot neuralnetwork nevelok
     newcastle-bst newcommand newcomputermodern newenviron newfile newfloat

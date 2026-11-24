@@ -992,7 +992,6 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'mathstone',   "die 'skipping, requires nonfree Stone fonts'",
  'mathtex',     "die 'skipping, compiled, cgi, etc.'",
  'mathtype',	"die 'skipping, compiled, nonfree, etc.'",
- 'mathwrap',	"die 'skipping, not as advertised, suggestion from ctan",
  'matlab',      "die 'skipping, requires nonfree matlab'",
  'mattex',      "die 'skipping, requires nonfree matlab'",
  'mbenotes',	"die 'skipping, obsolete on 4apr19'",
