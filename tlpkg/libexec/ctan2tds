@@ -481,6 +481,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'dictsym',     "&MAKEunzipandflatten",
  'digestif',    "&MAKEflatten",
  'digicap-pro',	"die 'skipping, requires adobe (dps)'",
+ 'digiconfigs',	"die 'skipping, obsolete on ctan'",
  'disser',      "&MAKEdisser",
  'divine',      "die 'skipping, requires nonfree font'",
  'dktools',     "die 'skipping, needs compilation, etc.'",
