@@ -370,7 +370,7 @@ my @TLP_working = qw(
     fancybox fancyhandout fancyhdr fancyhdr-it fancylabel
     fancymag fancynum fancypar
     fancyqr fancyref fancyslides fancytabs fancytooltips fancyvrb
-    fandol-braille
+    fandol fandol-braille
     fantasquesansmono-otf
     faq-fr faq-fr-gutenberg farbe fariscovernew fascicules fast-diagram
     fbb fbithesis fbox fbs

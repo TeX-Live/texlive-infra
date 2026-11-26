@@ -581,7 +581,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'fac',         "die 'skipping, noinfo license'",
  'famt',        "die 'skipping, noinfo license'",
  'fancyvrb',    "&MAKEflatten",
- 'fandol',      "die 'skipping, obsolete on ctan'",
+ #'fandol',      "die 'skipping, obsolete on ctan'",
  'fantasquesansmono-otf', "&MAKEflatten",
  'faq',         "die 'skipping, use FAQ-en'",
  'faq-en',      "die 'skipping, use FAQ-en'",
