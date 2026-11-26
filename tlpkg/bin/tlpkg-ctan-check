@@ -642,7 +642,7 @@ my @TLP_working = qw(
     mcaption mceinleger mcexam mcf2graph mcite mciteplus mcmthesis
     mdframed mdputu mdsymbol mdwtools
     measurebox mecaso media4svg media9 medmath medstarbeamer
-    meetingmins membranecomputing memdesign memexsupp
+    meetingmins membranecomputing memdesign
     memoir memoirchapterstyles memoize memoize-ext
     memory memorygraphs mendex-doc mentis
     mensa-tex menu menucard menukeys mercatormap mermin-equations merriweather

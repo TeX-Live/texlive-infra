@@ -998,6 +998,7 @@ chomp (my $ctan_root = `tlpkginfo --ctan-root`);
  'mbenotes',	"die 'skipping, obsolete on 4apr19'",
  'mdwfonts',    "die 'skipping, too many tfm duplicates'",
  'mem',         "die 'skipping, experimental ca.2006'",
+ 'memexsupp',   "die 'skipping, obsolete on ctan'",
  'memo2',       "die 'skipping, latex 2.09'",
  'memoirchapstyles',	"die 'skipping, use memoirchapterstyles'",
  'meper',       "die 'skipping, requires Java, confused license'",
