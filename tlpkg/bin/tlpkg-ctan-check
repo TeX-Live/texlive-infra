@@ -1004,7 +1004,7 @@ my @TLP_working = qw(
     tlc-article tlc2 tlc3-examples tlcockpit tlmgr-intro-zh-cn tlmgrbasics
     to-be-determined tocbibind tocdata tocloft tocvsec2 todo todonotes
     tokcycle tokenizer tokglobalstack tokgroupmark tokmap tokstools
-    tonevalue toolbox tools
+    tonevalue tongjithesis toolbox tools
     topfloat topiclongtable topletter toptesi
     totalcount totcount totpages
     tpic2pdftex tpslifonts tqft
